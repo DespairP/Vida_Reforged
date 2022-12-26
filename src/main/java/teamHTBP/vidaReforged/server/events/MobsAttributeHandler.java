@@ -6,7 +6,7 @@ import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teamHTBP.vidaReforged.server.mobs.AncientBeliever;
-import teamHTBP.vidaReforged.server.mobs.MobsLoader;
+import teamHTBP.vidaReforged.server.mobs.VidaMobsLoader;
 
 /**
  * @author DustW
@@ -16,7 +16,7 @@ import teamHTBP.vidaReforged.server.mobs.MobsLoader;
 public class MobsAttributeHandler {
     @SubscribeEvent
     public static void onEvent(EntityAttributeCreationEvent event) {
-        event.put(MobsLoader.ANCIENT_BELIEVER.get(), AncientBeliever.createAttributes().build());
+        event.put(VidaMobsLoader.ANCIENT_BELIEVER.get(), AncientBeliever.createAttributes().build());
 
     }
 }
