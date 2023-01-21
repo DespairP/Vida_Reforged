@@ -44,7 +44,7 @@ public class DecoBlockFactory {
 
 
     public enum DecoPropertyType{
-        NORMAL(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(3.0F)),
+        STANDARD(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(3.0F)),
         WOOD(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.PODZOL).strength(2.0F, 3.0F).sound(SoundType.WOOD)),
         STONE(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 6.0F));
 

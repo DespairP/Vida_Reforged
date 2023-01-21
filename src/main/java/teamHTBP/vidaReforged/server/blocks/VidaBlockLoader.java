@@ -5,12 +5,15 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.client.events.ModelRenderTypeAutoRegisterHandler;
 import teamHTBP.vidaReforged.core.common.block.DecoBlockFactory;
+import teamHTBP.vidaReforged.core.utils.reg.CustomModelBlock;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterItemBlock;
 
 import static teamHTBP.vidaReforged.core.common.block.DecoBlockFactory.DecoBlockType.NORMAL;
 import static teamHTBP.vidaReforged.core.common.block.DecoBlockFactory.DecoBlockType.SLAB;
 import static teamHTBP.vidaReforged.core.common.block.DecoBlockFactory.DecoPropertyType.*;
+import static teamHTBP.vidaReforged.client.events.ModelRenderTypeAutoRegisterHandler.CustomModelRenderType.*;
 /**
  * 方块注册管理类
  *
@@ -40,13 +43,15 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> SILENT_FOREST_BRICK_SLAB_1 = registerDecoBlock("silent_forest_brick_slab_1", STONE, SLAB);
 
 
-    public static Block registerBlock(String name,Block block){
-        RegistryObject<Block> regBlock = BLOCKS.register(name, () -> block);
-        return regBlock.get();
+    @CustomModelBlock(CUTOUT_MIPPED)
+    @RegisterItemBlock
+    public static RegistryObject<Block> collector = registerDecoBlock("collector", STANDARD, NORMAL);
+
+    public static RegistryObject<Block> registerBlock(String name,Block block){
+        return BLOCKS.register(name, () -> block);
     }
 
     public static RegistryObject<Block> registerDecoBlock(String name, DecoBlockFactory.DecoPropertyType propertyType, DecoBlockFactory.DecoBlockType buildType){
-        RegistryObject<Block> regBlock = BLOCKS.register(name, new DecoBlockFactory.Builder().setProperties(propertyType).build(buildType));
-        return regBlock;
+        return BLOCKS.register(name, new DecoBlockFactory.Builder().setProperties(propertyType).build(buildType));
     }
 }
