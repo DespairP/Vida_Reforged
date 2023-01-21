@@ -45,7 +45,7 @@ public class VidaBlockLoader {
 
     @CustomModelBlock(CUTOUT_MIPPED)
     @RegisterItemBlock
-    public static RegistryObject<Block> collector = registerDecoBlock("collector", STANDARD, NORMAL);
+    public static RegistryObject<Block> collector = registerDecoBlock("collector", STANDARD, NORMAL, true);
 
     public static RegistryObject<Block> registerBlock(String name,Block block){
         return BLOCKS.register(name, () -> block);
@@ -53,5 +53,9 @@ public class VidaBlockLoader {
 
     public static RegistryObject<Block> registerDecoBlock(String name, DecoBlockFactory.DecoPropertyType propertyType, DecoBlockFactory.DecoBlockType buildType){
         return BLOCKS.register(name, new DecoBlockFactory.Builder().setProperties(propertyType).build(buildType));
+    }
+
+    public static RegistryObject<Block> registerDecoBlock(String name, DecoBlockFactory.DecoPropertyType propertyType, DecoBlockFactory.DecoBlockType buildType,boolean noSolid){
+        return BLOCKS.register(name, new DecoBlockFactory.Builder().setProperties(propertyType.getProperties().noOcclusion()).build(buildType));
     }
 }
