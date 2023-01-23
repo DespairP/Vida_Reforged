@@ -4,6 +4,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
+import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 import teamHTBP.vidaReforged.server.mobs.VidaMobsLoader;
 
 /**
@@ -20,6 +21,8 @@ public class VidaReforged {
     public VidaReforged() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         VidaBlockLoader.BLOCKS.register(bus);
+        
+        VidaItemLoader.ITEMS.register(bus);
         VidaMobsLoader.ENTITY_TYPES.register(bus);
     }
 }
