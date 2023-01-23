@@ -47,6 +47,10 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public static RegistryObject<Block> collector = registerDecoBlock("collector", STANDARD, NORMAL, true);
 
+    @CustomModelBlock(CUTOUT)
+    @RegisterItemBlock
+    public static RegistryObject<Block> VIDA_LEAVES = registerDecoBlock("vida_leaves", STANDARD, NORMAL, true);
+
     public static RegistryObject<Block> registerBlock(String name,Block block){
         return BLOCKS.register(name, () -> block);
     }
