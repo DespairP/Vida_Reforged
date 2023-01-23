@@ -10,7 +10,7 @@ public class VidaItemGroupLoader {
     public static CreativeModeTab vidaItemGroup = new CreativeModeTab(VidaReforged.MOD_ID) {
         @Override
         public @NotNull ItemStack makeIcon() {
-            return new ItemStack(Blocks.FERN);
+            return new ItemStack(VidaItemLoader.VIDA_WAND.get());
         }
     };
 }
