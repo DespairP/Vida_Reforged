@@ -46,7 +46,8 @@ public class DecoBlockFactory {
     public enum DecoPropertyType{
         STANDARD(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(3.0F)),
         WOOD(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.PODZOL).strength(2.0F, 3.0F).sound(SoundType.WOOD)),
-        STONE(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 6.0F));
+        STONE(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 6.0F)),
+        GRASS(BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS));
 
         private BlockBehaviour.Properties properties;
 
@@ -68,6 +69,7 @@ public class DecoBlockFactory {
         DOOR(DecoBlockFactory::door),
         SLAB(DecoBlockFactory::slab),
         PLANT(DecoBlockFactory::plant),
+        FLOWER(DecoBlockFactory::flower),
         DOUBLE_PLANT(DecoBlockFactory::doublePlant),
         LOG(DecoBlockFactory::log);
         private Function<BlockBehaviour.Properties,Block> blockFunction;
@@ -76,7 +78,6 @@ public class DecoBlockFactory {
             this.blockFunction = blockFunction;
         }
     }
-
 
     public static Block yAxis(BlockBehaviour.Properties properties){
         return new DecoWithYBlock(properties);
@@ -104,6 +105,10 @@ public class DecoBlockFactory {
 
     public static Block plant(BlockBehaviour.Properties properties){
         return new DecoBlock(properties);
+    }
+
+    private static Block flower(BlockBehaviour.Properties properties) {
+        return new DecoFlowerBlock(properties);
     }
 
     public static Block doublePlant(BlockBehaviour.Properties properties){

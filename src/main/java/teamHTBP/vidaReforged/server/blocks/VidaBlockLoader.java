@@ -21,6 +21,8 @@ import static teamHTBP.vidaReforged.client.events.ModelRenderTypeAutoRegisterHan
 public class VidaBlockLoader {
     /**注册器*/
     public final static DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, VidaReforged.MOD_ID);
+
+    /**寂静系列*/
     @RegisterItemBlock
     public final static RegistryObject<Block> SILENT_FOREST_BRICK_0 = registerDecoBlock("silent_forest_brick_0", STONE, NORMAL);
     @RegisterItemBlock
@@ -42,6 +44,8 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> SILENT_FOREST_BRICK_SLAB_1 = registerDecoBlock("silent_forest_brick_slab_1", STONE, SLAB);
 
+    /**花*/
+
 
     @CustomModelBlock(CUTOUT_MIPPED)
     @RegisterItemBlock
@@ -49,7 +53,7 @@ public class VidaBlockLoader {
 
     @CustomModelBlock(CUTOUT)
     @RegisterItemBlock
-    public static RegistryObject<Block> VIDA_LEAVES = registerDecoBlock("vida_leaves", STANDARD, NORMAL, true);
+    public static RegistryObject<Block> VIDA_LEAVES = registerDecoBlock("vida_leaves", GRASS, NORMAL, true);
 
     public static RegistryObject<Block> registerBlock(String name,Block block){
         return BLOCKS.register(name, () -> block);
