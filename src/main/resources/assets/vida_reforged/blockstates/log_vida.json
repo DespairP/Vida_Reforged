@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "axis=y": { "model": "vida_reforged:block/log_vida" },
-    "axis=z":    { "model": "vida_reforged:block/log_vida", "x": 90 },
-    "axis=x":    { "model": "vida_reforged:block/log_vida", "x": 90, "y": 90 }
-  }
-}

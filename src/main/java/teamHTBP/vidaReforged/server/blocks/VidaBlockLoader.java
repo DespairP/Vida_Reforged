@@ -10,8 +10,7 @@ import teamHTBP.vidaReforged.core.common.block.DecoBlockFactory;
 import teamHTBP.vidaReforged.core.utils.reg.CustomModelBlock;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterItemBlock;
 
-import static teamHTBP.vidaReforged.core.common.block.DecoBlockFactory.DecoBlockType.NORMAL;
-import static teamHTBP.vidaReforged.core.common.block.DecoBlockFactory.DecoBlockType.SLAB;
+import static teamHTBP.vidaReforged.core.common.block.DecoBlockFactory.DecoBlockType.*;
 import static teamHTBP.vidaReforged.core.common.block.DecoBlockFactory.DecoPropertyType.*;
 import static teamHTBP.vidaReforged.client.events.ModelRenderTypeAutoRegisterHandler.CustomModelRenderType.*;
 /**
@@ -46,7 +45,7 @@ public class VidaBlockLoader {
 
     /**原木**/
     @RegisterItemBlock
-    public final static RegistryObject<Block> LOG_VIDA = registerDecoBlock("log_vida", WOOD, NORMAL);
+    public final static RegistryObject<Block> LOG_VIDA = registerDecoBlock("vida_log", WOOD, LOG);
     /**花*/
 
 
