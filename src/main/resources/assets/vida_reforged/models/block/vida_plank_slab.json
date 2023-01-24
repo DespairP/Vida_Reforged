@@ -1,0 +1,8 @@
+{
+  "parent": "block/slab",
+  "textures": {
+    "bottom": "vida_reforged:block/vida_plank_0",
+    "top": "vida_reforged:block/vida_plank_0",
+    "side": "vida_reforged:block/vida_plank_0"
+  }
+}

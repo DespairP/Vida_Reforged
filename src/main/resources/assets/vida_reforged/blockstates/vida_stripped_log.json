@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "vida_reforged:block/vida_stripped_log" },
+    "axis=z":    { "model": "vida_reforged:block/vida_stripped_log", "x": 90 },
+    "axis=x":    { "model": "vida_reforged:block/vida_stripped_log", "x": 90, "y": 90 }
+  }
+}

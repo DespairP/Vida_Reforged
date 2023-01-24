@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "vida_reforged:block/vida_plank_0"
+  }
+}

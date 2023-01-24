@@ -43,9 +43,21 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> SILENT_FOREST_BRICK_SLAB_1 = registerDecoBlock("silent_forest_brick_slab_1", STONE, SLAB);
 
+    /**生命木板**/
+    @RegisterItemBlock
+    public final static RegistryObject<Block> VIDA_PLANK_0 = registerDecoBlock("vida_plank_0", WOOD, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> VIDA_PLANK_SLAB = registerDecoBlock("vida_plank_slab", WOOD, SLAB);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> VIDA_PLANK_DOOR = registerDecoBlock("vida_plank_door", WOOD, DOOR);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> VIDA_PLANK_FENCE = registerDecoBlock("vida_plank_fence", WOOD, FENCE);
+
     /**原木**/
     @RegisterItemBlock
     public final static RegistryObject<Block> LOG_VIDA = registerDecoBlock("vida_log", WOOD, LOG);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> STRIPPED_LOG_VIDA = registerDecoBlock("vida_stripped_log", WOOD, LOG);
     /**花*/
 
 
