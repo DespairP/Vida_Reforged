@@ -52,12 +52,22 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> VIDA_PLANK_DOOR = registerDecoBlock("vida_plank_door", WOOD, DOOR);
     @RegisterItemBlock
     public final static RegistryObject<Block> VIDA_PLANK_FENCE = registerDecoBlock("vida_plank_fence", WOOD, FENCE);
+    @CustomModelBlock(CUTOUT)
+    @RegisterItemBlock
+    public final static RegistryObject<Block> VIDA_STAIRS = registerDecoStairBlock("vida_stair", VIDA_PLANK_0, WOOD);
 
-    /**原木**/
+    /**生命原木*/
     @RegisterItemBlock
-    public final static RegistryObject<Block> LOG_VIDA = registerDecoBlock("vida_log", WOOD, LOG);
+    public final static RegistryObject<Block> VIDA_LOG = registerDecoBlock("vida_log", WOOD, LOG);
+    /**生命原木变种*/
     @RegisterItemBlock
-    public final static RegistryObject<Block> STRIPPED_LOG_VIDA = registerDecoBlock("vida_stripped_log", WOOD, LOG);
+    public final static RegistryObject<Block> VIDA_STRIPPED_LOG = registerDecoBlock("vida_stripped_log", WOOD, LOG);
+    /**生命树叶*/
+    @CustomModelBlock(CUTOUT)
+    @RegisterItemBlock
+    public static RegistryObject<Block> VIDA_LEAVES = registerDecoBlock("vida_leaves", GRASS, NORMAL, true);
+
+
     /**花*/
 
 
@@ -65,9 +75,7 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public static RegistryObject<Block> collector = registerDecoBlock("collector", STANDARD, NORMAL, true);
 
-    @CustomModelBlock(CUTOUT)
-    @RegisterItemBlock
-    public static RegistryObject<Block> VIDA_LEAVES = registerDecoBlock("vida_leaves", GRASS, NORMAL, true);
+
 
     public static RegistryObject<Block> registerBlock(String name,Block block){
         return BLOCKS.register(name, () -> block);
@@ -79,5 +87,9 @@ public class VidaBlockLoader {
 
     public static RegistryObject<Block> registerDecoBlock(String name, DecoBlockFactory.DecoPropertyType propertyType, DecoBlockFactory.DecoBlockType buildType,boolean noSolid){
         return BLOCKS.register(name, new DecoBlockFactory.Builder().setProperties(propertyType.getProperties().noOcclusion()).build(buildType));
+    }
+
+    public static RegistryObject<Block> registerDecoStairBlock(String name,RegistryObject<Block> baseBlock, DecoBlockFactory.DecoPropertyType propertyType){
+        return BLOCKS.register(name, new DecoBlockFactory.Builder().setProperties(propertyType.getProperties().noOcclusion()).build(baseBlock));
     }
 }

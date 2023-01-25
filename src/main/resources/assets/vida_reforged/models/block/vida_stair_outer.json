@@ -1,0 +1,8 @@
+{
+   "parent": "block/outer_stairs",
+   "textures": {
+      "bottom": "vida_reforged:blocks/vida_plank_0",
+      "top": "vida_reforged:blocks/vida_plank_0",
+      "side": "vida_reforged:blocks/vida_plank_0"
+   }
+}

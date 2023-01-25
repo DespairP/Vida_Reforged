@@ -1,16 +1,16 @@
 package teamHTBP.vidaReforged.core.common.block;
 
 
+import com.google.common.util.concurrent.ClosingFuture;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DoublePlantBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.registries.RegistryObject;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -35,9 +35,14 @@ public class DecoBlockFactory {
         }
 
         public Supplier<Block> build(DecoBlockType type){
-            return ()->type.blockFunction.apply(properties);
+            return () -> type.blockFunction.apply(properties);
         }
 
+        /**特别为阶梯特制的build*/
+        public Supplier<Block> build(RegistryObject<Block> baseBlock){
+            BiFunction<RegistryObject<Block>,BlockBehaviour.Properties,Block> blockFunction = DecoBlockFactory::stairs;
+            return () -> blockFunction.apply(baseBlock,properties);
+        }
 
     }
 
@@ -47,7 +52,8 @@ public class DecoBlockFactory {
         STANDARD(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(3.0F)),
         WOOD(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.PODZOL).strength(2.0F, 3.0F).sound(SoundType.WOOD)),
         STONE(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 6.0F)),
-        GRASS(BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS));
+        GRASS(BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS)),
+        IRON(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL));
 
         private BlockBehaviour.Properties properties;
 
@@ -71,7 +77,8 @@ public class DecoBlockFactory {
         PLANT(DecoBlockFactory::plant),
         FLOWER(DecoBlockFactory::flower),
         DOUBLE_PLANT(DecoBlockFactory::doublePlant),
-        LOG(DecoBlockFactory::log);
+        LOG(DecoBlockFactory::log),
+        TRAP_DOOR(TrapDoorBlock::new);
         private Function<BlockBehaviour.Properties,Block> blockFunction;
 
         DecoBlockType(Function<BlockBehaviour.Properties,Block> blockFunction) {
@@ -99,8 +106,8 @@ public class DecoBlockFactory {
         return new DecoSlabBlock(properties);
     }
 
-    public static Block stairs(BlockBehaviour.Properties properties){
-        return null;
+    public static Block stairs(RegistryObject<Block> baseBlock, BlockBehaviour.Properties properties){
+        return new StairBlock(() -> baseBlock.get().defaultBlockState(), properties);
     }
 
     public static Block plant(BlockBehaviour.Properties properties){
