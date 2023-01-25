@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/fence_side",
   "textures": {
-    "texture": "vida_reforged:blocks/vida_plank_0"
+    "texture": "vida_reforged:block/vida_plank_0"
   }
 }

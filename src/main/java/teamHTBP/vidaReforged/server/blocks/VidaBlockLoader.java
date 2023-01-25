@@ -42,6 +42,8 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> SILENT_FOREST_BRICK_SLAB = registerDecoBlock("silent_forest_brick_slab", STONE, SLAB);
     @RegisterItemBlock
     public final static RegistryObject<Block> SILENT_FOREST_BRICK_SLAB_1 = registerDecoBlock("silent_forest_brick_slab_1", STONE, SLAB);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SILENT_FOREST_STAIR = registerDecoStairBlock("silent_forest_stair", SILENT_FOREST_BRICK_0, STONE);
 
     /**生命木板**/
     @RegisterItemBlock

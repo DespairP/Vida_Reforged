@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/door_bottom",
   "textures": {
-    "top": "vida_reforged:blocks/vida_plank_door_top",
-    "bottom": "vida_reforged:blocks/vida_plank_door_bottom"
+    "top": "vida_reforged:block/vida_plank_door_top",
+    "bottom": "vida_reforged:block/vida_plank_door_bottom"
   }
 }

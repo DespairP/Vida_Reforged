@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "vida_reforged:blocks/silent_forest_brick_1"
+    "all": "vida_reforged:block/silent_forest_brick_1"
   }
 }
