@@ -78,7 +78,8 @@ public class DecoBlockFactory {
         FLOWER(DecoBlockFactory::flower),
         DOUBLE_PLANT(DecoBlockFactory::doublePlant),
         LOG(DecoBlockFactory::log),
-        TRAP_DOOR(TrapDoorBlock::new);
+        TRAP_DOOR(TrapDoorBlock::new),
+        FENCE_GATE(DecoFenceGateBlock::new);
         private Function<BlockBehaviour.Properties,Block> blockFunction;
 
         DecoBlockType(Function<BlockBehaviour.Properties,Block> blockFunction) {
