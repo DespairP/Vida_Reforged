@@ -57,6 +57,11 @@ public class VidaBlockLoader {
     @CustomModelBlock(CUTOUT)
     @RegisterItemBlock
     public final static RegistryObject<Block> VIDA_STAIRS = registerDecoStairBlock("vida_stair", VIDA_PLANK_0, WOOD);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> VIDA_PLANK_FENCE_GATE = registerDecoBlock("vida_plank_fence_gate", WOOD, FENCE_GATE);
+    @CustomModelBlock(CUTOUT)
+    @RegisterItemBlock
+    public final static RegistryObject<Block> VIDA_PLANK_TRAPDOOR = registerDecoBlock("vida_plank_trapdoor", WOOD, TRAP_DOOR);
 
     /**生命原木*/
     @RegisterItemBlock
