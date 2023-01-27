@@ -79,7 +79,11 @@ public class DecoBlockFactory {
         DOUBLE_PLANT(DecoBlockFactory::doublePlant),
         LOG(DecoBlockFactory::log),
         TRAP_DOOR(TrapDoorBlock::new),
-        FENCE_GATE(DecoFenceGateBlock::new);
+        FENCE_GATE(DecoFenceGateBlock::new),
+        CARPET(CarpetBlock::new),
+        BUTTON(DecoButtonBlock::new),
+        PRESSURE_PLATE(DecoBlockFactory::pressurePlate),
+        WALL(DecoWallBlock::new);
         private Function<BlockBehaviour.Properties,Block> blockFunction;
 
         DecoBlockType(Function<BlockBehaviour.Properties,Block> blockFunction) {
@@ -125,5 +129,9 @@ public class DecoBlockFactory {
 
     public static Block log(BlockBehaviour.Properties properties){
         return new RotatedPillarBlock(properties);
+    }
+
+    public static Block pressurePlate(BlockBehaviour.Properties properties){
+        return new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS,properties);
     }
 }
