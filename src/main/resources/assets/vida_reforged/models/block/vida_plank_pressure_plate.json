@@ -1,5 +1,5 @@
 {
-	"parent": "minecraft:block/template_fence_gate_open",
+	"parent": "minecraft:block/pressure_plate_up",
 	"textures": {
 		"texture": "vida_reforged:block/vida_plank_0"
 	}

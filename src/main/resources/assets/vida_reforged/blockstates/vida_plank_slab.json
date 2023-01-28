@@ -4,7 +4,7 @@
       "model": "vida_reforged:block/vida_plank_slab"
     },
     "type=double": {
-      "model": "vida_reforged:block/vida_plank"
+      "model": "vida_reforged:block/vida_plank_0"
     },
     "type=top": {
       "model": "vida_reforged:block/vida_plank_slab_top"

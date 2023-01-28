@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:block/template_fence_gate_wall",
 	"textures": {
-		"texture": "vida_reforged:block/plank_vida_0"
+		"texture": "vida_reforged:block/vida_plank_0"
 	}
 }
