@@ -1,6 +1,0 @@
-{
-	"parent": "minecraft:block/template_orientable_trapdoor_open",
-	"textures": {
-		"texture": "vida_reforged:block/vida_plank_trapdoor"
-	}
-}
