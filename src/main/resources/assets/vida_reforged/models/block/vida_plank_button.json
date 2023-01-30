@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:block/button",
+	"textures": {
+		"texture": "vida_reforged:block/vida_plank_0"
+	}
+}
