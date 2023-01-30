@@ -78,13 +78,20 @@ public class VidaBlockLoader {
 
 
     /**花*/
+    @CustomModelBlock(CUTOUT)
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SUN_FLOWER = registerDecoBlock("sun_flower", GRASS, FLOWER);
+    @CustomModelBlock(CUTOUT)
+    @RegisterItemBlock
+    public final static RegistryObject<Block> LUNARIA_FLOWER = registerDecoBlock("lunaria_flower", GRASS, FLOWER);
+    @CustomModelBlock(CUTOUT)
+    @RegisterItemBlock
+    public final static RegistryObject<Block> GREEN_DEW_FLOWER = registerDecoBlock("green_dew_flower", GRASS, FLOWER);
 
 
     @CustomModelBlock(CUTOUT_MIPPED)
     @RegisterItemBlock
     public static RegistryObject<Block> collector = registerDecoBlock("collector", STANDARD, NORMAL, true);
-
-
 
     public static RegistryObject<Block> registerBlock(String name,Block block){
         return BLOCKS.register(name, () -> block);

@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:block/cross",
+	"textures": {
+		"cross": "vida_reforged:block/sun_flower"
+	}
+}

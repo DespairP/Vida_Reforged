@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "vida_reforged:block/green_dew_flower"
+	}
+}

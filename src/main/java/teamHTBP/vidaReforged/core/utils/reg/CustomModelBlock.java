@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 /**
  * 一个工具注释，标明注册的Block会自动注册渲染类型
  * 当触发RenderTypeSetup事件时，event会自动扫描{@link teamHTBP.vidaReforged.server.blocks.VidaBlockLoader}中所有标有这样注释的Block
- * 并且包装成BlockItem进行注册
+ * 并且进行模型渲染的注册
  * @see teamHTBP.vidaReforged.server.blocks.VidaBlockLoader
  * */
 @Retention(RetentionPolicy.RUNTIME)
