@@ -13,20 +13,15 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 import teamHTBP.vidaReforged.core.api.debug.IDebugObj;
 import teamHTBP.vidaReforged.core.api.mobs.IAttackManagerEntity;
 import teamHTBP.vidaReforged.core.common.mobs.manager.AttackManager;
 import teamHTBP.vidaReforged.core.common.mobs.manager.FiniteStateManager;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.Map;
 import java.util.Objects;
@@ -35,7 +30,7 @@ import java.util.Optional;
 /**
  * @author DustW
  */
-public abstract class AbstractBeliever extends VidaPathfinderMob implements IAnimatable, IAnimationTickable, IAttackManagerEntity, IDebugObj {
+public abstract class AbstractBeliever extends VidaPathfinderMob implements GeoAnimatable, IAttackManagerEntity, IDebugObj {
     protected static final EntityDataAccessor<Boolean> ATTACKING =
             SynchedEntityData.defineId(AbstractBeliever.class, EntityDataSerializers.BOOLEAN);
 
@@ -45,7 +40,7 @@ public abstract class AbstractBeliever extends VidaPathfinderMob implements IAni
 
     @Getter
     protected final AttackManager attackManager;
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     protected final FiniteStateManager<AbstractBeliever> stateManager;
 
     protected AbstractBeliever(EntityType<? extends PathfinderMob> type, Level level, AttackManager attackManager) {
@@ -130,14 +125,14 @@ public abstract class AbstractBeliever extends VidaPathfinderMob implements IAni
     boolean startAttackAnim;
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "standby_controller",
+    public void registerControllers(AnimatableManager.ControllerRegistrar data) {
+        data.add(new AnimationController<>(this, "standby_controller",
                 0, this::standbyPredicate));
 
-        data.addAnimationController(new AnimationController<>(this, "walk_controller",
+        data.add(new AnimationController<>(this, "walk_controller",
                 0, this::walkPredicate));
 
-        data.addAnimationController(new AnimationController<>(this, "attack_controller",
+        data.add(new AnimationController<>(this, "attack_controller",
                 0, this::attackPredicate));
     }
 
@@ -145,36 +140,41 @@ public abstract class AbstractBeliever extends VidaPathfinderMob implements IAni
     private final String walkAnimName = "animation.%s.walk".formatted(getModelName());
     private final String attackAnimName = "animation.%s.attack".formatted(getModelName());
 
-    private <T extends IAnimatable> PlayState standbyPredicate(AnimationEvent<T> event) {
+    private <T extends GeoAnimatable> PlayState standbyPredicate(AnimationState<T> event) {
         if (stateManager.isActive(STANDBY_STATE)) {
-            event.getController().setAnimation(new AnimationBuilder()
-                    .addAnimation(standbyAnimName, ILoopType.EDefaultLoopTypes.LOOP));
+            event.getController().setAnimation(
+                    RawAnimation
+                            .begin()
+                            .then(standbyAnimName, Animation.LoopType.LOOP)
+            );
             return PlayState.CONTINUE;
         }
 
         return PlayState.STOP;
     }
 
-    private <T extends IAnimatable> PlayState walkPredicate(AnimationEvent<T> event) {
+    private <T extends GeoAnimatable> PlayState walkPredicate(AnimationState<T> event) {
         if (stateManager.isActive(WALK_STATE)) {
-            event.getController().setAnimation(new AnimationBuilder()
-                    .addAnimation(walkAnimName, ILoopType.EDefaultLoopTypes.LOOP));
+            event.getController().setAnimation(
+                    RawAnimation
+                            .begin()
+                            .then(walkAnimName, Animation.LoopType.LOOP)
+            );
             return PlayState.CONTINUE;
         }
 
         return PlayState.STOP;
     }
 
-    private <T extends IAnimatable> PlayState attackPredicate(AnimationEvent<T> event) {
+    private <T extends GeoAnimatable> PlayState attackPredicate(AnimationState<T> event) {
         if (stateManager.isActive(ATTACK_STATE)) {
             AnimationController<?> controller = event.getController();
 
             if (startAttackAnim) {
                 startAttackAnim = false;
                 // 清除对话缓存，使得 should loop 为 false 时也可以再次播放动画
-                controller.markNeedsReload();
-
-                controller.setAnimation(new AnimationBuilder().addAnimation(attackAnimName, ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+                controller.forceAnimationReset();
+                controller.setAnimation(RawAnimation.begin().then(attackAnimName, Animation.LoopType.LOOP));
             }
 
             return PlayState.CONTINUE;
@@ -184,13 +184,13 @@ public abstract class AbstractBeliever extends VidaPathfinderMob implements IAni
     }
 
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.factory;
     }
 
     @Override
-    public int tickTimer() {
-        return tickCount;
+    public double getTick(Object o) {
+        return this.tickCount;
     }
 
     protected abstract String getModelName();

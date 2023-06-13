@@ -3,36 +3,29 @@ package teamHTBP.vidaReforged.client.events;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teamHTBP.vidaReforged.client.hud.VidaDebugScreen;
-import teamHTBP.vidaReforged.core.api.debug.IDebugObj;
 
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class HudHandler {
     @SubscribeEvent
-    public static void onOverlayRender(RenderGameOverlayEvent event) {
+    public static void onOverlayRender(RenderGuiOverlayEvent event) {
         // 防止默认HUD覆盖
-        if (event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
-            return;
-        }
         if (Minecraft.getInstance().player == null || Minecraft.getInstance().level == null) {
             return;
         }
         //获取玩家对准的方块
-        PoseStack matrixStack = event.getMatrixStack();
+        PoseStack matrixStack = event.getPoseStack();
         //Player player = Minecraft.getInstance().player;
 
         VidaDebugScreen debugScreen = new VidaDebugScreen();

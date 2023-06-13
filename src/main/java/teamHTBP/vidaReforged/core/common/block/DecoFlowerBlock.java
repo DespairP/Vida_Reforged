@@ -18,9 +18,8 @@ public class DecoFlowerBlock extends BushBlock {
 
 
     public DecoFlowerBlock(Properties properties) {
-        super(properties);
+        super(properties.offsetType(OffsetType.XZ));
     }
-
 
     @Override
     public @NotNull VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
@@ -28,11 +27,4 @@ public class DecoFlowerBlock extends BushBlock {
         return SHAPE.move(vec3.x, vec3.y, vec3.z);
     }
 
-    /**
-     * Get the OffsetType for this Block. Determines if the model is rendered slightly offset.
-     */
-    @Override
-    public BlockBehaviour.OffsetType getOffsetType() {
-        return BlockBehaviour.OffsetType.XZ;
-    }
 }

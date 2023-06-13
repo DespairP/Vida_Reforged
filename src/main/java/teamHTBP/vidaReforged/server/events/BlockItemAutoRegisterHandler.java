@@ -1,24 +1,30 @@
 package teamHTBP.vidaReforged.server.events;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterItemBlock;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
-import teamHTBP.vidaReforged.server.items.VidaItemGroupLoader;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
 import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Optional;
+
+import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
+import static teamHTBP.vidaReforged.server.items.VidaItemLoader.*;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BlockItemAutoRegisterHandler {
@@ -38,24 +44,32 @@ public class BlockItemAutoRegisterHandler {
     /**
      * 对方块进行BlockItem的注册
      * 分别调用{@link teamHTBP.vidaReforged.server.events.BlockItemAutoRegisterHandler#init()}进行需要注册的Block的获取，
-     * {@link teamHTBP.vidaReforged.server.events.BlockItemAutoRegisterHandler#inject()}进行Item的注入
+     * 注入请用{@link net.minecraftforge.registries.ObjectHolder}
      */
     @SubscribeEvent
-    public static void registerBlockItems(RegistryEvent.Register<Item> event) throws IllegalAccessException {
-        //获取注册方块的字段
+    public static void registerBlockItems(RegisterEvent event) throws IllegalAccessException {
+        // 只有在forge注册item的时候才可以进行注册
+        if(!event.getRegistryKey().equals(ForgeRegistries.Keys.ITEMS)){
+            return;
+        }
+        // 获取注册方块的字段
         init();
         // 依次进行注册
         REGISTRY_BLOCK_LIST.forEach((key, block) -> {
-            Item.Properties properties = new Item.Properties().tab(VidaItemGroupLoader.vidaItemGroup);
-            ResourceLocation registerName = Optional.ofNullable(block.get().getRegistryName()).orElse(block.getId());
-            BlockItem blockItem = new BlockItem(block.get(), properties);
-            blockItem.setRegistryName(registerName);
-            event.getRegistry().register(blockItem);
+            ResourceLocation registerName = block.getId();
+            if(!block.isPresent()){
+                return;
+            }
+            BlockItem blockItem = new BlockItem(block.get(),new Item.Properties());
+
+            event.register(ForgeRegistries.Keys.ITEMS, helper -> {
+                helper.register(registerName, blockItem);
+            });
             // 注册完成后放入Map中
-            REGISTRY_ITEMBLOCK_MAP.put(key, RegistryObject.create(registerName, event.getRegistry()));
+            REGISTRY_ITEMBLOCK_MAP.put(key, RegistryObject.create(registerName, event.getForgeRegistry()));
         });
         // 进行注入
-        inject();
+        //inject();
     }
 
 
@@ -67,22 +81,6 @@ public class BlockItemAutoRegisterHandler {
             if (decoratedBlock.getType() == RegistryObject.class && decoratedBlock.isAnnotationPresent(RegisterItemBlock.class)) {
                 decoratedBlock.setAccessible(true);
                 REGISTRY_BLOCK_LIST.put(decoratedBlock.getName(), (RegistryObject<Block>) decoratedBlock.get(null));
-            }
-        }
-    }
-
-    /**
-     * 将注册后的字段注入到ItemLoader中
-     */
-    private static void inject() throws IllegalAccessException {
-        for (Field itemField : VidaItemLoader.class.getDeclaredFields()) {
-            if (itemField.getType() == RegistryObject.class && itemField.isAnnotationPresent(RegisterItemBlock.class)) {
-                RegistryObject<Item> registryObject = REGISTRY_ITEMBLOCK_MAP.get(itemField.getName());
-                if (registryObject == null) {
-                    LOGGER.error("cannot inject field :{},please check the field name same as Block field name", itemField.getName());
-                    break;
-                }
-                itemField.set(null, registryObject);
             }
         }
     }

@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.registries.RegistryObject;
@@ -78,7 +79,7 @@ public class DecoBlockFactory {
         FLOWER(DecoBlockFactory::flower),
         DOUBLE_PLANT(DecoBlockFactory::doublePlant),
         LOG(DecoBlockFactory::log),
-        TRAP_DOOR(TrapDoorBlock::new),
+        TRAP_DOOR(DecoBlockFactory::trapDoor),
         FENCE_GATE(DecoFenceGateBlock::new),
         CARPET(CarpetBlock::new),
         BUTTON(DecoButtonBlock::new),
@@ -132,6 +133,10 @@ public class DecoBlockFactory {
     }
 
     public static Block pressurePlate(BlockBehaviour.Properties properties){
-        return new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS,properties);
+        return new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, properties, BlockSetType.f_271198_);
+    }
+
+    public static Block trapDoor(BlockBehaviour.Properties properties){
+        return new TrapDoorBlock(properties, BlockSetType.f_271198_);
     }
 }

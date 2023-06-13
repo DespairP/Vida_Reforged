@@ -10,7 +10,7 @@ import teamHTBP.vidaReforged.VidaReforged;
 
 import static teamHTBP.vidaReforged.core.common.VidaConstant.*;
 public class VidaMobsLoader {
-    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, VidaReforged.MOD_ID);
+    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, VidaReforged.MOD_ID);
     public static final RegistryObject<EntityType<AncientBeliever>> ANCIENT_BELIEVER =
             ENTITY_TYPES.register(ANCIENT_BELIEVER_NAME, () -> EntityType.Builder.of(AncientBeliever::new, MobCategory.MONSTER)
                     .sized(1, 2)

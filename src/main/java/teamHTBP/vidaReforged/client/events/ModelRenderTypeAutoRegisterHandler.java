@@ -25,7 +25,7 @@ import java.util.function.Supplier;
  * 用于指定方块或者物品渲染类型的事件注册类
  * @author Despair
  * */
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Deprecated
 public class ModelRenderTypeAutoRegisterHandler {
 
     /**
@@ -36,38 +36,6 @@ public class ModelRenderTypeAutoRegisterHandler {
      * LOGGER
      */
     public static final Logger LOGGER = LogManager.getLogger();
-
-    @SubscribeEvent
-    public static void onRenderTypeSetup(FMLClientSetupEvent event) throws IllegalAccessException {
-        //获取可注册的方块
-        init();
-        //
-        for(Map.Entry<CustomModelRenderType, List<RegistryObject<Block>>> renderTypeToBlocks : REGISTRY_BLOCK_LIST.entrySet()){
-            for(RegistryObject<Block> block:renderTypeToBlocks.getValue()){
-                ItemBlockRenderTypes.setRenderLayer(block.get(), renderTypeToBlocks.getKey().getRenderType());
-            }
-        }
-
-    }
-
-    /**
-     * 获取所有可以被注册的字段
-     */
-    private static void init() throws IllegalAccessException {
-        for (Field decoratedBlock : VidaBlockLoader.class.getDeclaredFields()) {
-            if (decoratedBlock.getType() == RegistryObject.class && decoratedBlock.isAnnotationPresent(CustomModelBlock.class)) {
-                decoratedBlock.setAccessible(true);
-                CustomModelRenderType renderType = decoratedBlock.getAnnotation(CustomModelBlock.class).value();
-                if(renderType == null){
-                    LOGGER.warn("{} is not set to the correct render type,will skip register the render type,please have a check", decoratedBlock.getName());
-                    continue;
-                }
-                List<RegistryObject<Block>> regList = REGISTRY_BLOCK_LIST.getOrDefault(renderType,new LinkedList<>());
-                regList.add((RegistryObject<Block>) decoratedBlock.get(null));
-                REGISTRY_BLOCK_LIST.put(renderType,regList);
-            }
-        }
-    }
 
 
 

@@ -27,13 +27,13 @@ public class VidaDebugScreen extends GuiComponent implements IVidaScreen {
     /**实体*/
     private Entity entity;
     /**间距*/
-    private final Integer marginHeightBelow = 2;
+    private final int marginHeightBelow = 2;
     /**字体*/
-    private Font font;
+    private final Font font;
     /**图片路径*/
     public static final ResourceLocation LOCATION_ENTITY_FRIENDLY = new ResourceLocation(VidaReforged.MOD_ID, "textures/icons/entity_friendly.png");
     /**图片属性*/
-    private TextureSection iconEntityFriendly = new TextureSection(LOCATION_ENTITY_FRIENDLY,0,0,16,16);
+    private final TextureSection iconEntityFriendly = new TextureSection(LOCATION_ENTITY_FRIENDLY,0,0,16,16);
 
 
     public VidaDebugScreen() {
