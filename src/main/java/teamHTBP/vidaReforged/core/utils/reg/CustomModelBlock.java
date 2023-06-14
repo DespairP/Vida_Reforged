@@ -15,6 +15,7 @@ import java.lang.annotation.Target;
  * */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
+@Deprecated
 public @interface CustomModelBlock {
     /**创建的渲染类型*/
     ModelRenderTypeAutoRegisterHandler.CustomModelRenderType value();

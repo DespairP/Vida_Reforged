@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.core.common.block;
+package teamHTBP.vidaReforged.core.common.block.templates;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffect;

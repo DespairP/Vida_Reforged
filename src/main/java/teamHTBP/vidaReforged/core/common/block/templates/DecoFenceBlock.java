@@ -1,7 +1,6 @@
-package teamHTBP.vidaReforged.core.common.block;
+package teamHTBP.vidaReforged.core.common.block.templates;
 
 import net.minecraft.core.Direction;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
