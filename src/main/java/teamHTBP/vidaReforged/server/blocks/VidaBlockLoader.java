@@ -67,6 +67,14 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> VIDA_PLANK_BUTTOn = registerDecoBlock("vida_plank_button", WOOD, BUTTON);
 
+    /**寒颤魔石**/
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TREMBLE_MAGIC_STONE = registerDecoBlock("tremble_magic_stone", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TREMBLE_MAGIC_BRICK_0 = registerDecoBlock("tremble_magic_brick_0", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TREMBLE_MAGIC_BRICK_1 = registerDecoBlock("tremble_magic_brick_1", STONE, NORMAL);
+
     /**生命原木*/
     @RegisterItemBlock
     public final static RegistryObject<Block> VIDA_LOG = registerDecoBlock("vida_log", WOOD, LOG);
