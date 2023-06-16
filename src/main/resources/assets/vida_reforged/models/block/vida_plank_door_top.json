@@ -1,5 +1,6 @@
 {
-  "parent": "minecraft:block/door_top",
+  "parent": "minecraft:block/door_top_left",
+  "render_type": "minecraft:cutout",
   "textures": {
     "top": "vida_reforged:block/vida_plank_door_top",
     "bottom": "vida_reforged:block/vida_plank_door_bottom"
