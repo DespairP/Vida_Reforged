@@ -103,6 +103,9 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public static RegistryObject<Block> collector = registerDecoBlock("collector", STANDARD, NORMAL, true);
 
+    @RegisterItemBlock
+    public static RegistryObject<Block> GLOWING_LIGHT_BLOCK = BLOCKS.register("glowing_light", GlowingLightBlock::new);
+
     public static RegistryObject<Block> registerBlock(String name,Block block){
         return BLOCKS.register(name, () -> block);
     }

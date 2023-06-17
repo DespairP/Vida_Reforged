@@ -4,8 +4,10 @@ import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.color.VidaColor;
 
 public enum VidaElement implements IVidaElement{
+    EMPTY("empty", ARGBColor.BLACK),
     VOID("void", ARGBColor.BLACK),
-    GOLD("gold", ARGBColor.BLACK);
+    GOLD("gold", ARGBColor.BLACK),
+    WOOD("wood",ARGBColor.BLACK);
 
     /**元素名称*/
     public String name;
