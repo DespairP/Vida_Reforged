@@ -80,7 +80,7 @@ public abstract class AbstractBeliever extends VidaPathfinderMob implements GeoA
     public void tick() {
         super.tick();
 
-        if (!level.isClientSide) {
+        if (!getCommandSenderWorld().isClientSide) {
             entityData.set(ATTACKING, attackManager.isStarted());
 
             attackManagerTick();

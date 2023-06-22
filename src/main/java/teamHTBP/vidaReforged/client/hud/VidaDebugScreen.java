@@ -2,17 +2,15 @@ package teamHTBP.vidaReforged.client.hud;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.network.chat.Component;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.debug.IDebugObj;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
-import teamHTBP.vidaReforged.core.utils.render.SpriteUtils;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 
 import java.util.LinkedList;
@@ -21,7 +19,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 
-public class VidaDebugScreen extends GuiComponent implements IVidaScreen {
+public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
+    /***/
+    private static final Minecraft minecraft = Minecraft.getInstance();
     /**是否开启debug模式*/
     public static Boolean isDebug = true;
     /**实体*/
@@ -36,7 +36,8 @@ public class VidaDebugScreen extends GuiComponent implements IVidaScreen {
     private final TextureSection iconEntityFriendly = new TextureSection(LOCATION_ENTITY_FRIENDLY,0,0,16,16);
 
 
-    public VidaDebugScreen() {
+    public VidaDebugScreen(MultiBufferSource.BufferSource bufferSource) {
+        super(minecraft, bufferSource);
         this.entity = mc.crosshairPickEntity;
         this.font = mc.font;
     }
@@ -75,8 +76,8 @@ public class VidaDebugScreen extends GuiComponent implements IVidaScreen {
         RenderSystem.setShaderTexture(0, iconEntityFriendly.location());
         int beginX = width - font.width(titleName) - 8 - iconEntityFriendly.width();
         blit(
-                matrixStack,
-                beginX, beginImgY,0,
+                iconEntityFriendly.location(),
+                beginX, beginImgY, 0,
                 iconEntityFriendly.mu(), iconEntityFriendly.mv(),
                 16,16,
                 16,16
@@ -84,19 +85,20 @@ public class VidaDebugScreen extends GuiComponent implements IVidaScreen {
         matrixStack.popPose();
 
         //2.渲染标题
-        matrixStack.pushPose();
+        pose().pushPose();
         beginX += iconEntityFriendly.width();
         beginImgY += iconEntityFriendly.width() / 2;
-        font.draw(matrixStack, titleName, (float)(beginX + 1), (float)beginImgY, 0);
-        font.draw(matrixStack, titleName, (float)(beginX - 1), (float)beginImgY, 0);
-        font.draw(matrixStack, titleName, (float)beginX, (float)(beginImgY + 1), 0);
-        font.draw(matrixStack, titleName, (float)beginX, (float)(beginImgY - 1), 0);
-        font.draw(matrixStack, titleName, (float)beginX, (float)beginImgY, 8453920);
-        matrixStack.popPose();
+
+        drawString(font, titleName, (float)(beginX + 1), (float)beginImgY, 0, false);
+        drawString(font, titleName, (float)(beginX - 1), (float)beginImgY, 0, false);
+        drawString(font, titleName, (float)beginX, (float)(beginImgY + 1), 0, false);
+        drawString(font, titleName, (float)beginX, (float)(beginImgY - 1), 0, false);
+        drawString(font, titleName, (float)beginX, (float)beginImgY, 8453920, false);
+        pose().popPose();
 
         //3.渲染信息文字
-        matrixStack.pushPose();
-        matrixStack.scale(scaledWeight,scaledWeight,scaledWeight);
+        pose().pushPose();
+        pose().scale(scaledWeight, scaledWeight, scaledWeight);
 
         //获取缩放因子
         final float factor = 1.0f / scaledWeight;
@@ -105,9 +107,9 @@ public class VidaDebugScreen extends GuiComponent implements IVidaScreen {
             String text = info.get(i);
             float x = width * factor - font.width(text) - 10;
             float y = beginTextY * factor + (marginHeightBelow + font.lineHeight) * i;
-            font.drawShadow(matrixStack, text, x , y, 0xFFFFFF);
+            drawString(font, text, x , y, 0xFFFFFF, true);
         }
-        matrixStack.popPose();
+        pose().popPose();
         //结束渲染
     }
 

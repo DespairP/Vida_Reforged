@@ -1,20 +1,14 @@
 package teamHTBP.vidaReforged.core.common.block;
 
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.flag.FeatureFlagSet;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.core.common.block.templates.*;
 
-import javax.annotation.Nullable;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -111,22 +105,22 @@ public class DecoBlockFactory {
         public BlockBehaviour.Properties getProperties() {
             switch (this){
                 case IRON -> {
-                    return BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL);
+                    return BlockBehaviour.Properties.of().sound(SoundType.METAL);
                 }
                 case WOOD -> {
-                    return BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.PODZOL).strength(2.0F, 3.0F).sound(SoundType.WOOD);
+                    return BlockBehaviour.Properties.of().mapColor(DyeColor.BROWN).strength(2.0F, 3.0F).sound(SoundType.WOOD);
                 }
                 case GRASS -> {
-                    return BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS);
+                    return BlockBehaviour.Properties.of().noCollission().instabreak().sound(SoundType.GRASS);
                 }
                 case STONE -> {
-                    return BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 6.0F);
+                    return BlockBehaviour.Properties.of().mapColor(DyeColor.GRAY).requiresCorrectToolForDrops().strength(1.5F, 6.0F);
                 }
                 case STANDARD -> {
-                    return BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(3.0F);
+                    return BlockBehaviour.Properties.of().sound(SoundType.STONE).strength(3.0F);
                 }
                 case LEAVES -> {
-                    return BlockBehaviour.Properties.of(Material.LEAVES).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion();
+                    return BlockBehaviour.Properties.of().strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion();
                 }
             }
             return null;

@@ -11,7 +11,7 @@ public class DecoDoorBlock extends DoorBlock {
     public DecoDoorBlock(Properties builder, DecoBlockProperties properties) {
         super(
             builder,
-            Optional.ofNullable(properties.blockSetType()).orElse(BlockSetType.f_271198_)
+            Optional.ofNullable(properties.blockSetType()).orElse(BlockSetType.OAK)
         );
     }
 }

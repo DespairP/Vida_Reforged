@@ -106,6 +106,9 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public static RegistryObject<Block> GLOWING_LIGHT_BLOCK = BLOCKS.register("glowing_light", GlowingLightBlock::new);
 
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TIME_ELEMENT_CRAFTING_TABLE = BLOCKS.register("time_element_crafting_table", TimeElementCraftingTable::new);
+
     public static RegistryObject<Block> registerBlock(String name,Block block){
         return BLOCKS.register(name, () -> block);
     }

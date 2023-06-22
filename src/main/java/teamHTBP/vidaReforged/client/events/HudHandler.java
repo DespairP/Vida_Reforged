@@ -2,6 +2,7 @@ package teamHTBP.vidaReforged.client.events;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
@@ -25,10 +26,11 @@ public class HudHandler {
             return;
         }
         //获取玩家对准的方块
-        PoseStack matrixStack = event.getPoseStack();
+        PoseStack matrixStack = event.getGuiGraphics().pose();
+        MultiBufferSource.BufferSource bufferSource = event.getGuiGraphics().bufferSource();
         //Player player = Minecraft.getInstance().player;
 
-        VidaDebugScreen debugScreen = new VidaDebugScreen();
+        VidaDebugScreen debugScreen = new VidaDebugScreen(bufferSource);
         debugScreen.renderEntity(matrixStack);
 
 
@@ -44,7 +46,7 @@ public class HudHandler {
         HitResult block =  player.pick(20.0D, 0.0F, false);
         if(block.getType() == HitResult.Type.BLOCK) {
             BlockPos blockpos = ((BlockHitResult)block).getBlockPos();
-            BlockState blockstate = player.level.getBlockState(blockpos);
+            BlockState blockstate = player.getCommandSenderWorld().getBlockState(blockpos);
             return blockstate.getBlock();
         }
         return null;

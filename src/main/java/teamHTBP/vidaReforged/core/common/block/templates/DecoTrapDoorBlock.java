@@ -10,7 +10,7 @@ public class DecoTrapDoorBlock extends TrapDoorBlock {
     public DecoTrapDoorBlock(Properties properties, DecoBlockProperties decoBlockProperties) {
         super(
             properties,
-            Optional.ofNullable(decoBlockProperties.blockSetType()).orElse(BlockSetType.f_271198_)
+            Optional.ofNullable(decoBlockProperties.blockSetType()).orElse(BlockSetType.OAK)
         );
     }
 }

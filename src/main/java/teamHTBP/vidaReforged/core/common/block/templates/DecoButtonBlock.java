@@ -13,7 +13,7 @@ public class DecoButtonBlock extends ButtonBlock {
     public DecoButtonBlock(Properties pProperties, DecoBlockProperties decoBlockProperties) {
         super(
             pProperties,
-            Optional.ofNullable(decoBlockProperties.blockSetType()).orElse(BlockSetType.f_271198_),
+            Optional.ofNullable(decoBlockProperties.blockSetType()).orElse(BlockSetType.OAK),
             30,
             true
         );

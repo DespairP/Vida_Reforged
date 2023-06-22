@@ -13,6 +13,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.VidaReforged;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class RenderHelper {
     public static Font fontRenderer = Minecraft.getInstance().font;
@@ -40,7 +41,7 @@ public class RenderHelper {
         matrixStack.pushPose();
         MutableComponent component = Component.literal(text);
         component.setStyle(Style.EMPTY.withFont(DUNGEON_FONT));
-        fontRenderer.draw(matrixStack, component, x, y, 0x000000);
+        //fontRenderer.drawInBatch(component, x, y, 0x000000);
         matrixStack.popPose();
     }
 

@@ -44,7 +44,7 @@ public class VidaPathfinderMob extends PathfinderMob {
     public void tick() {
         super.tick();
 
-        if (!level.isClientSide) {
+        if (!getCommandSenderWorld().isClientSide) {
             Goal.Flag[] values = Goal.Flag.values();
 
             for (int i = 0; i < values.length; i++) {

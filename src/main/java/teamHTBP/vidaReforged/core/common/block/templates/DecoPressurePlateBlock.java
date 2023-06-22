@@ -11,7 +11,7 @@ public class DecoPressurePlateBlock extends PressurePlateBlock {
         super(
             Sensitivity.MOBS,
             properties,
-            Optional.ofNullable(decoBlockProperties.blockSetType()).orElse(BlockSetType.f_271198_)
+            Optional.ofNullable(decoBlockProperties.blockSetType()).orElse(BlockSetType.OAK)
         );
     }
 }

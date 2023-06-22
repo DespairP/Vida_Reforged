@@ -1,13 +1,9 @@
 package teamHTBP.vidaReforged.server.events;
 
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -17,14 +13,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterItemBlock;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
-import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
 import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
-import static teamHTBP.vidaReforged.server.items.VidaItemLoader.*;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BlockItemAutoRegisterHandler {
