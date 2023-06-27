@@ -1,0 +1,6 @@
+{
+  "loader": "forge:obj",
+  "flip_v": true,
+  "model": "vida_reforged:models/block/crop/crimson_crest_stage2.obj",
+  "render_type": "cutout"
+}

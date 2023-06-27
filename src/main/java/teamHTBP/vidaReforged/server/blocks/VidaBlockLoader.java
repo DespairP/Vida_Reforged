@@ -5,9 +5,11 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.block.DecoBlockFactory;
 import teamHTBP.vidaReforged.core.utils.reg.CustomModelBlock;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterItemBlock;
+import teamHTBP.vidaReforged.server.blocks.crops.ParticleCropBlock;
 
 import static teamHTBP.vidaReforged.core.common.block.DecoBlockFactory.DecoBlockType.*;
 import static teamHTBP.vidaReforged.core.common.block.DecoBlockFactory.DecoPropertyType.*;
@@ -54,18 +56,16 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> VIDA_PLANK_DOOR = registerDecoBlock("vida_plank_door", WOOD, DOOR);
     @RegisterItemBlock
     public final static RegistryObject<Block> VIDA_PLANK_FENCE = registerDecoBlock("vida_plank_fence", WOOD, FENCE);
-    //@CustomModelBlock(CUTOUT)
     @RegisterItemBlock
     public final static RegistryObject<Block> VIDA_STAIRS = registerDecoBlock("vida_stair", WOOD, STAIRS, VIDA_PLANK_0);
     @RegisterItemBlock
     public final static RegistryObject<Block> VIDA_PLANK_FENCE_GATE = registerDecoBlock("vida_plank_fence_gate", WOOD, FENCE_GATE);
-    //@CustomModelBlock(CUTOUT)
     @RegisterItemBlock
     public final static RegistryObject<Block> VIDA_PLANK_TRAPDOOR = registerDecoBlock("vida_plank_trapdoor", WOOD, TRAP_DOOR);
     @RegisterItemBlock
     public final static RegistryObject<Block> VIDA_PLANK_PRESSURE_PLATE = registerDecoBlock("vida_plank_pressure_plate", WOOD, PRESSURE_PLATE);
     @RegisterItemBlock
-    public final static RegistryObject<Block> VIDA_PLANK_BUTTOn = registerDecoBlock("vida_plank_button", WOOD, BUTTON);
+    public final static RegistryObject<Block> VIDA_PLANK_BUTTON = registerDecoBlock("vida_plank_button", WOOD, BUTTON);
 
     /**寒颤魔石**/
     @RegisterItemBlock
@@ -82,26 +82,32 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> VIDA_STRIPPED_LOG = registerDecoBlock("vida_stripped_log", WOOD, LOG);
     /**生命树叶*/
-    //@CustomModelBlock(CUTOUT)
     @RegisterItemBlock
     public static RegistryObject<Block> VIDA_LEAVES = registerDecoBlock("vida_leaves", LEAVES, NORMAL, true);
 
 
     /**花*/
-    //@CustomModelBlock(CUTOUT)
     @RegisterItemBlock
     public final static RegistryObject<Block> SUN_FLOWER = registerDecoBlock("sun_flower", GRASS, FLOWER);
-    //@CustomModelBlock(CUTOUT)
     @RegisterItemBlock
     public final static RegistryObject<Block> LUNARIA_FLOWER = registerDecoBlock("lunaria_flower", GRASS, FLOWER);
-    //@CustomModelBlock(CUTOUT)
     @RegisterItemBlock
     public final static RegistryObject<Block> GREEN_DEW_FLOWER = registerDecoBlock("green_dew_flower", GRASS, FLOWER);
 
-
-    //@CustomModelBlock(CUTOUT_MIPPED)
+    /***/
     @RegisterItemBlock
-    public static RegistryObject<Block> collector = registerDecoBlock("collector", STANDARD, NORMAL, true);
+    public static RegistryObject<Block> CRISM_CREST = BLOCKS.register("crimson_crest", () -> new ParticleCropBlock(VidaElement.FIRE, null));
+    //public static RegistryObject<Block> HEART_OF_WAL = BLOCKS.register("heart_of_wal", () -> new ParticleCropBlock(VidaElement.WOOD, null));
+    //public static RegistryObject<Block> NITRITE_THORNS = BLOCKS.register("nitrite_thorns", () -> new ParticleCropBlock(VidaElement.GOLD, null));
+    //public static RegistryObject<Block> PLAM_STEM = BLOCKS.register("plam_stem", () -> new ParticleCropBlock( VidaElement.AQUA, null));
+    //public static RegistryObject<Block> SULLEN_HYDRANGE = BLOCKS.register("sullen_hydrangea", () -> new ParticleCropBlock(VidaElement.AQUA, null));
+    //public static RegistryObject<Block> SWEET_CYAN_REED  = BLOCKS.register("sweet_cyan_reed", () -> new ParticleCropBlock(VidaElement.WOOD, null));
+
+
+
+    /*功能性方块*/
+    @RegisterItemBlock
+    public static RegistryObject<Block> COLLECTOR = registerDecoBlock("collector", STANDARD, NORMAL, true);
 
     @RegisterItemBlock
     public static RegistryObject<Block> GLOWING_LIGHT_BLOCK = BLOCKS.register("glowing_light", GlowingLightBlock::new);
@@ -109,6 +115,12 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> TIME_ELEMENT_CRAFTING_TABLE = BLOCKS.register("time_element_crafting_table", TimeElementCraftingTable::new);
 
+
+    /**
+     * @param name 注册名称
+     * @param block 方块provider
+     * @return
+     */
     public static RegistryObject<Block> registerBlock(String name,Block block){
         return BLOCKS.register(name, () -> block);
     }

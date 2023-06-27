@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "age=0": { "model": "vida_reforged:block/crop/sullen_hydrangea_stage0" },
+    "age=1": { "model": "vida_reforged:block/crop/sullen_hydrangea_stage0" },
+    "age=2": { "model": "vida_reforged:block/crop/sullen_hydrangea_stage0" },
+    "age=3": { "model": "vida_reforged:block/crop/sullen_hydrangea_stage1" },
+    "age=4": { "model": "vida_reforged:block/crop/sullen_hydrangea_stage1" },
+    "age=5": { "model": "vida_reforged:block/crop/sullen_hydrangea_stage2" }
+  }
+}

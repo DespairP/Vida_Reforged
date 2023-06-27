@@ -1,8 +1,8 @@
 {
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "vida_reforged:model/collector",
-		"particle": "vida_reforged:model/collector"
+		"0": "vida_reforged:block/blockmodel/collector",
+		"particle": "vida_reforged:block/blockmodel/collector"
 	},
 	"elements": [
 		{

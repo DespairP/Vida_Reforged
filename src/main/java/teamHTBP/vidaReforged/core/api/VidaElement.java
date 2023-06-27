@@ -7,7 +7,10 @@ public enum VidaElement implements IVidaElement{
     EMPTY("empty", ARGBColor.BLACK),
     VOID("void", ARGBColor.BLACK),
     GOLD("gold", ARGBColor.BLACK),
-    WOOD("wood",ARGBColor.BLACK);
+    WOOD("wood",ARGBColor.BLACK),
+    AQUA("aqua",ARGBColor.DARK_BLUE),
+    FIRE("fire",ARGBColor.DARK_RED),
+    EARTH("earth",ARGBColor.BLACK);
 
     /**元素名称*/
     public String name;

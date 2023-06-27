@@ -51,11 +51,11 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
         this.entity = mc.crosshairPickEntity;
 
         //渲染生物数据
-        renderEntity(matrixStack);
+        renderEntity();
     }
 
 
-    public void renderEntity(PoseStack matrixStack){
+    public void renderEntity(){
         if(!checkEntityShouldRender()){
             return;
         }
@@ -72,7 +72,7 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
         //标题
         final String titleName = "Entity";
         //1.渲染图片
-        matrixStack.pushPose();
+        pose().pushPose();
         RenderSystem.setShaderTexture(0, iconEntityFriendly.location());
         int beginX = width - font.width(titleName) - 8 - iconEntityFriendly.width();
         blit(
@@ -82,7 +82,7 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
                 16,16,
                 16,16
         );
-        matrixStack.popPose();
+        pose().popPose();
 
         //2.渲染标题
         pose().pushPose();

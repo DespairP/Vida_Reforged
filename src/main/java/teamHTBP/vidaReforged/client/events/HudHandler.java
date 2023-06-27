@@ -31,7 +31,7 @@ public class HudHandler {
         //Player player = Minecraft.getInstance().player;
 
         VidaDebugScreen debugScreen = new VidaDebugScreen(bufferSource);
-        debugScreen.renderEntity(matrixStack);
+        debugScreen.renderEntity();
 
 
     }

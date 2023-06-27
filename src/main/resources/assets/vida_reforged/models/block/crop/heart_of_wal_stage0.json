@@ -1,0 +1,6 @@
+{
+  "loader": "forge:obj",
+  "render_type": "cutout",
+  "model": "vida_reforged:models/block/crop/heart_of_wal_stage0.obj",
+  "flip_v": true
+}

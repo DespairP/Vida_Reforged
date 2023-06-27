@@ -42,6 +42,10 @@ public class ARGBColor extends VidaColor {
         return of(1F, r, g, b);
     }
 
+    public static ARGBColor of(VidaColor color){
+        return color.toARGB();
+    }
+
     public static ARGBColor argb(int argb) {
         return new ARGBColor(argb >>> 24, argb >> 16 & 255, argb >> 8 & 255, argb & 255);
     }
@@ -93,5 +97,21 @@ public class ARGBColor extends VidaColor {
 
         float s = max != 0 ? delta / max : 0;
         return new HSVColor(h, s, max);
+    }
+
+    public int a() {
+        return a;
+    }
+
+    public int r() {
+        return r;
+    }
+
+    public int g() {
+        return g;
+    }
+
+    public int b() {
+        return b;
     }
 }

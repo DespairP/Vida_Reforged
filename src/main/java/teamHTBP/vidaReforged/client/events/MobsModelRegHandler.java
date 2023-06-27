@@ -8,7 +8,7 @@ import teamHTBP.vidaReforged.server.mobs.VidaMobsLoader;
 import teamHTBP.vidaReforged.client.model.mobs.AncientBelieverRenderer;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class MobsRegModelHandler {
+public class MobsModelRegHandler {
     @SubscribeEvent
     public static void onClientSetUpEvent(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(VidaMobsLoader.ANCIENT_BELIEVER.get(), AncientBelieverRenderer::new);
