@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"half=lower": {
+			"model": "vida_reforged:block/pink_jelly_flower_bottom"
+		},
+		"half=upper": {
+			"model": "vida_reforged:block/pink_jelly_flower_top"
+		}
+	}
+}

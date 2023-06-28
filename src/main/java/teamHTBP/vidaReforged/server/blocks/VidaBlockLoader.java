@@ -101,6 +101,10 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> BLUE_GRASS = registerDecoBlock("blue_grass", GRASS, FLOWER);
     @RegisterItemBlock
     public final static RegistryObject<Block> SMALL_EMERALD_MUSHROOM = registerDecoBlock("small_emerald_mushroom", GRASS, FLOWER);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> EMERALD_MUSHROOM = registerDecoBlock("emerald_mushroom", GRASS, DOUBLE_PLANT);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> PINK_JELLY_FLOWER = registerDecoBlock("pink_jelly_flower", GRASS, DOUBLE_PLANT);
 
     /***/
     @RegisterItemBlock

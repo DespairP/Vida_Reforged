@@ -1,0 +1,7 @@
+{
+	"parent": "minecraft:block/cross",
+	"render_type": "minecraft:cutout",
+	"textures": {
+		"cross": "vida_reforged:block/pink_jelly_flower_bottom"
+	}
+}

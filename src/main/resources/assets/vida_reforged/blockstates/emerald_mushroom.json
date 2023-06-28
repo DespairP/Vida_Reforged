@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"half=lower": {
+			"model": "vida_reforged:block/emerald_mushroom_bottom"
+		},
+		"half=upper": {
+			"model": "vida_reforged:block/emerald_mushroom_top"
+		}
+	}
+}
