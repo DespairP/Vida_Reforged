@@ -16,7 +16,7 @@ public class DestinationAnimator<T extends Comparable> extends Animator<T>{
         }
     }
 
-    public DestinationAnimator(T fromValue, T toValue, IValueProvider<T> provider, T initialValue, float maxTick) {
+    public DestinationAnimator(T fromValue, T toValue, IValueProvider<T> provider, T initialValue, float maxTick, int mode) {
         this.fromValue = fromValue;
         this.toValue = toValue;
         this.provider = provider;
@@ -80,6 +80,8 @@ public class DestinationAnimator<T extends Comparable> extends Animator<T>{
         private TimeInterpolator interpolator;
         private IValueProvider<T> provider;
 
+        private int mode = 0;
+
         private float maxTick;
 
         public Builder(){}
@@ -115,6 +117,11 @@ public class DestinationAnimator<T extends Comparable> extends Animator<T>{
             return this;
         }
 
+        public Builder<T> mode(int mode){
+            this.mode = mode;
+            return this;
+        }
+
         public DestinationAnimator<T> build(){
             if(provider == null){
                 throw new NullPointerException("provider is null,please have a check");
@@ -124,7 +131,8 @@ public class DestinationAnimator<T extends Comparable> extends Animator<T>{
                     toValue,
                     provider,
                     initialValue,
-                    maxTick
+                    maxTick,
+                    mode
             );
             anim.interpolator = interpolator;
             return anim;

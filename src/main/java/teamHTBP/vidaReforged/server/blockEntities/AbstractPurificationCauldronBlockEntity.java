@@ -25,6 +25,8 @@ import teamHTBP.vidaReforged.server.providers.records.ElementPotential;
 public abstract class AbstractPurificationCauldronBlockEntity extends BlockEntity implements IDebugObj {
     /**锅中的主要属性，或者是第一个被添加的属性*/
     public VidaElement mainElement = VidaElement.EMPTY;
+    /**/
+    public boolean isWaterFilled = false;
     /**本次提纯进度*/
     public float progress = 0.0f;
     /**步长*/
@@ -62,13 +64,21 @@ public abstract class AbstractPurificationCauldronBlockEntity extends BlockEntit
         this.targetSubProgress = 0f;
         this.totalProgress = 0f;
         this.isInProgress = false;
+        this.isWaterFilled = false;
         this.step = 1.0f;
     }
 
+    /**加入物品*/
     public boolean addItem(ItemStack item){
+        // 防止放入空气
         if(item.isEmpty() || item.getItem() == Items.AIR){
             return false;
         }
+        // 如果没有放入水源，不进行提纯
+        if(!isWaterFilled()){
+            return false;
+        }
+
         ElementPotential potential = ElementPotentialManager.getPotential(item);
         // 为空或者不匹配,都不加入
         if(potential != null && (mainElement == VidaElement.EMPTY || mainElement == potential.getElement())){
@@ -76,6 +86,19 @@ public abstract class AbstractPurificationCauldronBlockEntity extends BlockEntit
             return true;
         }
         return false;
+    }
+
+    /**填入水*/
+    public boolean fillWater(){
+        boolean result =  !this.isWaterFilled;
+        if(result){
+            this.isWaterFilled = true;
+        }
+        return result;
+    }
+
+    public boolean isWaterFilled(){
+        return this.isWaterFilled;
     }
 
     /**强制终止此次提纯任务*/
@@ -214,6 +237,7 @@ public abstract class AbstractPurificationCauldronBlockEntity extends BlockEntit
         pTag.putFloat("step", step);
         pTag.putBoolean("isInProgress", isInProgress);
         pTag.putString("mainElement", mainElement.name());
+        pTag.putBoolean("isWaterFilled", isWaterFilled);
         // 保存结果物品
         CompoundTag resultTags = new CompoundTag();
         if(resultItems.size() > 0){
@@ -238,6 +262,7 @@ public abstract class AbstractPurificationCauldronBlockEntity extends BlockEntit
         this.totalProgress = pTag.getFloat("totalProgress");
         this.step = pTag.getFloat("step");
         this.mainElement = VidaElement.valueOf(pTag.getString("mainElement"));
+        this.isWaterFilled = pTag.getBoolean("isWaterFilled");
         // 获取结果
         this.resultItems = NonNullList.create();
         if(pTag.contains(TAG_RESULT_ITEMS)){

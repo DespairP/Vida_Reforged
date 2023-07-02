@@ -1,8 +1,6 @@
 package teamHTBP.vidaReforged.client.model.blockEntities;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexBuffer;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BiomeColors;
@@ -22,7 +20,6 @@ import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
-import teamHTBP.vidaReforged.core.utils.color.VidaColor;
 import teamHTBP.vidaReforged.server.blockEntities.BasePurificationCauldronBlockEntity;
 
 public class PurificationCauldronBlockEntityRenderer implements BlockEntityRenderer<BasePurificationCauldronBlockEntity> {
@@ -37,11 +34,18 @@ public class PurificationCauldronBlockEntityRenderer implements BlockEntityRende
 
     @Override
     public void render(BasePurificationCauldronBlockEntity entity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLightIn, int combinedOverlayIn) {
+        this.renderWaterLayer(entity, partialTicks, poseStack, bufferSource);
+
+    }
+
+    /**渲染水图层*/
+    protected void renderWaterLayer(BasePurificationCauldronBlockEntity entity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource){
+        if(!entity.isWaterFilled()){
+            return;
+        }
         //
         final float percent = (entity.totalProgress / entity.getMaxMainTaskProgress());
         final float waterLevel = MAX_WATER_LEVEL * percent;
-
-
 
         poseStack.pushPose();
         //获取水的贴图
@@ -79,6 +83,9 @@ public class PurificationCauldronBlockEntityRenderer implements BlockEntityRende
         Minecraft.getInstance().getProfiler().pop();
         poseStack.popPose();
     }
+
+
+
 
     /**获取液体颜色*/
     private static int getFluidColor(Level world, BlockPos pos, Fluid fluid) {

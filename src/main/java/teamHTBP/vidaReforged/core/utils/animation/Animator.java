@@ -5,6 +5,11 @@ package teamHTBP.vidaReforged.core.utils.animation;
  * 具体使用见：{@link  DestinationAnimator#of}
  * */
 public abstract class Animator<T> implements IAnimator{
+    public final static int INFINITE = -1;
+    public final static int RESTART = 1;
+    public final static int REVERSE = 2;
+    /**模式*/
+    public int mode = 0;
     /**是否真正开始*/
     protected boolean isStarted = false;
     /**是否结束*/
@@ -19,8 +24,6 @@ public abstract class Animator<T> implements IAnimator{
     protected double delayFrames = 0;
     /**持续帧*/
     protected double existingTick = 0;
-    /***/
-    protected boolean isReverse = false;
     /***/
     protected float maxTick = 6;
 
@@ -55,9 +58,8 @@ public abstract class Animator<T> implements IAnimator{
     @Override
     public abstract void tick(float partialTicks);
 
-    /**倒放*/
-    public void reverse(){
-        this.isReverse = !this.isReverse;
+    public void setInfinite(){
+        this.mode = INFINITE;
     }
 
     public T getValue(){
