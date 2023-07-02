@@ -6,14 +6,16 @@ import teamHTBP.vidaReforged.core.api.VidaElement;
 /**
  * @author TT432
  */
-public record MagicParticle(int colorA,
-                            int colorB,
-                            MagicParticleAttribute speed,
-                            MagicParticleAttribute amount,
-                            MagicParticleAttribute maxAge,
-                            MagicParticleType type,
-                            MagicParticleAttribute damage,
-                            IVidaElement element) {
+public record MagicParticle(
+        int colorA,
+        int colorB,
+        MagicParticleAttribute speed,
+        MagicParticleAttribute amount,
+        MagicParticleAttribute maxAge,
+        MagicParticleType type,
+        MagicParticleAttribute damage,
+        IVidaElement element
+) {
 
     // TODO  序列化反序列化
 

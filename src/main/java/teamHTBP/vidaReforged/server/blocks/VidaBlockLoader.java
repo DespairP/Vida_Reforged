@@ -106,7 +106,7 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> PINK_JELLY_FLOWER = registerDecoBlock("pink_jelly_flower", GRASS, DOUBLE_PLANT);
 
-    /***/
+    /**作物*/
     @RegisterItemBlock
     public static RegistryObject<Block> CRISM_CREST = BLOCKS.register("crimson_crest", () -> new ParticleCropBlock(VidaElement.FIRE, null));
     //public static RegistryObject<Block> HEART_OF_WAL = BLOCKS.register("heart_of_wal", () -> new ParticleCropBlock(VidaElement.WOOD, null));
@@ -126,6 +126,9 @@ public class VidaBlockLoader {
 
     @RegisterItemBlock
     public final static RegistryObject<Block> TIME_ELEMENT_CRAFTING_TABLE = BLOCKS.register("time_element_crafting_table", TimeElementCraftingTable::new);
+
+    @RegisterItemBlock
+    public final static RegistryObject<Block> PURIFICATION_CAULDRON = BLOCKS.register("purification_cauldron", PurificationCauldron::new);
 
 
     /**

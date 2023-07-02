@@ -6,11 +6,11 @@ import teamHTBP.vidaReforged.core.utils.color.VidaColor;
 public enum VidaElement implements IVidaElement{
     EMPTY("empty", ARGBColor.BLACK),
     VOID("void", ARGBColor.BLACK),
-    GOLD("gold", ARGBColor.BLACK),
-    WOOD("wood",ARGBColor.BLACK),
-    AQUA("aqua",ARGBColor.DARK_BLUE),
+    GOLD("gold", ARGBColor.rgba(0xFFDA47)),
+    WOOD("wood",ARGBColor.rgba(0x6BC73A)),
+    AQUA("aqua",ARGBColor.rgba(0x00D5FF)),
     FIRE("fire",ARGBColor.DARK_RED),
-    EARTH("earth",ARGBColor.BLACK);
+    EARTH("earth",ARGBColor.LIGHT_BROWN);
 
     /**元素名称*/
     public String name;

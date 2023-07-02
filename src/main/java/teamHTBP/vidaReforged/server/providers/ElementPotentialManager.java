@@ -39,6 +39,10 @@ public class ElementPotentialManager extends SimpleJsonResourceReloadListener {
         super(JsonUtils.getGson(JsonUtils.JsonUtilType.NORMAL), "element_potential");
     }
 
+    {
+        itemPotentialMap.put("crimson_crest", new ElementPotential(null, VidaElement.FIRE, 100));
+    }
+
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
         // 初始化potential
@@ -82,16 +86,18 @@ public class ElementPotentialManager extends SimpleJsonResourceReloadListener {
     }
 
     /**根据ItemStack获取Potential*/
-    public ElementPotential getPotential(ItemStack itemStack){
+    public static ElementPotential getPotential(ItemStack itemStack){
         return itemPotentialMap.get(itemStack.getItem().toString());
     }
 
     /**根据ItemStack获取Potential*/
-    public List<ElementPotential> getPotential(Ingredient ingredient){
+    public static List<ElementPotential> getPotential(Ingredient ingredient){
         NonNullList<ElementPotential> potentials = NonNullList.create();
         for(ItemStack stack : ingredient.getItems()){
             potentials.add( getPotential(stack) );
         }
         return potentials;
     }
+
+
 }

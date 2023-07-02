@@ -6,8 +6,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.debug.IDebugObj;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
@@ -26,6 +29,8 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
     public static Boolean isDebug = true;
     /**实体*/
     private Entity entity;
+    /***/
+    public static BlockEntity blockEntity;
     /**间距*/
     private final int marginHeightBelow = 2;
     /**字体*/
@@ -36,22 +41,25 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
     private final TextureSection iconEntityFriendly = new TextureSection(LOCATION_ENTITY_FRIENDLY,0,0,16,16);
 
 
-    public VidaDebugScreen(MultiBufferSource.BufferSource bufferSource) {
+    public VidaDebugScreen(MultiBufferSource.BufferSource bufferSource, Entity entity ,BlockEntity blockEntity) {
         super(minecraft, bufferSource);
-        this.entity = mc.crosshairPickEntity;
+        this.entity = entity;
+        VidaDebugScreen.blockEntity = blockEntity;
         this.font = mc.font;
     }
 
     @Override
-    public void render(PoseStack matrixStack) {
+    public void render(PoseStack matrixStac) {
         if(!isDebug){
             return;
         }
         //刷新数据
         this.entity = mc.crosshairPickEntity;
 
+
         //渲染生物数据
         renderEntity();
+        renderBlockEntity();
     }
 
 
@@ -64,7 +72,7 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
         final int width = mc.getWindow().getGuiScaledWidth();
         final int height = mc.getWindow().getGuiScaledHeight();
         //获取需要渲染的数据
-        List<String> info = getEntityInformation();
+        List<String> info = getEntityInformation(this.entity);
         //计算需要渲染文字高度，计算文字起始渲染高度，计算图片渲染起始高度
         final int totalHeight = (font.lineHeight + marginHeightBelow) * info.size();
         final float beginTextY = height / 2.0f - totalHeight;
@@ -114,6 +122,69 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
     }
 
 
+    public void renderBlockEntity(){
+        if(!checkBlockEntityShouldRender()){
+            return;
+        }
+        final float scaledWeight = 0.8f;
+        //获取屏幕大小
+        final int width = mc.getWindow().getGuiScaledWidth();
+        final int height = mc.getWindow().getGuiScaledHeight();
+        //获取需要渲染的数据
+        List<String> info = getEntityInformation(this.blockEntity);
+        //计算需要渲染文字高度，计算文字起始渲染高度，计算图片渲染起始高度
+        final int totalHeight = (font.lineHeight + marginHeightBelow) * info.size();
+        final float beginTextY = (height - totalHeight) / 2.0f;
+        int beginImgY = (int) (beginTextY - 20.0f);
+        //标题
+        final String titleName = "BlockEntity";
+        //1.渲染图片
+        pose().pushPose();
+        RenderSystem.setShaderTexture(0, iconEntityFriendly.location());
+        int beginX = width - font.width(titleName) - 8 - iconEntityFriendly.width();
+        blit(
+                iconEntityFriendly.location(),
+                beginX, beginImgY, 0,
+                iconEntityFriendly.mu(), iconEntityFriendly.mv(),
+                16,16,
+                16,16
+        );
+        pose().popPose();
+
+        //2.渲染标题
+        pose().pushPose();
+        beginX += iconEntityFriendly.width();
+        beginImgY += iconEntityFriendly.width() / 2;
+
+        drawString(font, titleName, (float)(beginX + 1), (float)beginImgY, 0, false);
+        drawString(font, titleName, (float)(beginX - 1), (float)beginImgY, 0, false);
+        drawString(font, titleName, (float)beginX, (float)(beginImgY + 1), 0, false);
+        drawString(font, titleName, (float)beginX, (float)(beginImgY - 1), 0, false);
+        drawString(font, titleName, (float)beginX, (float)beginImgY, 8453920, false);
+        pose().popPose();
+
+        //3.渲染信息文字
+        pose().pushPose();
+        pose().scale(scaledWeight, scaledWeight, scaledWeight);
+
+        //获取缩放因子
+        final float factor = 1.0f / scaledWeight;
+        //开始渲染
+        for(var i = 0;i < info.size();i++){
+            String text = info.get(i);
+            float x = width * factor - font.width(text) - 10;
+            float y = beginTextY * factor + (marginHeightBelow + font.lineHeight) * i;
+            drawString(font, text, x , y, 0xFFFFFF, true);
+        }
+        pose().popPose();
+        //结束渲染
+    }
+
+    private boolean checkBlockEntityShouldRender() {
+        return blockEntity != null && blockEntity instanceof IDebugObj;
+    }
+
+
     /**
      * 是否渲染生物数据
      * */
@@ -125,11 +196,11 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
      * 获取玩家指向的实体信息
      * @return entity实体信息
      * */
-    public List<String> getEntityInformation(){
+    public List<String> getEntityInformation(Object obj){
         List<String> infos = new LinkedList<>();
         //获取Debug Entity info，变成KEY:VALUE的格式输出
-        if(entity instanceof IDebugObj){
-            infos = ((IDebugObj) entity).getDebugAttributes()
+        if(obj instanceof IDebugObj){
+            infos = ((IDebugObj) obj).getDebugAttributes()
                     .entrySet()
                     .stream()
                     .map(entry-> "%s: %s".formatted(entry.getKey(),entry.getValue()))

@@ -200,8 +200,8 @@ public abstract class AbstractBeliever extends VidaPathfinderMob implements GeoA
     public Map<String, String> getDebugAttributes() {
         return ImmutableMap.of(
                 "CurrentState", Objects.equals(this.stateManager, NULL) ? "" : Optional.ofNullable(this.stateManager.getActiveState()).orElse(""),
-                "isAttack", entityData.get(ATTACKING).toString(),
-                "health", "%.2f/%.2f".formatted(this.getHealth(), this.getMaxHealth())
+                "IsAttack", entityData.get(ATTACKING).toString(),
+                "Health", "%.2f/%.2f".formatted(this.getHealth(), this.getMaxHealth())
         );
     }
 }

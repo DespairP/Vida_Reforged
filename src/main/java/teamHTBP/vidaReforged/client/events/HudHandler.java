@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -28,11 +29,14 @@ public class HudHandler {
         //获取玩家对准的方块
         PoseStack matrixStack = event.getGuiGraphics().pose();
         MultiBufferSource.BufferSource bufferSource = event.getGuiGraphics().bufferSource();
-        //Player player = Minecraft.getInstance().player;
 
-        VidaDebugScreen debugScreen = new VidaDebugScreen(bufferSource);
-        debugScreen.renderEntity();
+        VidaDebugScreen debugScreen = new VidaDebugScreen(
+                bufferSource,
+                Minecraft.getInstance().crosshairPickEntity,
+                getBlockEntityPlayerLookAt(Minecraft.getInstance().player)
+        );
 
+        debugScreen.render(matrixStack);
 
     }
 
@@ -42,17 +46,13 @@ public class HudHandler {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static Block getBlockPlayerLookAt(Player player){
+    public static BlockEntity getBlockEntityPlayerLookAt(Player player){
         HitResult block =  player.pick(20.0D, 0.0F, false);
         if(block.getType() == HitResult.Type.BLOCK) {
             BlockPos blockpos = ((BlockHitResult)block).getBlockPos();
-            BlockState blockstate = player.getCommandSenderWorld().getBlockState(blockpos);
-            return blockstate.getBlock();
+            return player.getCommandSenderWorld().getBlockEntity(blockpos);
         }
         return null;
     }
-
-
-
 
 }
