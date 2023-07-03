@@ -23,6 +23,7 @@ public class BasePurificationCauldronBlockEntity extends AbstractPurificationCau
 
     public void doServerTick(Level pLevel, BlockPos pPos, BlockState pState, BlockEntity pBlockEntity){
         if(pLevel.isClientSide){
+            setChanged();
             return;
         }
         //检查是否正在提炼，并继续
@@ -40,7 +41,7 @@ public class BasePurificationCauldronBlockEntity extends AbstractPurificationCau
             this.generateResult();
             this.completeMainTask();
         }
-        this.step = 2.0f;
+        setChanged();
         pLevel.sendBlockUpdated(pPos, pState, pState, 1 | 2);
     }
 

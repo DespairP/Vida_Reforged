@@ -3,6 +3,9 @@ package teamHTBP.vidaReforged.core.utils.animation;
 import com.google.common.collect.Range;
 import teamHTBP.vidaReforged.core.utils.animation.calculator.IValueProvider;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.round;
+
 public class DestinationAnimator<T extends Comparable> extends Animator<T>{
     private final T fromValue;
     private final T toValue;
@@ -22,6 +25,7 @@ public class DestinationAnimator<T extends Comparable> extends Animator<T>{
         this.provider = provider;
         this.value = initialValue;
         this.maxTick = maxTick;
+        this.mode = mode;
     }
 
     /**
@@ -34,27 +38,44 @@ public class DestinationAnimator<T extends Comparable> extends Animator<T>{
             return;
         }
 
-        //计算动画开始经过了几帧数
+        // 计算动画开始经过了几帧数
         this.isRunning = true;
-        float step = (float) Math.min(maxTick, existingTick + partialTicks);
-        this.existingTick += partialTicks;
+
+        // 计算已经过了多久
+        float currentTick = (float) existingTick + partialTicks;
+        if(this.mode >= 0){
+            currentTick = (float) Math.min(maxTick, existingTick + partialTicks);
+        }
+
+        this.existingTick = currentTick;
 
         //延迟帧检查
         if(this.delayFrames > this.existingTick){
             return;
         }
 
+        // 三角波函数：f(x) = 1 - 2 |round(1 / t) * x - (1 / t) * x|
+        float percent = squareWave(currentTick, maxTick * 2.0);
         // value = (to - from) * percent
-        this.value = provider.multiplyValue(provider.minusValue(this.toValue,(float) this.fromValue), this.interpolator.interpolation((step / maxTick)));
+        this.value = provider.multiplyValue(provider.minusValue(this.toValue,(float) this.fromValue), this.interpolator.interpolation((percent)));
         // 检查是否越界了，如果已经越界，动画结束
         Range<T> range = Range.open(fromValue, toValue);
-        if(!range.contains(value)){
+        if(this.mode != INFINITE && !range.contains(value)){
             end();
         }
     }
 
+    /**
+     * 三角波函数
+     * @param x 参量x
+     * @param t 周期
+     * */
+    private float squareWave(double x,double t){
+        return (float)( 1 - 2 * abs((1 / t) * (x - t / 2) - round((1 / t) * (x - t / 2))) );
+    }
 
-    public static <T extends Comparable> DestinationAnimator<T> of(float ticks, T from,T to){
+
+    public static <T extends Comparable<T>> DestinationAnimator<T> of(float ticks, T from,T to){
         Class<T> clazz = (Class<T>) from.getClass();
         return new DestinationAnimator.Builder<T>()
                 //设置起始值

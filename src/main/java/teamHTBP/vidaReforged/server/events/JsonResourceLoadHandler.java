@@ -11,6 +11,6 @@ public class JsonResourceLoadHandler {
 
     @SubscribeEvent
     public static void onEvent(AddReloadListenerEvent event) {
-        //event.addListener(ELEMENT_POTENTIAL_MANAGER);
+        event.addListener(ELEMENT_POTENTIAL_MANAGER);
     }
 }

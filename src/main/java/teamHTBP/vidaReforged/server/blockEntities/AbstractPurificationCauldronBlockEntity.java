@@ -16,9 +16,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.debug.IDebugObj;
+import teamHTBP.vidaReforged.core.common.container.BlockEntityHelper;
 import teamHTBP.vidaReforged.server.providers.ElementPotentialManager;
 import teamHTBP.vidaReforged.server.providers.records.ElementPotential;
 
@@ -72,6 +74,9 @@ public abstract class AbstractPurificationCauldronBlockEntity extends BlockEntit
     public boolean addItem(ItemStack item){
         // 防止放入空气
         if(item.isEmpty() || item.getItem() == Items.AIR){
+            return false;
+        }
+        if(this.purificationItems.size() > 0){
             return false;
         }
         // 如果没有放入水源，不进行提纯
@@ -223,14 +228,20 @@ public abstract class AbstractPurificationCauldronBlockEntity extends BlockEntit
         this.isInProgress = true;
         this.mainElement = potential.element;
         this.targetSubProgress = potential.energy;
+        this.step = 0.2f;
     }
 
 
 
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        super.handleUpdateTag(tag);
+    }
+
     /**保存结果*/
+
     @Override
     protected void saveAdditional(CompoundTag pTag) {
-        super.saveAdditional(pTag);
         pTag.putFloat("progress", progress);
         pTag.putFloat("targetSubProgress", targetSubProgress);
         pTag.putFloat("totalProgress", totalProgress);
@@ -250,12 +261,12 @@ public abstract class AbstractPurificationCauldronBlockEntity extends BlockEntit
             ContainerHelper.saveAllItems(purificationTags, purificationItems);
         }
         pTag.put(TAG_PURE_ITEMS, purificationTags);
+        super.saveAdditional(pTag);
     }
 
 
     @Override
     public void load(CompoundTag pTag) {
-        super.load(pTag);
         this.progress = pTag.getFloat("progress");
         this.isInProgress = pTag.getBoolean("isInProgress");
         this.targetSubProgress = pTag.getFloat("targetSubProgress");
@@ -266,13 +277,14 @@ public abstract class AbstractPurificationCauldronBlockEntity extends BlockEntit
         // 获取结果
         this.resultItems = NonNullList.create();
         if(pTag.contains(TAG_RESULT_ITEMS)){
-            ContainerHelper.loadAllItems(pTag.getCompound(TAG_RESULT_ITEMS), this.resultItems);
+            BlockEntityHelper.loadAllItems(pTag.getCompound(TAG_RESULT_ITEMS), this.resultItems);
         }
         // 获取正在烧制物品
         this.purificationItems = NonNullList.create();
         if(pTag.contains(TAG_PURE_ITEMS)){
-            ContainerHelper.loadAllItems(pTag.getCompound(TAG_PURE_ITEMS), this.purificationItems);
+            BlockEntityHelper.loadAllItems(pTag.getCompound(TAG_PURE_ITEMS), this.purificationItems);
         }
+        super.load(pTag);
     }
 
     @Nullable
@@ -284,22 +296,8 @@ public abstract class AbstractPurificationCauldronBlockEntity extends BlockEntit
 
     @Override
     public CompoundTag getUpdateTag() {
-        CompoundTag compound = new CompoundTag();
+        CompoundTag compound = super.getUpdateTag();
         this.saveAdditional(compound);
         return compound;
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
-        handleUpdateTag(pkt.getTag());
-    }
-
-    public void sync(Level level) {
-        if (!level.isClientSide) {
-            ClientboundBlockEntityDataPacket p = ClientboundBlockEntityDataPacket.create(this);
-            ((ServerLevel)this.level).getChunkSource().chunkMap.getPlayers(new ChunkPos(getBlockPos()), false)
-                    .forEach(k -> k.connection.send(p));
-        }
     }
 }

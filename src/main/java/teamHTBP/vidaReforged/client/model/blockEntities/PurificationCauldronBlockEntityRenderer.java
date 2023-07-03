@@ -2,23 +2,36 @@ package teamHTBP.vidaReforged.client.model.blockEntities;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import org.joml.Matrix4f;
+import org.joml.Quaternionf;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.utils.animation.Animator;
+import teamHTBP.vidaReforged.core.utils.animation.DestinationAnimator;
+import teamHTBP.vidaReforged.core.utils.animation.TimeInterpolator;
+import teamHTBP.vidaReforged.core.utils.animation.calculator.IValueProvider;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.server.blockEntities.BasePurificationCauldronBlockEntity;
 
@@ -28,13 +41,28 @@ public class PurificationCauldronBlockEntityRenderer implements BlockEntityRende
     private int fluidColor;
     private final BlockEntityRendererProvider.Context context;
 
+    private final DestinationAnimator<Float> floatingLevelAnimator;
+
     public PurificationCauldronBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
         this.context = context;
+        this.floatingLevelAnimator = new DestinationAnimator
+                .Builder<Float>()
+                .init(0.1f)
+                .fromValue(0.1f)
+                .toValue(0.2f)
+                .mode(Animator.INFINITE)
+                .interpolator(TimeInterpolator.SINE)
+                .maxTick(120)
+                .provider(IValueProvider.FLOAT_VALUE_PROVIDER)
+                .build();
+        this.floatingLevelAnimator.start();
     }
 
     @Override
     public void render(BasePurificationCauldronBlockEntity entity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLightIn, int combinedOverlayIn) {
+        this.floatingLevelAnimator.tick(partialTicks);
         this.renderWaterLayer(entity, partialTicks, poseStack, bufferSource);
+        this.renderItem(entity, partialTicks, poseStack, bufferSource, combinedLightIn, combinedOverlayIn);
 
     }
 
@@ -84,6 +112,32 @@ public class PurificationCauldronBlockEntityRenderer implements BlockEntityRende
         poseStack.popPose();
     }
 
+    private void renderItem(BasePurificationCauldronBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLightIn, int combinedOverlayIn){
+        if(blockEntity.purificationItems.size() <= 0 || !blockEntity.isInProgress()){
+            return;
+        }
+        //获取renderer
+        final BlockEntityRenderDispatcher dispatcher = Minecraft.getInstance().getBlockEntityRenderDispatcher();
+        final ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+        final ItemStack lastItem = blockEntity.purificationItems.get(0);
+
+        poseStack.pushPose();
+
+        poseStack.translate(0.5f, 1.3f + floatingLevelAnimator.getValue(), 0.55f);
+        poseStack.scale(0.6f, 0.6f, 0.6f);
+
+        // 使得物品对着玩家视角旋转
+        Quaternionf quaternion = dispatcher.camera.rotation();
+        float rotationF = Mth.lerp(partialTicks, 0, 0);
+        quaternion.mul(Axis.XP.rotation(rotationF));
+
+        poseStack.mulPose(quaternion);
+
+        BakedModel ibakedmodel = itemRenderer.getModel(lastItem, blockEntity.getLevel(), null, 0);
+        itemRenderer.render(lastItem, ItemDisplayContext.FIXED, true, poseStack, bufferSource, combinedLightIn, combinedOverlayIn, ibakedmodel);
+
+        poseStack.popPose();
+    }
 
 
 

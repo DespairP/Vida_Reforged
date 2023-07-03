@@ -39,16 +39,13 @@ public class ElementPotentialManager extends SimpleJsonResourceReloadListener {
         super(JsonUtils.getGson(JsonUtils.JsonUtilType.NORMAL), "element_potential");
     }
 
-    {
-        itemPotentialMap.put("crimson_crest", new ElementPotential(null, VidaElement.FIRE, 100));
-    }
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
         // 初始化potential
         itemPotentialMap.clear();
         // 首先区分每个ElementKey
-        pObject.forEach(this::handlePotentialFile);
+        pObject.forEach(((location, jsonElement) -> handlePotentialFile(location,jsonElement)));
     }
 
     /**处理每一个json文件*/
@@ -61,7 +58,7 @@ public class ElementPotentialManager extends SimpleJsonResourceReloadListener {
         //处理每种元素
         for(String key : fileObject.keySet()){
             VidaElement element = VidaElement.valueOf(key.toUpperCase());
-            if(fileObject.get(key) == null || fileObject.get(key).isJsonArray()){
+            if(fileObject.get(key) == null || !fileObject.get(key).isJsonArray()){
                 LOGGER.warn(String.format("%s in %s element_potential json file is not an potential array,please have a check", key, location.toString()));
                 continue;
             }

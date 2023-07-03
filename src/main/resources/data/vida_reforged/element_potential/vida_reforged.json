@@ -1,0 +1,12 @@
+{
+  "FIRE": [
+    {
+      "item": "vida_reforged:crimson_crest",
+      "energy": 100
+    },
+    {
+      "item": "vida_reforged:blue_grass",
+      "energy": 100
+    }
+  ]
+}
