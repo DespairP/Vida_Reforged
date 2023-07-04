@@ -19,6 +19,9 @@ import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 import static teamHTBP.vidaReforged.server.events.BlockItemAutoRegisterHandler.REGISTRY_ITEMBLOCK_MAP;
 import static teamHTBP.vidaReforged.server.items.VidaItemLoader.VIDA_WAND;
 
+/**
+ * 创造物品栏注册
+ * */
 @Mod.EventBusSubscriber(modid = "vida_reforged", bus = Mod.EventBusSubscriber.Bus.MOD)
 public class VidaItemGroupLoader {
     /**注册器*/

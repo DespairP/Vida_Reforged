@@ -1,7 +1,9 @@
 package teamHTBP.vidaReforged;
 
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import teamHTBP.vidaReforged.server.blockEntities.VidaBlockEntityLoader;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
@@ -23,6 +25,9 @@ public class VidaReforged {
 
     //将所有事件/注册器接入管线
     public VidaReforged() {
+        // 设置配置
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, VidaConfig.CONFIG_SPEC);
+        //
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         VidaBlockLoader.BLOCKS.register(bus);
         VidaBlockEntityLoader.BLOCK_ENTITIES.register(bus);

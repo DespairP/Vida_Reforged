@@ -2,6 +2,7 @@ package teamHTBP.vidaReforged.server.blockEntities;
 
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -47,17 +48,20 @@ public class BasePurificationCauldronBlockEntity extends AbstractPurificationCau
 
     @Override
     public Map<String, String> getDebugAttributes() {
-        Map<String, String> map = new LinkedHashMap<>();
         try {
-            Field[] fields = AbstractPurificationCauldronBlockEntity.class.getDeclaredFields();
-
-            for (Field field: fields) {
-                field.setAccessible(true);
-                map.put(field.getName(), field.get(this).toString());
-            }
+            return ImmutableMap.of(
+                    "mainElement", mainElement.name(),
+                    "isWaterFilled", String.valueOf(isWaterFilled),
+                    "progress", String.valueOf(progress),
+                    "step", String.valueOf(step),
+                    "targetSubProgress", String.valueOf(targetSubProgress),
+                    "totalProgress", String.valueOf(totalProgress),
+                    "isInProgress", String.valueOf(isInProgress),
+                    "purificationItems", purificationItems.toString(),
+                    "resultItems", resultItems.toString()
+            );
         }catch (Exception ex){
-            return map;
+            return ImmutableMap.of();
         }
-        return map;
     }
 }

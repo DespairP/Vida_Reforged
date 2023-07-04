@@ -5,6 +5,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teamHTBP.vidaReforged.server.providers.ElementPotentialManager;
 
+/**
+ * 注册datapack
+ * */
 @Mod.EventBusSubscriber
 public class JsonResourceLoadHandler {
     public static final ElementPotentialManager ELEMENT_POTENTIAL_MANAGER = new ElementPotentialManager();

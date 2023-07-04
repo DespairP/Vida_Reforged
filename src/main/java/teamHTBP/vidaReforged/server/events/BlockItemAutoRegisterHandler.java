@@ -18,6 +18,9 @@ import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * 将BlockLoader中标记为RegisterBlock的方块进行物品注册
+ * */
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BlockItemAutoRegisterHandler {
     /**

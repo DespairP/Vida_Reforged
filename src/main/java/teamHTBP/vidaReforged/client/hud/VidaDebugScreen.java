@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import teamHTBP.vidaReforged.VidaConfig;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.debug.IDebugObj;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
@@ -26,7 +27,7 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
     /***/
     private static final Minecraft minecraft = Minecraft.getInstance();
     /**是否开启debug模式*/
-    public static Boolean isDebug = true;
+    //public static Boolean isDebug;
     /**实体*/
     private Entity entity;
     /***/
@@ -49,8 +50,8 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
     }
 
     @Override
-    public void render(PoseStack matrixStac) {
-        if(!isDebug){
+    public void render(PoseStack poseStack) {
+        if(!VidaConfig.DEBUG_MODE.get()){
             return;
         }
         //刷新数据
