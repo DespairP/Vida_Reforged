@@ -56,8 +56,12 @@ public class DestinationAnimator<T extends Comparable> extends Animator<T>{
 
         // 三角波函数：f(x) = 1 - 2 |round(1 / t) * x - (1 / t) * x|
         float percent = squareWave(currentTick, maxTick * 2.0);
-        // value = (to - from) * percent
-        this.value = provider.multiplyValue(provider.minusValue(this.toValue,(float) this.fromValue), this.interpolator.interpolation((percent)));
+        // value = from + (to - from) * percent
+        this.value =
+                provider.addValue(
+                        this.fromValue,
+                        (float) provider.multiplyValue(provider.minusValue(this.toValue,(float) this.fromValue), this.interpolator.interpolation((percent)))
+                );
         // 检查是否越界了，如果已经越界，动画结束
         Range<T> range = Range.open(fromValue, toValue);
         if(this.mode != INFINITE && !range.contains(value)){

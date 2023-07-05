@@ -33,22 +33,27 @@ public class CollectorBlock extends VidaBaseEntityBlock<CollectorBlockEntity> {
             return super.use(blockState, level, pos, player, interactionHand, result);
         }
 
-
-        // 进行交互的一定是要气息核心
         ItemStack handInItem = player.getItemInHand(interactionHand);
-        if(!handInItem.is(VidaItemLoader.BREATH_CATCHER.get())){
-            return super.use(blockState, level, pos, player, interactionHand, result);
-        }
-
         CollectorBlockEntity blockEntity = (CollectorBlockEntity) level.getBlockEntity(pos);
 
-        if(blockEntity.putItem(handInItem)){
+        // 如果是shift+右键，把物品取出
+        if(player.isShiftKeyDown() && handInItem.isEmpty() && blockEntity.canGetItem()){
+            player.getInventory().add(blockEntity.getItem());
             return InteractionResult.sidedSuccess(true);
         }
 
+        // 如果是普通右键，进行交互的一定是要气息核心
+        if(!handInItem.is(VidaItemLoader.BREATH_CATCHER.get())){
+            return InteractionResult.FAIL;
+        }
+
+        if(!player.isShiftKeyDown() && blockEntity.putItem(handInItem)){
+            return InteractionResult.sidedSuccess(true);
+        }
 
         return InteractionResult.PASS;
     }
+
 
 
 }

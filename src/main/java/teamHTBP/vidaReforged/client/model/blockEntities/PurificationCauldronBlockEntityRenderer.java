@@ -52,7 +52,7 @@ public class PurificationCauldronBlockEntityRenderer implements BlockEntityRende
                 .toValue(0.2f)
                 .mode(Animator.INFINITE)
                 .interpolator(TimeInterpolator.SINE)
-                .maxTick(120)
+                .maxTick(400)
                 .provider(IValueProvider.FLOAT_VALUE_PROVIDER)
                 .build();
         this.floatingLevelAnimator.start();

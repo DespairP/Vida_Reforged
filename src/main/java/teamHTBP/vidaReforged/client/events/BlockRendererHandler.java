@@ -7,6 +7,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teamHTBP.vidaReforged.client.model.blockEntities.CollectorBlockEntityRenderer;
 import teamHTBP.vidaReforged.client.model.blockEntities.PurificationCauldronBlockEntityRenderer;
+import teamHTBP.vidaReforged.client.model.blockEntities.TeaconGuideBookBlockRenderer;
 import teamHTBP.vidaReforged.server.blockEntities.VidaBlockEntityLoader;
 
 @OnlyIn(Dist.CLIENT)
@@ -16,5 +17,6 @@ public class BlockRendererHandler {
     public static void onClientEvent(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.PURIFICATION_CAULDRON.get(), PurificationCauldronBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.COLLECTOR.get(), CollectorBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(VidaBlockEntityLoader.TEACON_GUIDEBOOK.get(), TeaconGuideBookBlockRenderer::new);
     }
 }

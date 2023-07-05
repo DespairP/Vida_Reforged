@@ -130,6 +130,8 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> PURIFICATION_CAULDRON = BLOCKS.register("purification_cauldron", PurificationCauldron::new);
 
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK = BLOCKS.register("teacon_guidebook", TeaconGuideBookBlock::new);
 
     /**
      * @param name 注册名称

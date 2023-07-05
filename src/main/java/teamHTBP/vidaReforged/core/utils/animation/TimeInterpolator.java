@@ -4,6 +4,9 @@ package teamHTBP.vidaReforged.core.utils.animation;
 import net.minecraft.util.Mth;
 import teamHTBP.vidaReforged.core.utils.math.VidaMath;
 
+import static java.lang.Math.PI;
+import static java.lang.Math.sin;
+
 /**
  * 时间插值器
  * @author DustW
@@ -22,7 +25,7 @@ public interface TimeInterpolator {
     /** 开始和结尾时减速，中间加速 */
     TimeInterpolator ACCELERATE_DECELERATE = in -> Mth.cos((in + 1.0f) * VidaMath.PI) * 0.5f + 0.5f;
     /** sin */
-    TimeInterpolator SINE = in -> Mth.sin(VidaMath.PI_HALF * in);
+    TimeInterpolator SINE = in -> (float) (0.5 * (sin((2 * PI * in - PI / 2.0)) + 1));
 
     TimeInterpolator ANTICIPATE = in -> in * in * (3.0f * in - 2.0f);
 
