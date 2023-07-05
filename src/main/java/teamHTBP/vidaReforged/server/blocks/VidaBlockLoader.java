@@ -115,6 +115,28 @@ public class VidaBlockLoader {
     //public static RegistryObject<Block> SULLEN_HYDRANGE = BLOCKS.register("sullen_hydrangea", () -> new ParticleCropBlock(VidaElement.AQUA, null));
     //public static RegistryObject<Block> SWEET_CYAN_REED  = BLOCKS.register("sweet_cyan_reed", () -> new ParticleCropBlock(VidaElement.WOOD, null));
 
+    /**矿物*/
+    @RegisterItemBlock
+    public static RegistryObject<Block> GOLD_ELEMENT_ORE = BLOCKS.register("gold_element_ore", () -> new VidaOreBlock(VidaElement.GOLD));
+    @RegisterItemBlock
+    public static RegistryObject<Block> WOOD_ELEMENT_ORE = BLOCKS.register("wood_element_ore", () -> new VidaOreBlock(VidaElement.WOOD));
+    @RegisterItemBlock
+    public static RegistryObject<Block> AQUA_ELEMENT_ORE = BLOCKS.register("aqua_element_ore", () -> new VidaOreBlock(VidaElement.AQUA));
+    @RegisterItemBlock
+    public static RegistryObject<Block> FIRE_ELEMENT_ORE = BLOCKS.register("fire_element_ore", () -> new VidaOreBlock(VidaElement.FIRE));
+    @RegisterItemBlock
+    public static RegistryObject<Block> EARTH_ELEMENT_ORE = BLOCKS.register("earth_element_ore", () -> new VidaOreBlock(VidaElement.EARTH));
+    @RegisterItemBlock
+    public static RegistryObject<Block> DEEPSLATE_GOLD_ELEMENT_ORE = BLOCKS.register("deepslate_gold_element_ore", () -> new VidaOreBlock(VidaElement.GOLD));
+    @RegisterItemBlock
+    public static RegistryObject<Block> DEEPSLATE_WOOD_ELEMENT_ORE = BLOCKS.register("deepslate_wood_element_ore", () -> new VidaOreBlock(VidaElement.WOOD));
+    @RegisterItemBlock
+    public static RegistryObject<Block> DEEPSLATE_AQUA_ELEMENT_ORE = BLOCKS.register("deepslate_aqua_element_ore", () -> new VidaOreBlock(VidaElement.AQUA));
+    @RegisterItemBlock
+    public static RegistryObject<Block> DEEPSLATE_FIRE_ELEMENT_ORE = BLOCKS.register("deepslate_fire_element_ore", () -> new VidaOreBlock(VidaElement.FIRE));
+    @RegisterItemBlock
+    public static RegistryObject<Block> DEEPSLATE_EARTH_ELEMENT_ORE = BLOCKS.register("deepslate_earth_element_ore", () -> new VidaOreBlock(VidaElement.EARTH));
+
 
 
     /*功能性方块*/
