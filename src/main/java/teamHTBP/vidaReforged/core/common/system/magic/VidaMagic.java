@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.core.common.magic;
+package teamHTBP.vidaReforged.core.common.system.magic;
 
 
 import lombok.Getter;

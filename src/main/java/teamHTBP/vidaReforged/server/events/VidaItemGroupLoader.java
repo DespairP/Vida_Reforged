@@ -14,6 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterItemBlock;
+import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 import static teamHTBP.vidaReforged.server.events.BlockItemAutoRegisterHandler.REGISTRY_ITEMBLOCK_MAP;
@@ -42,6 +43,7 @@ public class VidaItemGroupLoader {
         if(event.getTab() == TAB.get()){
             REGISTRY_ITEMBLOCK_MAP.forEach((key,blockItem) ->{
                 event.accept(blockItem);
+                event.accept(VidaItemLoader.BREATH_CATCHER.get());
             });
         }
     }

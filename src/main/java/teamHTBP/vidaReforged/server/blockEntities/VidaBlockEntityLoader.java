@@ -21,4 +21,9 @@ public class VidaBlockEntityLoader {
             "purification_cauldron",
             () -> BlockEntityType.Builder.of(BasePurificationCauldronBlockEntity::new, VidaBlockLoader.PURIFICATION_CAULDRON.get()).build(null)
     );
+
+    public static final RegistryObject<BlockEntityType<CollectorBlockEntity>> COLLECTOR = BLOCK_ENTITIES.register(
+            "collector",
+            () -> BlockEntityType.Builder.of(CollectorBlockEntity::new, VidaBlockLoader.COLLECTOR.get()).build(null)
+    );
 }

@@ -15,6 +15,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.common.VidaConstant;
 import teamHTBP.vidaReforged.core.utils.json.JsonUtils;
 import teamHTBP.vidaReforged.server.providers.records.ElementPotential;
 
@@ -36,7 +37,7 @@ public class ElementPotentialManager extends SimpleJsonResourceReloadListener {
     private final Gson gson = JsonUtils.getGson(JsonUtils.JsonUtilType.NORMAL);
 
     public ElementPotentialManager() {
-        super(JsonUtils.getGson(JsonUtils.JsonUtilType.NORMAL), "element_potential");
+        super(JsonUtils.getGson(JsonUtils.JsonUtilType.NORMAL), VidaConstant.DATA_ELEMENT_POTENTIAL);
     }
 
 

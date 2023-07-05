@@ -17,4 +17,6 @@ public class VidaItemLoader {
 
     @ObjectHolder(registryName = "vida_reforged:crism_crest", value = "vida_reforged:crism_crest")
     public final static RegistryObject<Item> CRISM_CREST = null;
+
+    public final static RegistryObject<Item> BREATH_CATCHER = ITEMS.register("breath_catcher", BreathCatcher::new);
 }

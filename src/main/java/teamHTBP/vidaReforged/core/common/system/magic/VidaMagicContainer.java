@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.core.common.magic;
+package teamHTBP.vidaReforged.core.common.system.magic;
 
 /**
  * 每个魔法强度上都有不同,MagicContainer是为了方便存储每个物品而准备的

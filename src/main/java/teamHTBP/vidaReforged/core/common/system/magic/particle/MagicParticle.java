@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.core.common.magic.particle;
+package teamHTBP.vidaReforged.core.common.system.magic.particle;
 
 import teamHTBP.vidaReforged.core.api.IVidaElement;
 import teamHTBP.vidaReforged.core.api.VidaElement;
