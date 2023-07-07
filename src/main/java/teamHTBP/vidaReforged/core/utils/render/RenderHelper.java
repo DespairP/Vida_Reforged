@@ -14,59 +14,63 @@ import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.VidaReforged;
 import net.minecraft.client.gui.GuiGraphics;
+import teamHTBP.vidaReforged.client.events.RenderTypeHandler;
+
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 
 public class RenderHelper {
     public static Font fontRenderer = Minecraft.getInstance().font;
-    /**
-     * 字体位置
-     **/
+    /***/
     public final static ResourceLocation DUNGEON_FONT = new ResourceLocation(VidaReforged.MOD_ID, "dungeonfont");
     //public final static ResourceLocation fusionpixel = new ResourceLocation("vida", "fusionpixel");
 
-
     /**
-     * 普通材质渲染
-     */
-    public static void renderWithTexture(PoseStack matrixStack, ResourceLocation texture, Runnable runnable) {
-        matrixStack.pushPose();
-        RenderSystem.setShaderTexture(0, texture);
-        runnable.run();
-        matrixStack.pushPose();
-    }
-
-    /**
-     * dungeonFont字体渲染
-     */
-    public static void renderTextWithDungeonFont(PoseStack matrixStack, String text, int x, int y) {
-        matrixStack.pushPose();
-        MutableComponent component = Component.literal(text);
-        component.setStyle(Style.EMPTY.withFont(DUNGEON_FONT));
-        //fontRenderer.drawInBatch(component, x, y, 0x000000);
-        matrixStack.popPose();
-    }
-
-    /**渲染字体*/
-    public static void renderTextWithTranslationKeyCenter(PoseStack matrixStack, String key, int maxLength, int x, int y, int color) {
-        MutableComponent name = Component.translatable(key);
-        int textLength = fontRenderer.width(fontRenderer.plainSubstrByWidth(name.getString(), maxLength));
-        int textHeight = fontRenderer.wordWrapHeight(name.getString(),maxLength);
-        matrixStack.pushPose();
-        //fontRenderer.(name, (2 * x + maxLength) / 2 - textLength / 2 , y - textHeight, maxLength, color);
-        matrixStack.popPose();
-    }
-
-    /**由于GL20的scissor的xy与MC的xy不同,所以请使用这个方法裁剪*/
-    public static void renderScissor(int x,int y,int width,int height){
+     * 裁剪屏幕
+     * 由于GL20的scissor的xy与MC的xy不同,所以请使用这个方法裁剪
+     * @param posX 起始X位置
+     * @param posY 起始Y位置
+     * @param width 裁剪宽度
+     * @param height 裁剪高度
+     * */
+    public static void renderScissor(int posX,int posY,int width,int height){
         Window window = Minecraft.getInstance().getWindow();
         int scaledHeight = window.getGuiScaledHeight();
         int scaledWidth = window.getGuiScaledWidth();
         double scaledFactor = window.getGuiScale();
         RenderSystem.enableScissor(
-                (int)(x * scaledFactor),
-                (int)((scaledHeight - y - height) * scaledFactor),
+                (int)(posX * scaledFactor),
+                (int)((scaledHeight - posY - height) * scaledFactor),
                 (int)(width * scaledFactor),
                 (int)(height * scaledFactor)
         );
+    }
+
+    /**
+     * 画圆圈
+     * */
+    public static void renderCircle(GuiGraphics graphics,PoseStack poseStack, int posX, int posY,float radius,float degree){
+        poseStack.pushPose();
+        poseStack.translate(posX, posY,0);
+        Matrix4f matrix4f = poseStack.last().pose();
+        VertexConsumer buffer = graphics.bufferSource().getBuffer(RenderTypeHandler.TRIANGLE_FAN);
+        RenderSystem.enableBlend();
+        RenderSystem.disableCull();
+
+        buffer.vertex(matrix4f,0,0,0).color(0.4f, 0.4f, 0.4f, 0.5F).endVertex();
+
+        for (double i = Math.toRadians(0); i < Math.toRadians(degree); i += 0.01)   {
+            //double angle = (TWICE_PI * i / sides) + Math.toRadians(180);
+            buffer.vertex(
+                    matrix4f,
+                    (float) (radius * cos(i - Math.toRadians(90))),
+                    (float) (radius * sin(i - Math.toRadians(90))),
+                    (float) 0
+            ).color(0.4f, 0.4f, 0.4f, 1).endVertex();
+        }
+
+        RenderSystem.disableBlend();
+        poseStack.popPose();
     }
 
     public static void blitVertical(PoseStack poseStack, int x1, int y1, int height, int weight, int z, TextureAtlasSprite sprite, double percent) {

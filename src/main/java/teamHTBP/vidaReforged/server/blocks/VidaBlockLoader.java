@@ -155,6 +155,9 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> TEACON_GUIDEBOOK = BLOCKS.register("teacon_guidebook", TeaconGuideBookBlock::new);
 
+    @RegisterItemBlock
+    public final static RegistryObject<Block> JIGSAW_EQUIP = BLOCKS.register("jigsaw_equip", VidaMagicJigsawEquipingBlock::new);
+
     /**
      * @param name 注册名称
      * @param block 方块provider

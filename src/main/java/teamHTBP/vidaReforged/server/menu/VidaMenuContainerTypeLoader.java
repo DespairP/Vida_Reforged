@@ -29,4 +29,17 @@ public class VidaMenuContainerTypeLoader {
             )
     );
 
+
+    public final static RegistryObject<MenuType<MagicJigsawMenu>> JIGSAW_EQUIP = MENU_CONTAINER_TYPE.register(
+            MagicJigsawMenu.MENU_NAME,
+            () -> IForgeMenuType.create(
+                    (windowId, inv, data) -> new MagicJigsawMenu(
+                            windowId,
+                            ContainerLevelAccess.create( inv.player.getCommandSenderWorld(), data.readBlockPos()),
+                            inv,
+                            data.readBlockPos()
+                    )
+            )
+    );
+
 }

@@ -32,4 +32,9 @@ public class VidaBlockEntityLoader {
             "teacon_guidebook",
             () -> BlockEntityType.Builder.of(TeaconGuideBookBlockEntity::new, VidaBlockLoader.TEACON_GUIDEBOOK.get()).build(null)
     );
+
+    public static final RegistryObject<BlockEntityType<VidaMagicJigsawEquipingBlockEntity>> JIGSAW_EQUIP = BLOCK_ENTITIES.register(
+            "jigsaw_equip",
+            () -> BlockEntityType.Builder.of(VidaMagicJigsawEquipingBlockEntity::new, VidaBlockLoader.JIGSAW_EQUIP.get()).build(null)
+    );
 }
