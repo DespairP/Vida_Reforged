@@ -34,7 +34,8 @@ public class VidaWand extends Item {
         LazyOptional<IVidaManaCapability> manaCap = itemInHand.getCapability(VidaCapabilityRegisterHandler.VIDA_MANA);
 
         manaCap.ifPresent(cap -> {
-            System.out.println(cap.getCurrentMana());
+            //System.out.println(cap.getCurrentMana());
+
         });
 
         Entity entity = VidaEntityLoader.MAGIC_PARTICLE_PROJECTILE.get().create(level);

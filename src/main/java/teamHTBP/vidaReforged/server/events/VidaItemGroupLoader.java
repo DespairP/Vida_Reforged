@@ -43,6 +43,7 @@ public class VidaItemGroupLoader {
         if(event.getTab() == TAB.get()){
             REGISTRY_ITEMBLOCK_MAP.forEach((key,blockItem) ->{
                 event.accept(blockItem);
+                event.accept(VIDA_WAND.get());
                 event.accept(VidaItemLoader.BREATH_CATCHER.get());
             });
         }

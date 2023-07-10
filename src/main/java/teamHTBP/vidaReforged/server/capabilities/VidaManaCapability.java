@@ -86,6 +86,7 @@ public class VidaManaCapability implements IVidaManaCapability {
         return energy >= 0 ? energy - setEnergy : 0;
     }
 
+    /**获取元素占用容器的大小*/
     public double getAllMana(){
         double remainingMana = 0;
         for(VidaElement element : elementMana.keySet()){
