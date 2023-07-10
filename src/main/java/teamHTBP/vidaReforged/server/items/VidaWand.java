@@ -11,15 +11,19 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import teamHTBP.vidaReforged.core.api.items.IVidaManaConsumable;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
+import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
 import teamHTBP.vidaReforged.server.entity.VidaEntityLoader;
 import teamHTBP.vidaReforged.server.entity.projectile.MagicParticleProjectile;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+import static teamHTBP.vidaReforged.core.common.system.magic.VidaMagicHelper.getCurrentMagic;
+
 /**Vida法杖*/
-public class VidaWand extends Item {
+public class VidaWand extends Item implements IVidaManaConsumable {
     public VidaWand() {
         super(new Item.Properties().stacksTo(1));
     }
@@ -31,10 +35,16 @@ public class VidaWand extends Item {
             return super.use(level, player, hand);
         }
         ItemStack itemInHand = player.getItemInHand(hand);
-        LazyOptional<IVidaManaCapability> manaCap = itemInHand.getCapability(VidaCapabilityRegisterHandler.VIDA_MANA);
+        // 获取此次释放魔法需要的信息
+        final LazyOptional<VidaMagicContainer> magicContainerInfo = LazyOptional.of(() -> getCurrentMagic(itemInHand));
 
+        // 获取信息
+
+
+        //
+        LazyOptional<IVidaManaCapability> manaCap = itemInHand.getCapability(VidaCapabilityRegisterHandler.VIDA_MANA);
         manaCap.ifPresent(cap -> {
-            //System.out.println(cap.getCurrentMana());
+             //System.out.println(cap.getCurrentMana());
 
         });
 
@@ -64,5 +74,10 @@ public class VidaWand extends Item {
     public void readShareTag(ItemStack stack, @Nullable CompoundTag nbt) {
         LazyOptional<IVidaManaCapability> manaCap = stack.getCapability(VidaCapabilityRegisterHandler.VIDA_MANA);
         manaCap.ifPresent(cap -> cap.deserializeNBT(nbt));
+    }
+
+    @Override
+    public LazyOptional<IVidaManaCapability> getManaCapability(ItemStack itemStack) {
+        return itemStack.getCapability(VidaCapabilityRegisterHandler.VIDA_MANA);
     }
 }

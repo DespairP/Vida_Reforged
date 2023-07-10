@@ -8,7 +8,7 @@ import teamHTBP.vidaReforged.core.api.VidaElement;
 import java.util.Map;
 
 /**
- *
+ * 魔力系统
  * */
 public interface IVidaManaCapability extends INBTSerializable<CompoundTag> {
     /**最大能储存的能量值*/
