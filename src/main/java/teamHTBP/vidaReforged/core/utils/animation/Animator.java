@@ -8,6 +8,7 @@ public abstract class Animator<T> implements IAnimator{
     public final static int INFINITE = -1;
     public final static int RESTART = 1;
     public final static int REVERSE = 2;
+    public final static int ANIMATION_AFTER = 3;
     /**模式*/
     public int mode = 0;
     /**是否真正开始*/
@@ -46,6 +47,15 @@ public abstract class Animator<T> implements IAnimator{
         this.isRunning = false;
         this.isEnded = true;
     }
+
+    public void reverse(){
+        this.mode = REVERSE;
+    }
+
+    public void animationAfter(){
+        this.mode = ANIMATION_AFTER;
+    }
+
 
     public boolean isRunning() {
         return this.isRunning;

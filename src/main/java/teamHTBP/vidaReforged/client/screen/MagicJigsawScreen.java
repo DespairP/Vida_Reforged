@@ -20,7 +20,7 @@ public class MagicJigsawScreen extends AbstractContainerScreen<MagicJigsawMenu> 
     /**显示客户端玩家的拼图*/
     private NonNullList<?> playerJigsawList = NonNullList.create();
     /***/
-    AttachSlotsContainer slotsContainer = AttachSlotsContainer.create(10, 10).modify(100,100);
+    AttachSlotsContainer slotsContainer = AttachSlotsContainer.create(10, 10,10, 10).modify(100,100);
 
     public MagicJigsawScreen(MagicJigsawMenu p_97741_, Inventory p_97742_, Component p_97743_) {
         super(p_97741_, p_97742_, p_97743_);
@@ -45,6 +45,7 @@ public class MagicJigsawScreen extends AbstractContainerScreen<MagicJigsawMenu> 
     @Override
     protected void init() {
         super.init();
+        slotsContainer = AttachSlotsContainer.create(10, 10,10, 10).modify(100,100);
     }
 
     private List<?> getPlayerJigsaw(){

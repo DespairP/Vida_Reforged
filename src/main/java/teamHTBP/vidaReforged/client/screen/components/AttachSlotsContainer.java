@@ -18,14 +18,19 @@ public class AttachSlotsContainer implements Renderable {
 
     private AttachSlotsContainer(){}
 
-    public static AttachSlotsContainer create(int rowNum,int colNum){
-        AttachSlotsContainer container = new AttachSlotsContainer();
+    private AttachSlotsContainer(float startX, float startY) {
+        this.startX = startX;
+        this.startY = startY;
+    }
+
+    public static AttachSlotsContainer create(int startX, int startY, int rowNum, int colNum){
+        AttachSlotsContainer container = new AttachSlotsContainer(startX, startY);
         container.slots = new LinkedList<>();
         for(int row = 0; row < rowNum; row ++){
             for(int col = 0; col < colNum; col ++){
                 float colPosY = col * container.step;
                 float rowPosX = row * container.step;
-                container.slots.add(new AttachSlot().setPos(rowPosX,colPosY));
+                container.slots.add(new AttachSlot(container.startX, container.startY, rowPosX, colPosY));
             }
         }
         return container;

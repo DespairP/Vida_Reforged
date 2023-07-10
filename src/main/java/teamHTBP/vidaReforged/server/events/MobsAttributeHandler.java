@@ -9,6 +9,7 @@ import teamHTBP.vidaReforged.server.mobs.AncientBeliever;
 import teamHTBP.vidaReforged.server.mobs.VidaMobsLoader;
 
 /**
+ * 注册生物属性
  * @author DustW
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

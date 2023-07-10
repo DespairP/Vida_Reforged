@@ -9,7 +9,7 @@ import teamHTBP.vidaReforged.server.providers.ElementPotentialManager;
  * 注册datapack
  * */
 @Mod.EventBusSubscriber
-public class JsonResourceLoadHandler {
+public class VidaDataPackHandler {
     public static final ElementPotentialManager ELEMENT_POTENTIAL_MANAGER = new ElementPotentialManager();
 
     @SubscribeEvent
