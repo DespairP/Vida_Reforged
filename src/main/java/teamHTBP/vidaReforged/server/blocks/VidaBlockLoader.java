@@ -47,6 +47,21 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> SILENT_FOREST_WALL = registerDecoBlock("silent_forest_wall", STONE, WALL);
 
+    /**深潜系列**/
+    @RegisterItemBlock
+    public final static RegistryObject<Block> DEEP_STONE = registerDecoBlock("deep_stone", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> DEEP_STONE_BRICK_0 = registerDecoBlock("deep_stone_brick_0", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> DEEP_STONE_BRICK_1 = registerDecoBlock("deep_stone_brick_1", STONE, YAXIS);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> DEEP_STONE_BRICK_2 = registerDecoBlock("deep_stone_brick_2", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> DEEP_STONE_BRICK_3 = registerDecoBlock("deep_stone_brick_3", STONE, YAXIS);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> DEEP_STONE_BRICK_4 = registerDecoBlock("deep_stone_brick_4", STONE, YAXIS);
+
+
     /**生命木板*/
     @RegisterItemBlock
     public final static RegistryObject<Block> VIDA_PLANK_0 = registerDecoBlock("vida_plank_0", WOOD, NORMAL);
