@@ -27,19 +27,13 @@ import java.util.Map;
  * DataPack Loader:ElementPotential {@link ElementPotential}
  * @author DustW,DespairP
  * */
-public class ElementPotentialManager extends SimpleJsonResourceReloadListener {
+public class ElementPotentialManager extends AbstractVidaManager {
     /**PotentialMap*/
     private static Map<String, ElementPotential> itemPotentialMap = new LinkedHashMap<>();
 
-    /**Logger*/
-    public static final Logger LOGGER = LogManager.getLogger();
-
-    private final Gson gson = JsonUtils.getGson(JsonUtils.JsonUtilType.NORMAL);
-
     public ElementPotentialManager() {
-        super(JsonUtils.getGson(JsonUtils.JsonUtilType.NORMAL), VidaConstant.DATA_ELEMENT_POTENTIAL);
+        super(VidaConstant.DATA_ELEMENT_POTENTIAL);
     }
-
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {

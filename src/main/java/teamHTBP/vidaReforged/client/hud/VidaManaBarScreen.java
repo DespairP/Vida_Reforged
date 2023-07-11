@@ -79,7 +79,7 @@ public class VidaManaBarScreen extends GuiGraphics implements IVidaScreen {
 
         manaCap.ifPresent(cap->{
             cap.getCurrentMana().forEach((element, manaAmount) -> {
-                elementRenderWidth.put( element, (int)(manaAmount * MAX_BAR_WIDTH / cap.maxMana()) );
+                elementRenderWidth.put( element, cap.maxMana() <= 0 ? 0 : (int)(manaAmount * MAX_BAR_WIDTH / cap.maxMana()) );
             });
         });
 

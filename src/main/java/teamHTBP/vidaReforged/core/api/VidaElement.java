@@ -1,5 +1,6 @@
 package teamHTBP.vidaReforged.core.api;
 
+import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.color.VidaColor;
 
@@ -30,5 +31,16 @@ public enum VidaElement implements IVidaElement{
     @Override
     public VidaColor getBaseColor() {
         return this.baseColor;
+    }
+
+    public static VidaElement of(String value){
+        try{
+            if(value == null){
+                return EMPTY;
+            }
+            return valueOf(value.toUpperCase());
+        }catch (Exception ex){
+            return EMPTY;
+        }
     }
 }

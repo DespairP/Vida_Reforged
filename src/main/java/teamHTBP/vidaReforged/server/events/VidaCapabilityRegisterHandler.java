@@ -7,6 +7,7 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
+import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
 
 /**
  * 管理注册Capability的Event

@@ -30,10 +30,16 @@ public class VidaCommandRegisterHandler {
                 .then(Commands.argument("element", EnumArgument.enumArgument(VidaElement.class))
                         .then(Commands.argument("mana", DoubleArgumentType.doubleArg()).executes(VidaCommandManager.WAND_MANA_SOURCE))
                 );
+        //list
+        LiteralArgumentBuilder<CommandSourceStack> list = Commands.literal("list")
+                .requires(source -> source.hasPermission(3))
+                .executes(VidaCommandManager.MAGIC_SOURCE);
+
         //组装Magic命令集
         LiteralArgumentBuilder<CommandSourceStack> magic = Commands.literal("magic")
                 .then(setMaxMana)
-                .then(setMana);
+                .then(setMana)
+                .then(list);
 
         dispatcher.register(
                 Commands.literal("vida")
