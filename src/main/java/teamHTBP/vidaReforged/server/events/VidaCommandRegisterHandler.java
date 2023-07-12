@@ -3,6 +3,7 @@ package teamHTBP.vidaReforged.server.events;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -11,6 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.server.command.EnumArgument;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
 import teamHTBP.vidaReforged.server.commands.VidaCommandManager;
 
 @Mod.EventBusSubscriber
@@ -41,9 +43,24 @@ public class VidaCommandRegisterHandler {
                 .then(setMana)
                 .then(list);
 
+        //MagicContainer子命令集
+        // set
+        LiteralArgumentBuilder<CommandSourceStack> setArgs = Commands
+                .literal("setArgs")
+                .then(Commands.argument("container_argument", EnumArgument.enumArgument(VidaMagicContainer.MagicContainerArgument.class))
+                        .then(Commands.argument("container_value", StringArgumentType.string()).executes(VidaCommandManager.MAGIC_CONTAINER))
+                );
+
+
+        // 组装MagicContainer命令集
+        LiteralArgumentBuilder<CommandSourceStack> magicContainer = Commands.literal("magicContainer")
+                .then(setArgs);
+
+
         dispatcher.register(
                 Commands.literal("vida")
                         .then(magic)
+                        .then(magicContainer)
         );
     }
 }

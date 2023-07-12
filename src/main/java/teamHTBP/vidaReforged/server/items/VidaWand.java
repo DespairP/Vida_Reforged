@@ -8,9 +8,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.api.items.IVidaManaConsumable;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
@@ -38,22 +40,24 @@ public class VidaWand extends Item implements IVidaManaConsumable {
         // 获取此次释放魔法需要的信息
         final LazyOptional<VidaMagicContainer> magicContainerInfo = LazyOptional.of(() -> getCurrentMagic(itemInHand));
 
-        // 获取信息
-
-
         //
         LazyOptional<IVidaManaCapability> manaCap = itemInHand.getCapability(VidaCapabilityRegisterHandler.VIDA_MANA);
-        manaCap.ifPresent(cap -> {
-             //System.out.println(cap.getCurrentMana());
-
+        manaCap.ifPresent(manaCapability -> {
+             magicContainerInfo.ifPresent((container)->{
+                 for(int i = 0; i < container.amount(); i++){
+                     Entity entity = VidaEntityLoader.MAGIC_PARTICLE_PROJECTILE.get().create(level);
+                     if (entity instanceof MagicParticleProjectile mpp) {
+                         mpp.initMagicParticleProjectile(player);
+                         Vec3 lookAngle = player.getLookAngle();
+                         mpp.setPos(player.getEyePosition().scale(2).yRot((float) Math.toRadians(10 * i)));
+                         mpp.setDeltaMovement(lookAngle.scale(mpp.particle.speed().value()));
+                         level.addFreshEntity(entity);
+                     }
+                 }
+             });
         });
 
-        Entity entity = VidaEntityLoader.MAGIC_PARTICLE_PROJECTILE.get().create(level);
 
-        if (entity instanceof MagicParticleProjectile mpp) {
-            mpp.initMagicParticleProjectile(player);
-            level.addFreshEntity(entity);
-        }
 
         return super.use(level, player, hand);
     }
@@ -64,7 +68,14 @@ public class VidaWand extends Item implements IVidaManaConsumable {
         LazyOptional<IVidaManaCapability> manaCap = stack.getCapability(VidaCapabilityRegisterHandler.VIDA_MANA);
 
         manaCap.ifPresent(cap -> {
-            tag.set(cap.serializeNBT());
+            CompoundTag manaTag = cap.serializeNBT();
+            tag.get().put("mana", manaTag);
+        });
+
+        LazyOptional<IVidaMagicContainerCapability> containerCap = stack.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER);
+        containerCap.ifPresent(cap ->{
+            CompoundTag manaTag = cap.serializeNBT();
+            tag.get().put("container", manaTag);
         });
 
         return tag.get();
@@ -72,8 +83,13 @@ public class VidaWand extends Item implements IVidaManaConsumable {
 
     @Override
     public void readShareTag(ItemStack stack, @Nullable CompoundTag nbt) {
+        if(nbt == null){
+            return;
+        }
         LazyOptional<IVidaManaCapability> manaCap = stack.getCapability(VidaCapabilityRegisterHandler.VIDA_MANA);
-        manaCap.ifPresent(cap -> cap.deserializeNBT(nbt));
+        manaCap.ifPresent(cap -> cap.deserializeNBT(nbt.getCompound("mana")));
+        LazyOptional<IVidaMagicContainerCapability> containerCap = stack.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER);
+        containerCap.ifPresent(cap -> cap.deserializeNBT(nbt.getCompound("container")));
     }
 
     @Override

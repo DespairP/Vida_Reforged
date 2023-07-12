@@ -9,30 +9,26 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
+import teamHTBP.vidaReforged.server.capabilities.VidaMagicContainerCapability;
 import teamHTBP.vidaReforged.server.capabilities.VidaManaCapability;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 
-public class VidaManaCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-    private IVidaManaCapability capability;
-
+public class VidaMagicCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+    private IVidaMagicContainerCapability capability;
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        return cap == VidaCapabilityRegisterHandler.VIDA_MANA ?
+        return cap == VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER ?
                 LazyOptional.of(this::getOrCreateCapability).cast() :
                 LazyOptional.empty();
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
-        return ICapabilityProvider.super.getCapability(cap);
-    }
-
     /**获取cap*/
-    public IVidaManaCapability getOrCreateCapability(){
+    public IVidaMagicContainerCapability getOrCreateCapability(){
         if(this.capability == null){
-            this.capability = new VidaManaCapability(100);
+            this.capability = new VidaMagicContainerCapability();
         }
         return this.capability;
     }

@@ -2,9 +2,13 @@ package teamHTBP.vidaReforged.core.common.system.magic;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.util.LazyOptional;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
+import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class VidaMagicHelper {
 
@@ -17,6 +21,12 @@ public class VidaMagicHelper {
     }
 
     public static VidaMagicContainer getCurrentMagic(ItemStack wandStack){
-        return new VidaMagicContainer().damage(1).coolDown(120).amount(1).invokeCount(1).costMana(10);
+        if(wandStack == null || wandStack.isEmpty()){
+            return null;
+        }
+        LazyOptional<IVidaMagicContainerCapability> containerCap = wandStack.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER);
+        AtomicReference<VidaMagicContainer> container = new AtomicReference<>(null);
+        containerCap.ifPresent((capability) -> container.set(capability.getContainer()));
+        return container.get();
     }
 }

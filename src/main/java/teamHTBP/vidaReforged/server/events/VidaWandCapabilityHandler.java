@@ -7,6 +7,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.common.VidaConstant;
+import teamHTBP.vidaReforged.server.capabilities.provider.VidaMagicCapabilityProvider;
 import teamHTBP.vidaReforged.server.capabilities.provider.VidaManaCapabilityProvider;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
@@ -19,5 +20,6 @@ public class VidaWandCapabilityHandler {
             return;
         }
         event.addCapability(new ResourceLocation(VidaReforged.MOD_ID, VidaConstant.CAP_VIDA_MANA), new VidaManaCapabilityProvider());
+        event.addCapability(new ResourceLocation(VidaReforged.MOD_ID,VidaConstant.CAP_VIDA_MAGIC_CONTAINER), new VidaMagicCapabilityProvider());
     }
 }

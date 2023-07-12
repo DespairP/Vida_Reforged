@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * 每个魔法强度上都有不同,MagicContainer是为了方便存储每个物品而准备的
  * */
@@ -14,7 +16,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true,fluent = true)
 public class VidaMagicContainer{
     /**Container存储的魔法*/
-    private VidaMagic magic;
+    private List<VidaMagic> magic;
     /**伤害*/
     private double damage;
     /**伤害倍数，增益*/
@@ -37,4 +39,22 @@ public class VidaMagicContainer{
     private long lastInvokeMillSec = 0;
     /**级别*/
     private int level = 0;
+
+    public enum MagicContainerArgument{
+        MAGIC,
+        DAMAGE,
+        MULTIPLIER,
+        DECREASER,
+        COST_MANA,
+        AMOUNT,
+        INVOKE_COUNT,
+        MAX_INVOKE_COUNT,
+        COOLDOWN,
+        LAST_INVOKE_MILLSEC,
+        LEVEL;
+    }
+
+    public static VidaMagicContainer empty(){
+        return new VidaMagicContainer();
+    }
 }

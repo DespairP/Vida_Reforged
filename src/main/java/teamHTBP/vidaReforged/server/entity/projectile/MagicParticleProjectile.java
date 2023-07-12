@@ -26,7 +26,7 @@ import teamHTBP.vidaReforged.core.common.system.magic.particle.MagicParticle;
  */
 public class MagicParticleProjectile extends Projectile {
     // TODO 暂时硬编码，需要在服务端设置后给客户端同步一次
-    MagicParticle particle = MagicParticle.EMPTY;
+    public MagicParticle particle = MagicParticle.EMPTY;
 
     public MagicParticleProjectile(EntityType<MagicParticleProjectile> type, Level level) {
         super(type, level);

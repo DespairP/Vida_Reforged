@@ -45,10 +45,10 @@ public class VidaMagic {
                             new HoverEvent(
                                     HoverEvent.Action.SHOW_TEXT,
                                     Component.empty()
-                                            .append("name:" + this.magicName).append("\n")
-                                            .append("element:" + this.element.name).append("\n")
-                                            .append("isUsable:" + this.isPlayerUsable).append("\n")
-                                            .append("description:" + description)
+                                            .append(this.magicName).append("\n")
+                                            .append(this.element.name).append("\n")
+                                            .append(this.isPlayerUsable ? "player usable" : "player not usable").append("\n")
+                                            .append(description.getString())
                             )
                     );
         });

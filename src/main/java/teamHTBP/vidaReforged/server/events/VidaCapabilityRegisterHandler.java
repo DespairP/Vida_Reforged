@@ -6,6 +6,7 @@ import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
 
@@ -14,11 +15,13 @@ import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
  * */
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class VidaCapabilityRegisterHandler {
-    public static Capability<IVidaManaCapability> VIDA_MANA = CapabilityManager.get(new CapabilityToken<>(){});;
+    public static Capability<IVidaManaCapability> VIDA_MANA = CapabilityManager.get(new CapabilityToken<>(){});
+    public static Capability<IVidaMagicContainerCapability> VIDA_MAGIC_CONTAINER = CapabilityManager.get(new CapabilityToken<>(){});
 
     /**注册Capability*/
     @SubscribeEvent
-    public void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
+    public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
         event.register(IVidaManaCapability.class);
+        event.register(IVidaMagicContainerCapability.class);
     }
 }
