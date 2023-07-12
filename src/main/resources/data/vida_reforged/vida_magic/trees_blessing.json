@@ -1,0 +1,9 @@
+{
+  "name": "trees_blessing",
+  "magicType": "ATTACK_SHOOTABLE",
+  "icon": "vida_reforged:textures/icons/trees_blessing",
+  "iconIndex": 0,
+  "description": "vida_reforged.description.trees_blessing",
+  "element": "FIRE",
+  "isPlayerUsable": true
+}

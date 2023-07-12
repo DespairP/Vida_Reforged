@@ -1,0 +1,9 @@
+{
+  "name": "ice_crystal",
+  "magicType": "ATTACK_SHOOTABLE",
+  "icon": "vida_reforged:textures/icons/ice_crystal",
+  "iconIndex": 0,
+  "description": "vida_reforged.description.ice_crystal",
+  "element": "FIRE",
+  "isPlayerUsable": true
+}

@@ -1,0 +1,9 @@
+{
+  "name": "mining_enhanced",
+  "magicType": "ATTACK_SHOOTABLE",
+  "icon": "vida_reforged:textures/icons/mining_enhanced",
+  "iconIndex": 0,
+  "description": "vida_reforged.description.mining_enhanced",
+  "element": "FIRE",
+  "isPlayerUsable": true
+}

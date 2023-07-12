@@ -1,7 +1,7 @@
 {
   "name": "fireball",
   "magicType": "ATTACK_SHOOTABLE",
-  "icon": "vida_reforged:textures/icons/all_skills",
+  "icon": "vida_reforged:textures/icons/fireball",
   "iconIndex": 0,
   "description": "vida_reforged.description.fireball",
   "element": "FIRE",

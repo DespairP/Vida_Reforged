@@ -1,0 +1,9 @@
+{
+  "name": "metal_hardening",
+  "magicType": "ATTACK_SHOOTABLE",
+  "icon": "vida_reforged:textures/icons/metal_hardening",
+  "iconIndex": 0,
+  "description": "vida_reforged.description.metal_hardening",
+  "element": "FIRE",
+  "isPlayerUsable": true
+}
