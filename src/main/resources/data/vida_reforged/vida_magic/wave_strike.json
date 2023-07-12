@@ -4,6 +4,6 @@
   "icon": "vida_reforged:textures/icons/wave_strike",
   "iconIndex": 0,
   "description": "vida_reforged.description.wave_strike",
-  "element": "FIRE",
+  "element": "AQUA",
   "isPlayerUsable": true
 }

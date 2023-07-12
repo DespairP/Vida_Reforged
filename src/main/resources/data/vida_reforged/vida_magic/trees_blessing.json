@@ -4,6 +4,6 @@
   "icon": "vida_reforged:textures/icons/trees_blessing",
   "iconIndex": 0,
   "description": "vida_reforged.description.trees_blessing",
-  "element": "FIRE",
+  "element": "WOOD",
   "isPlayerUsable": true
 }

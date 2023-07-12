@@ -4,6 +4,6 @@
   "icon": "vida_reforged:textures/icons/ice_crystal",
   "iconIndex": 0,
   "description": "vida_reforged.description.ice_crystal",
-  "element": "FIRE",
+  "element": "AQUA",
   "isPlayerUsable": true
 }

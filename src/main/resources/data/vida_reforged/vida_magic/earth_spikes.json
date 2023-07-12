@@ -4,6 +4,6 @@
   "icon": "vida_reforged:textures/icons/earth_spikes",
   "iconIndex": 0,
   "description": "vida_reforged.description.earth_spikes",
-  "element": "FIRE",
+  "element": "EARTH",
   "isPlayerUsable": true
 }

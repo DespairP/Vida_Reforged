@@ -4,6 +4,6 @@
   "icon": "vida_reforged:textures/icons/mining_enhanced",
   "iconIndex": 0,
   "description": "vida_reforged.description.mining_enhanced",
-  "element": "FIRE",
+  "element": "GOLD",
   "isPlayerUsable": true
 }
