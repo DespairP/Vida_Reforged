@@ -7,6 +7,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -14,6 +15,10 @@ import net.minecraftforge.server.command.EnumArgument;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
 import teamHTBP.vidaReforged.server.commands.VidaCommandManager;
+import teamHTBP.vidaReforged.server.commands.arguments.MagicArgument;
+import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
+
+import java.util.stream.Stream;
 
 @Mod.EventBusSubscriber
 public class VidaCommandRegisterHandler {
@@ -51,10 +56,18 @@ public class VidaCommandRegisterHandler {
                         .then(Commands.argument("container_value", StringArgumentType.string()).executes(VidaCommandManager.MAGIC_CONTAINER))
                 );
 
+        //add magic
+        LiteralArgumentBuilder<CommandSourceStack> addMagic = Commands
+                .literal("addMagic")
+                .then(Commands.argument("magic_id", StringArgumentType.greedyString())
+                        .suggests((context, builder) -> SharedSuggestionProvider.suggest(MagicTemplateManager.getMagicsKey(), builder))
+                        .executes(VidaCommandManager.MAGIC_CONTAINER_ADD_SOURCE)
+                );
 
         // 组装MagicContainer命令集
         LiteralArgumentBuilder<CommandSourceStack> magicContainer = Commands.literal("magicContainer")
-                .then(setArgs);
+                .then(setArgs)
+                .then(addMagic);
 
 
         dispatcher.register(

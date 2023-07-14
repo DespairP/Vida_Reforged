@@ -1,8 +1,13 @@
 package teamHTBP.vidaReforged.server.capabilities;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.item.ItemStack;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class VidaMagicContainerCapability implements IVidaMagicContainerCapability {
     private VidaMagicContainer magicContainer;
@@ -39,6 +44,18 @@ public class VidaMagicContainerCapability implements IVidaMagicContainerCapabili
         tag.putLong("coolDown", container.coolDown());
         tag.putLong("lastInvokeMillSec", container.lastInvokeMillSec());
         tag.putInt("level", container.level());
+
+        ListTag magicListTag = new ListTag();
+
+        for(int i = 0; i < magicContainer.magic().size(); ++i){
+            CompoundTag magicTag = new CompoundTag();
+            magicTag.putByte("Magic", (byte)i);
+            magicTag.putString("magicId", magicContainer.magic().get(i));
+            magicListTag.add(magicTag);
+        }
+
+        tag.put("magic", magicListTag);
+
         return tag;
     }
 
@@ -54,6 +71,18 @@ public class VidaMagicContainerCapability implements IVidaMagicContainerCapabili
         long coolDown  = nbt.getLong("coolDown");
         long lastInvokeMillSec  = nbt.getLong("lastInvokeMillSec");
         int level  = nbt.getInt("level");
+        List<String> magics = new LinkedList<>();
+
+        //获取魔法
+        ListTag magicListTag = (ListTag) nbt.get("magic");
+        if(magicListTag != null){
+            for(int i = 0; i < magicListTag.size(); ++i) {
+                CompoundTag magicTag = magicListTag.getCompound(i);
+                magics.add(magicTag.getString("magicId"));
+            }
+        }
+
+
         getContainer().damage(damage)
                 .multiplier(multiplier)
                 .decreaser(decreaser)
@@ -63,7 +92,8 @@ public class VidaMagicContainerCapability implements IVidaMagicContainerCapabili
                 .maxInvokeCount(maxInvokeCount)
                 .coolDown(coolDown)
                 .lastInvokeMillSec(lastInvokeMillSec)
-                .level(level);
+                .level(level)
+                .magic(magics);
     }
 
 }

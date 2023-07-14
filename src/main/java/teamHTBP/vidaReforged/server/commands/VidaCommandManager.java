@@ -2,27 +2,41 @@ package teamHTBP.vidaReforged.server.commands;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.ArgumentType;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
+import teamHTBP.vidaReforged.server.commands.arguments.MagicArgument;
+import teamHTBP.vidaReforged.server.commands.arguments.MagicArgumentInfo;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class VidaCommandManager {
+    public final static DeferredRegister<ArgumentTypeInfo<?,?>> ARGUMENT_TYPE = DeferredRegister.create(ForgeRegistries.COMMAND_ARGUMENT_TYPES, VidaReforged.MOD_ID);
+
+    public final static RegistryObject<ArgumentTypeInfo<?,?>> MAGIC_TYPE = ARGUMENT_TYPE.register("magic_type", MagicArgumentInfo::new);
+
     public final static Command<CommandSourceStack> WAND_MAX_MANA_SOURCE = (context)->{
         try {
             double maxMana = context.getArgument("max_mana", Double.class);
@@ -120,6 +134,44 @@ public class VidaCommandManager {
         context.getSource().sendSuccess(() -> Component.literal("argument set success"), false);
         return 1;
     };
+
+    public final static Command<CommandSourceStack> MAGIC_CONTAINER_ADD_SOURCE = context -> {
+        String magicId = context.getArgument("magic_id", String.class);
+        ServerPlayer player = context.getSource().getPlayerOrException();
+        ItemStack handInItem = player.getItemInHand(InteractionHand.MAIN_HAND);
+
+        //
+        if(!handInItem.is(VidaItemLoader.VIDA_WAND.get())){
+            context.getSource().sendFailure(Component.literal("only vida wand can add Magic"));
+            return 1;
+        }
+        //
+        VidaMagic magic = MagicTemplateManager.getMagicById(magicId);
+        if(magic == null){
+            context.getSource().sendFailure(Component.translatable("magic %s not exists", magicId));
+            return 1;
+        }
+
+        //
+        LazyOptional<IVidaMagicContainerCapability> containerCapability = handInItem.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER);
+        AtomicBoolean isAdded = new AtomicBoolean(false);
+        containerCapability.ifPresent((cap) ->{
+            List<String> magics = cap.getContainer().magic();
+            if(!magics.contains(magicId)){
+                magics.add(magicId);
+                isAdded.set(true);
+            }
+        });
+
+        if(!isAdded.get()){
+            context.getSource().sendFailure(Component.translatable("magic %s is already added", magicId));
+            return 1;
+        }
+
+        context.getSource().sendSuccess(()->Component.translatable("magic %s is added", magicId), false);
+        return 1;
+    };
+
 
     private static Component getMagicList(){
         Map<String,VidaMagic> magicMap = MagicTemplateManager.getAllMagicAsString();

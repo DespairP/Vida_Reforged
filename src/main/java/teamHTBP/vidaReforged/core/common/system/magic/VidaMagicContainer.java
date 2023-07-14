@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 每个魔法强度上都有不同,MagicContainer是为了方便存储每个物品而准备的
@@ -16,7 +18,7 @@ import java.util.List;
 @Accessors(chain = true,fluent = true)
 public class VidaMagicContainer{
     /**Container存储的魔法*/
-    private List<VidaMagic> magic;
+    private List<String> magic = new LinkedList<>();
     /**伤害*/
     private double damage;
     /**伤害倍数，增益*/

@@ -9,10 +9,9 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.VidaConstant;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
+import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * 管理和注册所有魔法模板
@@ -56,8 +55,17 @@ public class MagicTemplateManager extends AbstractVidaManager{
         magicResourceMap.put(location, magic);
     }
 
+    @Deprecated
     public static Map<String,VidaMagic> getAllMagicAsString(){
         return magicIdMap;
+    }
+
+    public static VidaMagic getMagicById(String magicId){
+        return magicIdMap.getOrDefault(magicId,null);
+    }
+
+    public static Set<String> getMagicsKey(){
+        return magicIdMap.keySet();
     }
 
 }

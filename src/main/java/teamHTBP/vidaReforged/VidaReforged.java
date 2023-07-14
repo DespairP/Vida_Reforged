@@ -7,6 +7,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import teamHTBP.vidaReforged.server.blockEntities.VidaBlockEntityLoader;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
+import teamHTBP.vidaReforged.server.commands.VidaCommandManager;
 import teamHTBP.vidaReforged.server.entity.VidaEntityLoader;
 import teamHTBP.vidaReforged.server.events.VidaItemGroupLoader;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
@@ -36,5 +37,6 @@ public class VidaReforged {
         VidaMenuContainerTypeLoader.MENU_CONTAINER_TYPE.register(bus);
         VidaMobsLoader.ENTITY_TYPES.register(bus);
         VidaItemGroupLoader.CREATIVE_TAB.register(bus);
+        //VidaCommandManager.ARGUMENT_TYPE.register(bus);
     }
 }

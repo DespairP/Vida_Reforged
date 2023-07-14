@@ -37,6 +37,7 @@ public class VidaManaCapability implements IVidaManaCapability {
 
     @Override
     public double consumeMana(VidaElement element, double energy) {
+        elementMana.replace(element, elementMana.get(element) - energy);
         return 0;
     }
 
@@ -62,7 +63,7 @@ public class VidaManaCapability implements IVidaManaCapability {
 
     @Override
     public boolean testConsume(VidaElement element, double energy) {
-        return false;
+        return elementMana.getOrDefault(element,0.0) > energy ;
     }
 
     @Override
