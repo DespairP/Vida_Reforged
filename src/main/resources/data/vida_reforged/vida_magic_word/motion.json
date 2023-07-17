@@ -1,0 +1,7 @@
+{
+  "name": "motion",
+  "icon": "vida_reforged:textures/icons/magic_word/tile082.png",
+  "description": "vida_reforged.description.motion",
+  "element": "VOID",
+  "chance": 0.10
+}

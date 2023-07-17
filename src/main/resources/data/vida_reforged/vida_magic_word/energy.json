@@ -1,0 +1,7 @@
+{
+  "name": "energy",
+  "icon": "vida_reforged:textures/icons/magic_word/tile081.png",
+  "description": "vida_reforged.description.energy",
+  "element": "VOID",
+  "chance": 0.10
+}

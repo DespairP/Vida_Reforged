@@ -1,0 +1,7 @@
+{
+  "name": "rotten",
+  "icon": "vida_reforged:textures/icons/magic_word/tile017.png",
+  "description": "vida_reforged.description.rotten",
+  "element": "WOOD",
+  "chance": 0.10
+}

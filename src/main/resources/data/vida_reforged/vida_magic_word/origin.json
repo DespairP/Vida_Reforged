@@ -1,0 +1,7 @@
+{
+  "name": "origin",
+  "icon": "vida_reforged:textures/icons/magic_word/tile065.png",
+  "description": "vida_reforged.description.origin",
+  "element": "EARTH",
+  "chance": 0.10
+}

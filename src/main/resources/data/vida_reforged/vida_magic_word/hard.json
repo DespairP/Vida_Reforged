@@ -1,0 +1,7 @@
+{
+  "name": "hard",
+  "icon": "vida_reforged:textures/icons/magic_word/tile001.png",
+  "description": "vida_reforged.description.hard",
+  "element": "GOLD",
+  "chance": 0.10
+}

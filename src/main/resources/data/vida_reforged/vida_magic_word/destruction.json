@@ -1,0 +1,7 @@
+{
+  "name": "destruction",
+  "icon": "vida_reforged:textures/icons/magic_word/tile049.png",
+  "description": "vida_reforged.description.destruction",
+  "element": "FIRE",
+  "chance": 0.10
+}

@@ -1,0 +1,7 @@
+{
+  "name": "reborn",
+  "icon": "vida_reforged:textures/icons/magic_word/tile016.png",
+  "description": "vida_reforged.description.reborn",
+  "element": "WOOD",
+  "chance": 0.10
+}

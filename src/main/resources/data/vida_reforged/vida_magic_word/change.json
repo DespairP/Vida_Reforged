@@ -1,0 +1,7 @@
+{
+  "name": "change",
+  "icon": "vida_reforged:textures/icons/magic_word/tile034.png",
+  "description": "vida_reforged.description.change",
+  "element": "AQUA",
+  "chance": 0.10
+}

@@ -1,0 +1,7 @@
+{
+  "name": "sharp",
+  "icon": "vida_reforged:textures/icons/magic_word/tile004.png",
+  "description": "vida_reforged.description.sharp",
+  "element": "GOLD",
+  "chance": 0.10
+}

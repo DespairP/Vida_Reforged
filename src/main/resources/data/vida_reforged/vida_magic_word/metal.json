@@ -1,0 +1,7 @@
+{
+  "name": "metal",
+  "icon": "vida_reforged:textures/icons/magic_word/tile000.png",
+  "description": "vida_reforged.description.metal",
+  "element": "GOLD",
+  "chance": 0.10
+}

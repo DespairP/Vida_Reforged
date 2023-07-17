@@ -1,0 +1,7 @@
+{
+  "name": "plasticity",
+  "icon": "vida_reforged:textures/icons/magic_word/tile003.png",
+  "description": "vida_reforged.description.plasticity",
+  "element": "GOLD",
+  "chance": 0.10
+}

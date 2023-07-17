@@ -1,0 +1,7 @@
+{
+  "name": "brun",
+  "icon": "vida_reforged:textures/icons/magic_word/tile048.png",
+  "description": "vida_reforged.description.brun",
+  "element": "FIRE",
+  "chance": 0.10
+}

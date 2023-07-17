@@ -1,0 +1,7 @@
+{
+  "name": "thought",
+  "icon": "vida_reforged:textures/icons/magic_word/tile080.png",
+  "description": "vida_reforged.description.thought",
+  "element": "VOID",
+  "chance": 0.10
+}

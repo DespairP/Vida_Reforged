@@ -1,0 +1,7 @@
+{
+  "name": "creativity",
+  "icon": "vida_reforged:textures/icons/magic_word/tile086.png",
+  "description": "vida_reforged.description.creativity",
+  "element": "VOID",
+  "chance": 0.10
+}

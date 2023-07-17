@@ -1,0 +1,7 @@
+{
+  "name": "loop",
+  "icon": "vida_reforged:textures/icons/magic_word/tile018.png",
+  "description": "vida_reforged.description.loop",
+  "element": "WOOD",
+  "chance": 0.10
+}

@@ -1,0 +1,7 @@
+{
+  "name": "rock",
+  "icon": "vida_reforged:textures/icons/magic_word/tile068.png",
+  "description": "vida_reforged.description.rock",
+  "element": "EARTH",
+  "chance": 0.10
+}

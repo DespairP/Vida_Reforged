@@ -1,0 +1,7 @@
+{
+  "name": "cloud",
+  "icon": "vida_reforged:textures/icons/magic_word/tile036.png",
+  "description": "vida_reforged.description.cloud",
+  "element": "AQUA",
+  "chance": 0.10
+}

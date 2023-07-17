@@ -1,0 +1,7 @@
+{
+  "name": "inspiration",
+  "icon": "vida_reforged:textures/icons/magic_word/tile085.png",
+  "description": "vida_reforged.description.inspiration",
+  "element": "VOID",
+  "chance": 0.10
+}

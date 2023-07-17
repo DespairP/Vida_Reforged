@@ -1,0 +1,7 @@
+{
+  "name": "poisonous",
+  "icon": "vida_reforged:textures/icons/magic_word/tile020.png",
+  "description": "vida_reforged.description.poisonous",
+  "element": "WOOD",
+  "chance": 0.10
+}

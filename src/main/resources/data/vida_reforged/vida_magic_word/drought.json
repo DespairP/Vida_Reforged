@@ -1,0 +1,7 @@
+{
+  "name": "drought",
+  "icon": "vida_reforged:textures/icons/magic_word/tile066.png",
+  "description": "vida_reforged.description.drought",
+  "element": "EARTH",
+  "chance": 0.10
+}

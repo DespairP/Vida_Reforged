@@ -1,0 +1,7 @@
+{
+  "name": "decompose",
+  "icon": "vida_reforged:textures/icons/magic_word/tile051.png",
+  "description": "vida_reforged.description.decompose",
+  "element": "FIRE",
+  "chance": 0.10
+}

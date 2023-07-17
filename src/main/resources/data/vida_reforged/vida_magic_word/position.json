@@ -1,0 +1,7 @@
+{
+  "name": "position",
+  "icon": "vida_reforged:textures/icons/magic_word/tile083.png",
+  "description": "vida_reforged.description.position",
+  "element": "VOID",
+  "chance": 0.10
+}

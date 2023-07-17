@@ -1,0 +1,7 @@
+{
+  "name": "flow",
+  "icon": "vida_reforged:textures/icons/magic_word/tile035.png",
+  "description": "vida_reforged.description.flow",
+  "element": "AQUA",
+  "chance": 0.10
+}

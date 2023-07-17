@@ -1,0 +1,7 @@
+{
+  "name": "greed",
+  "icon": "vida_reforged:textures/icons/magic_word/tile002.png",
+  "description": "vida_reforged.description.greed",
+  "element": "GOLD",
+  "chance": 0.10
+}

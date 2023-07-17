@@ -1,0 +1,7 @@
+{
+  "name": "scorching",
+  "icon": "vida_reforged:textures/icons/magic_word/tile050.png",
+  "description": "vida_reforged.description.scorching",
+  "element": "FIRE",
+  "chance": 0.10
+}

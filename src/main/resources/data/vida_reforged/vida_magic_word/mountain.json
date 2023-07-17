@@ -1,0 +1,7 @@
+{
+  "name": "mountain",
+  "icon": "vida_reforged:textures/icons/magic_word/tile067.png",
+  "description": "vida_reforged.description.mountain",
+  "element": "EARTH",
+  "chance": 0.10
+}

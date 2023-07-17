@@ -1,0 +1,7 @@
+{
+  "name": "tree",
+  "icon": "vida_reforged:textures/icons/magic_word/tile019.png",
+  "description": "vida_reforged.description.tree",
+  "element": "WOOD",
+  "chance": 0.10
+}

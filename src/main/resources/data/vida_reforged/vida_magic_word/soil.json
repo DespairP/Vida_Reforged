@@ -1,0 +1,7 @@
+{
+  "name": "soil",
+  "icon": "vida_reforged:textures/icons/magic_word/tile064.png",
+  "description": "vida_reforged.description.soil",
+  "element": "EARTH",
+  "chance": 0.10
+}
