@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
@@ -34,37 +35,49 @@ public class MagicWordWidget extends AbstractWidget {
     public FloatRange downBorderPoint = new FloatRange(0,0, WIDTH);
     public FloatRange selectedAlpha = new FloatRange(0,0, 1);
     private MagicWordListWidget container;
-    private VidaElement parentElement;
+    private VidaElement element;
     private VidaMagicWordViewModel model;
     private boolean isSelected = false;
 
-    public MagicWordWidget(VidaMagicWordViewModel model, int x, int y, MagicWord word) {
+    public MagicWordWidget(VidaMagicWordViewModel model,MagicWordListWidget parent, int x, int y, MagicWord word) {
         super(x, y, WIDTH, HEIGHT, Component.translatable("magic word"));
         this.magicWord = word;
         this.model = model;
+        this.container = parent;
         this.init();
     }
 
     public void init(){
-        IDataObserver<Map<VidaElement,String>> observer = (value)->{
-            if(magicWord == null || value == null){
-                setSelected(false);
-                return;
-            }
-            setSelected(value.equals(magicWord.name()));
-        };
+        IDataObserver<Map<VidaElement,String>> observer = this::checkIfSelected;
         this.model.selectedMagicWord.observe(observer);
+        this.checkIfSelected(this.model.selectedMagicWord.getValue());
+    }
+
+    public void checkIfSelected(Map<VidaElement,String> value){
+        if(magicWord == null || value == null || magicWord.element() == null){
+            setSelected(false);
+            return;
+        }
+        String selectedMagicId = value.get(magicWord.element());
+        if(selectedMagicId == null){
+            setSelected(false);
+            return;
+        }
+        setSelected(selectedMagicId.equals(magicWord.name()));
     }
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         this.isHovered = mouseX >= this.getX() &&
-                mouseY >= this.getY() + getScroll() &&
+                mouseY >= this.getY() &&
                 mouseX < this.getX() + this.width &&
-                mouseY < this.getY() + this.height + getScroll();
+                mouseY < this.getY() + this.height;
 
         upperBorderPoint.change(isHovered, 3f);
         downBorderPoint.change(isHovered, 2.85f);
+
+        // 绘制选择的背景
+        renderSelectedBg(graphics, mouseX, mouseY, partialTicks);
 
         // 绘制背景
         PoseStack poseStack = graphics.pose();
@@ -72,7 +85,7 @@ public class MagicWordWidget extends AbstractWidget {
         poseStack.pushPose();
         Matrix4f matrix4f = poseStack.last().pose();
         VertexConsumer buffer = graphics.bufferSource().getBuffer(RenderType.gui());
-        matrix4f.translate(getX(), getY() + getScroll(), 0);
+        matrix4f.translate(getX(), getY(), 0);
         ARGBColor color = new ARGBColor(255,0,0,0);
         float r = color.r() / 255.0f;
         float g = color.g() / 255.0f;
@@ -94,25 +107,28 @@ public class MagicWordWidget extends AbstractWidget {
 
         poseStack.popPose();
 
-        poseStack.pushPose();
-        Minecraft mc = Minecraft.getInstance();
-        Component testComponent = Component.translatable("净化").withStyle((style) -> {
-            return style.withFont(DINKFONT).withBold(false);
-        });
 
-        graphics.drawString(mc.font, testComponent,getX() + 28, getY() + 8 + getScroll(), 0xFFFFFFFF);
-        poseStack.popPose();
 
-        // 绘制选择的背景
-        renderSelectedBg(graphics, mouseX, mouseY, partialTicks);
 
-        // 绘制图标
         if(magicWord == null){
             return;
         }
+
+        // 绘制名字
+        poseStack.pushPose();
+        Minecraft mc = Minecraft.getInstance();
+        String name = Language.getInstance().getOrDefault(magicWord.name(), magicWord.name());
+        name = name.substring(0,Math.min(name.length(), 10));
+        Component testComponent = Component.literal(name).withStyle((style) -> {
+            return style.withFont(DINKFONT).withBold(false);
+        });
+        graphics.drawString(mc.font, testComponent,getX() + 28, getY() + 8, 0xFFFFFFFF);
+        poseStack.popPose();
+
+        // 绘制图标
         TextureSection section = new TextureSection(magicWord.icon(),0,0,16,16);
         final int iconX = getX() + 4;
-        final int iconY = getY() + ((HEIGHT - ICON_PIXEL) / 2) + getScroll();
+        final int iconY = getY() + ((HEIGHT - ICON_PIXEL) / 2) ;
 
         poseStack.pushPose();
         graphics.blit(
@@ -123,28 +139,30 @@ public class MagicWordWidget extends AbstractWidget {
                 ICON_PIXEL, ICON_PIXEL
         );
         poseStack.popPose();
+
+
     }
 
     public void renderSelectedBg(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
-        float alpha = this.selectedAlpha.change(this.isSelected,0.1f);
+        float alpha = this.selectedAlpha.change(this.isSelected,0.05f);
         PoseStack poseStack = graphics.pose();
 
         poseStack.pushPose();
         Matrix4f matrix4f = poseStack.last().pose();
         VertexConsumer buffer = graphics.bufferSource().getBuffer(RenderType.gui());
-        matrix4f.translate(getX(), getY() + getScroll(), 0);
-        ARGBColor fromColor = ARGBColor.of(183, 33, 255);
+        matrix4f.translate(getX(), getY(), 0);
+        ARGBColor fromColor = ARGBColor.of(125, 226, 252);
         float fromR = fromColor.r() / 255.0f;
         float fromG = fromColor.g() / 255.0f;
         float fromB = fromColor.b() / 255.0f;
 
-        ARGBColor toColor = ARGBColor.of(33, 212, 253);
+        ARGBColor toColor = ARGBColor.of(185, 182, 229);
         float toR = toColor.r() / 255.0f;
         float toG = toColor.g() / 255.0f;
         float toB = toColor.b() / 255.0f;
 
-        buffer.vertex(matrix4f, 0, 0, 0).color(fromR, fromG, fromB, alpha).endVertex();
-        buffer.vertex(matrix4f, 0, HEIGHT, 0).color(toR, toG, toB, alpha).endVertex();
+        buffer.vertex(matrix4f, 0, 0, 0).color(toR, toG, toB, alpha).endVertex();
+        buffer.vertex(matrix4f, 0, HEIGHT, 0).color(fromR, fromG, fromB, alpha).endVertex();
         buffer.vertex(matrix4f, WIDTH, HEIGHT, 0).color(toR, toG, toB, alpha).endVertex();
         buffer.vertex(matrix4f, WIDTH, 0, 0).color(fromR, fromG, fromB, alpha).endVertex();
 
@@ -154,10 +172,6 @@ public class MagicWordWidget extends AbstractWidget {
 
     public int getScroll(){
         return this.container == null ? 0 : this.container.getScroll();
-    }
-
-    public void parentElement(VidaElement element){
-        this.parentElement = element;
     }
 
     @Override
@@ -170,7 +184,19 @@ public class MagicWordWidget extends AbstractWidget {
     }
 
     @Override
-    public void onClick(double p_93634_, double p_93635_) {
+    public int getX() {
+        return super.getX();
+    }
+
+    @Override
+    public int getY() {
+        return super.getY() + this.getScroll();
+    }
+
+    @Override
+    public void onClick(double x, double y) {
         this.model.setSelectWord(magicWord.element(),magicWord.name());
     }
+
+
 }

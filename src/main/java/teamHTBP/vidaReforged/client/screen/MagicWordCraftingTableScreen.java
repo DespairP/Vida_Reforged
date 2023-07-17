@@ -1,5 +1,6 @@
 package teamHTBP.vidaReforged.client.screen;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -75,5 +76,12 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
         listeners.add(this.magicWordWidget);
         listeners.addAll(this.magicWordWidget.getChildren());
         return listeners;
+    }
+
+    @Override
+    protected void clearWidgets() {
+        this.viewModel.selectedMagicWord.clearObservers();
+        this.viewModel.selectedFilterElement.clearObservers();
+        super.clearWidgets();
     }
 }

@@ -31,4 +31,8 @@ public class LiveData<T> {
     public T getValue(){
         return this.data;
     }
+
+    public void clearObservers(){
+        this.observersList.clear();
+    }
 }

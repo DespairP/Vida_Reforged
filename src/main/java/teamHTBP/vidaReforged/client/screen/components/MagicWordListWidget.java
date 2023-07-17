@@ -1,5 +1,6 @@
 package teamHTBP.vidaReforged.client.screen.components;
 
+import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -24,7 +25,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MagicWordListWidget extends AbstractWidget {
-    private AbstractContainerScreen parent;
     public final static int WIDTH = 180;
     public final Map<VidaElement, List<MagicWordWidget>> widgetMap;
     public VidaElement currentSelectedElement = VidaElement.GOLD;
@@ -43,14 +43,21 @@ public class MagicWordListWidget extends AbstractWidget {
         for(VidaElement element : VidaElement.values()){
             widgetMap.put(element,new LinkedList<>());
         }
+        Map<VidaElement,AtomicInteger> offset = ImmutableMap.of(
+                VidaElement.GOLD, new AtomicInteger(0),
+                VidaElement.WOOD, new AtomicInteger(0),
+                VidaElement.AQUA, new AtomicInteger(0),
+                VidaElement.FIRE, new AtomicInteger(0),
+                VidaElement.EARTH, new AtomicInteger(0)
+        );
 
-        for(int i = 0;i < 20;i++){
+        for(MagicWord word : MagicWordManager.getAllMagicWords()){
+            int i = offset.getOrDefault(word.element(), new AtomicInteger(0)).getAndIncrement();
             int x = (i % 2) * MagicWordWidget.WIDTH;
             int y = (int)Math.floor(i / 2.0f) * MagicWordWidget.HEIGHT;
             int offsetX = (i % 2) * 5;
             int offsetY = (int)Math.floor(i / 2.0f) * 10;
-            MagicWord word = MagicWordManager.getMagicWord("vida_reforged:purify");
-            MagicWordWidget magicWordWidget = new MagicWordWidget(model,getX() + x + offsetX, getY() + y + offsetY, word);
+            MagicWordWidget magicWordWidget = new MagicWordWidget(model, this, getX() + x + offsetX, getY() + y + offsetY, word);
             widgetMap.get(word.element()).add(magicWordWidget);
         }
 
@@ -131,8 +138,13 @@ public class MagicWordListWidget extends AbstractWidget {
         return Math.max(0, allWordHeight - getHeight());
     }
 
+    @Override
+    public void onClick(double x, double y) {
+        widgetMap.get(currentSelectedElement).forEach(widget -> widget.mouseClicked(x, y, 0));
+    }
+
     public Collection<? extends GuiEventListener> getChildren(){
-        List<GuiEventListener> listeners = new ArrayList<>();
+        List<MagicWordWidget> listeners = new ArrayList<>();
         this.widgetMap.forEach((key,value)->listeners.addAll(value));
         return listeners;
     }
