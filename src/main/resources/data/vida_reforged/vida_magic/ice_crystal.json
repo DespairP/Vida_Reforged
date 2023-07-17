@@ -1,7 +1,7 @@
 {
   "name": "ice_crystal",
   "magicType": "ATTACK_SHOOTABLE",
-  "icon": "vida_reforged:textures/icons/ice_crystal",
+  "icon": "vida_reforged:textures/icons/ice_crystal.png",
   "iconIndex": 0,
   "description": "vida_reforged.description.ice_crystal",
   "element": "AQUA",

@@ -8,6 +8,7 @@ import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import teamHTBP.vidaReforged.client.screen.components.MagicWordWidget;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
@@ -42,4 +43,15 @@ public class VidaMenuContainerTypeLoader {
             )
     );
 
+    public final static RegistryObject<MenuType<MagicWordCraftingTableMenu>> MAGIC_WORD_CRAFTING = MENU_CONTAINER_TYPE.register(
+            MagicWordCraftingTableMenu.MENU_NAME,
+            () -> IForgeMenuType.create(
+                    (windowId, inv, data) -> new MagicWordCraftingTableMenu(
+                            windowId,
+                            ContainerLevelAccess.create( inv.player.getCommandSenderWorld(), data.readBlockPos()),
+                            inv,
+                            data.readBlockPos()
+                    )
+            )
+    );
 }

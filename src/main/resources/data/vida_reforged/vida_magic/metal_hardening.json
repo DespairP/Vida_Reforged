@@ -1,7 +1,7 @@
 {
   "name": "metal_hardening",
   "magicType": "ATTACK_SHOOTABLE",
-  "icon": "vida_reforged:textures/icons/metal_hardening",
+  "icon": "vida_reforged:textures/icons/metal_hardening.png",
   "iconIndex": 0,
   "description": "vida_reforged.description.metal_hardening",
   "element": "GOLD",

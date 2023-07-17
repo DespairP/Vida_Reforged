@@ -1,13 +1,16 @@
 package teamHTBP.vidaReforged.server.items;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
@@ -19,12 +22,15 @@ import teamHTBP.vidaReforged.core.api.items.IVidaManaConsumable;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
+import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicHelper;
+import teamHTBP.vidaReforged.server.components.VidaWandTooltipComponent;
 import teamHTBP.vidaReforged.server.entity.VidaEntityLoader;
 import teamHTBP.vidaReforged.server.entity.projectile.MagicParticleProjectile;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static teamHTBP.vidaReforged.core.common.system.magic.VidaMagicHelper.getCurrentMagic;
@@ -51,11 +57,34 @@ public class VidaWand extends Item implements IVidaManaConsumable {
         //处理
         manaCap.ifPresent((manaCapability) -> {
             containerCap.ifPresent((container)->{
-                 doMagic(container, manaCapability, level, player, itemInHand);
+                 boolean isMagicReleased = doMagic(container, manaCapability, level, player, itemInHand);
              });
         });
 
+
         return super.use(level, player, hand);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
+        components.add(Component.translatable("VidaWand"));
+    }
+
+    /***/
+    @Override
+    public Optional<TooltipComponent> getTooltipImage(ItemStack itemStack) {
+        AtomicReference<TooltipComponent> componentReference = new AtomicReference<>(null);
+        // 获取container中所存的魔法
+        this.getContainerCapability(itemStack).ifPresent((containerCap) ->{
+            if(containerCap.getContainer() != null){
+                final List<String> magics = containerCap.getContainer().magic() == null ? ImmutableList.of() : containerCap.getContainer().magic();
+                componentReference.set(
+                        new VidaWandTooltipComponent(magics)
+                );
+            }
+
+        });
+        return Optional.ofNullable(componentReference.get());
     }
 
     /**发送Packet到Client端时，Server端需要将Capability解析*/
@@ -96,8 +125,12 @@ public class VidaWand extends Item implements IVidaManaConsumable {
         return itemStack.getCapability(VidaCapabilityRegisterHandler.VIDA_MANA);
     }
 
+    public LazyOptional<IVidaMagicContainerCapability> getContainerCapability(ItemStack itemStack) {
+        return itemStack.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER);
+    }
+
     /**魔法释放处理逻辑*/
-    public boolean doMagic(IVidaMagicContainerCapability magicContainer,IVidaManaCapability mana,Level level,Player player,ItemStack handInItem){
+    public boolean doMagic(IVidaMagicContainerCapability magicContainer,IVidaManaCapability mana, Level level, Player player, ItemStack handInItem){
         final long currentMillSecond = System.currentTimeMillis();
         final VidaMagicContainer container = magicContainer.getContainer();
         final List<String> magicList = container.magic();
@@ -120,13 +153,8 @@ public class VidaWand extends Item implements IVidaManaConsumable {
 
         mana.consumeMana(currentMagic.element(), container.costMana());
         container.lastInvokeMillSec(currentMillSecond);
-        Entity entity = VidaEntityLoader.MAGIC_PARTICLE_PROJECTILE.get().create(level);
-        if (entity instanceof MagicParticleProjectile mpp) {
-            mpp.initMagicParticleProjectile(player);
-            level.addFreshEntity(entity);
-        }
 
-        System.out.println(container);
+        VidaMagicHelper.invokeMagic(magicContainer,mana,level,player);
 
         return true;
     }

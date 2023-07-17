@@ -12,6 +12,8 @@ import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 管理和注册所有魔法模板
@@ -62,6 +64,14 @@ public class MagicTemplateManager extends AbstractVidaManager{
 
     public static VidaMagic getMagicById(String magicId){
         return magicIdMap.getOrDefault(magicId,null);
+    }
+
+    public static Map<String,VidaMagic> getMagicByIds(List<String> magicIdList){
+        return
+                magicIdMap.values()
+                        .stream()
+                        .filter(magic -> magicIdList.contains(magic.magicName()))
+                        .collect(Collectors.toMap(VidaMagic::magicName, vidaMagic -> vidaMagic));
     }
 
     public static Set<String> getMagicsKey(){

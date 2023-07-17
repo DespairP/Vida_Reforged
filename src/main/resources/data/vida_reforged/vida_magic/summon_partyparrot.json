@@ -1,7 +1,7 @@
 {
   "name": "summon_partyparrot",
   "magicType": "ATTACK_SHOOTABLE",
-  "icon": "vida_reforged:textures/icons/summon_partyparrot",
+  "icon": "vida_reforged:textures/icons/summon_partyparrot.png",
   "iconIndex": 0,
   "description": "vida_reforged.description.summon_partyparrot",
   "element": "FIRE",

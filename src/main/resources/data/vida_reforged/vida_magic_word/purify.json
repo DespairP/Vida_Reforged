@@ -1,0 +1,7 @@
+{
+  "name": "purify",
+  "icon": "vida_reforged:textures/icons/magic_word/tile032.png",
+  "description": "vida_reforged.description.purify",
+  "element": "AQUA",
+  "chance": 0.10
+}

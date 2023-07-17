@@ -173,6 +173,9 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> JIGSAW_EQUIP = BLOCKS.register("jigsaw_equip", VidaMagicJigsawEquipingBlock::new);
 
+    @RegisterItemBlock
+    public final static RegistryObject<Block> MAGIC_WORD_CRAFTING = BLOCKS.register("magic_word_crafting_table", MagicWordCraftingTable::new);
+
     /**
      * @param name 注册名称
      * @param block 方块provider

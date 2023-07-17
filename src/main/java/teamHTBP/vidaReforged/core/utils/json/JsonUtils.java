@@ -2,10 +2,12 @@ package teamHTBP.vidaReforged.core.utils.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.CompoundIngredient;
+import teamHTBP.vidaReforged.core.api.VidaElement;
 
 /**
  * json处理类
@@ -35,6 +37,10 @@ public class JsonUtils {
                     // 注册自定义类型的序列化/反序列化器
                     //.registerTypeAdapter(Ingredient.class, new IngredientSerializer())
                     .registerTypeAdapter(ItemStack.class, new ItemStackSerializer())
+                    // 注册资源包解析器
+                    .registerTypeAdapter(ResourceLocation.class,new ResourceLocation.Serializer())
+                    // 注册元素解析器
+                    .registerTypeAdapter(VidaElement.class,new VidaElementSerializer())
                     // 注册自定义类型的序列化/反序列化器（附带子类）
                     .registerTypeHierarchyAdapter(Item.class, new ItemSerializer());
                     //.registerTypeHierarchyAdapter(IElement.class, new IElementSerializer());

@@ -37,4 +37,9 @@ public class VidaBlockEntityLoader {
             "jigsaw_equip",
             () -> BlockEntityType.Builder.of(VidaMagicJigsawEquipingBlockEntity::new, VidaBlockLoader.JIGSAW_EQUIP.get()).build(null)
     );
+
+    public static final RegistryObject<BlockEntityType<MagicWordCraftingTableBlockEntity>> MAGIC_WORD_CRAFTING = BLOCK_ENTITIES.register(
+            "magic_word_crafting_table",
+            () -> BlockEntityType.Builder.of(MagicWordCraftingTableBlockEntity::new, VidaBlockLoader.MAGIC_WORD_CRAFTING.get()).build(null)
+    );
 }

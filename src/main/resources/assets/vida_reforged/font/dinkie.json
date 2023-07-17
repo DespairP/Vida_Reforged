@@ -1,0 +1,11 @@
+{
+  "providers": [
+    {
+      "type": "ttf",
+      "file": "vida_reforged:dinkiebitmap.ttf",
+      "shift": [0.0, -1.0],
+      "size": 12.0,
+      "overSample": 2.0
+    }
+  ]
+}
