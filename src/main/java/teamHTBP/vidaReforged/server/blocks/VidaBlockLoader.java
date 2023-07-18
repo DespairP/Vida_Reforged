@@ -11,6 +11,8 @@ import teamHTBP.vidaReforged.core.utils.reg.CustomModelBlock;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterItemBlock;
 import teamHTBP.vidaReforged.server.blocks.crops.ParticleCropBlock;
 
+import java.awt.event.WindowAdapter;
+
 import static teamHTBP.vidaReforged.core.common.block.DecoBlockFactory.DecoBlockType.*;
 import static teamHTBP.vidaReforged.core.common.block.DecoBlockFactory.DecoPropertyType.*;
 /**
@@ -53,13 +55,23 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> DEEP_STONE_BRICK_0 = registerDecoBlock("deep_stone_brick_0", STONE, NORMAL);
     @RegisterItemBlock
-    public final static RegistryObject<Block> DEEP_STONE_BRICK_1 = registerDecoBlock("deep_stone_brick_1", STONE, YAXIS);
+    public final static RegistryObject<Block> DEEP_STONE_BRICK_1 = registerDecoBlock("deep_stone_brick_1", STONE, NORMAL);
     @RegisterItemBlock
     public final static RegistryObject<Block> DEEP_STONE_BRICK_2 = registerDecoBlock("deep_stone_brick_2", STONE, NORMAL);
     @RegisterItemBlock
-    public final static RegistryObject<Block> DEEP_STONE_BRICK_3 = registerDecoBlock("deep_stone_brick_3", STONE, YAXIS);
+    public final static RegistryObject<Block> DEEP_STONE_BRICK_3 = registerDecoBlock("deep_stone_brick_3", STONE, NORMAL);
     @RegisterItemBlock
-    public final static RegistryObject<Block> DEEP_STONE_BRICK_4 = registerDecoBlock("deep_stone_brick_4", STONE, YAXIS);
+    public final static RegistryObject<Block> DEEP_STONE_BRICK_4 = registerDecoBlock("deep_stone_brick_4", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> DEEP_STONE_BRICK_SLAB = registerDecoBlock("deep_stone_brick_slab", STONE, SLAB);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> DEEP_STONE_BRICK_SLAB_1 = registerDecoBlock("deep_stone_brick_slab_1", STONE, SLAB);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> DEEP_STONE_BRICK_STAIR = registerDecoBlock("deep_stone_brick_stair", STONE, STAIRS,DEEP_STONE_BRICK_0);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> DEEP_STONE_BRICK_STAIR_1 = registerDecoBlock("deep_stone_brick_stair_1", STONE, STAIRS,DEEP_STONE_BRICK_2);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> DEEP_STONE_BRICK_WALL = registerDecoBlock("deep_stone_brick_wall", STONE, WALL);
 
 
     /**生命木板*/
@@ -89,6 +101,28 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> TREMBLE_MAGIC_BRICK_0 = registerDecoBlock("tremble_magic_brick_0", STONE, NORMAL);
     @RegisterItemBlock
     public final static RegistryObject<Block> TREMBLE_MAGIC_BRICK_1 = registerDecoBlock("tremble_magic_brick_1", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TREMBLE_MAGIC_BRICK_2 = registerDecoBlock("tremble_magic_brick_2", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TREMBLE_MAGIC_BRICK_3 = registerDecoBlock("tremble_magic_brick_3", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TREMBLE_MAGIC_BRICK_4 = registerDecoBlock("tremble_magic_brick_4", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TREMBLE_MAGIC_BRICK_5 = registerDecoBlock("tremble_magic_brick_5", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TREMBLE_MAGIC_BRICK_SLAB = registerDecoBlock("tremble_magic_brick_slab", STONE, SLAB);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TREMBLE_MAGIC_BRICK_SLAB_1 = registerDecoBlock("tremble_magic_brick_slab_1", STONE, SLAB);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TREMBLE_MAGIC_BRICK_STAIR = registerDecoBlock("tremble_magic_brick_stair", STONE, STAIRS,TREMBLE_MAGIC_BRICK_0);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TREMBLE_MAGIC_BRICK_STAIR_1 = registerDecoBlock("tremble_magic_brick_stair_1", STONE, STAIRS,TREMBLE_MAGIC_BRICK_4);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TREMBLE_MAGIC_BRICK_WALL = registerDecoBlock("tremble_magic_brick_wall", STONE, WALL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TREMBLE_MAGIC_STONE_CANDLESTICK = registerDecoBlock("tremble_magic_stone_candlestick", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TREMBLE_MAGIC_STONE_BENCH = registerDecoBlock("tremble_magic_stone_bench", STONE, NORMAL);
 
     /**生命原木*/
     @RegisterItemBlock

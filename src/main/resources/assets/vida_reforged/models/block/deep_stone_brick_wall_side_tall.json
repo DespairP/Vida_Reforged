@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side_tall",
+  "textures": {
+    "wall": "vida_reforged:block/deep_stone_brick_0"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "vida_reforged:block/deep_stone_brick_slab_1"
+    },
+    "type=double": {
+      "model": "vida_reforged:block/deep_stone_brick_2"
+    },
+    "type=top": {
+      "model": "vida_reforged:block/deep_stone_brick_slab_top_1"
+    }
+  }
+}

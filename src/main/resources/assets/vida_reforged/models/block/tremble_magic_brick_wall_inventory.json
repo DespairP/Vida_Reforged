@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "vida_reforged:block/tremble_magic_brick_0"
+  }
+}

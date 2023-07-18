@@ -1,13 +1,5 @@
 {
   "variants": {
-    "axis=y,type=0": { "model": "vida_reforged:block/deep_stone_brick_4" },
-    "axis=z,type=0":    { "model": "vida_reforged:block/deep_stone_brick_4", "x": 90 },
-    "axis=x,type=0":    { "model": "vida_reforged:block/deep_stone_brick_4", "x": 90, "y": 90 },
-    "axis=y,type=1": { "model": "vida_reforged:block/deep_stone_brick_4" },
-    "axis=z,type=1":    { "model": "vida_reforged:block/deep_stone_brick_4", "x": 90 },
-    "axis=x,type=1":    { "model": "vida_reforged:block/deep_stone_brick_4", "x": 90, "y": 90 },
-    "axis=y,type=2": { "model": "vida_reforged:block/deep_stone_brick_4" },
-    "axis=z,type=2":    { "model": "vida_reforged:block/deep_stone_brick_4", "x": 90 },
-    "axis=x,type=2":    { "model": "vida_reforged:block/deep_stone_brick_4", "x": 90, "y": 90 }
+    "": { "model": "vida_reforged:block/deep_stone_brick_4"}
   }
 }

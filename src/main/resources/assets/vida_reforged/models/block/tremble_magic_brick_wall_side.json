@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side",
+  "textures": {
+    "wall": "vida_reforged:block/tremble_magic_brick_0"
+  }
+}

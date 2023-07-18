@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "vida_reforged:blocks/deep_stone_brick_0",
+    "top": "vida_reforged:block/deep_stone_brick_0",
+    "side": "vida_reforged:block/deep_stone_brick_0"
+  }
+}
