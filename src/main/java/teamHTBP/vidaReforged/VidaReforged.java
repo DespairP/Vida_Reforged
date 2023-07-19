@@ -13,6 +13,7 @@ import teamHTBP.vidaReforged.server.events.VidaItemGroupLoader;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 import teamHTBP.vidaReforged.server.menu.VidaMenuContainerTypeLoader;
 import teamHTBP.vidaReforged.server.mobs.VidaMobsLoader;
+import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
 
 /**
  * Vida Reforged
@@ -38,5 +39,7 @@ public class VidaReforged {
         VidaMobsLoader.ENTITY_TYPES.register(bus);
         VidaItemGroupLoader.CREATIVE_TAB.register(bus);
         //VidaCommandManager.ARGUMENT_TYPE.register(bus);
+
+        VidaPacketManager.register();
     }
 }

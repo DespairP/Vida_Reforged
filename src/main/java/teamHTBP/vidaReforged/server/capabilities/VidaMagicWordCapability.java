@@ -5,17 +5,21 @@ import net.minecraft.nbt.ListTag;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicWordCapability;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class VidaMagicWordCapability implements IVidaMagicWordCapability {
-    public List<String> unlockedMagicWord;
+    /**已经解锁的词条*/
+    public List<String> unlockedMagicWord = new ArrayList<>();
 
+    /**获取玩家所有解锁的词条*/
     @Override
     public List<String> getAccessibleMagicWord() {
         return unlockedMagicWord;
     }
 
+    /**解锁词条*/
     @Override
     public boolean unlockMagicWord(String magicWordId) {
         if(!unlockedMagicWord.contains(magicWordId) && MagicWordManager.getMagicWord(magicWordId) != null){

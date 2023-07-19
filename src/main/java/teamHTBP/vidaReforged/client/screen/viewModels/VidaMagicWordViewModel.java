@@ -1,8 +1,11 @@
 package teamHTBP.vidaReforged.client.screen.viewModels;
 
+import net.minecraft.core.BlockPos;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.component.LiveData;
 import teamHTBP.vidaReforged.core.common.component.ViewModel;
+import teamHTBP.vidaReforged.server.packets.MagicWordPacket;
+import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,6 +15,8 @@ public class VidaMagicWordViewModel extends ViewModel {
 
     public LiveData<Map<VidaElement, String>> selectedMagicWord = new LiveData<>(new LinkedHashMap<>());
 
+    public LiveData<BlockPos> blockPos = new LiveData<BlockPos>(BlockPos.ZERO);
+
     public void setSelectWord(VidaElement element,String magicWordId){
         String replacedMagicWordId = magicWordId;
         Map<VidaElement, String> map = this.selectedMagicWord.getValue();
@@ -20,14 +25,16 @@ public class VidaMagicWordViewModel extends ViewModel {
             // 如果有且是同一个，取消选择
             String magicId = map.get(element);
             if(magicId != null && magicId.equals(magicWordId)){
-                replacedMagicWordId = null;
+                replacedMagicWordId = "";
             }
             map.replace(element,replacedMagicWordId);
             selectedMagicWord.setValue(map);
+            VidaPacketManager.sendToServer(new MagicWordPacket(blockPos.getValue(), selectedMagicWord.getValue()));
             return;
         }
         // 如果没有就添加
         map.put(element, replacedMagicWordId);
+        VidaPacketManager.sendToServer(new MagicWordPacket(blockPos.getValue(), selectedMagicWord.getValue()));
         selectedMagicWord.setValue(map);
     }
 }
