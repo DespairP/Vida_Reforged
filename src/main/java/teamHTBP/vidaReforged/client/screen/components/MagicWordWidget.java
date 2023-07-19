@@ -119,7 +119,7 @@ public class MagicWordWidget extends AbstractWidget {
             return;
         }
 
-        String magicNameKey = isUnlocked ? magicWord.name() : "???";
+        String magicNameKey = isUnlocked ? String.format("%s.%s", magicWord.namePrefix(), magicWord.name()) : "???";
         ResourceLocation iconLocation = isUnlocked ? magicWord.icon() : QUESTION_MARK;
 
         // 绘制名字
