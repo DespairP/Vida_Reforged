@@ -61,7 +61,7 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> DEEP_STONE_BRICK_3 = registerDecoBlock("deep_stone_brick_3", STONE, NORMAL);
     @RegisterItemBlock
-    public final static RegistryObject<Block> DEEP_STONE_BRICK_4 = registerDecoBlock("deep_stone_brick_4", STONE, NORMAL);
+    public final static RegistryObject<Block> DEEP_STONE_BRICK_4 = registerDecoBlock("deep_stone_brick_4", STONE, YAXIS);
     @RegisterItemBlock
     public final static RegistryObject<Block> DEEP_STONE_BRICK_SLAB = registerDecoBlock("deep_stone_brick_slab", STONE, SLAB);
     @RegisterItemBlock

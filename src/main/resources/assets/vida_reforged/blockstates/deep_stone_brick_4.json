@@ -1,5 +1,19 @@
 {
   "variants": {
-    "": { "model": "vida_reforged:block/deep_stone_brick_4"}
+    "facing=east": {
+      "model": "vida_reforged:block/deep_stone_brick_4",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "vida_reforged:block/deep_stone_brick_4"
+    },
+    "facing=south": {
+      "model": "vida_reforged:block/deep_stone_brick_4",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "vida_reforged:block/deep_stone_brick_4",
+      "y": 270
+    }
   }
 }
