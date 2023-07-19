@@ -1,14 +1,26 @@
 package teamHTBP.vidaReforged.server.menu;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.client.screen.components.MagicWordWidget;
+import teamHTBP.vidaReforged.core.api.capability.IVidaMagicWordCapability;
+import teamHTBP.vidaReforged.server.capabilities.VidaMagicWordCapability;
+import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
+
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
@@ -46,12 +58,22 @@ public class VidaMenuContainerTypeLoader {
     public final static RegistryObject<MenuType<MagicWordCraftingTableMenu>> MAGIC_WORD_CRAFTING = MENU_CONTAINER_TYPE.register(
             MagicWordCraftingTableMenu.MENU_NAME,
             () -> IForgeMenuType.create(
-                    (windowId, inv, data) -> new MagicWordCraftingTableMenu(
-                            windowId,
-                            ContainerLevelAccess.create( inv.player.getCommandSenderWorld(), data.readBlockPos()),
-                            inv,
-                            data.readBlockPos()
-                    )
+                    (windowId, inv, data) ->{
+                        final BlockPos pos = data.readBlockPos();
+                        final Level level = inv.player.getCommandSenderWorld();
+                        final List<String> magicWords = new ArrayList<>();
+                        CompoundTag wordList = data.readNbt();
+                        if(wordList != null) {
+                            magicWords.addAll(VidaMagicWordCapability.deserialize(wordList));
+                        }
+                        return new MagicWordCraftingTableMenu(
+                                windowId,
+                                ContainerLevelAccess.create(level, pos),
+                                inv,
+                                pos,
+                                magicWords
+                        );
+                    }
             )
     );
 }

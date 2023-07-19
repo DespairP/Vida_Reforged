@@ -7,18 +7,16 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
-import teamHTBP.vidaReforged.core.common.component.IDataObserver;
-import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
 
 import java.util.*;
 
-public class MagicWordButtonList extends AbstractWidget {
+public class MagicWordFilterList extends AbstractWidget {
     public final static int BUTTON_AMOUNT = 5;
-    public final Map<VidaElement, MagicWordButton> widgetMap;
+    public final Map<VidaElement, MagicWordFilter> widgetMap;
     private VidaElement selectedElement = VidaElement.EMPTY;
     private final VidaMagicWordViewModel model;
-    public MagicWordButtonList(VidaMagicWordViewModel model, int x, int y) {
-        super(x, y, MagicWordButton.PIXEL, MagicWordButton.PIXEL * BUTTON_AMOUNT, Component.translatable("magic filter button list"));
+    public MagicWordFilterList(VidaMagicWordViewModel model, int x, int y) {
+        super(x, y, MagicWordFilter.PIXEL, MagicWordFilter.PIXEL * BUTTON_AMOUNT, Component.translatable("magic filter button list"));
         this.widgetMap = new LinkedHashMap<>();
         this.model = model;
         this.initWidget();
@@ -30,7 +28,7 @@ public class MagicWordButtonList extends AbstractWidget {
             if(element == VidaElement.EMPTY || element == VidaElement.VOID){
                 continue;
             }
-            widgetMap.put(element, new MagicWordButton(this.model, getX(), getY() + count * MagicWordButton.PIXEL, element));
+            widgetMap.put(element, new MagicWordFilter(this.model, getX(), getY() + count * MagicWordFilter.PIXEL, element));
             count ++;
         }
 
@@ -38,7 +36,7 @@ public class MagicWordButtonList extends AbstractWidget {
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        this.widgetMap.forEach((element, magicWordButton) -> magicWordButton.render(graphics, mouseX, mouseY, partialTicks));
+        this.widgetMap.forEach((element, magicWordFilter) -> magicWordFilter.render(graphics, mouseX, mouseY, partialTicks));
     }
 
     @Override

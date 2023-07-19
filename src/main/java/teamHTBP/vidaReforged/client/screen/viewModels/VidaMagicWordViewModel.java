@@ -7,7 +7,9 @@ import teamHTBP.vidaReforged.core.common.component.ViewModel;
 import teamHTBP.vidaReforged.server.packets.MagicWordPacket;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class VidaMagicWordViewModel extends ViewModel {
@@ -15,6 +17,7 @@ public class VidaMagicWordViewModel extends ViewModel {
 
     public LiveData<Map<VidaElement, String>> selectedMagicWord = new LiveData<>(new LinkedHashMap<>());
 
+    public LiveData<List<String>> playerMagicWords = new LiveData<>(new ArrayList<>());
     public LiveData<BlockPos> blockPos = new LiveData<BlockPos>(BlockPos.ZERO);
 
     public void setSelectWord(VidaElement element,String magicWordId){

@@ -21,7 +21,9 @@ import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
@@ -31,6 +33,7 @@ public class MagicWordWidget extends AbstractWidget {
     public static final int ICON_PIXEL = 16;
     public final MagicWord magicWord;
     public static ResourceLocation DINKFONT = new ResourceLocation(MOD_ID, "dinkie");
+    public static ResourceLocation QUESTION_MARK = new ResourceLocation(MOD_ID, "textures/icons/magic_word/question_mark.png");
     public FloatRange upperBorderPoint = new FloatRange(0,0, WIDTH);
     public FloatRange downBorderPoint = new FloatRange(0,0, WIDTH);
     public FloatRange selectedAlpha = new FloatRange(0,0, 1);
@@ -38,6 +41,7 @@ public class MagicWordWidget extends AbstractWidget {
     private VidaElement element;
     private VidaMagicWordViewModel model;
     private boolean isSelected = false;
+    private boolean isUnlocked = false;
 
     public MagicWordWidget(VidaMagicWordViewModel model,MagicWordListWidget parent, int x, int y, MagicWord word) {
         super(x, y, WIDTH, HEIGHT, Component.translatable("magic word"));
@@ -51,6 +55,9 @@ public class MagicWordWidget extends AbstractWidget {
         IDataObserver<Map<VidaElement,String>> observer = this::checkIfSelected;
         this.model.selectedMagicWord.observe(observer);
         this.checkIfSelected(this.model.selectedMagicWord.getValue());
+        if(magicWord != null){
+            this.isUnlocked = Optional.ofNullable(this.model.playerMagicWords.getValue()).orElse(new ArrayList<>()).contains(magicWord.name());
+        }
     }
 
     public void checkIfSelected(Map<VidaElement,String> value){
@@ -108,16 +115,17 @@ public class MagicWordWidget extends AbstractWidget {
         poseStack.popPose();
 
 
-
-
         if(magicWord == null){
             return;
         }
 
+        String magicNameKey = isUnlocked ? magicWord.name() : "???";
+        ResourceLocation iconLocation = isUnlocked ? magicWord.icon() : QUESTION_MARK;
+
         // 绘制名字
         poseStack.pushPose();
         Minecraft mc = Minecraft.getInstance();
-        String name = Language.getInstance().getOrDefault(magicWord.name(), magicWord.name());
+        String name = Language.getInstance().getOrDefault(magicNameKey, magicNameKey);
         name = name.substring(0,Math.min(name.length(), 10));
         Component testComponent = Component.literal(name).withStyle((style) -> {
             return style.withFont(DINKFONT).withBold(false);
@@ -126,7 +134,7 @@ public class MagicWordWidget extends AbstractWidget {
         poseStack.popPose();
 
         // 绘制图标
-        TextureSection section = new TextureSection(magicWord.icon(),0,0,16,16);
+        TextureSection section = new TextureSection(iconLocation,0,0,16,16);
         final int iconX = getX() + 4;
         final int iconY = getY() + ((HEIGHT - ICON_PIXEL) / 2) ;
 
@@ -179,6 +187,10 @@ public class MagicWordWidget extends AbstractWidget {
 
     }
 
+    public boolean isSelectable(){
+        return this.isUnlocked;
+    }
+
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
@@ -195,6 +207,9 @@ public class MagicWordWidget extends AbstractWidget {
 
     @Override
     public void onClick(double x, double y) {
+        if(!this.isSelectable()){
+            return;
+        }
         this.model.setSelectWord(magicWord.element(),magicWord.name());
     }
 

@@ -17,14 +17,17 @@ import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
+import teamHTBP.vidaReforged.core.api.capability.IVidaMagicWordCapability;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
+import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
 import teamHTBP.vidaReforged.server.commands.arguments.MagicArgument;
 import teamHTBP.vidaReforged.server.commands.arguments.MagicArgumentInfo;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
+import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
@@ -169,6 +172,35 @@ public class VidaCommandManager {
         }
 
         context.getSource().sendSuccess(()->Component.translatable("magic %s is added", magicId), false);
+        return 1;
+    };
+
+    public final static Command<CommandSourceStack> WORD_ADD_SOURCE = context -> {
+        String wordId = context.getArgument("word_id", String.class);
+        MagicWord word = MagicWordManager.getMagicWord(wordId);
+        if(word == null){
+            context.getSource().sendFailure(Component.translatable("magic word %s not exists", wordId));
+            return 1;
+        }
+        try {
+            LazyOptional<IVidaMagicWordCapability> wordCapability = context
+                    .getSource()
+                    .getPlayerOrException()
+                    .getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_WORD);
+            AtomicBoolean isAdded = new AtomicBoolean(false);
+            wordCapability.ifPresent(cap -> {
+                isAdded.set(cap.unlockMagicWord(wordId));
+                ;
+            });
+            if(!isAdded.get()){
+                context.getSource().sendFailure(Component.translatable("magic word  %s is already added", wordId));
+                return 1;
+            }
+            context.getSource().sendSuccess(()->Component.translatable("magic word  %s is added", wordId), false);
+            return 1;
+        }catch (Exception ex){
+            context.getSource().sendFailure(Component.literal("cannot execute the command"));
+        }
         return 1;
     };
 

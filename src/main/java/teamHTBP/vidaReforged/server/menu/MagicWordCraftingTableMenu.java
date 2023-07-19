@@ -13,23 +13,29 @@ import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.client.screen.components.MagicWordListWidget;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MagicWordCraftingTableMenu extends AbstractContainerMenu {
     public static final String MENU_NAME = "magic_word_crafting_table";
     private final ContainerLevelAccess access;
     private final Inventory playerInventory;
     private final BlockPos blockPos;
     private final static int COL_SIZE = 18;
-
+    /**物品栏列数*/
     private final static int INVENTORY_COL_AMOUNT = 9;
-
+    /**物品栏里面的行数*/
     private final static int INVENTORY_ROW_AMOUNT = 3;
+    /***/
+    private List<String> playerMagicWords = new ArrayList<>();
 
-    public MagicWordCraftingTableMenu(int menuId, ContainerLevelAccess access, Inventory inventory, BlockPos pos) {
+
+    public MagicWordCraftingTableMenu(int menuId, ContainerLevelAccess access, Inventory inventory, BlockPos pos, List<String> playerMagicWords) {
         super(VidaMenuContainerTypeLoader.MAGIC_WORD_CRAFTING.get(), menuId);
         this.access = access;
         this.playerInventory = inventory;
         this.blockPos = pos;
-
+        this.playerMagicWords = playerMagicWords;
         int xOffset = 0;
         int yOffset = 0;
 
@@ -63,5 +69,11 @@ public class MagicWordCraftingTableMenu extends AbstractContainerMenu {
         return blockPos;
     }
 
+    public Inventory getPlayerInventory() {
+        return playerInventory;
+    }
 
+    public List<String> getPlayerMagicWords() {
+        return playerMagicWords;
+    }
 }
