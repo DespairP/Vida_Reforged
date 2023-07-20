@@ -1,14 +1,23 @@
 package teamHTBP.vidaReforged.client.screen;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.model.data.ModelData;
+import teamHTBP.vidaReforged.client.screen.components.MagicSelectedWordListWidget;
 import teamHTBP.vidaReforged.client.screen.components.MagicWordFilter;
 import teamHTBP.vidaReforged.client.screen.components.MagicWordFilterList;
 import teamHTBP.vidaReforged.client.screen.components.MagicWordListWidget;
@@ -16,6 +25,7 @@ import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.blockEntities.MagicWordCraftingTableBlockEntity;
+import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
 import teamHTBP.vidaReforged.server.menu.MagicWordCraftingTableMenu;
 
 import java.util.HashMap;
@@ -28,6 +38,7 @@ import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicWordCraftingTableMenu> {
     MagicWordListWidget magicWordWidget;
     MagicWordFilterList magicWordFilterLists;
+    MagicSelectedWordListWidget magicSelectedWordListWidget;
     final VidaMagicWordViewModel viewModel;
     final Inventory inventory;
 
@@ -55,6 +66,7 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
 
         magicWordWidget = new MagicWordListWidget( viewModel, x, y, 0, componentHeight, factor);
         magicWordFilterLists = new MagicWordFilterList(viewModel, x - MagicWordFilter.PIXEL, y + componentHeight - MagicWordFilter.PIXEL * MagicWordFilterList.BUTTON_AMOUNT);
+        magicSelectedWordListWidget = new MagicSelectedWordListWidget(viewModel,this.leftPos + 50,this.topPos - 138);
     }
 
     @Override
@@ -138,12 +150,59 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
 
     public void renderMagicWords(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
         if(magicWordWidget != null){
+            RenderSystem.enableBlend();
             magicWordWidget.render(graphics, mouseX, mouseY, partialTicks);
             magicWordFilterLists.render(graphics, mouseX, mouseY, partialTicks);
+            magicSelectedWordListWidget.render(graphics, mouseX, mouseY, partialTicks);
+            graphics.setColor(1, 1, 1,1);
+            renderBlock(graphics, mouseX, mouseY, partialTicks);
+            RenderSystem.disableBlend();
         }
-
     }
 
+
+    public void renderBlock(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
+        PoseStack pPoseStack = graphics.pose();
+        final BlockRenderDispatcher blockRenderer = this.minecraft.getBlockRenderer();
+
+        // 入栈1：设置结构偏移
+        pPoseStack.pushPose();
+        pPoseStack.translate(magicSelectedWordListWidget.getX() + 48, magicSelectedWordListWidget.getY() + 46, 100.0F);
+        pPoseStack.scale(12.0F, 12.0F, 12.0F);
+        // 中心方块是-1,-1偏移后的方块
+        pPoseStack.translate(-1.0F, -1.0F, 0.0F);
+
+
+        // 将模型调整到旋转正中央
+        pPoseStack.translate(0.5 ,0.5,0.5);
+        // 因为renderBatched整个结构是倒着渲染的，先要将整个结构按X轴正转180度，然后再按20度，让方块的顶部面向玩家
+        pPoseStack.mulPose(Axis.XP.rotationDegrees(160));
+        // 再按Y轴转45度，让方块左边和右边面向玩家，呈现三视图的状态
+        pPoseStack.mulPose(Axis.YP.rotationDegrees(45));
+        // 将模型调整到旋转前正中央
+        pPoseStack.translate(-0.5 ,-0.5,-0.5);
+
+
+
+        // 入栈1-1：方块渲染
+        RenderSystem.enableBlend();
+        // 取消面剪切
+        RenderSystem.disableCull();
+        // 方块Shader颜色
+        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+
+        //
+        BlockState state = VidaBlockLoader.MAGIC_WORD_CRAFTING.get().defaultBlockState();
+
+        // 通知此batch加入相应的render
+        blockRenderer.renderSingleBlock(state, pPoseStack, graphics.bufferSource(),0, 15728880, ModelData.EMPTY, RenderType.translucent());
+
+        // 出栈1-1
+        RenderSystem.disableBlend();
+        // 出栈1
+        pPoseStack.popPose();
+
+    }
 
 
     @Override
@@ -157,6 +216,7 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
         listeners.addAll(this.magicWordFilterLists.getChildren());
         listeners.add(this.magicWordWidget);
         listeners.addAll(this.magicWordWidget.getChildren());
+        listeners.addAll(this.magicSelectedWordListWidget.getChildren());
         return listeners;
     }
 
