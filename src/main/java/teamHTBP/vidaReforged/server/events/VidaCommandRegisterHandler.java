@@ -17,6 +17,7 @@ import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
 import teamHTBP.vidaReforged.server.commands.VidaCommandManager;
 import teamHTBP.vidaReforged.server.commands.arguments.MagicArgument;
 import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
+import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
 import java.util.stream.Stream;
 
@@ -69,11 +70,24 @@ public class VidaCommandRegisterHandler {
                 .then(setArgs)
                 .then(addMagic);
 
+        //MagicWord子命令
+        LiteralArgumentBuilder<CommandSourceStack> addWord = Commands
+                .literal("add")
+                .then(Commands.argument("word_id", StringArgumentType.greedyString())
+                        .suggests((context, builder) -> SharedSuggestionProvider.suggest(MagicWordManager.getAllMagicWordIds(), builder))
+                        .executes(VidaCommandManager.WORD_ADD_SOURCE)
+                );
+
+        //组装MagicWord命令集
+        LiteralArgumentBuilder<CommandSourceStack> magicWord = Commands.literal("magicWord")
+                        .then(addWord);
+
 
         dispatcher.register(
                 Commands.literal("vida")
                         .then(magic)
                         .then(magicContainer)
+                        .then(magicWord)
         );
     }
 }

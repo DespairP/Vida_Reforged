@@ -73,4 +73,6 @@ public class MagicWordCraftingTableBlockEntity extends VidaBlockEntity implement
         }
     }
 
+
+
 }

@@ -9,8 +9,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import teamHTBP.vidaReforged.client.screen.components.MagicWordButton;
-import teamHTBP.vidaReforged.client.screen.components.MagicWordButtonList;
+import teamHTBP.vidaReforged.client.screen.components.MagicWordFilter;
+import teamHTBP.vidaReforged.client.screen.components.MagicWordFilterList;
 import teamHTBP.vidaReforged.client.screen.components.MagicWordListWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
@@ -27,7 +27,7 @@ import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
 public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicWordCraftingTableMenu> {
     MagicWordListWidget magicWordWidget;
-    MagicWordButtonList magicWordListButton;
+    MagicWordFilterList magicWordFilterLists;
     final VidaMagicWordViewModel viewModel;
     final Inventory inventory;
 
@@ -37,6 +37,7 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
         super(menu, inventory, Component.translatable("magic_word_crafting_table"));
         viewModel = new VidaMagicWordViewModel();
         viewModel.blockPos.setValue(menu.getBlockPos());
+        viewModel.playerMagicWords.setValue(getMenu().getPlayerMagicWords());
         this.inventory = inventory;
     }
 
@@ -53,7 +54,7 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
         int y = (int)((screenHeight - componentHeight) / 2);
 
         magicWordWidget = new MagicWordListWidget( viewModel, x, y, 0, componentHeight, factor);
-        magicWordListButton = new MagicWordButtonList(viewModel, x - MagicWordButton.PIXEL, y + componentHeight - MagicWordButton.PIXEL * MagicWordButtonList.BUTTON_AMOUNT);
+        magicWordFilterLists = new MagicWordFilterList(viewModel, x - MagicWordFilter.PIXEL, y + componentHeight - MagicWordFilter.PIXEL * MagicWordFilterList.BUTTON_AMOUNT);
     }
 
     @Override
@@ -138,7 +139,7 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
     public void renderMagicWords(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
         if(magicWordWidget != null){
             magicWordWidget.render(graphics, mouseX, mouseY, partialTicks);
-            magicWordListButton.render(graphics, mouseX, mouseY, partialTicks);
+            magicWordFilterLists.render(graphics, mouseX, mouseY, partialTicks);
         }
 
     }
@@ -153,7 +154,7 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
     @Override
     public List<? extends GuiEventListener> children() {
         List<GuiEventListener> listeners = (List<GuiEventListener>) super.children();
-        listeners.addAll(this.magicWordListButton.getChildren());
+        listeners.addAll(this.magicWordFilterLists.getChildren());
         listeners.add(this.magicWordWidget);
         listeners.addAll(this.magicWordWidget.getChildren());
         return listeners;

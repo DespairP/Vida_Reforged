@@ -24,7 +24,7 @@ import java.util.Map;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
-public class MagicWordButton extends AbstractWidget {
+public class MagicWordFilter extends AbstractWidget {
     public static final int PIXEL = 20;
     private final VidaElement element;
     private FloatRange alphaRange = new FloatRange(0.1f,0.1f,0.3f);
@@ -39,7 +39,7 @@ public class MagicWordButton extends AbstractWidget {
             VidaElement.EARTH, ImmutableList.of(ARGBColor.of(230, 185, 128), ARGBColor.of(234, 205, 163))
     );
 
-    public MagicWordButton(VidaMagicWordViewModel model, int x, int y, VidaElement element) {
+    public MagicWordFilter(VidaMagicWordViewModel model, int x, int y, VidaElement element) {
         super(x, y, PIXEL, PIXEL, Component.translatable("magic_word_filter"));
         this.element = element;
         this.model = model;

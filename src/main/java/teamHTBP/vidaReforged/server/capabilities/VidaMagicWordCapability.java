@@ -57,4 +57,19 @@ public class VidaMagicWordCapability implements IVidaMagicWordCapability {
             }
         }
     }
+
+    public static List<String> deserialize(CompoundTag nbt){
+        //
+        List<String> words = new LinkedList<>();
+        //获取词条
+        ListTag magicListTag = (ListTag) nbt.get("unlockedMagicWord");
+        if(magicListTag != null){
+            for(int i = 0; i < magicListTag.size(); ++i) {
+                CompoundTag magicTag = magicListTag.getCompound(i);
+                words.add(magicTag.getString("magicWordId"));
+            }
+        }
+
+        return words;
+    }
 }

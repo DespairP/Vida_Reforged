@@ -16,6 +16,7 @@ import teamHTBP.vidaReforged.core.utils.json.JsonUtils;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MagicWordManager extends SimpleJsonResourceReloadListener {
     /**Logger*/
@@ -59,5 +60,9 @@ public class MagicWordManager extends SimpleJsonResourceReloadListener {
 
     public static List<MagicWord> getAllMagicWords(){
         return magicWordIdMap.values().stream().toList();
+    }
+
+    public static Set<String> getAllMagicWordIds(){
+        return magicWordIdMap.keySet();
     }
 }
