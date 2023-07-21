@@ -1,0 +1,9 @@
+{
+  "name": "stone_wall",
+  "magicType": "ATTACK_SHOOTABLE",
+  "icon": "vida_reforged:textures/icons/stone_wall.png",
+  "iconIndex": 0,
+  "description": "vida_reforged.description.stone_wall",
+  "element": "EARTH",
+  "isPlayerUsable": true
+}

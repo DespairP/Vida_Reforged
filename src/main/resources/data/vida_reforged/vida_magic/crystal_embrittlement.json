@@ -1,0 +1,9 @@
+{
+  "name": "crystal_embrittlement",
+  "magicType": "ATTACK_SHOOTABLE",
+  "icon": "vida_reforged:textures/icons/crystal_embrittlement.png",
+  "iconIndex": 0,
+  "description": "vida_reforged.description.crystal_embrittlement",
+  "element": "GOLD",
+  "isPlayerUsable": true
+}

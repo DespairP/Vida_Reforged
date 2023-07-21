@@ -1,0 +1,9 @@
+{
+  "name": "ocean_blessing",
+  "magicType": "ATTACK_SHOOTABLE",
+  "icon": "vida_reforged:textures/icons/ocean_blessing.png",
+  "iconIndex": 0,
+  "description": "vida_reforged.description.ocean_blessing",
+  "element": "AQUA",
+  "isPlayerUsable": true
+}
