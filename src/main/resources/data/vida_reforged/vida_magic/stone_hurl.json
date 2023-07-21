@@ -1,0 +1,9 @@
+{
+  "name": "stone_hurl",
+  "magicType": "ATTACK_SHOOTABLE",
+  "icon": "vida_reforged:textures/icons/stone_hurl.png",
+  "iconIndex": 0,
+  "description": "vida_reforged.description.stone_hurl",
+  "element": "EARTH",
+  "isPlayerUsable": true
+}

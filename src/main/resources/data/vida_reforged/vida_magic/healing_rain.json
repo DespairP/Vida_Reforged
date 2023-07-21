@@ -1,0 +1,9 @@
+{
+  "name": "healing_rain",
+  "magicType": "ATTACK_SHOOTABLE",
+  "icon": "vida_reforged:textures/icons/healing_rain.png",
+  "iconIndex": 0,
+  "description": "vida_reforged.description.healing_rain",
+  "element": "AQUA",
+  "isPlayerUsable": true
+}
