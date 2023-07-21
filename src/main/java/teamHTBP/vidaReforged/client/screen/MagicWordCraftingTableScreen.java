@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
+import static teamHTBP.vidaReforged.core.utils.math.StringUtils.compareString;
 
 public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicWordCraftingTableMenu> {
     MagicWordListWidget magicWordWidget;
@@ -142,10 +143,6 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
             HashMap<VidaElement,String> newMagicWordMap = new HashMap<>(serverMap);
             this.viewModel.selectedMagicWord.setValue(newMagicWordMap);
         }
-    }
-
-    public static boolean compareString(String str1, String str2) {
-        return (str1 == null ? str2 == null : str1.equals(str2));
     }
 
     public void renderMagicWords(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){

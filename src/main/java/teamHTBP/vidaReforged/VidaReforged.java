@@ -14,6 +14,8 @@ import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 import teamHTBP.vidaReforged.server.menu.VidaMenuContainerTypeLoader;
 import teamHTBP.vidaReforged.server.mobs.VidaMobsLoader;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
+import teamHTBP.vidaReforged.server.recipe.VidaRecipeLoader;
+import teamHTBP.vidaReforged.server.recipe.VidaRecipeSerializerLoader;
 
 /**
  * Vida Reforged
@@ -38,6 +40,8 @@ public class VidaReforged {
         VidaMenuContainerTypeLoader.MENU_CONTAINER_TYPE.register(bus);
         VidaMobsLoader.ENTITY_TYPES.register(bus);
         VidaItemGroupLoader.CREATIVE_TAB.register(bus);
+        VidaRecipeLoader.TYPES.register(bus);
+        VidaRecipeSerializerLoader.SERIALIZER.register(bus);
         //VidaCommandManager.ARGUMENT_TYPE.register(bus);
 
         VidaPacketManager.register();

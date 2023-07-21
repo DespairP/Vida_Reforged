@@ -4,6 +4,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -17,7 +20,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MagicWordCraftingTableBlockEntity extends VidaBlockEntity implements IVidaTickableBlockEntity {
-    Map<VidaElement,ItemStack> elementItemStackMap = new LinkedHashMap<>();
+    Map<VidaElement, SimpleContainer> elementSlots = new HashMap<>(Map.of(
+            VidaElement.GOLD, new SimpleContainer(ItemStack.EMPTY),
+            VidaElement.WOOD, new SimpleContainer(ItemStack.EMPTY),
+            VidaElement.AQUA, new SimpleContainer(ItemStack.EMPTY),
+            VidaElement.FIRE, new SimpleContainer(ItemStack.EMPTY),
+            VidaElement.EARTH, new SimpleContainer(ItemStack.EMPTY)
+    ));
     Map<VidaElement,String> magicWordMap = new HashMap<>();
 
     public MagicWordCraftingTableBlockEntity(BlockPos pPos, BlockState pBlockState) {
@@ -74,5 +83,7 @@ public class MagicWordCraftingTableBlockEntity extends VidaBlockEntity implement
     }
 
 
-
+    public SimpleContainer getSlotFromElement(VidaElement element){
+        return this.elementSlots.get(element);
+    }
 }

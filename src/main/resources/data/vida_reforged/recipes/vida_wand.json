@@ -1,0 +1,16 @@
+{
+  "type": "vida_reforged:magic_word",
+  "requiredWords": {
+    "GOLD": "",
+    "WOOD": "",
+    "AQUA": "",
+    "FIRE": "",
+    "EARTH": "vida_reforged:origin"
+  },
+  "ingredients": [
+    {
+      "item": "vida_reforged:vida_log",
+      "amount": 3
+    }
+  ]
+}

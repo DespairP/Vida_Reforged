@@ -11,6 +11,8 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.client.screen.components.MagicWordListWidget;
+import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.server.blockEntities.MagicWordCraftingTableBlockEntity;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
 
 import java.util.ArrayList;
@@ -53,6 +55,17 @@ public class MagicWordCraftingTableMenu extends AbstractContainerMenu {
             int slotNumber = col;
             this.addSlot(new Slot(inventory, slotNumber, 8 + col * 18 + xOffset, 161 - 103 + yOffset));
         }
+
+        //添加其他
+        access.execute(((level, pos$1) -> {
+            MagicWordCraftingTableBlockEntity entity = (MagicWordCraftingTableBlockEntity)level.getBlockEntity(pos$1);
+            int index = 0;
+            this.addSlot(new Slot(entity.getSlotFromElement(VidaElement.GOLD), 0, (index++) * 20, -30));
+            this.addSlot(new Slot(entity.getSlotFromElement(VidaElement.WOOD), 0, (index++) * 20, -30));
+            this.addSlot(new Slot(entity.getSlotFromElement(VidaElement.AQUA), 0, (index++) * 20, -30));
+            this.addSlot(new Slot(entity.getSlotFromElement(VidaElement.FIRE), 0, (index++) * 20, -30));
+            this.addSlot(new Slot(entity.getSlotFromElement(VidaElement.EARTH), 0, (index++) * 20, -30));
+        }));
     }
 
     @Override
