@@ -20,7 +20,7 @@ public abstract class AbstractVidaRecipe<T extends Container> implements Recipe<
     @Expose
     public ItemStack resultItem = ItemStack.EMPTY;
     @Expose(deserialize = false, serialize = false)
-    private RecipeSerializer<?> serializer;
+    private transient RecipeSerializer<?> serializer;
 
     public <C extends Container, R extends AbstractVidaRecipe<C>> R setID(ResourceLocation id) {
         this.recipeId = id;

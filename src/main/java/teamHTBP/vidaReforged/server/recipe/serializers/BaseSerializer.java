@@ -34,6 +34,7 @@ public class BaseSerializer <C extends Container, RECIPE extends AbstractVidaRec
 
     @Override
     public void toNetwork(FriendlyByteBuf buf, RECIPE recipe) {
-        buf.writeUtf(JsonUtils.getGson(JsonUtils.JsonUtilType.NORMAL).toJson(recipe,recipeClass), 32767);
+        String recipeStr = JsonUtils.getGson(JsonUtils.JsonUtilType.NORMAL).toJson(recipe,recipeClass);
+        buf.writeUtf(recipeStr, 32767);
     }
 }
