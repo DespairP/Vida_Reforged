@@ -13,7 +13,7 @@ import java.lang.reflect.Type;
  * @author DustW
  **/
 public class ItemStackSerializer implements JsonDeserializer<ItemStack>,JsonSerializer<ItemStack> {
-    private final static String AMOUNT_KEY = "amount";
+    private static final String AMOUNT_KEY = "amount";
 
     @Override
     public ItemStack deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -30,7 +30,7 @@ public class ItemStackSerializer implements JsonDeserializer<ItemStack>,JsonSeri
     @Override
     public JsonElement serialize(ItemStack src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject result = new JsonObject();
-        result.addProperty("item", src.toString());
+        result.addProperty("item", ForgeRegistries.ITEMS.getKey(src.getItem()).toString());
         result.addProperty(AMOUNT_KEY, src.getCount());
         return result;
     }
