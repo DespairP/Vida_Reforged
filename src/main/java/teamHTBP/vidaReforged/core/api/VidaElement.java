@@ -1,6 +1,8 @@
 package teamHTBP.vidaReforged.core.api;
 
+import com.mojang.serialization.Codec;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
+import teamHTBP.vidaReforged.core.utils.codec.EnumCodec;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.color.VidaColor;
 
@@ -12,6 +14,8 @@ public enum VidaElement implements IVidaElement{
     AQUA("aqua",ARGBColor.rgba(0x00D5FFFF)),
     FIRE("fire",ARGBColor.DARK_RED),
     EARTH("earth",ARGBColor.LIGHT_BROWN);
+
+    public static final Codec<VidaElement> CODEC = new EnumCodec<>(VidaElement.class);
 
     /**元素名称*/
     public String name;

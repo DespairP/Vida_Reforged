@@ -1,19 +1,24 @@
 package teamHTBP.vidaReforged.core.common.system.magic.particle;
 
-import teamHTBP.vidaReforged.core.api.IVidaElement;
+import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
+import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 
 
 /**
- * @author TT432
- * @param colorA 粒子基础色
- * @param colorB 粒子渐变色
- * @param speed 发射物速度
- * @param amount 发射物数量
- * @param maxAge 发射物最大持续时间
- * @param type 攻击
- * @param damage 伤害
+ * @param colorA  粒子基础色
+ * @param colorB  粒子渐变色
+ * @param speed   发射物速度
+ * @param amount  发射物数量
+ * @param maxAge  发射物最大持续时间
+ * @param type    攻击
+ * @param damage  伤害
  * @param element
+ * @author TT432
  */
 public record MagicParticle(
         int colorA,
@@ -23,10 +28,31 @@ public record MagicParticle(
         MagicParticleAttribute maxAge,
         MagicParticleType type,
         MagicParticleAttribute damage,
-        IVidaElement element
+        VidaElement element
 ) {
+    public static final Codec<MagicParticle> CODEC = RecordCodecBuilder.create(ins -> ins.group(
+            Codec.INT.fieldOf("colorA").forGetter(MagicParticle::colorA),
+            Codec.INT.fieldOf("colorB").forGetter(MagicParticle::colorB),
+            MagicParticleAttribute.CODEC.fieldOf("speed").forGetter(MagicParticle::speed),
+            MagicParticleAttribute.CODEC.fieldOf("amount").forGetter(MagicParticle::amount),
+            MagicParticleAttribute.CODEC.fieldOf("maxAge").forGetter(MagicParticle::maxAge),
+            MagicParticleType.CODEC.fieldOf("type").forGetter(MagicParticle::type),
+            MagicParticleAttribute.CODEC.fieldOf("damage").forGetter(MagicParticle::damage),
+            VidaElement.CODEC.fieldOf("element").forGetter(MagicParticle::element)
+    ).apply(ins, MagicParticle::new));
 
-    // TODO  序列化反序列化
+    public CompoundTag toTag() {
+        return CODEC.encodeStart(NbtOps.INSTANCE, this)
+                .map(tag -> tag instanceof CompoundTag ct ? ct : new CompoundTag())
+                .get()
+                .left()
+                .orElse(new CompoundTag());
+    }
+
+    @Nullable
+    public static MagicParticle fromTag(CompoundTag tag) {
+        return CODEC.decode(NbtOps.INSTANCE, tag).get().left().orElse(new Pair<>(null, null)).getFirst();
+    }
 
     public static final MagicParticle EMPTY = new MagicParticle(
             0xFF_FF_FF_FF,

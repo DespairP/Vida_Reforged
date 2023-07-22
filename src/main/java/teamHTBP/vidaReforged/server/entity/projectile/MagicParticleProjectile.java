@@ -60,8 +60,8 @@ public class MagicParticleProjectile extends Projectile {
         Vec3 vec3 = this.getDeltaMovement();
         if (this.xRotO == 0.0F && this.yRotO == 0.0F) {
             double d0 = vec3.horizontalDistance();
-            this.setYRot((float) (Mth.atan2(vec3.x, vec3.z) * (double) (180F / (float) Math.PI)));
-            this.setXRot((float) (Mth.atan2(vec3.y, d0) * (double) (180F / (float) Math.PI)));
+            this.setYRot((float) (Mth.atan2(vec3.x, vec3.z) *  (180F / (float) Math.PI)));
+            this.setXRot((float) (Mth.atan2(vec3.y, d0) *  (180F / (float) Math.PI)));
             this.yRotO = this.getYRot();
             this.xRotO = this.getXRot();
         }
