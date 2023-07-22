@@ -8,6 +8,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.server.blockEntities.MagicWordCraftingTableBlockEntity;
 import teamHTBP.vidaReforged.server.recipe.VidaRecipeLoader;
 import teamHTBP.vidaReforged.server.recipe.ingredient.ItemStackListIngredient;
 
@@ -36,6 +37,9 @@ public class VidaMagicWordRecipe extends AbstractVidaRecipe<Container>{
         for(VidaElement element : requiredWords.keySet()){
             String containerWord = containerWordMap.get(element);
             String recipeWord = requiredWords.get(element);
+            if(requiredWords == null || recipeWord.isBlank()){
+                continue;
+            }
             if(!compareString(containerWord, recipeWord)){
                 isMatch = false;
                 break;
@@ -51,6 +55,10 @@ public class VidaMagicWordRecipe extends AbstractVidaRecipe<Container>{
     @Override
     public RecipeSerializer<?> getSerializer() {
         return MAGIC_WORD_RECIPE_SERIALIZER.get();
+    }
+
+    public boolean matches(MagicWordCraftingTableBlockEntity container) {
+        return matchWords(container.getMagicWordMap()) && matchItemStack(container.getElementStacks());
     }
 
     @Override

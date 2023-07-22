@@ -2,6 +2,7 @@ package teamHTBP.vidaReforged.server.recipe.ingredient;
 
 import com.google.gson.*;
 import com.google.gson.annotations.Expose;
+import com.google.gson.reflect.TypeToken;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -27,7 +28,7 @@ public class ItemStackListIngredient implements Predicate<List<ItemStack>> {
             return false;
         }
         //
-        final Map<Item, ItemStack> matchMap = itemStacks.stream().collect(Collectors.toMap(ItemStack::getItem, itemStack -> itemStack));
+        final Map<Item, ItemStack> matchMap = itemStacks.stream().collect(Collectors.toMap(ItemStack::getItem, itemStack -> itemStack, (first, second) -> first));
 
         // 比对成功的次数
         int matchAmount = 0;
@@ -62,8 +63,10 @@ public class ItemStackListIngredient implements Predicate<List<ItemStack>> {
         public ItemStackListIngredient deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             ItemStackListIngredient ingredient = new ItemStackListIngredient();
             try {
-                List<ItemStack> itemStacks = JsonUtils.getGson(JsonUtils.JsonUtilType.NORMAL).fromJson(json, List.class);
-                ingredient.requiredItemStack = itemStacks;
+                Type itemstackType = new TypeToken<List<ItemStack>>() {}.getType();
+                List<ItemStack> itemStacks = JsonUtils.getGson(JsonUtils.JsonUtilType.NORMAL).fromJson(json, itemstackType);
+                ingredient.requiredItemStack = new ArrayList<>();
+                ingredient.requiredItemStack.addAll(itemStacks);
                 return ingredient;
             }catch (Exception ex){
                 LOGGER.error(ex.getMessage());

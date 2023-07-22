@@ -12,5 +12,9 @@
       "item": "vida_reforged:vida_log",
       "amount": 3
     }
-  ]
+  ],
+  "resultItem": {
+    "item": "vida_reforged:vida_wand",
+    "amount": 1
+  }
 }

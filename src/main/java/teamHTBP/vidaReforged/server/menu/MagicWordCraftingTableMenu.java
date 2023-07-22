@@ -1,7 +1,9 @@
 package teamHTBP.vidaReforged.server.menu;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -12,11 +14,15 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.client.screen.components.MagicWordListWidget;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.helper.VidaElementHelper;
 import teamHTBP.vidaReforged.server.blockEntities.MagicWordCraftingTableBlockEntity;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
+import teamHTBP.vidaReforged.server.menu.slots.FobiddenSlot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MagicWordCraftingTableMenu extends AbstractContainerMenu {
     public static final String MENU_NAME = "magic_word_crafting_table";
@@ -30,6 +36,10 @@ public class MagicWordCraftingTableMenu extends AbstractContainerMenu {
     private final static int INVENTORY_ROW_AMOUNT = 3;
     /***/
     private List<String> playerMagicWords = new ArrayList<>();
+
+    private Map<VidaElement, Slot> elementSlotMap = new HashMap<>();
+
+    private Slot resultSlot;
 
 
     public MagicWordCraftingTableMenu(int menuId, ContainerLevelAccess access, Inventory inventory, BlockPos pos, List<String> playerMagicWords) {
@@ -56,16 +66,21 @@ public class MagicWordCraftingTableMenu extends AbstractContainerMenu {
             this.addSlot(new Slot(inventory, slotNumber, 8 + col * 18 + xOffset, 161 - 103 + yOffset));
         }
 
-        //添加其他
+        final List<VidaElement> normalElements = VidaElementHelper.getNormalElements();
+
+        // 添加其他物品栏
         access.execute(((level, pos$1) -> {
             MagicWordCraftingTableBlockEntity entity = (MagicWordCraftingTableBlockEntity)level.getBlockEntity(pos$1);
             int index = 0;
-            this.addSlot(new Slot(entity.getSlotFromElement(VidaElement.GOLD), 0, (index++) * 20, -30));
-            this.addSlot(new Slot(entity.getSlotFromElement(VidaElement.WOOD), 0, (index++) * 20, -30));
-            this.addSlot(new Slot(entity.getSlotFromElement(VidaElement.AQUA), 0, (index++) * 20, -30));
-            this.addSlot(new Slot(entity.getSlotFromElement(VidaElement.FIRE), 0, (index++) * 20, -30));
-            this.addSlot(new Slot(entity.getSlotFromElement(VidaElement.EARTH), 0, (index++) * 20, -30));
+            for(VidaElement element : normalElements){
+                Slot elementSlot = new Slot(entity.getSlotFromElement(element), 0, (index++) * 20 + COL_SIZE * 2 + 4, -30);
+                this.elementSlotMap.put(element, elementSlot);
+                this.addSlot(elementSlot);
+            }
+            resultSlot = new FobiddenSlot( entity.getResultSlot(), 0, 84, -120);
+            this.addSlot(resultSlot);
         }));
+
     }
 
     @Override
@@ -88,5 +103,17 @@ public class MagicWordCraftingTableMenu extends AbstractContainerMenu {
 
     public List<String> getPlayerMagicWords() {
         return playerMagicWords;
+    }
+
+    public Slot getSlotFromElement(VidaElement element){
+        return this.elementSlotMap.get(element);
+    }
+
+    public List<Slot> getAllElementSlot(){
+        return this.elementSlotMap.values().stream().toList();
+    }
+
+    public Slot getResultSlot(){
+        return resultSlot;
     }
 }

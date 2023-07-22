@@ -15,12 +15,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
-import teamHTBP.vidaReforged.client.screen.components.MagicSelectedWordListWidget;
-import teamHTBP.vidaReforged.client.screen.components.MagicWordFilter;
-import teamHTBP.vidaReforged.client.screen.components.MagicWordFilterList;
-import teamHTBP.vidaReforged.client.screen.components.MagicWordListWidget;
+import teamHTBP.vidaReforged.client.screen.components.*;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
@@ -28,10 +26,7 @@ import teamHTBP.vidaReforged.server.blockEntities.MagicWordCraftingTableBlockEnt
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
 import teamHTBP.vidaReforged.server.menu.MagicWordCraftingTableMenu;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 import static teamHTBP.vidaReforged.core.utils.math.StringUtils.compareString;
@@ -40,6 +35,8 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
     MagicWordListWidget magicWordWidget;
     MagicWordFilterList magicWordFilterLists;
     MagicSelectedWordListWidget magicSelectedWordListWidget;
+    MagicWordCraftingButton magicWordCraftingButton;
+    List<MagicSlotComponent> magicSlots;
     final VidaMagicWordViewModel viewModel;
     final Inventory inventory;
 
@@ -67,7 +64,24 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
 
         magicWordWidget = new MagicWordListWidget( viewModel, x, y, 0, componentHeight, factor);
         magicWordFilterLists = new MagicWordFilterList(viewModel, x - MagicWordFilter.PIXEL, y + componentHeight - MagicWordFilter.PIXEL * MagicWordFilterList.BUTTON_AMOUNT);
-        magicSelectedWordListWidget = new MagicSelectedWordListWidget(viewModel,this.leftPos + 50,this.topPos - 138);
+        magicSelectedWordListWidget = new MagicSelectedWordListWidget(viewModel,this.leftPos + 46,this.topPos - 138);
+        magicWordCraftingButton = new MagicWordCraftingButton(viewModel, this.leftPos + 64, this.topPos - 50);
+        magicSlots = new ArrayList<>();
+        this.addMagicSlots();
+    }
+
+    private void addMagicSlots(){
+
+        List<Slot> slots = this.menu.getAllElementSlot();
+        for(Slot slot : slots){
+            if(slot == null) {
+                continue;
+            }
+
+            this.magicSlots.add(new MagicSlotComponent(slot, this.leftPos + slot.x, this.topPos + slot.y));
+        }
+        //Slot slot = this.menu.getResultSlot();
+        //this.magicSlots.add(new MagicSlotComponent(slot,this.leftPos + slot.x, this.topPos + slot.y));
     }
 
     @Override
@@ -111,10 +125,14 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
 
     /**对比服务端数据和客户端数据，如果不一样，立即更换*/
     public void compareServerAndClientSideAndUpdate(){
+        //更新按钮
+        boolean isCrafting = false;
+        //更新词条
         Map<VidaElement,String> clientMap = this.viewModel.selectedMagicWord.getValue();
         Map<VidaElement,String> serverMap = new LinkedHashMap<>();
         BlockPos pos = getMenu().getBlockPos();
         if(inventory.player.getCommandSenderWorld().getBlockEntity(pos) instanceof MagicWordCraftingTableBlockEntity entity){
+            isCrafting = entity.isCrafting;
             serverMap = entity.getMagicWordMap();
         }
         boolean flag = false;
@@ -138,6 +156,8 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
             }
         }
 
+        //
+        this.viewModel.isCrafting.setValue(isCrafting);
         if(flag){
             // 更新但是不发送数据包
             HashMap<VidaElement,String> newMagicWordMap = new HashMap<>(serverMap);
@@ -151,8 +171,12 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
             magicWordWidget.render(graphics, mouseX, mouseY, partialTicks);
             magicWordFilterLists.render(graphics, mouseX, mouseY, partialTicks);
             magicSelectedWordListWidget.render(graphics, mouseX, mouseY, partialTicks);
+            magicSlots.forEach(slot -> slot.render(graphics, mouseX, mouseY, partialTicks));
+            graphics.setColor(1, 1, 1,1);
+            magicWordCraftingButton.render(graphics, mouseX, mouseY, partialTicks);
             graphics.setColor(1, 1, 1,1);
             renderBlock(graphics, mouseX, mouseY, partialTicks);
+            graphics.setColor(1, 1, 1,1);
             RenderSystem.disableBlend();
         }
     }
@@ -214,6 +238,7 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
         listeners.add(this.magicWordWidget);
         listeners.addAll(this.magicWordWidget.getChildren());
         listeners.addAll(this.magicSelectedWordListWidget.getChildren());
+        listeners.add(this.magicWordCraftingButton);
         return listeners;
     }
 

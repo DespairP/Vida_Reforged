@@ -18,7 +18,10 @@ public class VidaMagicWordViewModel extends ViewModel {
     public LiveData<Map<VidaElement, String>> selectedMagicWord = new LiveData<>(new LinkedHashMap<>());
 
     public LiveData<List<String>> playerMagicWords = new LiveData<>(new ArrayList<>());
+
     public LiveData<BlockPos> blockPos = new LiveData<BlockPos>(BlockPos.ZERO);
+
+    public LiveData<Boolean> isCrafting = new LiveData<>(false);
 
     public void setSelectWord(VidaElement element,String magicWordId){
         String replacedMagicWordId = magicWordId;
