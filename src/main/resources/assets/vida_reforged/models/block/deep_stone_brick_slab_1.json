@@ -1,7 +1,7 @@
 {
   "parent": "block/slab",
   "textures": {
-    "bottom": "vida_reforged:blocks/deep_stone_brick_2",
+    "bottom": "vida_reforged:block/deep_stone_brick_2",
     "top": "vida_reforged:block/deep_stone_brick_2",
     "side": "vida_reforged:block/deep_stone_brick_2"
   }

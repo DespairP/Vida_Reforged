@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "vida_reforged:block/sinking_stone_brick_3" },
+    "axis=z":    { "model": "vida_reforged:block/sinking_stone_brick_3", "x": 90 },
+    "axis=x":    { "model": "vida_reforged:block/sinking_stone_brick_3", "x": 90, "y": 90 }
+  }
+}

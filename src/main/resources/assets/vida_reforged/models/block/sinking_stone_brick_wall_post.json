@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_post",
+  "textures": {
+    "wall": "vida_reforged:block/sinking_stone_brick_0"
+  }
+}

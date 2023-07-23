@@ -1,6 +1,8 @@
 {
-  "parent": "block/cube_all",
+  "parent": "block/cube_column",
   "textures": {
-    "all": "vida_reforged:block/deep_stone"
+    "end": "vida_reforged:block/deep_stone_top",
+    "side":  "vida_reforged:block/deep_stone"
   }
+
 }

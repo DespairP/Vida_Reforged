@@ -73,6 +73,29 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> DEEP_STONE_BRICK_WALL = registerDecoBlock("deep_stone_brick_wall", STONE, WALL);
 
+    /**沉渊系列**/
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SINKING_STONE = registerDecoBlock("sinking_stone", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SINKING_STONE_BRICK_0 = registerDecoBlock("sinking_stone_brick_0", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SINKING_STONE_BRICK_1 = registerDecoBlock("sinking_stone_brick_1", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SINKING_STONE_BRICK_2 = registerDecoBlock("sinking_stone_brick_2", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SINKING_STONE_BRICK_3 = registerDecoBlock("sinking_stone_brick_3", STONE, LOG);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SINKING_STONE_BRICK_4 = registerDecoBlock("sinking_stone_brick_4", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SINKING_STONE_BRICK_SLAB = registerDecoBlock("sinking_stone_brick_slab", STONE, SLAB);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SINKING_STONE_BRICK_SLAB_1 = registerDecoBlock("sinking_stone_brick_slab_1", STONE, SLAB);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SINKING_STONE_BRICK_STAIR = registerDecoBlock("sinking_stone_brick_stair", STONE, STAIRS,SINKING_STONE_BRICK_0);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SINKING_STONE_BRICK_STAIR_1 = registerDecoBlock("sinking_stone_brick_stair_1", STONE, STAIRS,SINKING_STONE_BRICK_1);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SINKING_STONE_BRICK_WALL = registerDecoBlock("sinking_stone_brick_wall", STONE,WALL);
 
     /**生命木板*/
     @RegisterItemBlock

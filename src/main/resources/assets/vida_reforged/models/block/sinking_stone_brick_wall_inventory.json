@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "vida_reforged:block/sinking_stone_brick_0"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "vida_reforged:block/sinking_stone_brick_slab"
+    },
+    "type=double": {
+      "model": "vida_reforged:block/sinking_stone_brick_0"
+    },
+    "type=top": {
+      "model": "vida_reforged:block/sinking_stone_brick_slab_top"
+    }
+  }
+}
