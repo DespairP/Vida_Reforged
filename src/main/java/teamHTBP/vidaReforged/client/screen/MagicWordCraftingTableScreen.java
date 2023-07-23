@@ -64,7 +64,7 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
 
         magicWordWidget = new MagicWordListWidget( viewModel, x, y, 0, componentHeight, factor);
         magicWordFilterLists = new MagicWordFilterList(viewModel, x - MagicWordFilter.PIXEL, y + componentHeight - MagicWordFilter.PIXEL * MagicWordFilterList.BUTTON_AMOUNT);
-        magicSelectedWordListWidget = new MagicSelectedWordListWidget(viewModel,this.leftPos + 46,this.topPos - 138);
+        magicSelectedWordListWidget = new MagicSelectedWordListWidget(viewModel,this.leftPos + 46,this.topPos - 140);
         magicWordCraftingButton = new MagicWordCraftingButton(viewModel, this.leftPos + 64, this.topPos - 50);
         magicSlots = new ArrayList<>();
         this.addMagicSlots();

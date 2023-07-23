@@ -77,7 +77,7 @@ public class MagicWordCraftingTableMenu extends AbstractContainerMenu {
                 this.elementSlotMap.put(element, elementSlot);
                 this.addSlot(elementSlot);
             }
-            resultSlot = new FobiddenSlot( entity.getResultSlot(), 0, 84, -120);
+            resultSlot = new FobiddenSlot( entity.getResultSlot(), 0, 80, -120);
             this.addSlot(resultSlot);
         }));
 

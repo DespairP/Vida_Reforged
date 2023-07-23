@@ -32,7 +32,7 @@ import static teamHTBP.vidaReforged.server.menu.TimeElementCraftingTableMenuCont
 
 public class MagicWordCraftingTable extends VidaBaseEntityBlock {
     public MagicWordCraftingTable() {
-        super(Properties.of().noCollission(), VidaBlockEntityLoader.MAGIC_WORD_CRAFTING);
+        super(Properties.of().noOcclusion(), VidaBlockEntityLoader.MAGIC_WORD_CRAFTING);
     }
 
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {

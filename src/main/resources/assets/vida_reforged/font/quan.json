@@ -1,0 +1,11 @@
+{
+  "providers": [
+    {
+      "type": "ttf",
+      "file": "vida_reforged:quan.ttf",
+      "shift": [0.0, -1.0],
+      "size": 8.0,
+      "overSample": 2.0
+    }
+  ]
+}

@@ -37,7 +37,7 @@ public class VidaMagicWordRecipe extends AbstractVidaRecipe<Container>{
         for(VidaElement element : requiredWords.keySet()){
             String containerWord = containerWordMap.get(element);
             String recipeWord = requiredWords.get(element);
-            if(requiredWords == null || recipeWord.isBlank()){
+            if((requiredWords == null || recipeWord.isEmpty()) && (containerWord == null || containerWord.isEmpty())){
                 continue;
             }
             if(!compareString(containerWord, recipeWord)){
