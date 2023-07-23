@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.screen.components;
+package teamHTBP.vidaReforged.client.screen.components.magicWords;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;

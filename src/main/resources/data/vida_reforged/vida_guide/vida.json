@@ -1,0 +1,28 @@
+{
+  "id": "vida_reforged:vida",
+  "titleKey": "guidebook.title.vida_reforged.vida",
+  "pages": [
+    {
+      "pageId": "vida_01",
+      "subTitleKey": "guidebook.subtitle.vida_reforged.vida_01",
+      "left": {
+        "type": "EMPTY"
+      },
+      "right": {
+        "type": "TEXT",
+        "text": "guidebook.text.vida_reforged.vida_01"
+      }
+    },
+    {
+      "pageId": "vida_02",
+      "subTitleKey": "guidebook.subtitle.vida_reforged.vida_02",
+      "left": {
+        "type": "EMPTY"
+      },
+      "right": {
+        "type": "TEXT",
+        "text": "guidebook.text.vida_reforged.vida_02"
+      }
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.screen.components;
+package teamHTBP.vidaReforged.client.screen.components.magicWords;
 
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.gui.GuiGraphics;
@@ -6,14 +6,12 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import org.joml.Matrix2f;
 import org.joml.Vector2f;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MagicSelectedWordListWidget extends AbstractWidget {

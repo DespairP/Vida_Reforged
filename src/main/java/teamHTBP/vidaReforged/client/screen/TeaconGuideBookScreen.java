@@ -1,26 +1,35 @@
 package teamHTBP.vidaReforged.client.screen;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import teamHTBP.vidaReforged.client.screen.components.GuideBookScrollTextArea;
+import teamHTBP.vidaReforged.client.screen.components.guidebooks.GuideBookScrollTextArea;
+import teamHTBP.vidaReforged.client.screen.components.guidebooks.TeaconGuidebookPagesManager;
+import teamHTBP.vidaReforged.client.screen.viewModels.VidaTeaconGuidebookViewModel;
+import teamHTBP.vidaReforged.core.common.system.guidebook.TeaconGuideBook;
+import teamHTBP.vidaReforged.server.providers.TeaconGuideBookManager;
+
+import java.util.List;
 
 public class TeaconGuideBookScreen extends Screen {
     GuideBookScrollTextArea textArea;
-
+    TeaconGuideBook book;
+    int page = 1;
+    VidaTeaconGuidebookViewModel viewModel;
+    TeaconGuidebookPagesManager manager;
 
     public TeaconGuideBookScreen(String bookId) {
         super(Component.translatable("Teacon Guide Book"));
+        TeaconGuideBook book = TeaconGuideBookManager.pageIdMap.get("vida_reforged:vida");
+        this.viewModel = new VidaTeaconGuidebookViewModel(book);
     }
 
     @Override
     protected void init() {
         super.init();
-        final int textWidth = (int)(this.width * 1.9f / 3.0f);
-        final int textHeight = (int)(this.height * 2.0f / 3.0f);
-        final int x = (int)(this.width * 1.0f / 3.0f);
-        final int y = (int)(this.height - textHeight) / 2;
-        this.textArea = new GuideBookScrollTextArea(x, y, textWidth, textHeight);
+        this.manager = new TeaconGuidebookPagesManager(viewModel).setWidth(width).setHeight(height);
+        this.manager.init();
     }
 
     @Override
@@ -36,11 +45,18 @@ public class TeaconGuideBookScreen extends Screen {
     }
 
     public void renderText(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
-        this.textArea.render(graphics, mouseX, mouseY, partialTicks);
+        this.manager.render(graphics, mouseX, mouseY, partialTicks);
     }
 
     @Override
     public boolean isPauseScreen() {
         return false;
+    }
+
+    @Override
+    public List<? extends GuiEventListener> children() {
+        List<GuiEventListener> listeners = (List<GuiEventListener>) super.children();
+        listeners.addAll(this.manager.getChildren());
+        return listeners;
     }
 }

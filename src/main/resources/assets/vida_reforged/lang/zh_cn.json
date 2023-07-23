@@ -123,5 +123,8 @@
  "magic_word.name.vida_reforged:sun": "太阳",
  "magic_word.name.vida_reforged:thought": "思维",
  "magic_word.name.vida_reforged:tree": "树木",
- "magic_word.name.vida_reforged:vision": "视野"
+ "magic_word.name.vida_reforged:vision": "视野",
+ "guidebook.text.vida_reforged.vida_01" : "测试\n12345${#FF517F}测试！\n1${bold}\n1\n1\n1\n1\n1\n1\n1\n1\n1\n1\n1\n1\n1\n1n1\n1\n1\n1\n1\n1\n1\n1\n1\n1\n1\n1\n1\n1\n1"
+
+
 }

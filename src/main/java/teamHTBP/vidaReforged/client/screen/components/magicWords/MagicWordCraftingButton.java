@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.screen.components;
+package teamHTBP.vidaReforged.client.screen.components.magicWords;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -9,14 +9,13 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
-import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.packets.MagicWordCraftingPacket;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
-import static teamHTBP.vidaReforged.client.screen.components.MagicWordWidget.DINKFONT;
+import static teamHTBP.vidaReforged.client.screen.components.magicWords.MagicWordWidget.DINKFONT;
 
 public class MagicWordCraftingButton extends AbstractWidget {
     public static final int WIDTH = 48;

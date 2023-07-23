@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.screen.components;
+package teamHTBP.vidaReforged.client.screen.components.jigsaw;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;

@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.screen.components;
+package teamHTBP.vidaReforged.client.screen.components.jigsaw;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -11,6 +11,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import org.joml.Matrix4f;
+import teamHTBP.vidaReforged.client.screen.components.AbstractVidaWidget;
 import teamHTBP.vidaReforged.core.utils.animation.DestinationAnimator;
 
 public class AttachSlot extends AbstractVidaWidget implements Renderable {

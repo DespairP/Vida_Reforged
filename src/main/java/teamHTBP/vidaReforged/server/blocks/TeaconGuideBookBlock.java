@@ -27,8 +27,9 @@ import java.util.function.Supplier;
 public class TeaconGuideBookBlock extends VidaBaseEntityBlock<TeaconGuideBookBlockEntity> {
     private String bookId = "";
 
-    public TeaconGuideBookBlock() {
+    public TeaconGuideBookBlock(String bookId) {
         super(BlockBehaviour.Properties.of().noOcclusion().noCollission(), VidaBlockEntityLoader.TEACON_GUIDEBOOK);
+        this.bookId = bookId;
     }
 
 

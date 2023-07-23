@@ -242,7 +242,7 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> PURIFICATION_CAULDRON = BLOCKS.register("purification_cauldron", PurificationCauldron::new);
 
     @RegisterItemBlock
-    public final static RegistryObject<Block> TEACON_GUIDEBOOK = BLOCKS.register("teacon_guidebook", TeaconGuideBookBlock::new);
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK = BLOCKS.register("teacon_guidebook", () -> new TeaconGuideBookBlock("vida_reforged:vida"));
 
     @RegisterItemBlock
     public final static RegistryObject<Block> JIGSAW_EQUIP = BLOCKS.register("jigsaw_equip", VidaMagicJigsawEquipingBlock::new);

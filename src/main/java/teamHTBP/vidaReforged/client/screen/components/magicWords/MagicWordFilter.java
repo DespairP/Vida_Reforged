@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.screen.components;
+package teamHTBP.vidaReforged.client.screen.components.magicWords;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;

@@ -1,17 +1,11 @@
 package teamHTBP.vidaReforged.client.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import org.joml.Matrix4f;
-import teamHTBP.vidaReforged.client.events.RenderTypeHandler;
-import teamHTBP.vidaReforged.client.screen.components.AttachSlotsContainer;
+import teamHTBP.vidaReforged.client.screen.components.jigsaw.AttachSlotsContainer;
 import teamHTBP.vidaReforged.server.menu.MagicJigsawMenu;
 
 import java.util.List;
