@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:block/cube_all",
+	"textures": {
+		"all": "vida_reforged:block/blue_jelly_mushroom_block"
+	}
+}

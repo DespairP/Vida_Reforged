@@ -157,6 +157,19 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public static RegistryObject<Block> VIDA_LEAVES = registerDecoBlock("vida_leaves", LEAVES, NORMAL, true);
 
+    /**蘑菇**/
+    @RegisterItemBlock
+    public final static RegistryObject<Block> EMERALD_MUSHROOM_STEM = registerDecoBlock("emerald_mushroom_stem", WOOD, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> EMERALD_MUSHROOM_BLOCK = registerDecoBlock("emerald_mushroom_block", WOOD, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> MYSTIC_MUSHROOM_STEM = registerDecoBlock("mystic_mushroom_stem", WOOD, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> MYSTIC_MUSHROOM_BLOCK = registerDecoBlock("mystic_mushroom_block", WOOD, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> BLUE_JELLY_MUSHROOM_STEM = registerDecoBlock("blue_jelly_mushroom_stem", WOOD, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> BLUE_JELLY_MUSHROOM_BLOCK = registerDecoBlock("blue_jelly_mushroom_block", WOOD, NORMAL);
 
     /**花*/
     @RegisterItemBlock
@@ -177,6 +190,10 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> EMERALD_MUSHROOM = registerDecoBlock("emerald_mushroom", GRASS, DOUBLE_PLANT);
     @RegisterItemBlock
     public final static RegistryObject<Block> PINK_JELLY_FLOWER = registerDecoBlock("pink_jelly_flower", GRASS, DOUBLE_PLANT);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> MYSTIC_MUSHROOM = registerDecoBlock("mystic_mushroom", GRASS, FLOWER);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> BLUE_JELLY_MUSHROOM = registerDecoBlock("blue_jelly_mushroom", GRASS, FLOWER);
 
     /**作物*/
     @RegisterItemBlock
