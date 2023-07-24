@@ -23,6 +23,50 @@
         "type": "TEXT",
         "text": "guidebook.text.vida_reforged.vida_02"
       }
+    },
+    {
+      "pageId": "vida_03",
+      "subTitleKey": "guidebook.subtitle.vida_reforged.vida_03",
+      "left": {
+        "type": "EMPTY"
+      },
+      "right": {
+        "type": "TEXT",
+        "text": "guidebook.text.vida_reforged.vida_03"
+      }
+    },
+    {
+      "pageId": "vida_04",
+      "subTitleKey": "guidebook.subtitle.vida_reforged.vida_04",
+      "left": {
+        "type": "EMPTY"
+      },
+      "right": {
+        "type": "TEXT",
+        "text": "guidebook.text.vida_reforged.vida_04"
+      }
+    },
+    {
+      "pageId": "vida_05",
+      "subTitleKey": "guidebook.subtitle.vida_reforged.vida_05",
+      "left": {
+        "type": "EMPTY"
+      },
+      "right": {
+        "type": "TEXT",
+        "text": "guidebook.text.vida_reforged.vida_05"
+      }
+    },
+    {
+      "pageId": "vida_06",
+      "subTitleKey": "guidebook.subtitle.vida_reforged.vida_06",
+      "left": {
+        "type": "EMPTY"
+      },
+      "right": {
+        "type": "TEXT",
+        "text": "guidebook.text.vida_reforged.vida_06"
+      }
     }
   ]
 }
