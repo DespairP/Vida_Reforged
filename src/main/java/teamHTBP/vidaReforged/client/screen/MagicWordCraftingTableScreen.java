@@ -231,7 +231,7 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
 
     @Override
     public List<? extends GuiEventListener> children() {
-        List<GuiEventListener> listeners = (List<GuiEventListener>) super.children();
+        List<GuiEventListener> listeners = new ArrayList<>();
         listeners.addAll(this.magicWordFilterLists.getChildren());
         listeners.add(this.magicWordWidget);
         listeners.addAll(this.magicWordWidget.getChildren());

@@ -6,6 +6,19 @@
       "shift": [0.0, -1.0],
       "size": 12.0,
       "overSample": 2.0
+    },
+    {
+      "type": "ttf",
+      "file": "vida_reforged:quan.ttf",
+      "shift": [0.0, 1],
+      "size": 8.0,
+      "overSample": 2.0
+    },
+    {
+      "type": "reference",
+      "shift": [0.0, 12.0],
+      "size": 12.0,
+      "id": "minecraft:include/unifont"
     }
   ]
 }

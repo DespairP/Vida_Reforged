@@ -16,6 +16,8 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.client.screen.components.magicWords.MagicWordWidget;
+import teamHTBP.vidaReforged.core.utils.animation.Animator;
+import teamHTBP.vidaReforged.core.utils.animation.DestinationAnimator;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.core.utils.render.RenderHelper;
 
@@ -29,18 +31,24 @@ import java.util.stream.Collectors;
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
 public class GuideBookScrollTextArea extends AbstractWidget implements IGuidebookComponent {
-    Font font;
-
+    /**字体*/
+    private Font font;
+    /**匹配${}格式的正则*/
     private final Pattern pattern;
-
+    /**${}正则*/
     private final String regex;
-
-    public static ResourceLocation VONWAON = new ResourceLocation(MOD_ID, "quan");
-
+    /**QUAN字体*/
+    public static ResourceLocation QUAN = new ResourceLocation(MOD_ID, "quan");
+    /**显示的所有字*/
     private String all;
-
+    /**滚动*/
     private AtomicInteger scroll = new AtomicInteger(0);
+    /**滚动条透明度*/
     private FloatRange scrollBarAlpha = new FloatRange(0,0,0.3f);
+    /**全局透明度*/
+    private DestinationAnimator<Float> globalAlphaAnim;
+    /**丁卯字体*/
+    public static ResourceLocation DINKFONT = new ResourceLocation(MOD_ID, "dinkie");
 
     public GuideBookScrollTextArea(String key, int x, int y, int width, int height) {
         super(x, y, width, height, Component.translatable("text"));
@@ -48,23 +56,40 @@ public class GuideBookScrollTextArea extends AbstractWidget implements IGuideboo
         this.regex = "\\$\\{.*?\\}";
         this.pattern = Pattern.compile(regex);
         this.all = Language.getInstance().getOrDefault(key, key);
+        this.globalAlphaAnim = DestinationAnimator.of(3,0f,0.95f);
+        this.globalAlphaAnim.start();
     }
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        //动画
+        this.globalAlphaAnim.tick(partialTicks);
+        float alpha = this.globalAlphaAnim.getValue();
+        //渲染
+        RenderSystem.enableBlend();
+        RenderSystem.setShaderColor(alpha, alpha,alpha,alpha);
+        renderBg(graphics, mouseX, mouseY, partialTicks);
         renderText(graphics,mouseX,mouseY,partialTicks);
         drawScrollBar(graphics, mouseX, mouseY, partialTicks);
+        RenderSystem.setShaderColor(1,1,1,1);
+        RenderSystem.disableBlend();
     }
 
+    /**渲染滚动条*/
     private void drawScrollBar(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
         float alpha = scrollBarAlpha.change(isHovered, 0.02f);
+
 
         PoseStack poseStack = graphics.pose();
         poseStack.pushPose();
         VertexConsumer consumer = graphics.bufferSource().getBuffer(RenderType.gui());
-        int iconHeight = getHeight() - getMaxScrollHeight();
+        int iconHeight = Math.max(5, getHeight() - getMaxScrollHeight());
         Matrix4f matrix4f = poseStack.last().pose();
-        matrix4f.translate(getX() + getWidth(), getY() - scroll.get(), 0);
+        matrix4f.translate(
+                getX() + getWidth(),
+                Math.min(getY() - scroll.get(), getY() + getHeight() - 5),
+                0
+        );
         consumer.vertex(matrix4f, 0, 0, 0).color(0.8f, 0.8f, 0.8f, alpha).endVertex();
         consumer.vertex(matrix4f, 0, iconHeight, 0).color(0.8f, 0.8f, 0.8f, alpha).endVertex();
         consumer.vertex(matrix4f, 3, iconHeight, 0).color(0.8f, 0.8f, 0.8f, alpha).endVertex();
@@ -72,31 +97,37 @@ public class GuideBookScrollTextArea extends AbstractWidget implements IGuideboo
         poseStack.popPose();
     }
 
+    /**获取最大能滚动的高度*/
     public int getMaxScrollHeight(){
         String text = this.splitString(this.all).stream().filter(str -> !str.matches(regex)).collect(Collectors.joining());
         int allWordHeight = font.wordWrapHeight(text, getWidth());
         return Math.max(0, allWordHeight - getHeight());
     }
 
-    protected void renderText(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    /**渲染*/
+    protected void renderBg(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
         PoseStack poseStack = graphics.pose();
-
         poseStack.pushPose();
         graphics.fillGradient(
                 getX(),
                 getY(),
                 getX() + this.width,
                 getY() + this.height,
-                -1072689136,
-                -804253680
+                0x50000000,
+                0x20000000
         );
         poseStack.popPose();
+    }
 
+    /**渲染文字*/
+    protected void renderText(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        PoseStack poseStack = graphics.pose();
         MutableComponent component = Component.empty();
+
 
         List<String> strList = this.splitString(this.all);
         for (int i = 0; i < strList.size(); i++) {
-            Style style = Style.EMPTY.withFont(VONWAON);
+            Style style = Style.EMPTY.withFont(DINKFONT);
             for (int j = i; j < strList.size(); j++) {
                 String subStr = strList.get(j);
                 if (subStr.matches(regex) && !("${}".equals(subStr))) {
@@ -108,14 +139,18 @@ public class GuideBookScrollTextArea extends AbstractWidget implements IGuideboo
             }
             component.append(Component.literal(strList.get(i)).withStyle(style));
         }
+
         poseStack.pushPose();
         RenderSystem.enableBlend();
+
         RenderHelper.renderScissor(getX() + 3,getY(), getWidth(), getHeight());
-        poseStack.translate(3, 9 + scroll.get(), 0);
-        graphics.drawWordWrap(font, component, getX(), getY(), getWidth(), 0xFFFFFFFF);
+        poseStack.translate(10, 10 + scroll.get() , 0);
+        graphics.drawWordWrap(font, component, getX(), getY(), getWidth() - 13, 0xFFFFFFFF);
+
         RenderSystem.disableScissor();
         RenderSystem.disableBlend();
         poseStack.popPose();
+
     }
 
     /**
