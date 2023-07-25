@@ -1,0 +1,9 @@
+{
+  "sources": [
+    {
+      "type": "directory",
+      "source": "block/crystal",
+      "prefix": "block/crystal"
+    }
+  ]
+}

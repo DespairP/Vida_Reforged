@@ -30,7 +30,20 @@ public class VidaBlockEntityLoader {
 
     public static final RegistryObject<BlockEntityType<TeaconGuideBookBlockEntity>> TEACON_GUIDEBOOK = BLOCK_ENTITIES.register(
             "teacon_guidebook",
-            () -> BlockEntityType.Builder.of(TeaconGuideBookBlockEntity::new, VidaBlockLoader.TEACON_GUIDEBOOK.get()).build(null)
+            () -> BlockEntityType.Builder.of(
+                    TeaconGuideBookBlockEntity::new,
+                    VidaBlockLoader.TEACON_GUIDEBOOK.get(),
+                    VidaBlockLoader.TEACON_GUIDEBOOK_01.get(),
+                    VidaBlockLoader.TEACON_GUIDEBOOK_02.get(),
+                    VidaBlockLoader.TEACON_GUIDEBOOK_03.get(),
+                    VidaBlockLoader.TEACON_GUIDEBOOK_04.get(),
+                    VidaBlockLoader.TEACON_GUIDEBOOK_05.get(),
+                    VidaBlockLoader.TEACON_GUIDEBOOK_06.get(),
+                    VidaBlockLoader.TEACON_GUIDEBOOK_07.get(),
+                    VidaBlockLoader.TEACON_GUIDEBOOK_08.get(),
+                    VidaBlockLoader.TEACON_GUIDEBOOK_09.get(),
+                    VidaBlockLoader.TEACON_GUIDEBOOK_10.get()
+            ).build(null)
     );
 
     public static final RegistryObject<BlockEntityType<VidaMagicJigsawEquipingBlockEntity>> JIGSAW_EQUIP = BLOCK_ENTITIES.register(
@@ -41,5 +54,16 @@ public class VidaBlockEntityLoader {
     public static final RegistryObject<BlockEntityType<MagicWordCraftingTableBlockEntity>> MAGIC_WORD_CRAFTING = BLOCK_ENTITIES.register(
             "magic_word_crafting_table",
             () -> BlockEntityType.Builder.of(MagicWordCraftingTableBlockEntity::new, VidaBlockLoader.MAGIC_WORD_CRAFTING.get()).build(null)
+    );
+
+    public static final RegistryObject<BlockEntityType<FloatingCrystalBlockEntity>> FLOATING_CRYSTAL = BLOCK_ENTITIES.register(
+            "floating_crystal",
+            () -> BlockEntityType.Builder.of(FloatingCrystalBlockEntity::new,
+                    VidaBlockLoader.GOLD_FLOATING_ELEMENT_CRYSTAL.get(),
+                    VidaBlockLoader.WOOD_FLOATING_ELEMENT_CRYSTAL.get(),
+                    VidaBlockLoader.AQUA_FLOATING_ELEMENT_CRYSTAL.get(),
+                    VidaBlockLoader.FIRE_FLOATING_ELEMENT_CRYSTAL.get(),
+                    VidaBlockLoader.EARTH_FLOATING_ELEMENT_CRYSTAL.get()
+            ).build(null)
     );
 }

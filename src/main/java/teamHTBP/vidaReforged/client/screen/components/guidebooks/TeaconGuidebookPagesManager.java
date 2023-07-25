@@ -10,6 +10,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaTeaconGuidebookViewModel;
 import teamHTBP.vidaReforged.core.utils.animation.Animator;
@@ -25,6 +26,7 @@ import java.util.List;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.sin;
+import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
 public class TeaconGuidebookPagesManager implements IGuidebookComponent{
     private final VidaTeaconGuidebookViewModel viewModel;
@@ -34,6 +36,8 @@ public class TeaconGuidebookPagesManager implements IGuidebookComponent{
     private Component title;
     private Component subTitle;
     private Font font;
+    /**丁卯字体*/
+    public static ResourceLocation DINKFONT = new ResourceLocation(MOD_ID, "dinkie");
     private FloatRange subTitleAlpha = new FloatRange(0, 0, 1.0f);
 
     private FloatRange horizonLineLength = new FloatRange(0f,0f,390f);
@@ -135,14 +139,13 @@ public class TeaconGuidebookPagesManager implements IGuidebookComponent{
         RenderSystem.disableBlend();
         poseStack.popPose();
 
-        float scale = 0.6f;
+        float scale = 0.9f;
 
 
         poseStack.pushPose();
         poseStack.scale(scale, scale, scale);
         int color = ARGBColor.of(subTitleAlpha.get(), 1, 1, 1).argb();
-        graphics.drawString(font, subTitle,(int)((x + 100) * 1.0f / scale),(int)(y * 1.0f / scale) + 8, color);
-
+        graphics.drawString(font, Component.empty().append(subTitle).withStyle(style -> style.withFont(DINKFONT)) ,(int)((x + 100) * 1.0f / scale),(int)(y * 1.0f / scale) + 8, color);
         poseStack.popPose();
     }
 

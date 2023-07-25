@@ -263,12 +263,20 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> TEACON_GUIDEBOOK_09 = BLOCKS.register("teacon_guidebook_09", () -> new TeaconGuideBookBlock("vida_reforged:vida_09"));
     @RegisterItemBlock
     public final static RegistryObject<Block> TEACON_GUIDEBOOK_10 = BLOCKS.register("teacon_guidebook_10", () -> new TeaconGuideBookBlock("vida_reforged:vida_10"));
-
     @RegisterItemBlock
     public final static RegistryObject<Block> JIGSAW_EQUIP = BLOCKS.register("jigsaw_equip", VidaMagicJigsawEquipingBlock::new);
-
     @RegisterItemBlock
     public final static RegistryObject<Block> MAGIC_WORD_CRAFTING = BLOCKS.register("magic_word_crafting_table", MagicWordCraftingTable::new);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> GOLD_FLOATING_ELEMENT_CRYSTAL = BLOCKS.register("gold_floating_element_crystal", ()-> new FloatingCrystalBlock(VidaElement.GOLD));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> WOOD_FLOATING_ELEMENT_CRYSTAL = BLOCKS.register("wood_floating_element_crystal", ()-> new FloatingCrystalBlock(VidaElement.WOOD));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> AQUA_FLOATING_ELEMENT_CRYSTAL = BLOCKS.register("aqua_floating_element_crystal", ()-> new FloatingCrystalBlock(VidaElement.AQUA));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> FIRE_FLOATING_ELEMENT_CRYSTAL = BLOCKS.register("fire_floating_element_crystal", ()-> new FloatingCrystalBlock(VidaElement.FIRE));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> EARTH_FLOATING_ELEMENT_CRYSTAL = BLOCKS.register("earth_floating_element_crystal", ()-> new FloatingCrystalBlock(VidaElement.EARTH));
 
     /**
      * @param name 注册名称

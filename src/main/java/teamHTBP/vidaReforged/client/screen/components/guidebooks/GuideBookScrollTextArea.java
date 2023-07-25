@@ -37,8 +37,6 @@ public class GuideBookScrollTextArea extends AbstractWidget implements IGuideboo
     private final Pattern pattern;
     /**${}正则*/
     private final String regex;
-    /**QUAN字体*/
-    public static ResourceLocation QUAN = new ResourceLocation(MOD_ID, "quan");
     /**显示的所有字*/
     private String all;
     /**滚动*/
@@ -47,8 +45,6 @@ public class GuideBookScrollTextArea extends AbstractWidget implements IGuideboo
     private FloatRange scrollBarAlpha = new FloatRange(0,0,0.3f);
     /**全局透明度*/
     private DestinationAnimator<Float> globalAlphaAnim;
-    /**丁卯字体*/
-    public static ResourceLocation DINKFONT = new ResourceLocation(MOD_ID, "dinkie");
 
     public GuideBookScrollTextArea(String key, int x, int y, int width, int height) {
         super(x, y, width, height, Component.translatable("text"));
@@ -101,7 +97,7 @@ public class GuideBookScrollTextArea extends AbstractWidget implements IGuideboo
     public int getMaxScrollHeight(){
         String text = this.splitString(this.all).stream().filter(str -> !str.matches(regex)).collect(Collectors.joining());
         int allWordHeight = font.wordWrapHeight(text, getWidth());
-        return Math.max(0, allWordHeight - getHeight());
+        return Math.max(0, allWordHeight - getHeight() + 10);
     }
 
     /**渲染*/
@@ -127,7 +123,7 @@ public class GuideBookScrollTextArea extends AbstractWidget implements IGuideboo
 
         List<String> strList = this.splitString(this.all);
         for (int i = 0; i < strList.size(); i++) {
-            Style style = Style.EMPTY.withFont(DINKFONT);
+            Style style = Style.EMPTY;
             for (int j = i; j < strList.size(); j++) {
                 String subStr = strList.get(j);
                 if (subStr.matches(regex) && !("${}".equals(subStr))) {
@@ -207,6 +203,11 @@ public class GuideBookScrollTextArea extends AbstractWidget implements IGuideboo
             //下划线匹配
             if (styleString.contains("u")) {
                 style = style.withUnderlined(true);
+            }
+
+            //删除
+            if (styleString.contains("del")) {
+                style = style.withStrikethrough(true);
             }
 
             return style;
