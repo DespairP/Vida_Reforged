@@ -1,0 +1,17 @@
+{
+  "id": "vida_reforged:vida_06",
+  "titleKey": "guidebook.title.vida_reforged.vida_06",
+  "pages": [
+    {
+      "pageId": "vida_12",
+      "subTitleKey": "guidebook.subtitle.vida_reforged.vida_12",
+      "left": {
+        "type": "EMPTY"
+      },
+      "right": {
+        "type": "TEXT",
+        "text": "guidebook.text.vida_reforged.vida_12"
+      }
+    }
+  ]
+}

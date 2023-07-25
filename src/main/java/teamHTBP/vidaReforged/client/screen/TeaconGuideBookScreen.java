@@ -24,7 +24,7 @@ public class TeaconGuideBookScreen extends Screen {
 
     public TeaconGuideBookScreen(String bookId) {
         super(Component.translatable("Teacon Guide Book"));
-        TeaconGuideBook book = TeaconGuideBookManager.pageIdMap.get("vida_reforged:vida");
+        TeaconGuideBook book = TeaconGuideBookManager.pageIdMap.get(bookId);
         this.viewModel = new VidaTeaconGuidebookViewModel(book);
         this.viewModel.setMaxPage(book != null ? Math.max(0,book.getPageCount()) : 0);
     }

@@ -243,6 +243,26 @@ public class VidaBlockLoader {
 
     @RegisterItemBlock
     public final static RegistryObject<Block> TEACON_GUIDEBOOK = BLOCKS.register("teacon_guidebook", () -> new TeaconGuideBookBlock("vida_reforged:vida"));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK_01 = BLOCKS.register("teacon_guidebook_01", () -> new TeaconGuideBookBlock("vida_reforged:vida_01"));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK_02 = BLOCKS.register("teacon_guidebook_02", () -> new TeaconGuideBookBlock("vida_reforged:vida_02"));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK_03 = BLOCKS.register("teacon_guidebook_03", () -> new TeaconGuideBookBlock("vida_reforged:vida_03"));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK_04 = BLOCKS.register("teacon_guidebook_04", () -> new TeaconGuideBookBlock("vida_reforged:vida_04"));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK_05 = BLOCKS.register("teacon_guidebook_05", () -> new TeaconGuideBookBlock("vida_reforged:vida_05"));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK_06 = BLOCKS.register("teacon_guidebook_06", () -> new TeaconGuideBookBlock("vida_reforged:vida_06"));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK_07 = BLOCKS.register("teacon_guidebook_07", () -> new TeaconGuideBookBlock("vida_reforged:vida_07"));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK_08 = BLOCKS.register("teacon_guidebook_08", () -> new TeaconGuideBookBlock("vida_reforged:vida_08"));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK_09 = BLOCKS.register("teacon_guidebook_09", () -> new TeaconGuideBookBlock("vida_reforged:vida_09"));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK_10 = BLOCKS.register("teacon_guidebook_10", () -> new TeaconGuideBookBlock("vida_reforged:vida_10"));
 
     @RegisterItemBlock
     public final static RegistryObject<Block> JIGSAW_EQUIP = BLOCKS.register("jigsaw_equip", VidaMagicJigsawEquipingBlock::new);
