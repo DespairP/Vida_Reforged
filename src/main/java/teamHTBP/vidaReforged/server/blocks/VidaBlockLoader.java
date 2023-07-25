@@ -145,7 +145,7 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> TREMBLE_MAGIC_STONE_CANDLESTICK = registerDecoBlock("tremble_magic_stone_candlestick", STONE, NORMAL, true);
     @RegisterItemBlock
-    public final static RegistryObject<Block> TREMBLE_MAGIC_STONE_BENCH = registerDecoBlock("tremble_magic_stone_bench", STONE, NORMAL);
+    public final static RegistryObject<Block> TREMBLE_MAGIC_STONE_BENCH = registerDecoBlock("tremble_magic_stone_bench", STONE, NORMAL, true);
 
     /**生命原木*/
     @RegisterItemBlock
