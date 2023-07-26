@@ -18,7 +18,9 @@ public class TeaconGuideBookSectionSerializer implements JsonSerializer<IGuideBo
     /**Map*/
     private static final Map<String,Class<? extends IGuideBookSection>> COMPONENT_MAP = ImmutableMap.of(
             "TEXT", TeaconGuideBookTextSection.class,
-            "EMPTY", TeaconGuideBookEmptySection.class
+            "EMPTY", TeaconGuideBookEmptySection.class,
+            "BLOCK", TeaconGuideBookBlockModelSection.class,
+            "BLOCKLIST", TeaconGuideBookBlockModelList.class
     );
 
     Gson gson = new GsonBuilder()

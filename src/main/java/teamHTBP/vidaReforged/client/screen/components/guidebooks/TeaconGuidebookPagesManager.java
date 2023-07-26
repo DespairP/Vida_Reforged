@@ -32,6 +32,7 @@ public class TeaconGuidebookPagesManager implements IGuidebookComponent{
     private final VidaTeaconGuidebookViewModel viewModel;
     private int width;
     private int height;
+    private IGuidebookComponent leftComponent = null;
     private IGuidebookComponent rightComponent = null;
     private Component title;
     private Component subTitle;
@@ -39,7 +40,6 @@ public class TeaconGuidebookPagesManager implements IGuidebookComponent{
     /**丁卯字体*/
     public static ResourceLocation DINKFONT = new ResourceLocation(MOD_ID, "dinkie");
     private FloatRange subTitleAlpha = new FloatRange(0, 0, 1.0f);
-
     private FloatRange horizonLineLength = new FloatRange(0f,0f,390f);
 
     public TeaconGuidebookPagesManager(VidaTeaconGuidebookViewModel viewModel) {
@@ -60,14 +60,28 @@ public class TeaconGuidebookPagesManager implements IGuidebookComponent{
     public void init(){
         final int textWidth = (int)(this.width * 1.9f / 3.0f);
         final int textHeight = (int)(this.height * 2.0f / 3.0f);
-        final int x = (int)(this.width * 1.0f / 3.0f);
-        final int y = (int)(this.height - textHeight) * 2 / 3;
+        final int textX = (int)(this.width * 1.0f / 3.0f);
+        final int textY = (int)(this.height - textHeight) * 2 / 3;
         int currentIndex = viewModel.page.getValue() - 1;
+        //左边
         this.rightComponent = viewModel.getGuidebook()
                 .pages()
                 .get(currentIndex)
                 .right()
-                .initComponent(x, y, textWidth, textHeight);
+                .initComponent(textX, textY, textWidth, textHeight);
+
+        final int picWidth = (int)(this.width * 0.8f / 3.0f);
+        final int picHeight = (int)(this.height * 2.0f / 3.0f);
+        final int picX = (int)(this.width * 0.1f / 3.0f);
+        final int picY = (int)(this.height - textHeight) * 2 / 3;
+
+        //右边
+        this.leftComponent = viewModel.getGuidebook()
+                .pages()
+                .get(currentIndex)
+                .left()
+                .initComponent(picX, picY, picWidth, picHeight);
+        //标题和副标题
         this.title = viewModel.getGuidebook().getTitle();
         this.subTitle = viewModel.getGuidebook().pages().get(currentIndex).getSubTitle();
         this.viewModel.page.observe(page -> {
@@ -75,8 +89,16 @@ public class TeaconGuidebookPagesManager implements IGuidebookComponent{
                     .pages()
                     .get(page - 1)
                     .right()
-                    .initComponent(x, y, textWidth, textHeight);
+                    .initComponent(textX, textY, textWidth, textHeight);
+            this.leftComponent = viewModel.getGuidebook()
+                    .pages()
+                    .get(page - 1)
+                    .left()
+                    .initComponent(picX, picY, picWidth, picHeight);
+
             this.subTitle = viewModel.getGuidebook().pages().get(page - 1).getSubTitle();
+
+
             if(this.subTitleAlpha != null){
                 this.subTitleAlpha.set(0);
             }
@@ -88,6 +110,9 @@ public class TeaconGuidebookPagesManager implements IGuidebookComponent{
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         if(this.rightComponent != null){
             this.rightComponent.render(graphics, mouseX, mouseY, partialTicks);
+        }
+        if(this.leftComponent != null){
+            this.leftComponent.render(graphics, mouseX, mouseY, partialTicks);
         }
         if(this.title != null){
             this.renderTitle(graphics, mouseX, mouseY, partialTicks);
@@ -163,6 +188,11 @@ public class TeaconGuidebookPagesManager implements IGuidebookComponent{
         List<GuiEventListener> listeners = new ArrayList<>();
         if(this.rightComponent != null){
             listeners.add((GuiEventListener) this.rightComponent);
+            listeners.addAll(this.rightComponent.getChildren());
+        }
+        if(this.leftComponent != null){
+            listeners.add((GuiEventListener) this.leftComponent);
+            listeners.addAll(this.leftComponent.getChildren());
         }
         return listeners;
     }

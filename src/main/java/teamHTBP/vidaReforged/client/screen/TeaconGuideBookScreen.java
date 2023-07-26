@@ -4,7 +4,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import teamHTBP.vidaReforged.client.screen.components.guidebooks.GuiBookPagination;
+import teamHTBP.vidaReforged.client.screen.components.guidebooks.GuideBookPagination;
 import teamHTBP.vidaReforged.client.screen.components.guidebooks.GuideBookScrollTextArea;
 import teamHTBP.vidaReforged.client.screen.components.guidebooks.TeaconGuidebookPagesManager;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaTeaconGuidebookViewModel;
@@ -20,7 +20,7 @@ public class TeaconGuideBookScreen extends Screen {
     int page = 1;
     VidaTeaconGuidebookViewModel viewModel;
     TeaconGuidebookPagesManager manager;
-    GuiBookPagination pagination;
+    GuideBookPagination pagination;
 
     public TeaconGuideBookScreen(String bookId) {
         super(Component.translatable("Teacon Guide Book"));
@@ -40,7 +40,7 @@ public class TeaconGuideBookScreen extends Screen {
         final int x = (int)(this.width * 1.0f / 3.0f);
         final int y = (int)(this.height - textAreaHeight) * 2 / 3;
 
-        this.pagination = new GuiBookPagination(viewModel, x, this.height - 20);
+        this.pagination = new GuideBookPagination(viewModel, x, this.height - 20);
     }
 
     @Override

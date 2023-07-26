@@ -11,17 +11,15 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import org.joml.Matrix4f;
-import teamHTBP.vidaReforged.client.screen.components.magicWords.MagicWordWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaTeaconGuidebookViewModel;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
-import teamHTBP.vidaReforged.core.utils.render.RenderHelper;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class GuiBookPagination extends AbstractWidget {
+public class GuideBookPagination extends AbstractWidget {
     public static final int WIDTH = 70;
     public static final int HEIGHT = 20;
     final VidaTeaconGuidebookViewModel viewModel;
@@ -31,7 +29,7 @@ public class GuiBookPagination extends AbstractWidget {
     final Button rightButton;
 
 
-    public GuiBookPagination(VidaTeaconGuidebookViewModel viewModel, int x, int y) {
+    public GuideBookPagination(VidaTeaconGuidebookViewModel viewModel, int x, int y) {
         super(x, y, WIDTH, HEIGHT, Component.translatable("GuiBookPagination"));
         this.viewModel = viewModel;
         this.leftButton = new Button(this.viewModel::decreasePage, getX() + 5, getY() + 5, true);

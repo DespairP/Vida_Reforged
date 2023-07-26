@@ -244,7 +244,7 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> TEACON_GUIDEBOOK = BLOCKS.register("teacon_guidebook", () -> new TeaconGuideBookBlock("vida_reforged:vida"));
     @RegisterItemBlock
-    public final static RegistryObject<Block> TEACON_GUIDEBOOK_01 = BLOCKS.register("teacon_guidebook_01", () -> new TeaconGuideBookBlock("vida_reforged:vida_01"));
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK_01 = BLOCKS.register("teacon_guidebook_01", () -> new TeaconGuideBookBlock("vida_reforged:guide_silent_forest_brick"));
     @RegisterItemBlock
     public final static RegistryObject<Block> TEACON_GUIDEBOOK_02 = BLOCKS.register("teacon_guidebook_02", () -> new TeaconGuideBookBlock("vida_reforged:vida_02"));
     @RegisterItemBlock
