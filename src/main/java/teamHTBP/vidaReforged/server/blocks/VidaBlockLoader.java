@@ -278,6 +278,9 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> EARTH_FLOATING_ELEMENT_CRYSTAL = BLOCKS.register("earth_floating_element_crystal", ()-> new FloatingCrystalBlock(VidaElement.EARTH));
 
+    @RegisterItemBlock
+    public final static RegistryObject<Block> CRYSTAL_DECORATION_BLOCK = BLOCKS.register("crystal_decoration_block", CrystalDecorationBlock::new);
+
     /**
      * @param name 注册名称
      * @param block 方块provider
