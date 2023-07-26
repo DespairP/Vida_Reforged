@@ -50,7 +50,7 @@ public class FloatingCrystalBlockEntityRenderer implements BlockEntityRenderer<F
 
         float color = (float) (0.7f - 0.3 * floatWave);
 
-        poseStack.translate(0.6f, 0.6f + 0.03 * floatWave, 0.6f);
+        poseStack.translate(0.6f, 0.6f + 0.2 * floatWave, 0.6f);
         poseStack.scale(0.4f, 0.4f, 0.4f);
         poseStack.mulPose(Axis.YP.rotationDegrees(angle));
         poseStack.translate(-0.5, -0.5f, -0.5);
