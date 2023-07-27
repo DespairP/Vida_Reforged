@@ -42,6 +42,8 @@ public class GuideBookBlockModel extends AbstractWidget implements IGuidebookCom
     float rotateY = 0;
     private final ResourceLocation blockId;
 
+    protected boolean isDragging = false;
+
     public GuideBookBlockModel(int x, int y, int width, int height,ResourceLocation blockId) {
         super(x, y, width, height, Component.translatable("block model"));
         this.itemRenderer = Minecraft.getInstance().getItemRenderer();
@@ -96,7 +98,8 @@ public class GuideBookBlockModel extends AbstractWidget implements IGuidebookCom
     public void renderBlockWithState(GuiGraphics graphics, ItemStack renderStack, int startX, int startY, float partialTicks){
         //透明度
         this.alphaRange.increase(0.02f);
-        this.hoverRange.change(isHovered,0.02f);
+        this.hoverRange.change(isHovered || isDragging,0.02f);
+        this.isDragging = false;
 
         //渲染
         PoseStack pPoseStack = graphics.pose();
@@ -177,7 +180,19 @@ public class GuideBookBlockModel extends AbstractWidget implements IGuidebookCom
     public boolean mouseDragged(double mouseX, double mouseY, int mouseButton, double dragX, double dragY) {
         this.rotateX = (float) ((this.rotateX + dragX) % 360);
         this.rotateY = (float) ((this.rotateY + dragY) % 360);
+        this.isDragging = true;
         return true;
+    }
+
+    @Override
+    public boolean mouseReleased(double p_93684_, double p_93685_, int p_93686_) {
+        this.onRelease(p_93684_, p_93685_);
+        return true;
+    }
+
+    @Override
+    public void onRelease(double p_93669_, double p_93670_) {
+        this.isDragging = false;
     }
 
     @Override

@@ -42,7 +42,8 @@ public class VidaBlockEntityLoader {
                     VidaBlockLoader.TEACON_GUIDEBOOK_07.get(),
                     VidaBlockLoader.TEACON_GUIDEBOOK_08.get(),
                     VidaBlockLoader.TEACON_GUIDEBOOK_09.get(),
-                    VidaBlockLoader.TEACON_GUIDEBOOK_10.get()
+                    VidaBlockLoader.TEACON_GUIDEBOOK_10.get(),
+                    VidaBlockLoader.TEACON_GUIDEBOOK_11.get()
             ).build(null)
     );
 
@@ -65,5 +66,9 @@ public class VidaBlockEntityLoader {
                     VidaBlockLoader.FIRE_FLOATING_ELEMENT_CRYSTAL.get(),
                     VidaBlockLoader.EARTH_FLOATING_ELEMENT_CRYSTAL.get()
             ).build(null)
+    );
+
+    public static final RegistryObject<BlockEntityType<PrismBlockEntity>> PRISM = BLOCK_ENTITIES.register(
+            "prism", () -> BlockEntityType.Builder.of(PrismBlockEntity::new, VidaBlockLoader.PRISM.get()).build(null)
     );
 }

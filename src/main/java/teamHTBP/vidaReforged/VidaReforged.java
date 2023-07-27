@@ -5,6 +5,7 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
 import teamHTBP.vidaReforged.server.blockEntities.VidaBlockEntityLoader;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
 import teamHTBP.vidaReforged.server.commands.VidaCommandManager;
@@ -42,6 +43,7 @@ public class VidaReforged {
         VidaItemGroupLoader.CREATIVE_TAB.register(bus);
         VidaRecipeLoader.TYPES.register(bus);
         VidaRecipeSerializerLoader.SERIALIZER.register(bus);
+        VidaParticleTypeLoader.PARTICLE_TYPE_REGISTER.register(bus);
         //VidaCommandManager.ARGUMENT_TYPE.register(bus);
 
         VidaPacketManager.register();
