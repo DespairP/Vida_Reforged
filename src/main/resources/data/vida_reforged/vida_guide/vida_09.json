@@ -6,7 +6,8 @@
       "pageId": "vida_15",
       "subTitleKey": "guidebook.subtitle.vida_reforged.vida_15",
       "left": {
-        "type": "EMPTY"
+        "type": "BLOCK",
+        "block": "vida_reforged:magic_word_crafting_table"
       },
       "right": {
         "type": "TEXT",

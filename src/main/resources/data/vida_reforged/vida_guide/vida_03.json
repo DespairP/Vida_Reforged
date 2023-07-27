@@ -6,7 +6,9 @@
       "pageId": "vida_09",
       "subTitleKey": "guidebook.subtitle.vida_reforged.vida_09",
       "left": {
-        "type": "EMPTY"
+        "type": "BLOCKLIST",
+        "blocklist": ["vida_reforged:sinking_stone","vida_reforged:sinking_stone_brick_0","vida_reforged:sinking_stone_brick_1","vida_reforged:sinking_stone_brick_2","vida_reforged:sinking_stone_brick_3","vida_reforged:sinking_stone_brick_4",
+          "vida_reforged:sinking_stone_brick_slab","vida_reforged:sinking_stone_brick_slab_1","vida_reforged:sinking_stone_brick_stair","vida_reforged:sinking_stone_brick_stair_1","vida_reforged:sinking_stone_brick_wall"]
       },
       "right": {
         "type": "TEXT",

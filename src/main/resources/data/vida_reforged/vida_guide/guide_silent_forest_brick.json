@@ -3,23 +3,12 @@
   "titleKey": "guidebook.title.vida_reforged.silent_forest_brick",
   "pages": [
     {
-      "pageId": "silent_forest_brick_page_01",
-      "subTitleKey": "guidebook.subtitle.vida_reforged.silent_forest_brick",
-      "left": {
-        "type": "BLOCK",
-        "block": "vida_reforged:silent_forest_brick_0"
-      },
-      "right": {
-        "type": "TEXT",
-        "text": "guidebook.text.vida_reforged.silent_forest_brick"
-      }
-    },
-    {
       "pageId": "silent_forest_brick_page_02",
       "subTitleKey": "guidebook.subtitle.vida_reforged.silent_forest_brick",
       "left": {
         "type": "BLOCKLIST",
-        "blocklist": ["vida_reforged:silent_forest_brick_0", "vida_reforged:silent_forest_brick_1"]
+        "blocklist": ["vida_reforged:silent_forest_brick_0", "vida_reforged:silent_forest_brick_1","vida_reforged:silent_forest_brick_2","vida_reforged:silent_forest_brick_3","vida_reforged:silent_forest_brick_4","vida_reforged:silent_forest_brick_5",
+          "vida_reforged:silent_forest_brick_6","vida_reforged:silent_forest_brick_7","vida_reforged:silent_forest_brick_slab","vida_reforged:silent_forest_brick_slab_1","vida_reforged:silent_forest_stair","vida_reforged:silent_forest_wall"]
       },
       "right": {
         "type": "TEXT",

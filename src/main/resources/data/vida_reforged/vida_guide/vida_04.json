@@ -6,7 +6,9 @@
       "pageId": "vida_10",
       "subTitleKey": "guidebook.subtitle.vida_reforged.vida_10",
       "left": {
-        "type": "EMPTY"
+        "type": "BLOCKLIST",
+        "blocklist": ["vida_reforged:tremble_magic_stone","vida_reforged:tremble_magic_brick_0","vida_reforged:tremble_magic_brick_1","vida_reforged:tremble_magic_brick_2","vida_reforged:tremble_magic_brick_3","vida_reforged:tremble_magic_brick_4","vida_reforged:tremble_magic_brick_5",
+          "vida_reforged:tremble_magic_brick_slab","vida_reforged:tremble_magic_brick_slab_1","vida_reforged:tremble_magic_brick_stair","vida_reforged:tremble_magic_brick_stair_1","vida_reforged:tremble_magic_brick_wall"]
       },
       "right": {
         "type": "TEXT",

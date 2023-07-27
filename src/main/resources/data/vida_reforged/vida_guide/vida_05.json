@@ -6,7 +6,9 @@
       "pageId": "vida_11",
       "subTitleKey": "guidebook.subtitle.vida_reforged.vida_11",
       "left": {
-        "type": "EMPTY"
+        "type": "BLOCKLIST",
+        "blocklist": ["vida_reforged:vida_log","vida_reforged:vida_leaves","vida_reforged:vida_stripped_log","vida_reforged:vida_plank_0","vida_reforged:vida_stair","vida_reforged:vida_plank_slab","vida_reforged:vida_plank_door","vida_reforged:vida_plank_fence",
+          "vida_reforged:vida_plank_fence_gate","vida_reforged:vida_plank_trapdoor","vida_reforged:vida_plank_button","vida_reforged:vida_plank_pressure_plate"]
       },
       "right": {
         "type": "TEXT",

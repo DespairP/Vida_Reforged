@@ -6,7 +6,8 @@
       "pageId": "vida_13",
       "subTitleKey": "guidebook.subtitle.vida_reforged.vida_13",
       "left": {
-        "type": "EMPTY"
+        "type": "BLOCK",
+        "block": "vida_reforged:collector"
       },
       "right": {
         "type": "TEXT",

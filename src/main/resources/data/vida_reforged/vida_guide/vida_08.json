@@ -6,7 +6,8 @@
       "pageId": "vida_14",
       "subTitleKey": "guidebook.subtitle.vida_reforged.vida_14",
       "left": {
-        "type": "EMPTY"
+        "type": "BLOCK",
+        "block": "vida_reforged:purification_cauldron"
       },
       "right": {
         "type": "TEXT",

@@ -6,7 +6,9 @@
       "pageId": "vida_08",
       "subTitleKey": "guidebook.subtitle.vida_reforged.vida_08",
       "left": {
-        "type": "EMPTY"
+        "type": "BLOCKLIST",
+        "blocklist": ["vida_reforged:deep_stone","vida_reforged:deep_stone_brick_0","vida_reforged:deep_stone_brick_1","vida_reforged:deep_stone_brick_2","vida_reforged:deep_stone_brick_3","vida_reforged:deep_stone_brick_4","vida_reforged:deep_stone_brick_slab","vida_reforged:deep_stone_brick_slab_1",
+          "vida_reforged:deep_stone_brick_stair","vida_reforged:deep_stone_brick_stair_1","vida_reforged:deep_stone_brick_wall"]
       },
       "right": {
         "type": "TEXT",

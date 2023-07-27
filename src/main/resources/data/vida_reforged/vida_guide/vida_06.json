@@ -6,7 +6,9 @@
       "pageId": "vida_12",
       "subTitleKey": "guidebook.subtitle.vida_reforged.vida_12",
       "left": {
-        "type": "EMPTY"
+        "type": "BLOCKLIST",
+        "blocklist": ["vida_reforged:gold_element_ore","vida_reforged:wood_element_ore","vida_reforged:aqua_element_ore","vida_reforged:fire_element_ore","vida_reforged:earth_element_ore",
+          "vida_reforged:deepslate_gold_element_ore","vida_reforged:deepslate_wood_element_ore","vida_reforged:deepslate_aqua_element_ore","vida_reforged:deepslate_fire_element_ore","vida_reforged:deepslate_earth_element_ore"]
       },
       "right": {
         "type": "TEXT",
