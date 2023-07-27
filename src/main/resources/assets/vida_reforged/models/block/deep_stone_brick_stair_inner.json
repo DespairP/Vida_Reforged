@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/stairs",
+  "parent": "minecraft:block/inner_stairs",
   "textures": {
     "bottom": "vida_reforged:block/deep_stone_brick_0",
     "top": "vida_reforged:block/deep_stone_brick_0",

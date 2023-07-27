@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "vida_reforged:block/glistening_stone_slab"
+    },
+    "type=double": {
+      "model": "vida_reforged:block/glistening_stone"
+    },
+    "type=top": {
+      "model": "vida_reforged:block/glistening_stone_slab_top"
+    }
+  }
+}

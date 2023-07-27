@@ -147,6 +147,32 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> TREMBLE_MAGIC_STONE_BENCH = registerDecoBlock("tremble_magic_stone_bench", STONE, NORMAL, true);
 
+    /**锃闪石系列**/
+    @RegisterItemBlock
+    public final static RegistryObject<Block> GLISTENING_STONE = registerDecoBlock("glistening_stone", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> GLISTENING_STONE_BRICK_0 = registerDecoBlock("glistening_stone_brick_0", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> GLISTENING_STONE_BRICK_1 = registerDecoBlock("glistening_stone_brick_1", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> GLISTENING_STONE_BRICK_2 = registerDecoBlock("glistening_stone_brick_2", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> GLISTENING_STONE_BRICK_3 = registerDecoBlock("glistening_stone_brick_3", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> GLISTENING_STONE_BRICK_4 = registerDecoBlock("glistening_stone_brick_4", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> GLISTENING_STONE_SLAB = registerDecoBlock("glistening_stone_slab", STONE, SLAB);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> GLISTENING_STONE_SLAB_1 = registerDecoBlock("glistening_stone_slab_1", STONE, SLAB);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> GLISTENING_STONE_STAIR = registerDecoBlock("glistening_stone_stair", STONE, STAIRS,GLISTENING_STONE);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> GLISTENING_STONE_STAIR_1 = registerDecoBlock("glistening_stone_stair_1", STONE, STAIRS,GLISTENING_STONE);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> GLISTENING_STONE_WALL = registerDecoBlock("glistening_stone_wall", STONE, WALL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> GLISTENING_STONE_WALL_1 = registerDecoBlock("glistening_stone_wall_1", STONE, WALL);
+
     /**生命原木*/
     @RegisterItemBlock
     public final static RegistryObject<Block> VIDA_LOG = registerDecoBlock("vida_log", WOOD, LOG);
@@ -263,6 +289,8 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> TEACON_GUIDEBOOK_09 = BLOCKS.register("teacon_guidebook_09", () -> new TeaconGuideBookBlock("vida_reforged:vida_09"));
     @RegisterItemBlock
     public final static RegistryObject<Block> TEACON_GUIDEBOOK_10 = BLOCKS.register("teacon_guidebook_10", () -> new TeaconGuideBookBlock("vida_reforged:vida_10"));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK_11 = BLOCKS.register("teacon_guidebook_11", () -> new TeaconGuideBookBlock("vida_reforged:vida_11"));
     @RegisterItemBlock
     public final static RegistryObject<Block> JIGSAW_EQUIP = BLOCKS.register("jigsaw_equip", VidaMagicJigsawEquipingBlock::new);
     @RegisterItemBlock

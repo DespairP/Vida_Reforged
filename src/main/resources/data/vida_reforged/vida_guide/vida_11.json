@@ -1,0 +1,19 @@
+{
+  "id": "vida_reforged:vida_11",
+  "titleKey": "guidebook.title.vida_reforged.vida_11",
+  "pages": [
+    {
+      "pageId": "vida_17",
+      "subTitleKey": "guidebook.subtitle.vida_reforged.vida_17",
+      "left": {
+        "type": "BLOCKLIST",
+        "blocklist": ["vida_reforged:glistening_stone","vida_reforged:glistening_stone_brick_0","vida_reforged:glistening_stone_brick_1","vida_reforged:glistening_stone_brick_2","vida_reforged:glistening_stone_brick_3","vida_reforged:glistening_stone_brick_4",
+          "vida_reforged:glistening_stone_slab","vida_reforged:glistening_stone_slab_1","vida_reforged:glistening_stone_stair","vida_reforged:glistening_stone_stair_1","vida_reforged:glistening_stone_wall","vida_reforged:glistening_stone_wall_1"]
+      },
+      "right": {
+        "type": "TEXT",
+        "text": "guidebook.text.vida_reforged.vida_17"
+      }
+    }
+  ]
+}
