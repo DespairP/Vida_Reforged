@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "vida_reforged:block/smoke_stone_brick_0"
+  }
+}

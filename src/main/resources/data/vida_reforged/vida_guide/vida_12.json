@@ -1,0 +1,19 @@
+{
+  "id": "vida_reforged:vida_12",
+  "titleKey": "guidebook.title.vida_reforged.vida_12",
+  "pages": [
+    {
+      "pageId": "vida_18",
+      "subTitleKey": "guidebook.subtitle.vida_reforged.vida_18",
+      "left": {
+        "type": "BLOCKLIST",
+        "blocklist": ["vida_reforged:smoke_stone","vida_reforged:smoke_stone_brick_0","vida_reforged:smoke_stone_brick_1","vida_reforged:smoke_stone_brick_2","vida_reforged:smoke_stone_brick_3","vida_reforged:smoke_stone_brick_4",
+          "vida_reforged:smoke_stone_slab","vida_reforged:smoke_stone_slab_1","vida_reforged:smoke_stone_slab_2","vida_reforged:smoke_stone_stair","vida_reforged:smoke_stone_stair_1","vida_reforged:smoke_stone_stair_2","vida_reforged:smoke_stone_wall","vida_reforged:smoke_stone_wall_1"]
+      },
+      "right": {
+        "type": "TEXT",
+        "text": "guidebook.text.vida_reforged.vida_18"
+      }
+    }
+  ]
+}

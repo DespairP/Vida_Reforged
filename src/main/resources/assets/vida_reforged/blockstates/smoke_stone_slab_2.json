@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "vida_reforged:block/smoke_stone_slab_2"
+    },
+    "type=double": {
+      "model": "vida_reforged:block/smoke_stone_brick_2"
+    },
+    "type=top": {
+      "model": "vida_reforged:block/smoke_stone_slab_top_2"
+    }
+  }
+}

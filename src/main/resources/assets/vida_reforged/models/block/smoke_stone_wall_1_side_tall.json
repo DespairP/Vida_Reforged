@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side_tall",
+  "textures": {
+    "wall": "vida_reforged:block/smoke_stone_brick_0"
+  }
+}
