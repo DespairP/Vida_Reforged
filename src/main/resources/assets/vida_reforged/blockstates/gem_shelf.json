@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=east,half=lower":  { "model": "vida_reforged:block/gem_shelf","y": 90},
+    "facing=east,half=upper":  { "model": "minecraft:block/air" },
+    "facing=south,half=lower":  { "model": "vida_reforged:block/gem_shelf"},
+    "facing=south,half=upper":  { "model": "minecraft:block/air" },
+    "facing=west,half=lower": {"model": "vida_reforged:block/gem_shelf","y": 270},
+    "facing=west,half=upper": {"model": "minecraft:block/air"},
+    "facing=north,half=lower": {"model": "vida_reforged:block/gem_shelf","y": 180},
+    "facing=north,half=upper": {"model": "minecraft:block/air"}
+  }
+}

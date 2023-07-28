@@ -3,16 +3,16 @@ package teamHTBP.vidaReforged.client.events;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleEngine;
-import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.world.level.block.Block;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import teamHTBP.vidaReforged.client.particles.ParticleTypeLoader;
+import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
 import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
 import teamHTBP.vidaReforged.client.particles.providers.BaseParticleProvider;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterParticleType;
@@ -20,7 +20,7 @@ import teamHTBP.vidaReforged.core.utils.reg.RegisterParticleType;
 import java.lang.reflect.Field;
 import java.util.*;
 
-import static teamHTBP.vidaReforged.client.particles.ParticleTypeLoader.*;
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ParticleProviderRegHandler {
     /** logger */
     public static final Logger LOGGER = LogManager.getLogger();
@@ -50,7 +50,7 @@ public class ParticleProviderRegHandler {
     private static void init() throws IllegalAccessException,IllegalArgumentException {
         final Map<String, Map.Entry<RegistryObject<ParticleType<BaseParticleType>>, Class<? extends Particle>>> registerObjs = new LinkedHashMap<>();
         //获取注释的字段
-        for (Field decoratedParticleType : ParticleTypeLoader.class.getDeclaredFields()) {
+        for (Field decoratedParticleType : VidaParticleTypeLoader.class.getDeclaredFields()) {
             //通过注释的字段获取粒子对应的type和粒子Class
             if (decoratedParticleType.getType() == RegistryObject.class && decoratedParticleType.isAnnotationPresent(RegisterParticleType.class)) {
                 decoratedParticleType.setAccessible(true);
@@ -69,7 +69,7 @@ public class ParticleProviderRegHandler {
                 );
                 //放入map中
                 assert particleType.getKey() != null;
-                registerObjs.put(particleType.getKey().registry().getPath(), particleEntry);
+                registerObjs.put(particleType.getKey().location().toString(), particleEntry);
             }
         }
         //最后
