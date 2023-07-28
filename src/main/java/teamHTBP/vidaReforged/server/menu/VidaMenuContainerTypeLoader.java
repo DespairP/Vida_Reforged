@@ -71,7 +71,7 @@ public class VidaMenuContainerTypeLoader {
     );
 
     public final static RegistryObject<MenuType<PrismMenu>> PRISM = MENU_CONTAINER_TYPE.register(
-            MagicWordCraftingTableMenu.MENU_NAME,
+            PrismMenu.MENU_NAME,
             () -> IForgeMenuType.create(
                     (windowId, inv, data) ->{
                         final BlockPos pos = data.readBlockPos();
