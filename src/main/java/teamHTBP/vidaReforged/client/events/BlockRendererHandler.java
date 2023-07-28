@@ -10,6 +10,7 @@ import teamHTBP.vidaReforged.client.model.blockEntities.FloatingCrystalBlockEnti
 import teamHTBP.vidaReforged.client.model.blockEntities.PurificationCauldronBlockEntityRenderer;
 import teamHTBP.vidaReforged.client.model.blockEntities.TeaconGuideBookBlockRenderer;
 import teamHTBP.vidaReforged.server.blockEntities.VidaBlockEntityLoader;
+import teamHTBP.vidaReforged.server.entity.VidaEntityLoader;
 
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

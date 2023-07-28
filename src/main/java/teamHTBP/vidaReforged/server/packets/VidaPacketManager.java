@@ -12,7 +12,7 @@ import teamHTBP.vidaReforged.VidaReforged;
 import java.util.Optional;
 
 public class VidaPacketManager {
-    private static final String PROTOCOL_VERSION = "1.1";
+    private static final String PROTOCOL_VERSION = "1.2";
 
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(VidaReforged.MOD_ID, "main"),
@@ -52,6 +52,12 @@ public class VidaPacketManager {
                 MagicWordCraftingPacket::toBytes,
                 MagicWordCraftingPacket::fromBytes,
                 MagicWordCraftingPacket::handler,
+                server);
+        INSTANCE.registerMessage(id++,
+                PrismPacket.class,
+                PrismPacket::toBytes,
+                PrismPacket::fromBytes,
+                PrismPacket::handler,
                 server);
     }
 }

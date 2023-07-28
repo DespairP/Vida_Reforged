@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import teamHTBP.vidaReforged.client.screen.MagicJigsawScreen;
 import teamHTBP.vidaReforged.client.screen.MagicWordCraftingTableScreen;
+import teamHTBP.vidaReforged.client.screen.PrismScreen;
 import teamHTBP.vidaReforged.client.screen.TimeElementCraftTableScreen;
 import teamHTBP.vidaReforged.server.menu.MagicJigsawMenu;
 import teamHTBP.vidaReforged.server.menu.MagicWordCraftingTableMenu;
@@ -22,6 +23,7 @@ public class VidaScreenHandler {
             MenuScreens.register(VidaMenuContainerTypeLoader.TIME_ELEMENT_MENU.get(), TimeElementCraftTableScreen::new);
             MenuScreens.register(VidaMenuContainerTypeLoader.JIGSAW_EQUIP.get(), MagicJigsawScreen::new);
             MenuScreens.register(VidaMenuContainerTypeLoader.MAGIC_WORD_CRAFTING.get(), MagicWordCraftingTableScreen::new);
+            MenuScreens.register(VidaMenuContainerTypeLoader.PRISM.get(), PrismScreen::new);
         });
     }
 }
