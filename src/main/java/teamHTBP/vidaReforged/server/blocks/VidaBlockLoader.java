@@ -330,6 +330,12 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> TEACON_GUIDEBOOK_12 = BLOCKS.register("teacon_guidebook_12", () -> new TeaconGuideBookBlock("vida_reforged:vida_12"));
     @RegisterItemBlock
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK_13 = BLOCKS.register("teacon_guidebook_13", () -> new TeaconGuideBookBlock("vida_reforged:vida_13"));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK_14 = BLOCKS.register("teacon_guidebook_14", () -> new TeaconGuideBookBlock("vida_reforged:vida_14"));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> TEACON_GUIDEBOOK_15 = BLOCKS.register("teacon_guidebook_15", () -> new TeaconGuideBookBlock("vida_reforged:vida_15"));
+    @RegisterItemBlock
     public final static RegistryObject<Block> JIGSAW_EQUIP = BLOCKS.register("jigsaw_equip", VidaMagicJigsawEquipingBlock::new);
     @RegisterItemBlock
     public final static RegistryObject<Block> MAGIC_WORD_CRAFTING = BLOCKS.register("magic_word_crafting_table", MagicWordCraftingTable::new);

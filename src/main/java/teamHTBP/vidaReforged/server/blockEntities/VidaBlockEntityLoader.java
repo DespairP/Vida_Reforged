@@ -43,7 +43,11 @@ public class VidaBlockEntityLoader {
                     VidaBlockLoader.TEACON_GUIDEBOOK_08.get(),
                     VidaBlockLoader.TEACON_GUIDEBOOK_09.get(),
                     VidaBlockLoader.TEACON_GUIDEBOOK_10.get(),
-                    VidaBlockLoader.TEACON_GUIDEBOOK_11.get()
+                    VidaBlockLoader.TEACON_GUIDEBOOK_11.get(),
+                    VidaBlockLoader.TEACON_GUIDEBOOK_12.get(),
+                    VidaBlockLoader.TEACON_GUIDEBOOK_13.get(),
+                    VidaBlockLoader.TEACON_GUIDEBOOK_14.get(),
+                    VidaBlockLoader.TEACON_GUIDEBOOK_15.get()
             ).build(null)
     );
 
