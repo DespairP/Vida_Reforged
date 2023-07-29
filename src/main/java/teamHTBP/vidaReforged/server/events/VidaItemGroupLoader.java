@@ -51,6 +51,12 @@ public class VidaItemGroupLoader {
             event.accept(VidaItemLoader.AQUA_GEM.get());
             event.accept(VidaItemLoader.FIRE_GEM.get());
             event.accept(VidaItemLoader.EARTH_GEM.get());
+            event.accept(VidaItemLoader.CRIMSON_CREST_SEED_ITEM.get());
+            event.accept(VidaItemLoader.PLAM_STEM_SEED_ITEM.get());
+            event.accept(VidaItemLoader.HEART_OF_WAL_SEED_ITEM.get());
+            event.accept(VidaItemLoader.NITRITE_THORNS_SEED_ITEM.get());
+            event.accept(VidaItemLoader.SULLEN_HYDRANGEA_SEED_ITEM.get());
+            event.accept(VidaItemLoader.SWEET_CYAN_REED_SEED_ITEM.get());
         }
     }
 

@@ -1,0 +1,6 @@
+{
+  "loader": "forge:obj",
+  "flip_v": true,
+  "render_type": "cutout",
+  "model": "vida_reforged:models/block/crop/plam_stem_stage2.obj"
+}
