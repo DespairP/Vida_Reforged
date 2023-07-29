@@ -10,6 +10,7 @@ import teamHTBP.vidaReforged.core.common.block.DecoBlockFactory;
 import teamHTBP.vidaReforged.core.utils.reg.CustomModelBlock;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterItemBlock;
 import teamHTBP.vidaReforged.server.blocks.crops.ParticleCropBlock;
+import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
 import java.awt.event.WindowAdapter;
 
@@ -253,7 +254,7 @@ public class VidaBlockLoader {
 
     /**作物*/
     @RegisterItemBlock
-    public static RegistryObject<Block> CRISM_CREST = BLOCKS.register("crimson_crest", () -> new ParticleCropBlock(VidaElement.FIRE, null));
+    public static RegistryObject<Block> CRISM_CREST = BLOCKS.register("crimson_crest", () -> new ParticleCropBlock(VidaElement.FIRE, ()-> VidaItemLoader.CRISM_CREST.get()));
     //public static RegistryObject<Block> HEART_OF_WAL = BLOCKS.register("heart_of_wal", () -> new ParticleCropBlock(VidaElement.WOOD, null));
     //public static RegistryObject<Block> NITRITE_THORNS = BLOCKS.register("nitrite_thorns", () -> new ParticleCropBlock(VidaElement.GOLD, null));
     //public static RegistryObject<Block> PLAM_STEM = BLOCKS.register("plam_stem", () -> new ParticleCropBlock( VidaElement.AQUA, null));
