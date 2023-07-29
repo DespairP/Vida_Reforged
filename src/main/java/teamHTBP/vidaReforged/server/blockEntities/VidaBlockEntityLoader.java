@@ -71,4 +71,8 @@ public class VidaBlockEntityLoader {
     public static final RegistryObject<BlockEntityType<PrismBlockEntity>> PRISM = BLOCK_ENTITIES.register(
             "prism", () -> BlockEntityType.Builder.of(PrismBlockEntity::new, VidaBlockLoader.PRISM.get()).build(null)
     );
+
+    public static final RegistryObject<BlockEntityType<CrystalDecorationBlockEntity>> GEM_SHELF = BLOCK_ENTITIES.register(
+            "gem_shelf", () -> BlockEntityType.Builder.of(CrystalDecorationBlockEntity::new, VidaBlockLoader.CRYSTAL_DECORATION_BLOCK.get()).build(null)
+    );
 }

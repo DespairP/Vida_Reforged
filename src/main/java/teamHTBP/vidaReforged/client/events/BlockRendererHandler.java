@@ -5,10 +5,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import teamHTBP.vidaReforged.client.model.blockEntities.CollectorBlockEntityRenderer;
-import teamHTBP.vidaReforged.client.model.blockEntities.FloatingCrystalBlockEntityRenderer;
-import teamHTBP.vidaReforged.client.model.blockEntities.PurificationCauldronBlockEntityRenderer;
-import teamHTBP.vidaReforged.client.model.blockEntities.TeaconGuideBookBlockRenderer;
+import teamHTBP.vidaReforged.client.model.blockEntities.*;
 import teamHTBP.vidaReforged.server.blockEntities.VidaBlockEntityLoader;
 import teamHTBP.vidaReforged.server.entity.VidaEntityLoader;
 
@@ -21,5 +18,7 @@ public class BlockRendererHandler {
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.COLLECTOR.get(), CollectorBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.TEACON_GUIDEBOOK.get(), TeaconGuideBookBlockRenderer::new);
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.FLOATING_CRYSTAL.get(), FloatingCrystalBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(VidaBlockEntityLoader.GEM_SHELF.get(), CrystalDecorationBlockEntityRenderer::new);
+
     }
 }
