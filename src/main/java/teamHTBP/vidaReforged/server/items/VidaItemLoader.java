@@ -27,4 +27,5 @@ public class VidaItemLoader {
 
 
     public final static RegistryObject<Item> UNLOCK_MAGIC_WORD_PAPER = ITEMS.register("unlock_magic_word_paper", UnlockMagicWordPaper::new);
+
 }
