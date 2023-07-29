@@ -46,8 +46,11 @@ public class VidaItemGroupLoader {
             });
             event.accept(VIDA_WAND.get());
             event.accept(VidaItemLoader.BREATH_CATCHER.get());
-            event.accept(VidaItemLoader.FIRE_GEM.get());
+            event.accept(VidaItemLoader.GOLD_GEM.get());
             event.accept(VidaItemLoader.WOOD_GEM.get());
+            event.accept(VidaItemLoader.AQUA_GEM.get());
+            event.accept(VidaItemLoader.FIRE_GEM.get());
+            event.accept(VidaItemLoader.EARTH_GEM.get());
         }
     }
 
