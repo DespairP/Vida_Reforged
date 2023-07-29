@@ -15,6 +15,7 @@ import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.VidaReforged;
 import net.minecraft.client.gui.GuiGraphics;
 import teamHTBP.vidaReforged.client.events.RenderTypeHandler;
+import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -49,7 +50,7 @@ public class RenderHelper {
     /**
      * 画圆圈
      * */
-    public static void renderCircle(GuiGraphics graphics,PoseStack poseStack, int posX, int posY,float radius,float degree){
+    public static void renderCircle(GuiGraphics graphics, PoseStack poseStack, int posX, int posY, float radius, float degree, ARGBColor color){
         poseStack.pushPose();
         poseStack.translate(posX, posY,0);
         Matrix4f matrix4f = poseStack.last().pose();
@@ -66,7 +67,7 @@ public class RenderHelper {
                     (float) (radius * cos(i - Math.toRadians(90))),
                     (float) (radius * sin(i - Math.toRadians(90))),
                     (float) 0
-            ).color(0.4f, 0.4f, 0.4f, 1).endVertex();
+            ).color(color.r() / 255.0f, color.g() / 255.0f, color.b() / 255.0f, color.a() / 255.0f).endVertex();
         }
 
         RenderSystem.disableBlend();
