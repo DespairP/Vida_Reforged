@@ -26,6 +26,8 @@ import teamHTBP.vidaReforged.server.commands.arguments.MagicArgument;
 import teamHTBP.vidaReforged.server.commands.arguments.MagicArgumentInfo;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
+import teamHTBP.vidaReforged.server.packets.UnlockMagicWordCraftingPacket;
+import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
 import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
@@ -190,12 +192,12 @@ public class VidaCommandManager {
             AtomicBoolean isAdded = new AtomicBoolean(false);
             wordCapability.ifPresent(cap -> {
                 isAdded.set(cap.unlockMagicWord(wordId));
-                ;
             });
             if(!isAdded.get()){
                 context.getSource().sendFailure(Component.translatable("magic word  %s is already added", wordId));
                 return 1;
             }
+            VidaPacketManager.sendToEntity(new UnlockMagicWordCraftingPacket(wordId), context.getSource().getEntity());
             context.getSource().sendSuccess(()->Component.translatable("magic word  %s is added", wordId), false);
             return 1;
         }catch (Exception ex){

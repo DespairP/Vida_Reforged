@@ -9,6 +9,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
@@ -21,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.debug.IDebugObj;
 import teamHTBP.vidaReforged.core.common.container.BlockEntityHelper;
+import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 import teamHTBP.vidaReforged.server.providers.ElementPotentialManager;
 import teamHTBP.vidaReforged.server.providers.records.ElementPotential;
 
@@ -187,13 +189,16 @@ public abstract class AbstractPurificationCauldronBlockEntity extends BlockEntit
         if(this.purificationItems.size() > 0){
             for(ItemStack puringItem : this.purificationItems){
                 if(!puringItem.isEmpty() && puringItem.getItem() != Items.AIR){
-                    this.resultItems.add(puringItem);
+                    level.addFreshEntity(new ItemEntity(level,getBlockPos().getX(),getBlockPos().getY(),getBlockPos().getZ(), puringItem.copy()));
                 }
             }
         }
         this.purificationItems.clear();
 
         // 生成微光
+        ItemStack stack = new ItemStack(VidaItemLoader.UNLOCK_MAGIC_WORD_PAPER.get(), 1);
+        stack.getOrCreateTag().putString("wordId","vida_reforged:purify");
+        level.addFreshEntity(new ItemEntity(level,getBlockPos().getX(),getBlockPos().getY(),getBlockPos().getZ(), stack));
 
     }
 
@@ -228,7 +233,7 @@ public abstract class AbstractPurificationCauldronBlockEntity extends BlockEntit
         this.isInProgress = true;
         this.mainElement = potential.element;
         this.targetSubProgress = potential.energy;
-        this.step = 0.2f;
+        this.step = 3.0f;
     }
 
 

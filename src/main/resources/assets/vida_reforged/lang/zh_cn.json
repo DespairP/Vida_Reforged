@@ -154,7 +154,8 @@
  "item.vida_reforged.heart_of_wal_seed_item":"瓦树橙果种子袋",
  "item.vida_reforged.plam_stem_seed_item":"苍蓝草茎种子袋",
  "item.vida_reforged.sweet_cyan_reed_seed_item":"甘青芦苇种子袋",
- "item.vida_reforged.nitrite_thorns_seed_item":"硝金荆棘种子袋",
+ "item.vida_reforged.unlock_magic_word_paper":"词条图纸",
+ "item.vida_reforged.sullen_hydrangea_seed_item":"忧郁紫球草种子袋",
  "item.vida_reforged.sullen_hydrangea_seed_item":"忧郁紫球草种子袋",
  "magic_word.name.vida_reforged:brun": "焚烧",
  "magic_word.name.vida_reforged:change": "变化",
@@ -245,5 +246,6 @@
  "guidebook.subtitle.vida_reforged.vida_18":"烟熔石",
  "guidebook.subtitle.vida_reforged.vida_19":"棱镜台",
  "guidebook.subtitle.vida_reforged.vida_20":"词条",
- "guidebook.subtitle.vida_reforged.vida_21":"魔法作物"
+ "guidebook.subtitle.vida_reforged.vida_21":"魔法作物",
+ "tootip.vida_reforged.unlock_magic_word_paper": "<右键解锁以下词条>"
 }

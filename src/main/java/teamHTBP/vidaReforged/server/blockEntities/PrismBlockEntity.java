@@ -84,7 +84,11 @@ public class PrismBlockEntity extends VidaBlockEntity implements IVidaTickableBl
     }
 
     public void generateItem(){
-        this.inputAndResult.setItem(1,new ItemStack(VidaItemLoader.UNLOCK_MAGIC_WORD_PAPER.get(), 1));
+        CompoundTag tag = new CompoundTag();
+        tag.putString("wordId", "vida_reforged:position");
+        ItemStack stack = new ItemStack(VidaItemLoader.UNLOCK_MAGIC_WORD_PAPER.get(), 1, tag);
+        stack.getOrCreateTag().putString("wordId", "vida_reforged:position");
+        this.inputAndResult.setItem(1, stack);
     }
 
     @Override

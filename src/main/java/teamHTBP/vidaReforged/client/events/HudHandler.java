@@ -24,6 +24,7 @@ import teamHTBP.vidaReforged.VidaConfig;
 import teamHTBP.vidaReforged.client.hud.VidaCauldronScreen;
 import teamHTBP.vidaReforged.client.hud.VidaDebugScreen;
 import teamHTBP.vidaReforged.client.hud.VidaManaBarScreen;
+import teamHTBP.vidaReforged.client.hud.VidaUnlockScreen;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.server.blockEntities.BasePurificationCauldronBlockEntity;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
@@ -34,6 +35,7 @@ import java.util.List;
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class HudHandler {
     protected static VidaManaBarScreen screen;
+    protected static VidaUnlockScreen unlockScreen;
     protected static final float MAX_PLAYER_BAR_OFFSET = 12f;
     protected static FloatRange playerBarOffset = new FloatRange(0,0,MAX_PLAYER_BAR_OFFSET);
     protected static FloatRange globalHudAlpha = new FloatRange(0,0, 1);
@@ -53,6 +55,9 @@ public class HudHandler {
 
         // 渲染法杖魔力界面
         renderVidaManaScreen(event);
+
+        //渲染解锁界面
+        renderUnlockOverlay(event);
     }
 
     /**当渲染魔力界面时，原版血条等等ui都往上偏移12个像素，入栈*/
@@ -89,6 +94,17 @@ public class HudHandler {
         }
     }
 
+    public static void renderUnlockOverlay(RenderGuiOverlayEvent event){
+        Player player = Minecraft.getInstance().player;
+        Minecraft mc = Minecraft.getInstance();
+        VidaUnlockScreen unlockScreen = getOrUnlockVidaManaScreen(event.getGuiGraphics().bufferSource());
+        if(player == null || event.getOverlay() != VanillaGuiOverlay.EXPERIENCE_BAR.type()){
+            return;
+        }
+
+        unlockScreen.render(event.getGuiGraphics().pose());
+    }
+
     /**显示debug界面*/
     public static void renderDebugOverlay(RenderGuiOverlayEvent event){
         if(!VidaConfig.DEBUG_MODE.get()){
@@ -103,6 +119,7 @@ public class HudHandler {
                 Minecraft.getInstance().crosshairPickEntity,
                 getBlockEntityPlayerLookAt(Minecraft.getInstance().player)
         );
+
 
         debugScreen.render(matrixStack);
     }
@@ -138,6 +155,10 @@ public class HudHandler {
             screen = new VidaManaBarScreen(Minecraft.getInstance(), bufferSource);
         }
         return screen;
+    }
+
+    public static VidaUnlockScreen getOrUnlockVidaManaScreen(MultiBufferSource.BufferSource bufferSource){
+        return new VidaUnlockScreen(Minecraft.getInstance(), bufferSource);
     }
 
 

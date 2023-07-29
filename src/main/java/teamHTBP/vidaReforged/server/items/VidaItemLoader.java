@@ -1,5 +1,6 @@
 package teamHTBP.vidaReforged.server.items;
 
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
@@ -34,4 +35,9 @@ public class VidaItemLoader {
 
     public final static RegistryObject<Item> UNLOCK_MAGIC_WORD_PAPER = ITEMS.register("unlock_magic_word_paper", UnlockMagicWordPaper::new);
 
+
+    public static final FoodProperties BALANCE_FOOD = (new FoodProperties.Builder()).nutrition(3).saturationMod(0.3F).build();
+    public static final FoodProperties UNHEALTH_FOOD = (new FoodProperties.Builder()).nutrition(2).saturationMod(0.1F).build();
+
+    public final static RegistryObject<Item> FRIED_CRIMSON_CREST = ITEMS.register("fried_crimson_crest", () -> new VidaFood(BALANCE_FOOD));
 }
