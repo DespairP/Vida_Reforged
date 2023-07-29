@@ -5,7 +5,75 @@
       "energy": 100
     },
     {
+      "item": "vida_reforged:vermillion_bowl",
+      "energy": 100
+    },
+    {
+      "item": "vida_reforged:sun_flower",
+      "energy": 100
+    }
+  ],
+  "WOOD": [
+    {
+      "item": "vida_reforged:sweet_cyan_reed",
+      "energy": 100
+    },
+    {
+      "item": "vida_reforged:heart_of_wal",
+      "energy": 100
+    },
+    {
+      "item": "vida_reforged:green_dew_flower",
+      "energy": 100
+    },
+    {
+      "item": "vida_reforged:small_emerald_mushroom",
+      "energy": 100
+    },
+    {
+      "item": "vida_reforged:emerald_mushroom",
+      "energy": 100
+    }
+  ],
+  "AQUA": [
+    {
+    "item": "vida_reforged:plam_stem",
+    "energy": 100
+    },
+    {
+      "item": "vida_reforged:sullen_hydrangea",
+      "energy": 100
+    },
+    {
+      "item": "vida_reforged:lunaria_flower",
+      "energy": 100
+    },
+    {
+      "item": "vida_reforged:mystic_mushroom",
+      "energy": 100
+    },
+    {
+      "item": "vida_reforged:blue_jelly_mushroom",
+      "energy": 100
+    }
+  ],
+  "GOLD": [
+    {
+      "item": "vida_reforged:nitrite_thorns",
+      "energy": 100
+    }
+  ],
+  "EARTH": [
+    {
       "item": "vida_reforged:blue_grass",
+      "energy": 100
+    },
+    {
+      "item": "vida_reforged:light_grass",
+      "energy": 100
+    },
+    {
+      "item": "vida_reforged:pink_jelly_flower",
       "energy": 100
     }
   ]
