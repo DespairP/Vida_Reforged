@@ -40,4 +40,10 @@ public class VidaItemLoader {
     public static final FoodProperties UNHEALTH_FOOD = (new FoodProperties.Builder()).nutrition(2).saturationMod(0.1F).build();
 
     public final static RegistryObject<Item> FRIED_CRIMSON_CREST = ITEMS.register("fried_crimson_crest", () -> new VidaFood(BALANCE_FOOD));
+    public final static RegistryObject<Item> HEART_OF_WAL_JUICE = ITEMS.register("heart_of_wal_juice", () -> new VidaFood(BALANCE_FOOD));
+    public final static RegistryObject<Item> PLAM_STEM_TEA = ITEMS.register("plam_stem_tea", () -> new VidaFood(BALANCE_FOOD));
+    public final static RegistryObject<Item> PROCESSED_SULLEN_HYDRANGEA_BERRY = ITEMS.register("processed_sullen_hydrangea_berry", () -> new VidaFood(BALANCE_FOOD));
+    public final static RegistryObject<Item> SULLEN_HYDRANGEA_SOUP = ITEMS.register("sullen_hydrangea_soup", () -> new VidaFood(BALANCE_FOOD));
+    public final static RegistryObject<Item> NITRITE_TEA = ITEMS.register("nitrite_tea", () -> new VidaFood(BALANCE_FOOD));
+    public final static RegistryObject<Item> DRIED_SWEET_CYAN_REED = ITEMS.register("dried_sweet_cyan_reed", () -> new VidaFood(BALANCE_FOOD));
 }
