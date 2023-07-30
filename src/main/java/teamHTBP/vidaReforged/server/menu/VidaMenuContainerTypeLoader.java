@@ -85,4 +85,21 @@ public class VidaMenuContainerTypeLoader {
                     }
             )
     );
+
+    public final static RegistryObject<MenuType<MagicWordViewMenu>> MAGIC_WORD_VIEWING = MENU_CONTAINER_TYPE.register(
+            MagicWordViewMenu.MENU_NAME,
+            () -> IForgeMenuType.create(
+                    (windowId, inv, data) ->{
+                        final List<String> magicWords = new ArrayList<>();
+                        CompoundTag wordList = data.readNbt();
+                        if(wordList != null) {
+                            magicWords.addAll(VidaMagicWordCapability.deserialize(wordList));
+                        }
+                        return new MagicWordViewMenu(
+                                windowId,
+                                magicWords
+                        );
+                    }
+            )
+    );
 }

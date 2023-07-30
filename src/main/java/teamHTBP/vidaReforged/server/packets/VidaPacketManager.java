@@ -65,5 +65,11 @@ public class VidaPacketManager {
                 UnlockMagicWordCraftingPacket::fromBytes,
                 UnlockMagicWordCraftingPacket::handler,
                 client);
+        INSTANCE.registerMessage(id++,
+                OpenMagicWordScreenPacket.class,
+                OpenMagicWordScreenPacket::toBytes,
+                OpenMagicWordScreenPacket::fromBytes,
+                OpenMagicWordScreenPacket::handler,
+                server);
     }
 }

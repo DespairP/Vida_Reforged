@@ -171,5 +171,7 @@
  "magic_word.name.vida_reforged.sun": "sun",
  "magic_word.name.vida_reforged.thought": "thought",
  "magic_word.name.vida_reforged.tree": "tree",
- "magic_word.name.vida_reforged.vision": "vision"
+ "magic_word.name.vida_reforged.vision": "vision",
+ "key.category.vida": "Vida",
+ "key.keyboard.open_magic_word": "Open Magic Word Screen"
 }

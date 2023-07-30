@@ -37,7 +37,7 @@ public class ARGBColor extends VidaColor {
     }
 
     public static ARGBColor of(float a, float r, float g, float b) {
-        return new ARGBColor((int) a * 255, (int) r * 255, (int) g * 255, (int) b * 255);
+        return new ARGBColor((int) (a * 255f), (int) (r * 255f), (int) (g * 255f), (int)(b * 255f));
     }
 
     public static ARGBColor of(int r, int g, int b) {

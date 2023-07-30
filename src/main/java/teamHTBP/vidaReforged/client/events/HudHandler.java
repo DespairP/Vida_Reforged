@@ -98,7 +98,7 @@ public class HudHandler {
         Player player = Minecraft.getInstance().player;
         Minecraft mc = Minecraft.getInstance();
         VidaUnlockScreen unlockScreen = getOrUnlockVidaManaScreen(event.getGuiGraphics().bufferSource());
-        if(player == null || event.getOverlay() != VanillaGuiOverlay.EXPERIENCE_BAR.type()){
+        if(player == null || event.getOverlay() != VanillaGuiOverlay.HOTBAR.type()){
             return;
         }
 

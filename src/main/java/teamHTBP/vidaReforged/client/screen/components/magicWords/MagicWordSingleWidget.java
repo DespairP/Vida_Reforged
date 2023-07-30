@@ -11,7 +11,7 @@ import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
-import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
+import teamHTBP.vidaReforged.client.screen.viewModels.VidaViewMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.component.IDataObserver;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
@@ -23,34 +23,28 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
-import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
+import static teamHTBP.vidaReforged.client.screen.components.magicWords.MagicWordWidget.*;
 
-public class MagicWordWidget extends AbstractWidget {
-    public static final int HEIGHT = 20;
-    public static final int WIDTH = 85;
-    public static final int ICON_PIXEL = 16;
+public class MagicWordSingleWidget extends AbstractWidget {
     public final MagicWord magicWord;
-    public static ResourceLocation DINKFONT = new ResourceLocation(MOD_ID, "dinkie");
-    public static ResourceLocation QUESTION_MARK = new ResourceLocation(MOD_ID, "textures/icons/magic_word/question_mark.png");
-    public FloatRange upperBorderPoint = new FloatRange(0,0, WIDTH);
-    public FloatRange downBorderPoint = new FloatRange(0,0, WIDTH);
+    public FloatRange upperBorderPoint = new FloatRange(0,0, getWidth());
+    public FloatRange downBorderPoint = new FloatRange(0,0, getWidth());
     public FloatRange selectedAlpha = new FloatRange(0,0, 1);
-    private MagicWordListWidget container;
-    private VidaElement element;
-    private VidaMagicWordViewModel model;
     private boolean isSelected = false;
     private boolean isUnlocked = false;
+    private VidaViewMagicWordViewModel model;
 
-    public MagicWordWidget(VidaMagicWordViewModel model, MagicWordListWidget parent, int x, int y, MagicWord word) {
-        super(x, y, WIDTH, HEIGHT, Component.translatable("magic word"));
-        this.magicWord = word;
+    private float scroll = 0f;
+
+    public MagicWordSingleWidget(VidaViewMagicWordViewModel model, int x, int y, int width, MagicWord word) {
+        super(x, y, width, HEIGHT, Component.translatable("word"));
         this.model = model;
-        this.container = parent;
-        this.init();
+        this.magicWord = word;
+        init();
     }
 
     public void init(){
-        IDataObserver<Map<VidaElement,String>> observer = this::checkIfSelected;
+        IDataObserver<String> observer = this::checkIfSelected;
         this.model.selectedMagicWord.observe(observer);
         this.checkIfSelected(this.model.selectedMagicWord.getValue());
         if(magicWord != null){
@@ -58,26 +52,17 @@ public class MagicWordWidget extends AbstractWidget {
         }
     }
 
-    public void checkIfSelected(Map<VidaElement,String> value){
-        if(magicWord == null || value == null || magicWord.element() == null){
+    public void checkIfSelected(String value){
+        if(magicWord == null || value == null){
             setSelected(false);
             return;
         }
-        String selectedMagicId = value.get(magicWord.element());
-        if(selectedMagicId == null){
-            setSelected(false);
-            return;
-        }
-        setSelected(selectedMagicId.equals(magicWord.name()));
+        boolean isSelected = value != null && value.equals(this.magicWord.name());
+        setSelected(isSelected);
     }
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        this.isHovered = mouseX >= this.getX() &&
-                mouseY >= this.getY() &&
-                mouseX < this.getX() + this.width &&
-                mouseY < this.getY() + this.height;
-
         upperBorderPoint.change(isHovered, 3f);
         downBorderPoint.change(isHovered, 2.85f);
 
@@ -102,8 +87,8 @@ public class MagicWordWidget extends AbstractWidget {
         // 绘制
         buffer.vertex( matrix4f, 0 + up, 0, 0).color(r, g, b, 0.5f).endVertex();
         buffer.vertex( matrix4f, 0 + dn, HEIGHT, 0).color(r, g, b, 0.5f).endVertex();
-        buffer.vertex( matrix4f, WIDTH, HEIGHT, 0).color(r, g, b, 0.5f).endVertex();
-        buffer.vertex( matrix4f, WIDTH , 0, 0).color(r, g, b, 0.5f).endVertex();
+        buffer.vertex( matrix4f, getWidth(), HEIGHT, 0).color(r, g, b, 0.5f).endVertex();
+        buffer.vertex( matrix4f, getWidth() , 0, 0).color(r, g, b, 0.5f).endVertex();
 
         buffer.vertex( matrix4f, 0, 0, 0).color(1, 1, 1, 0.5f).endVertex();
         buffer.vertex( matrix4f, 0, HEIGHT, 0).color(1, 1, 1, 0.5f).endVertex();
@@ -146,11 +131,15 @@ public class MagicWordWidget extends AbstractWidget {
         );
         poseStack.popPose();
 
-
     }
+
 
     public void renderSelectedBg(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
         float alpha = this.selectedAlpha.change(this.isSelected,0.05f);
+        if(alpha <= 0.03){
+            return;
+        }
+
         PoseStack poseStack = graphics.pose();
 
         poseStack.pushPose();
@@ -169,24 +158,20 @@ public class MagicWordWidget extends AbstractWidget {
 
         buffer.vertex(matrix4f, 0, 0, 0).color(toR, toG, toB, alpha).endVertex();
         buffer.vertex(matrix4f, 0, HEIGHT, 0).color(fromR, fromG, fromB, alpha).endVertex();
-        buffer.vertex(matrix4f, WIDTH, HEIGHT, 0).color(toR, toG, toB, alpha).endVertex();
-        buffer.vertex(matrix4f, WIDTH, 0, 0).color(fromR, fromG, fromB, alpha).endVertex();
+        buffer.vertex(matrix4f, getWidth(), HEIGHT, 0).color(toR, toG, toB, alpha).endVertex();
+        buffer.vertex(matrix4f, getWidth(), 0, 0).color(fromR, fromG, fromB, alpha).endVertex();
 
 
         poseStack.popPose();
     }
 
-    public int getScroll(){
-        return this.container == null ? 0 : this.container.getScroll();
-    }
-
     @Override
-    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
-
+    public int getY() {
+        return (int) (super.getY() + scroll);
     }
 
-    public boolean isSelectable(){
-        return this.isUnlocked;
+    public void setScroll(float scroll) {
+        this.scroll = scroll;
     }
 
     public void setSelected(boolean selected) {
@@ -194,22 +179,13 @@ public class MagicWordWidget extends AbstractWidget {
     }
 
     @Override
-    public int getX() {
-        return super.getX();
+    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
+
     }
 
-    @Override
-    public int getY() {
-        return super.getY() + this.getScroll();
-    }
 
     @Override
     public void onClick(double x, double y) {
-        if(!this.isSelectable()){
-            return;
-        }
         this.model.setSelectWord(magicWord.element(),magicWord.name());
     }
-
-
 }

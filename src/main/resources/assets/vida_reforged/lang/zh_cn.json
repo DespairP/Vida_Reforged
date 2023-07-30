@@ -247,5 +247,15 @@
  "guidebook.subtitle.vida_reforged.vida_19":"棱镜台",
  "guidebook.subtitle.vida_reforged.vida_20":"词条",
  "guidebook.subtitle.vida_reforged.vida_21":"魔法作物",
- "tootip.vida_reforged.unlock_magic_word_paper": "<右键解锁以下词条>"
+ "tootip.vida_reforged.unlock_magic_word_paper": "<右键解锁以下词条>",
+ "key.category.vida": "生命",
+ "key.keyboard.open_magic_word": "打开词条界面",
+ "element.vida_reforged.void": "虚空",
+ "element.vida_reforged.gold": "金",
+ "element.vida_reforged.wood": "木",
+ "element.vida_reforged.aqua": "水",
+ "element.vida_reforged.fire": "火",
+ "element.vida_reforged.earth": "土",
+ "description.word.vida_reforged.select": "选择相应的词条",
+ "description.word.vida_reforged.unlocked": "你还未获得这个词条，或许可以寻找看看！"
 }

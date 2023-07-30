@@ -60,7 +60,7 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
         int x = screenWidth - 200;
         int y = (int)((screenHeight - componentHeight) / 2);
 
-        magicWordWidget = new MagicWordListWidget( viewModel, x, y, 0, componentHeight, factor);
+        magicWordWidget = new MagicWordListWidget( viewModel, x, y, MagicWordListWidget.WIDTH, componentHeight, factor);
         magicWordFilterLists = new MagicWordFilterList(viewModel, x - MagicWordFilter.PIXEL, y + componentHeight - MagicWordFilter.PIXEL * MagicWordFilterList.BUTTON_AMOUNT);
         magicSelectedWordListWidget = new MagicSelectedWordListWidget(viewModel,this.leftPos + 46,this.topPos - 140);
         magicWordCraftingButton = new MagicWordCraftingButton(viewModel, this.leftPos + 64, this.topPos - 50);

@@ -230,6 +230,10 @@ public class GuideBookScrollTextArea extends AbstractWidget implements IGuideboo
         return true;
     }
 
+    public void setNewWord(String key){
+        this.all = Language.getInstance().getOrDefault(key, key);
+        this.scroll.set(0);
+    }
 
     @Override
     protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
