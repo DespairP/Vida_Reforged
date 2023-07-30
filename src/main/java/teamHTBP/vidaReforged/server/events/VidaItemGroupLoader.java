@@ -57,6 +57,13 @@ public class VidaItemGroupLoader {
             event.accept(VidaItemLoader.NITRITE_THORNS_SEED_ITEM.get());
             event.accept(VidaItemLoader.SULLEN_HYDRANGEA_SEED_ITEM.get());
             event.accept(VidaItemLoader.SWEET_CYAN_REED_SEED_ITEM.get());
+            event.accept(VidaItemLoader.FRIED_CRIMSON_CREST.get());
+            event.accept(VidaItemLoader.HEART_OF_WAL_JUICE.get());
+            event.accept(VidaItemLoader.PLAM_STEM_TEA.get());
+            event.accept(VidaItemLoader.PROCESSED_SULLEN_HYDRANGEA_BERRY.get());
+            event.accept(VidaItemLoader.SULLEN_HYDRANGEA_SOUP.get());
+            event.accept(VidaItemLoader.NITRITE_TEA.get());
+            event.accept(VidaItemLoader.DRIED_SWEET_CYAN_REED.get());
         }
     }
 

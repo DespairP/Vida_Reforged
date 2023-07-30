@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "vida_reforged:item/nitrite_tea"
+  }
+}
