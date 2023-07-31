@@ -9,6 +9,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.server.items.armors.ItemArmorApprentice;
 import teamHTBP.vidaReforged.server.items.armors.ItemArmorBlackMetal;
 
 public class VidaItemLoader {
@@ -40,6 +41,13 @@ public class VidaItemLoader {
     public final static RegistryObject<Item> BLACK_METAL_HELMET = ITEMS.register("black_metal_helmet", () -> new ItemArmorBlackMetal(ArmorItem.Type.HELMET));
     public final static RegistryObject<Item> BLACK_METAL_CHESTPLATE = ITEMS.register("black_metal_chestplate", () -> new ItemArmorBlackMetal(ArmorItem.Type.CHESTPLATE));
     public final static RegistryObject<Item> BLACK_METAL_BOOTS = ITEMS.register("black_metal_boots", () -> new ItemArmorBlackMetal(ArmorItem.Type.BOOTS));
+
+
+    public final static RegistryObject<Item> APPRENTICE_HELMET = ITEMS.register("apprentice_helmet", () -> new ItemArmorApprentice(ArmorItem.Type.HELMET));
+    public final static RegistryObject<Item> APPRENTICE_CHESTPLATE = ITEMS.register("apprentice_chestplate", () -> new ItemArmorApprentice(ArmorItem.Type.CHESTPLATE));
+    public final static RegistryObject<Item> APPRENTICE_LEGGINGS = ITEMS.register("apprentice_leggings", () -> new ItemArmorApprentice(ArmorItem.Type.LEGGINGS));
+    public final static RegistryObject<Item> APPRENTICE_BOOTS = ITEMS.register("apprentice_boots", () -> new ItemArmorApprentice(ArmorItem.Type.BOOTS));
+
 
 
     public static final FoodProperties BALANCE_FOOD = (new FoodProperties.Builder()).nutrition(3).saturationMod(0.3F).build();

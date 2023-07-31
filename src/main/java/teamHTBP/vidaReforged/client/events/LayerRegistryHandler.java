@@ -10,9 +10,13 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teamHTBP.vidaReforged.client.model.armors.LayerManager;
+import teamHTBP.vidaReforged.client.model.armors.boot.VidaApprenticeBoots;
 import teamHTBP.vidaReforged.client.model.armors.chestplate.BlackMetalChestPlate;
+import teamHTBP.vidaReforged.client.model.armors.chestplate.VidaBasedChestPlate;
 import teamHTBP.vidaReforged.client.model.armors.head.BlackMetalHelmet;
+import teamHTBP.vidaReforged.client.model.armors.head.VidaBasedHelmet;
 import teamHTBP.vidaReforged.client.model.armors.leggings.BlackMetalLeggings;
+import teamHTBP.vidaReforged.client.model.armors.leggings.VidaBasedLeggings;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
@@ -28,9 +32,13 @@ public class LayerRegistryHandler {
 
     @SubscribeEvent
     public static void onRegisterLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        register(event, BlackMetalLeggings.LAYER_LOCATION, LayerManager::createBodyLayer, BlackMetalLeggings.class);
-        register(event, BlackMetalChestPlate.LAYER_LOCATION, LayerManager::createBodyLayer, BlackMetalChestPlate.class);
-        register(event, BlackMetalHelmet.LAYER_LOCATION, LayerManager::createBodyLayer, BlackMetalHelmet.class);
+        register(event, BlackMetalLeggings.LAYER_LOCATION, LayerManager::createMetalBodyLayer, BlackMetalLeggings.class);
+        register(event, BlackMetalChestPlate.LAYER_LOCATION, LayerManager::createMetalBodyLayer, BlackMetalChestPlate.class);
+        register(event, BlackMetalHelmet.LAYER_LOCATION, LayerManager::createMetalBodyLayer, BlackMetalHelmet.class);
+        register(event, VidaBasedHelmet.APPRENTICE_LAYER_LOCATION, LayerManager::createApprenticeBodyLayer, VidaBasedHelmet.class);
+        register(event, VidaBasedChestPlate.APPRENTICE_LAYER_LOCATION, LayerManager::createApprenticeBodyLayer, VidaBasedChestPlate.class);
+        register(event, VidaBasedLeggings.APPRENTICE_LAYER_LOCATION, LayerManager::createApprenticeBodyLayer, VidaBasedLeggings.class);
+        register(event, VidaApprenticeBoots.APPRENTICE_LAYER_LOCATION, LayerManager::createApprenticeBodyLayer, VidaApprenticeBoots.class);
     }
 
     public static void register(EntityRenderersEvent.RegisterLayerDefinitions event, ModelLayerLocation layerLocation, Supplier<LayerDefinition> supplier,Class<? extends Model> modelClazz){

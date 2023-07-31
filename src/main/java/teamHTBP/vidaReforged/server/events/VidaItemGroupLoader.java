@@ -64,6 +64,13 @@ public class VidaItemGroupLoader {
             event.accept(VidaItemLoader.SULLEN_HYDRANGEA_SOUP.get());
             event.accept(VidaItemLoader.NITRITE_TEA.get());
             event.accept(VidaItemLoader.DRIED_SWEET_CYAN_REED.get());
+            event.accept(VidaItemLoader.BLACK_METAL_HELMET.get());
+            event.accept(VidaItemLoader.BLACK_METAL_CHESTPLATE.get());
+            event.accept(VidaItemLoader.BLACK_METAL_BOOTS.get());
+            event.accept(VidaItemLoader.APPRENTICE_HELMET.get());
+            event.accept(VidaItemLoader.APPRENTICE_CHESTPLATE.get());
+            event.accept(VidaItemLoader.APPRENTICE_LEGGINGS.get());
+            event.accept(VidaItemLoader.APPRENTICE_BOOTS.get());
         }
     }
 
