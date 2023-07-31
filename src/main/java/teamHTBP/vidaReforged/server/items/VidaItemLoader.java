@@ -1,6 +1,7 @@
 package teamHTBP.vidaReforged.server.items;
 
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
@@ -8,6 +9,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.server.items.armors.ItemArmorBlackMetal;
 
 public class VidaItemLoader {
     /**注册器*/
@@ -34,6 +36,10 @@ public class VidaItemLoader {
 
 
     public final static RegistryObject<Item> UNLOCK_MAGIC_WORD_PAPER = ITEMS.register("unlock_magic_word_paper", UnlockMagicWordPaper::new);
+
+    public final static RegistryObject<Item> BLACK_METAL_HELMET = ITEMS.register("black_metal_helmet", () -> new ItemArmorBlackMetal(ArmorItem.Type.HELMET));
+    public final static RegistryObject<Item> BLACK_METAL_CHESTPLATE = ITEMS.register("black_metal_chestplate", () -> new ItemArmorBlackMetal(ArmorItem.Type.CHESTPLATE));
+    public final static RegistryObject<Item> BLACK_METAL_BOOTS = ITEMS.register("black_metal_boots", () -> new ItemArmorBlackMetal(ArmorItem.Type.BOOTS));
 
 
     public static final FoodProperties BALANCE_FOOD = (new FoodProperties.Builder()).nutrition(3).saturationMod(0.3F).build();

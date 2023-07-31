@@ -146,12 +146,12 @@ public class MagicWordSingleWidget extends AbstractWidget {
         Matrix4f matrix4f = poseStack.last().pose();
         VertexConsumer buffer = graphics.bufferSource().getBuffer(RenderType.gui());
         matrix4f.translate(getX(), getY(), 0);
-        ARGBColor fromColor = ARGBColor.of(125, 226, 252);
+        ARGBColor fromColor = ARGBColor.of(171, 236, 214);
         float fromR = fromColor.r() / 255.0f;
         float fromG = fromColor.g() / 255.0f;
         float fromB = fromColor.b() / 255.0f;
 
-        ARGBColor toColor = ARGBColor.of(185, 182, 229);
+        ARGBColor toColor = ARGBColor.of(251, 237, 150);
         float toR = toColor.r() / 255.0f;
         float toG = toColor.g() / 255.0f;
         float toB = toColor.b() / 255.0f;
@@ -182,7 +182,6 @@ public class MagicWordSingleWidget extends AbstractWidget {
     protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
 
     }
-
 
     @Override
     public void onClick(double x, double y) {

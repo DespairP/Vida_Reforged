@@ -14,6 +14,8 @@ import teamHTBP.vidaReforged.core.api.VidaElement;
 import javax.annotation.Nullable;
 import java.util.Locale;
 
+import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
+
 public class ItemArmorElementBoots extends ArmorItem {  //盔甲属于什么元素
     protected VidaElement element = VidaElement.EMPTY;
 
@@ -42,7 +44,7 @@ public class ItemArmorElementBoots extends ArmorItem {  //盔甲属于什么元�
     @Nullable
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        return String.format("vida:textures/armor/%s_element_armor.png", element.toString().toLowerCase(Locale.ROOT));
+        return String.format("%s:textures/armor/%s_element_armor.png", MOD_ID, element.toString().toLowerCase(Locale.ROOT));
     }
 
 
