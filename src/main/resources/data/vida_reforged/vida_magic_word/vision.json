@@ -2,6 +2,6 @@
   "name": "vision",
   "icon": "vida_reforged:textures/icons/magic_word/tile084.png",
   "description": "vida_reforged.description.vision",
-  "element": "GOLD",
+  "element": "VOID",
   "chance": 0.10
 }
