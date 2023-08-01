@@ -7,6 +7,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.server.entity.projectile.MagicParticleProjectile;
+import teamHTBP.vidaReforged.server.entity.projectile.PartyParrotProjecttile;
 
 /**
  * @author TT432
@@ -24,4 +25,12 @@ public class VidaEntityLoader {
                     .clientTrackingRange(4)
                     .updateInterval(10)
                     .build("magic_particle_projectile"));
+
+    public static final RegistryObject<EntityType<PartyParrotProjecttile>> PARTY_PARROT = ENTITIES
+            .register("party_parrot_projectile", () -> EntityType.Builder
+                    .of(PartyParrotProjecttile::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(4)
+                    .updateInterval(10)
+                    .build("party_parrot_projectile"));
 }

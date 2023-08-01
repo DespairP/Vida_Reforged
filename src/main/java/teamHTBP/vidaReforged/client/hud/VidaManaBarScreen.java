@@ -12,8 +12,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
+import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
@@ -22,6 +24,8 @@ import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class VidaManaBarScreen extends GuiGraphics implements IVidaScreen {
     private static final float MAX_BAR_WIDTH = 166.0f;
@@ -144,6 +148,35 @@ public class VidaManaBarScreen extends GuiGraphics implements IVidaScreen {
         poseStack.popPose();
         // 出栈1.1
         RenderSystem.disableBlend();
+
+        final LazyOptional<IVidaMagicContainerCapability> containerCap = handInItem.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER);
+        AtomicBoolean isInCoolDown = new AtomicBoolean(false);
+        AtomicInteger coolDownWidth = new AtomicInteger(0);
+        containerCap.ifPresent(cap->{
+            if(cap.getContainer() != null){
+                VidaMagicContainer container = cap.getContainer();
+                long current = System.currentTimeMillis();
+                float cooldown = Math.max(1, container.coolDown());
+                isInCoolDown.set(cap.isInCoolDown(current));
+                coolDownWidth.set(isInCoolDown.get() ? (int) ((current - container.lastInvokeMillSec()) * 166.0f / cooldown) : 0);
+            }
+        });
+
+        if(isInCoolDown.get()){
+            poseStack.pushPose();
+
+            blit(
+                    progressSec.location(),
+                    renderX + 8,  renderY + 4, 0,
+                    progressSec.minU(), progressSec.minV(),
+                    (int)166 - coolDownWidth.get(), progressSec.height(),
+                    256, 256
+            );
+
+            poseStack.popPose();
+        }
+
+
         this.isRendered = true;
     }
 

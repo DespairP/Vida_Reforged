@@ -45,6 +45,7 @@ public class VidaCommandRegisterHandler {
 
         //组装Magic命令集
         LiteralArgumentBuilder<CommandSourceStack> magic = Commands.literal("magic")
+                .requires(source -> source.hasPermission(3))
                 .then(setMaxMana)
                 .then(setMana)
                 .then(list);
@@ -67,6 +68,7 @@ public class VidaCommandRegisterHandler {
 
         // 组装MagicContainer命令集
         LiteralArgumentBuilder<CommandSourceStack> magicContainer = Commands.literal("magicContainer")
+                .requires(source -> source.hasPermission(3))
                 .then(setArgs)
                 .then(addMagic);
 
@@ -80,14 +82,19 @@ public class VidaCommandRegisterHandler {
 
         //组装MagicWord命令集
         LiteralArgumentBuilder<CommandSourceStack> magicWord = Commands.literal("magicWord")
-                        .then(addWord);
+                .requires(source -> source.hasPermission(3))
+                .then(addWord);
 
+        //
+        LiteralArgumentBuilder<CommandSourceStack> dice = Commands.literal("magicDice")
+                        .executes(VidaCommandManager.WAND_DICE);
 
         dispatcher.register(
                 Commands.literal("vida")
                         .then(magic)
                         .then(magicContainer)
                         .then(magicWord)
+                        .then(dice)
         );
     }
 }

@@ -308,5 +308,12 @@
  "vida_reforged.description.position":"方位的出现使文明中的高等生物明白，世界并非是杂乱无章的造物，而是规律与有序的集合体。",
  "vida_reforged.description.vision":"将世界的多彩赋予给生命，这便是视觉的责任。",
  "vida_reforged.description.inspiration":"当文明发展到某一转折点的时候，往往只需要一个小小的灵感来作为助推。",
- "vida_reforged.description.creativity":"创造对于文明起到不可或缺的作用。先进的技术，抑或是多样的艺术，都是创造的结果。"
+ "vida_reforged.description.creativity":"创造对于文明起到不可或缺的作用。先进的技术，抑或是多样的艺术，都是创造的结果。",
+ "attribute.vida_forged.amount": "发射数量: ",
+ "attribute.vida_forged.damage": "伤害: ",
+ "attribute.vida_forged.speed": "法术速度: ",
+ "attribute.vida_forged.max_age": "施法时长: ",
+ "attribute.vida_forged.cool_down": "冷却时间: ",
+ "attribute.vida_forged.current_consume_element": "消耗元素: ",
+ "attribute.vida_forged.current_consume": "消耗能量: "
 }

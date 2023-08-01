@@ -30,6 +30,7 @@ import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -67,7 +68,32 @@ public class VidaWand extends Item implements IVidaManaConsumable {
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
-        components.add(Component.translatable("VidaWand"));
+        this.getContainerCapability(itemStack).ifPresent((containerCap) ->{
+            if(containerCap.getContainer() != null){
+                VidaMagicContainer container = containerCap.getContainer();
+                components.add(Component.translatable("attribute.vida_forged.amount").append(String.valueOf(container.amount())));
+                components.add(Component.translatable("attribute.vida_forged.damage").append(String.valueOf(container.damage())));
+                components.add(Component.translatable("attribute.vida_forged.speed").append(String.valueOf(container.speed()) + 'x'));
+                components.add(Component.translatable("attribute.vida_forged.max_age").append(String.valueOf(container.maxAge())));
+                components.add(Component.translatable("attribute.vida_forged.cool_down").append(String.valueOf(container.coolDown())));
+
+
+                final List<String> magicList = container.magic();
+                final String currentMagicId = magicList.size() > 0 ? magicList.get(0) : null;
+                final VidaMagic currentMagic = MagicTemplateManager.getMagicById(currentMagicId);
+
+                if(currentMagic != null){
+                    VidaElement element = currentMagic.element() == null ? VidaElement.EMPTY : currentMagic.element();
+                    components.add(Component.translatable("attribute.vida_forged.current_consume_element").append(
+                            Component.translatable(String.format("element.vida_reforged.%s",currentMagic.element().toString().toLowerCase(Locale.ROOT)))
+                                    .withStyle(style -> style.withColor(element.baseColor.argb()))
+                    ));
+                    components.add(Component.translatable("attribute.vida_forged.current_consume").append(String.valueOf(container.costMana())));
+
+                }
+
+            }
+        });
     }
 
     /***/
@@ -137,6 +163,7 @@ public class VidaWand extends Item implements IVidaManaConsumable {
         final String currentMagicId = magicList.size() > 0 ? magicList.get(0) : null;
         final VidaMagic currentMagic = MagicTemplateManager.getMagicById(currentMagicId);
 
+
         if(currentMagic == null){
             return false;
         }
@@ -154,7 +181,7 @@ public class VidaWand extends Item implements IVidaManaConsumable {
         mana.consumeMana(currentMagic.element(), container.costMana());
         container.lastInvokeMillSec(currentMillSecond);
 
-        VidaMagicHelper.invokeMagic(magicContainer,mana,level,player);
+        VidaMagicHelper.invokeMagic(magicContainer, mana, level, player, currentMagic);
 
         return true;
     }

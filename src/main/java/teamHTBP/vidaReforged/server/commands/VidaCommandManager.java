@@ -8,6 +8,7 @@ import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
@@ -32,9 +33,7 @@ import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class VidaCommandManager {
@@ -134,6 +133,12 @@ public class VidaCommandManager {
                 case LEVEL -> {
                     cap.getContainer().level(Integer.parseInt(value));
                 }
+                case SPEED -> {
+                    cap.getContainer().speed(Double.parseDouble(value));
+                }
+                case MAX_AGE -> {
+                    cap.getContainer().maxAge(Integer.parseInt(value));
+                }
             }
         });
         context.getSource().sendSuccess(() -> Component.literal("argument set success"), false);
@@ -204,6 +209,56 @@ public class VidaCommandManager {
             context.getSource().sendFailure(Component.literal("cannot execute the command"));
         }
         return 1;
+    };
+
+    public final static Command<CommandSourceStack> WAND_DICE = context -> {
+        ServerPlayer player = context.getSource().getPlayerOrException();
+        ItemStack handInItem = player.getItemInHand(InteractionHand.MAIN_HAND);
+
+        //
+        try {
+            if (!handInItem.is(VidaItemLoader.VIDA_WAND.get())) {
+                context.getSource().sendFailure(Component.literal("only vida wand can random dice"));
+                return 1;
+            }
+
+            RandomSource source = RandomSource.create();
+            VidaElement randomElement = VidaElement.values()[2 + source.nextInt(4)];
+            int randomMaxAge = source.nextBoolean() ? 120 + source.nextInt(50) : 120 + source.nextInt(10);
+            double randomSpeed =  source.nextDouble() / 2.0F;
+            int randomCost = source.nextInt(10) + 30;
+            int randomCoolDown = source.nextInt(3000) + source.nextInt(1000);
+
+            //
+            String randomMagicId = String.format("vida_reforged:summon_partyparrot_%s", randomElement.toString().toLowerCase(Locale.ROOT));
+            VidaMagic magic = MagicTemplateManager.getMagicById(randomMagicId);
+            if (magic == null) {
+                context.getSource().sendFailure(Component.literal("cannot execute the command"));
+                return 1;
+            }
+
+            LazyOptional<IVidaMagicContainerCapability> containerCapability = handInItem.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER);
+            AtomicBoolean isAdded = new AtomicBoolean(false);
+            containerCapability.ifPresent((cap) ->{
+                VidaMagicContainer container = cap.getContainer();
+                if(container != null) {
+                    container.magic(new LinkedList<>(ImmutableList.of(randomMagicId)))
+                            .costMana(randomCost)
+                            .coolDown(randomCoolDown)
+                            .maxAge(randomMaxAge)
+                            .speed(randomSpeed)
+                            .amount(1);
+                    isAdded.set(true);
+                }
+            });
+            LazyOptional<IVidaManaCapability> manaCap = handInItem.getCapability(VidaCapabilityRegisterHandler.VIDA_MANA);
+            manaCap.ifPresent(cap -> cap.setMaxMana(3000));
+            context.getSource().sendSuccess(() -> Component.literal("dice complete"), false);
+            return 1;
+        }catch (Exception ex){
+            context.getSource().sendFailure(Component.literal("cannot execute the command"));
+            return 1;
+        }
     };
 
 

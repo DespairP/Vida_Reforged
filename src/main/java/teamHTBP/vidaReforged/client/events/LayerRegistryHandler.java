@@ -17,6 +17,7 @@ import teamHTBP.vidaReforged.client.model.armors.head.BlackMetalHelmet;
 import teamHTBP.vidaReforged.client.model.armors.head.VidaBasedHelmet;
 import teamHTBP.vidaReforged.client.model.armors.leggings.BlackMetalLeggings;
 import teamHTBP.vidaReforged.client.model.armors.leggings.VidaBasedLeggings;
+import teamHTBP.vidaReforged.client.model.blockModel.InjectTableModel;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
@@ -39,6 +40,8 @@ public class LayerRegistryHandler {
         register(event, VidaBasedChestPlate.APPRENTICE_LAYER_LOCATION, LayerManager::createApprenticeBodyLayer, VidaBasedChestPlate.class);
         register(event, VidaBasedLeggings.APPRENTICE_LAYER_LOCATION, LayerManager::createApprenticeBodyLayer, VidaBasedLeggings.class);
         register(event, VidaApprenticeBoots.APPRENTICE_LAYER_LOCATION, LayerManager::createApprenticeBodyLayer, VidaApprenticeBoots.class);
+        register(event, InjectTableModel.APPRENTICE_LAYER_LOCATION, InjectTableModel::createBodyLayer, InjectTableModel.class);
+
     }
 
     public static void register(EntityRenderersEvent.RegisterLayerDefinitions event, ModelLayerLocation layerLocation, Supplier<LayerDefinition> supplier,Class<? extends Model> modelClazz){

@@ -35,16 +35,17 @@ public class CrystalDecorationBlock extends MutiDoubleWithYBlock implements Enti
         ItemStack handInItem = player.getItemInHand(hand);
         CrystalDecorationBlockEntity entity = getEntity(level, pos, state);
 
-        if(entity.hasItem() && player.isShiftKeyDown()){
+        // 如果有物品，取出物品
+        if(entity.hasItem() && player.isShiftKeyDown()) {
             level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), entity.getItemStack()));
             return InteractionResult.PASS;
         }
-        if(!handInItem.is(itemHolder -> itemHolder.get() instanceof ElementGem)){
+
+        //
+        if(entity.hasItem() || !handInItem.is(itemHolder -> itemHolder.get() instanceof ElementGem)){
             return InteractionResult.PASS;
         }
-        if(entity.hasItem()){
-            return InteractionResult.PASS;
-        }
+
         entity.putItem(handInItem.copyWithCount(1));
         handInItem.shrink(1);
         entity.setUpdated();

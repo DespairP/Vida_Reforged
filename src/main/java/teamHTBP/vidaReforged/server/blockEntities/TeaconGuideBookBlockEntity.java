@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import teamHTBP.vidaReforged.core.api.blockentity.IVidaTickableBlockEntity;
 
 public class TeaconGuideBookBlockEntity extends BlockEntity implements IVidaTickableBlockEntity {
-    public int time;
+    public long time;
     public float flip;
     public float oFlip;
     public float flipT;

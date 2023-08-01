@@ -19,6 +19,6 @@ public class BlockRendererHandler {
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.TEACON_GUIDEBOOK.get(), TeaconGuideBookBlockRenderer::new);
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.FLOATING_CRYSTAL.get(), FloatingCrystalBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.GEM_SHELF.get(), CrystalDecorationBlockEntityRenderer::new);
-
+        event.registerBlockEntityRenderer(VidaBlockEntityLoader.INJECT_TABLE.get(), InjectTableBlockEntityRenderer::new);
     }
 }

@@ -32,7 +32,7 @@ public class VidaManaCapabilityProvider implements ICapabilityProvider, INBTSeri
     /**获取cap*/
     public IVidaManaCapability getOrCreateCapability(){
         if(this.capability == null){
-            this.capability = new VidaManaCapability(100);
+            this.capability = new VidaManaCapability(5000);
         }
         return this.capability;
     }

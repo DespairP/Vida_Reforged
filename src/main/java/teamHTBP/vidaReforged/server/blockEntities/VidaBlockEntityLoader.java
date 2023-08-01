@@ -4,6 +4,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import teamHTBP.vidaReforged.server.blocks.InjectTable;
 import teamHTBP.vidaReforged.server.blocks.PurificationCauldron;
 import teamHTBP.vidaReforged.server.blocks.TeaconGuideBookBlock;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
@@ -78,5 +79,9 @@ public class VidaBlockEntityLoader {
 
     public static final RegistryObject<BlockEntityType<CrystalDecorationBlockEntity>> GEM_SHELF = BLOCK_ENTITIES.register(
             "gem_shelf", () -> BlockEntityType.Builder.of(CrystalDecorationBlockEntity::new, VidaBlockLoader.CRYSTAL_DECORATION_BLOCK.get()).build(null)
+    );
+
+    public static final RegistryObject<BlockEntityType<InjectTableBlockEntity>> INJECT_TABLE = BLOCK_ENTITIES.register(
+            "inject_table", () -> BlockEntityType.Builder.of(InjectTableBlockEntity::new, VidaBlockLoader.INJECT_TABLE.get()).build(null)
     );
 }

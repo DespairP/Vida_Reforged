@@ -9,11 +9,15 @@ import net.minecraftforge.common.util.LazyOptional;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
+import teamHTBP.vidaReforged.core.common.system.magic.particle.MagicParticle;
+import teamHTBP.vidaReforged.core.common.system.magic.particle.MagicParticleAttribute;
+import teamHTBP.vidaReforged.core.common.system.magic.particle.MagicParticleType;
 import teamHTBP.vidaReforged.server.entity.VidaEntityLoader;
-import teamHTBP.vidaReforged.server.entity.projectile.MagicParticleProjectile;
+import teamHTBP.vidaReforged.server.entity.projectile.PartyParrotProjecttile;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class VidaMagicHelper {
@@ -37,10 +41,22 @@ public class VidaMagicHelper {
     }
 
     /**触发魔法*/
-    public static void invokeMagic(IVidaMagicContainerCapability magicContainer, IVidaManaCapability manaContainer, Level level, Player player){
-        Entity entity = VidaEntityLoader.MAGIC_PARTICLE_PROJECTILE.get().create(level);
-        if (entity instanceof MagicParticleProjectile mpp) {
-            mpp.initMagicParticleProjectile(player);
+    public static void invokeMagic(IVidaMagicContainerCapability magicContainer, IVidaManaCapability manaContainer, Level level, Player player, VidaMagic currentMagic){
+        Entity entity = VidaEntityLoader.PARTY_PARROT.get().create(level);
+
+        VidaMagicContainer container = magicContainer.getContainer();
+        MagicParticle particle = new MagicParticle(
+                0xFFFFFF,
+                0xFFFFFF,
+                new MagicParticleAttribute((float)container.speed()),
+                new MagicParticleAttribute(container.amount()),
+                new MagicParticleAttribute(container.maxAge()),
+                new MagicParticleType(),
+                new MagicParticleAttribute((float) container.damage()),
+                Optional.ofNullable(currentMagic).orElse(new VidaMagic("")).element()
+        );
+        if (entity instanceof PartyParrotProjecttile mpp) {
+            mpp.initProjectile(player, particle);
             level.addFreshEntity(entity);
         }
     }

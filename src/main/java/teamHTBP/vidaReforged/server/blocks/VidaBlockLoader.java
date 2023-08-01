@@ -355,6 +355,9 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> PRISM = BLOCKS.register("prism", PrismBlock::new);
 
+    @RegisterItemBlock
+    public final static RegistryObject<Block> INJECT_TABLE = BLOCKS.register("inject_table", InjectTable::new);
+
     /**
      * @param name 注册名称
      * @param block 方块provider

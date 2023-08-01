@@ -41,6 +41,11 @@ public class VidaMagicContainer{
     private long lastInvokeMillSec = 0;
     /**级别*/
     private int level = 0;
+    /**施法速度*/
+    private double speed = 0;
+    /**最大*/
+    private int maxAge = 20;
+
 
     public enum MagicContainerArgument{
         MAGIC,
@@ -53,7 +58,9 @@ public class VidaMagicContainer{
         MAX_INVOKE_COUNT,
         COOLDOWN,
         LAST_INVOKE_MILLSEC,
-        LEVEL;
+        LEVEL,
+        MAX_AGE,
+        SPEED;
     }
 
     public static VidaMagicContainer empty(){

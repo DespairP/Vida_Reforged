@@ -44,6 +44,8 @@ public class VidaMagicContainerCapability implements IVidaMagicContainerCapabili
         tag.putLong("coolDown", container.coolDown());
         tag.putLong("lastInvokeMillSec", container.lastInvokeMillSec());
         tag.putInt("level", container.level());
+        tag.putDouble("speed", container.speed());
+        tag.putInt("maxAge", container.maxAge());
 
         ListTag magicListTag = new ListTag();
 
@@ -71,6 +73,8 @@ public class VidaMagicContainerCapability implements IVidaMagicContainerCapabili
         long coolDown  = nbt.getLong("coolDown");
         long lastInvokeMillSec  = nbt.getLong("lastInvokeMillSec");
         int level  = nbt.getInt("level");
+        double speed = nbt.getDouble("speed");
+        int maxAge = nbt.getInt("maxAge");
         List<String> magics = new LinkedList<>();
 
         //获取魔法
@@ -93,7 +97,9 @@ public class VidaMagicContainerCapability implements IVidaMagicContainerCapabili
                 .coolDown(coolDown)
                 .lastInvokeMillSec(lastInvokeMillSec)
                 .level(level)
-                .magic(magics);
+                .magic(magics)
+                .speed(speed)
+                .maxAge(maxAge);
     }
 
 }

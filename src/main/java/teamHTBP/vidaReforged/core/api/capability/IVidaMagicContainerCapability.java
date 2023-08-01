@@ -22,7 +22,7 @@ public interface IVidaMagicContainerCapability extends INBTSerializable<Compound
     /**是否在冷却时间内*/
     default public boolean isInCoolDown(long currentMillSecond){
         VidaMagicContainer container = getContainer();
-        long millSecondBefore = currentMillSecond - container.lastInvokeMillSec() + getCoolDown();
+        long millSecondBefore = currentMillSecond - container.lastInvokeMillSec() - getCoolDown();
         return !(millSecondBefore >= 0);
     }
 }
