@@ -34,7 +34,9 @@ public class PartyParrotProjectileRenderer extends EntityRenderer<PartyParrotPro
             new ResourceLocation(MOD_ID, "block/parrots/partyparrot_deal"),
             new ResourceLocation(MOD_ID, "block/parrots/partyparrot_rythm"),
             new ResourceLocation(MOD_ID, "block/parrots/partyparrot_vue"),
-            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_react")
+            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_react"),
+            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_coffee")
+
 
     );
 
