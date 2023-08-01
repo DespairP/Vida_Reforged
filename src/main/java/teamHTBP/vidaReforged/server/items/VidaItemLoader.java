@@ -24,6 +24,11 @@ public class VidaItemLoader {
 
     public final static RegistryObject<Item> BREATH_CATCHER = ITEMS.register("breath_catcher", BreathCatcher::new);
     public final static RegistryObject<Item> GOLD_GEM = ITEMS.register("gold_gem", ElementGem::new);
+    public final static RegistryObject<Item> GOLD_ELEMENT_CORE = ITEMS.register("gold_element_core", ElementGem::new);
+    public final static RegistryObject<Item> AQUA_ELEMENT_CORE = ITEMS.register("aqua_element_core", ElementGem::new);
+    public final static RegistryObject<Item> FIRE_ELEMENT_CORE = ITEMS.register("fire_element_core", ElementGem::new);
+    public final static RegistryObject<Item> WOOD_ELEMENT_CORE = ITEMS.register("wood_element_core", ElementGem::new);
+    public final static RegistryObject<Item> EARTH_ELEMENT_CORE = ITEMS.register("earth_element_core", ElementGem::new);
     public final static RegistryObject<Item> WOOD_GEM = ITEMS.register("wood_gem", ElementGem::new);
     public final static RegistryObject<Item> AQUA_GEM = ITEMS.register("aqua_gem", ElementGem::new);
     public final static RegistryObject<Item> FIRE_GEM = ITEMS.register("fire_gem", ElementGem::new);
