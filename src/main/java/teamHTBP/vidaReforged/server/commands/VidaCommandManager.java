@@ -152,15 +152,17 @@ public class VidaCommandManager {
 
         //
         if(!handInItem.is(VidaItemLoader.VIDA_WAND.get())){
-            context.getSource().sendFailure(Component.literal("only vida wand can add Magic"));
+            context.getSource().sendFailure(Component.literal("only vida wand and unlock paper can add Magic"));
             return 1;
         }
+
         //
         VidaMagic magic = MagicTemplateManager.getMagicById(magicId);
         if(magic == null){
             context.getSource().sendFailure(Component.translatable("magic %s not exists", magicId));
             return 1;
         }
+
 
         //
         LazyOptional<IVidaMagicContainerCapability> containerCapability = handInItem.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER);
@@ -190,6 +192,13 @@ public class VidaCommandManager {
             return 1;
         }
         try {
+            ItemStack handInItem = context.getSource().getPlayer().getItemInHand(InteractionHand.MAIN_HAND);
+
+            if(handInItem.is(VidaItemLoader.UNLOCK_MAGIC_WORD_PAPER.get())){
+                handInItem.getOrCreateTag().putString("wordId", wordId);
+                context.getSource().sendSuccess(()->Component.translatable("word %s is added", wordId), false);
+                return 1;
+            }
             LazyOptional<IVidaMagicWordCapability> wordCapability = context
                     .getSource()
                     .getPlayerOrException()
