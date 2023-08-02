@@ -1,13 +1,12 @@
 package teamHTBP.vidaReforged.client.particles.providers;
 
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.client.particle.*;
 import org.jetbrains.annotations.Nullable;
+import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
 import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
 import teamHTBP.vidaReforged.client.particles.particles.Cube3DParticle;
+import teamHTBP.vidaReforged.client.particles.particles.CuboidParticle;
 
 /**粒子提供工厂*/
 public class BaseParticleProvider implements ParticleProvider<BaseParticleType> {
@@ -24,7 +23,25 @@ public class BaseParticleProvider implements ParticleProvider<BaseParticleType> 
     @Nullable
     @Override
     public Particle createParticle(BaseParticleType pType, ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
-        Cube3DParticle particle = new Cube3DParticle(
+        if(pType.getType() == VidaParticleTypeLoader.CUBE_PARTICLE_TYPE.get()) {
+            Cube3DParticle particleCube = new Cube3DParticle(
+                    pLevel,
+                    pX,
+                    pY,
+                    pZ,
+                    pXSpeed,
+                    pYSpeed,
+                    pZSpeed,
+                    pType.getAlpha(),
+                    pType.getColorRed(),
+                    pType.getColorGreen(),
+                    pType.getColorBlue(),
+                    (int) pType.getSize()
+            );
+            particleCube.pickSprite(spriteSet);
+            return particleCube;
+        }
+        CuboidParticle particleCuboid = new CuboidParticle(
                 pLevel,
                 pX,
                 pY,
@@ -36,9 +53,9 @@ public class BaseParticleProvider implements ParticleProvider<BaseParticleType> 
                 pType.getColorRed(),
                 pType.getColorGreen(),
                 pType.getColorBlue(),
-                (int)pType.getSize()
+                (int) pType.getSize()
         );
-        particle.pickSprite(spriteSet);
-        return particle;
+        particleCuboid.pickSprite(spriteSet);
+        return particleCuboid;
     }
 }

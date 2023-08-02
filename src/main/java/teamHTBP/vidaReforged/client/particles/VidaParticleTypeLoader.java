@@ -7,6 +7,7 @@ import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
 import teamHTBP.vidaReforged.client.particles.particles.Cube3DParticle;
+import teamHTBP.vidaReforged.client.particles.particles.CuboidParticle;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterParticleType;
 
 
@@ -14,5 +15,8 @@ public class VidaParticleTypeLoader {
     public final static DeferredRegister<ParticleType<?>> PARTICLE_TYPE_REGISTER = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, VidaReforged.MOD_ID);
 
     @RegisterParticleType(Cube3DParticle.class)
-    public final static RegistryObject<ParticleType<BaseParticleType>> BASE_PARTICLE_TYPE = PARTICLE_TYPE_REGISTER.register("cube_particle", ()->new BaseParticleType(VidaParticleTypeLoader.BASE_PARTICLE_TYPE));
+    public final static RegistryObject<ParticleType<BaseParticleType>> CUBE_PARTICLE_TYPE = PARTICLE_TYPE_REGISTER.register("cube_particle", ()->new BaseParticleType(VidaParticleTypeLoader.CUBE_PARTICLE_TYPE));
+
+    @RegisterParticleType(CuboidParticle.class)
+    public final static RegistryObject<ParticleType<BaseParticleType>> CUBOID_PARTICLE_TYPE = PARTICLE_TYPE_REGISTER.register("cuboid_particle", ()->new BaseParticleType(VidaParticleTypeLoader.CUBOID_PARTICLE_TYPE));
 }
