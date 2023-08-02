@@ -6,6 +6,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +26,7 @@ public class MagicWordManager extends SimpleJsonResourceReloadListener {
     /**gson*/
     private final Gson gson = JsonUtils.getGson(JsonUtils.JsonUtilType.NORMAL);
     /***/
-    private static final Map<String,MagicWord> magicWordIdMap = new LinkedHashMap<>();
+    private static Map<String,MagicWord> magicWordIdMap = new LinkedHashMap<>();
 
     public MagicWordManager() {
         super(JsonUtils.getGson(JsonUtils.JsonUtilType.NORMAL), VidaConstant.DATA_MAGIC_WORD);
@@ -60,6 +62,16 @@ public class MagicWordManager extends SimpleJsonResourceReloadListener {
 
     public static List<MagicWord> getAllMagicWords(){
         return magicWordIdMap.values().stream().toList();
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void setMagicWordIdMap(Map<String,MagicWord> magicWords){
+        magicWordIdMap = new LinkedHashMap<>();
+        magicWordIdMap.putAll(magicWords);
+    }
+
+    public static LinkedHashMap<String, MagicWord> getMagicWordIdMap() {
+        return new LinkedHashMap<>(magicWordIdMap);
     }
 
     public static Set<String> getAllMagicWordIds(){

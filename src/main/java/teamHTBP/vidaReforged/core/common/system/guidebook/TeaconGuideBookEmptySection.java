@@ -6,6 +6,8 @@ import teamHTBP.vidaReforged.client.screen.components.guidebooks.IGuidebookCompo
 import teamHTBP.vidaReforged.core.api.screen.IGuideBookSection;
 
 public class TeaconGuideBookEmptySection implements IGuideBookSection {
+    public String type = "EMPTY";
+
     @Override
     public String getType() {
         return "EMPTY";

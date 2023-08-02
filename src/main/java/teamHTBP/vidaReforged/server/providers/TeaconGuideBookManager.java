@@ -5,6 +5,8 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import teamHTBP.vidaReforged.core.common.system.guidebook.TeaconGuideBook;
 import teamHTBP.vidaReforged.core.common.system.guidebook.TeaconGuideBookPage;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static teamHTBP.vidaReforged.core.common.VidaConstant.DATA_GUIDE;
 
@@ -44,5 +47,19 @@ public class TeaconGuideBookManager extends AbstractVidaManager{
         }catch (Exception ex){
             LOGGER.error(ex.getMessage());
         }
+    }
+
+    public static Map<ResourceLocation, TeaconGuideBook> getPageMap() {
+        return pageMap;
+    }
+
+    public static HashMap<String, TeaconGuideBook> getPageIdMap() {
+        return new HashMap<>(pageIdMap);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void setPageIdMap(Map<String, TeaconGuideBook> pageIdMap) {
+        TeaconGuideBookManager.pageIdMap = pageIdMap;
+        TeaconGuideBookManager.pageMap = pageIdMap.values().stream().collect(Collectors.toMap(TeaconGuideBook::guideBookId, teaconGuideBook -> teaconGuideBook, (a,b) -> a));
     }
 }

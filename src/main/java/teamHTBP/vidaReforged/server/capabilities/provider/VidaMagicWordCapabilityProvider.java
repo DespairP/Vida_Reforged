@@ -23,6 +23,11 @@ public class VidaMagicWordCapabilityProvider implements ICapabilityProvider, INB
                 LazyOptional.empty();
     }
 
+    @Override
+    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
+        return ICapabilityProvider.super.getCapability(cap);
+    }
+
     /**获取cap*/
     public IVidaMagicWordCapability getOrCreateCapability(){
         if(this.capability == null){
@@ -32,11 +37,11 @@ public class VidaMagicWordCapabilityProvider implements ICapabilityProvider, INB
     }
     @Override
     public CompoundTag serializeNBT() {
-        return this.getOrCreateCapability().serializeNBT();
+        return getOrCreateCapability().serializeNBT();
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        this.getOrCreateCapability().deserializeNBT(nbt);
+        getOrCreateCapability().deserializeNBT(nbt);
     }
 }

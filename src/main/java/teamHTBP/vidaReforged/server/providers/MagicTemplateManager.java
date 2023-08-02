@@ -6,6 +6,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.VidaConstant;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
@@ -72,6 +74,17 @@ public class MagicTemplateManager extends AbstractVidaManager{
                         .stream()
                         .filter(magic -> magicIdList.contains(magic.magicName()))
                         .collect(Collectors.toMap(VidaMagic::magicName, vidaMagic -> vidaMagic));
+    }
+
+    public static LinkedHashMap<String, VidaMagic> getMagicIdMap() {
+        return new LinkedHashMap<>(magicIdMap);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void setMagicIdMap(LinkedHashMap<String, VidaMagic> magics){
+        magicIdMap = new LinkedHashMap<>();
+        magicIdMap.putAll(magics);
+        magicResourceMap = magicIdMap.values().stream().collect(Collectors.toMap(VidaMagic::location,vidaMagic -> vidaMagic, (a,b) -> a));
     }
 
     public static Set<String> getMagicsKey(){

@@ -25,7 +25,7 @@ public class VidaWandCapabilityHandler {
             return;
         }
         event.addCapability(new ResourceLocation(VidaReforged.MOD_ID, VidaConstant.CAP_VIDA_MANA), new VidaManaCapabilityProvider());
-        event.addCapability(new ResourceLocation(VidaReforged.MOD_ID,VidaConstant.CAP_VIDA_MAGIC_CONTAINER), new VidaMagicCapabilityProvider());
+        event.addCapability(new ResourceLocation(VidaReforged.MOD_ID, VidaConstant.CAP_VIDA_MAGIC_CONTAINER), new VidaMagicCapabilityProvider());
     }
 
     @SubscribeEvent

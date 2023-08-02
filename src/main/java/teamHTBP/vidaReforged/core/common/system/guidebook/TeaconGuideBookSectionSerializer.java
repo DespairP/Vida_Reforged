@@ -23,7 +23,7 @@ public class TeaconGuideBookSectionSerializer implements JsonSerializer<IGuideBo
             "BLOCKLIST", TeaconGuideBookBlockModelList.class
     );
 
-    Gson gson = new GsonBuilder()
+    public static Gson GSON = new GsonBuilder()
             .enableComplexMapKeySerialization()
             .registerTypeAdapter(ResourceLocation.class,new ResourceLocation.Serializer())
             .create();
@@ -40,7 +40,7 @@ public class TeaconGuideBookSectionSerializer implements JsonSerializer<IGuideBo
         }
         String componentType = componentTypeElement.getAsString();
         Class<? extends IGuideBookSection> clazz = COMPONENT_MAP.get(componentType);
-        return gson.fromJson(json, clazz);
+        return GSON.fromJson(json, clazz);
     }
 
     @Override
@@ -51,6 +51,6 @@ public class TeaconGuideBookSectionSerializer implements JsonSerializer<IGuideBo
             throw new JsonParseException("cannot find componentType!please check the component type");
         }
         Type componentType = TypeToken.get(guideBookComponentClazz).getType();
-        return context.serialize(section, componentType);
+        return GSON.toJsonTree(section, componentType);
     }
 }
