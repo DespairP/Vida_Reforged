@@ -225,7 +225,7 @@ public class VidaCommandManager {
             RandomSource source = RandomSource.create();
             VidaElement randomElement = VidaElement.values()[2 + source.nextInt(4)];
             int randomMaxAge = source.nextBoolean() ? 120 + source.nextInt(50) : 120 + source.nextInt(10);
-            double randomSpeed =  source.nextDouble() / 2.0F;
+            double randomSpeed =  source.nextBoolean() ? source.nextDouble() * 2F / 3F : source.nextDouble() / 2.0F;
             int randomCost = source.nextInt(10) + 30;
             int randomCoolDown = source.nextInt(3000) + source.nextInt(1000);
 

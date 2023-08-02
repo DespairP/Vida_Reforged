@@ -167,9 +167,9 @@ public class VidaManaBarScreen extends GuiGraphics implements IVidaScreen {
 
             blit(
                     progressSec.location(),
-                    renderX + 8,  renderY + 4, 0,
+                    renderX + 8,  renderY + 4 + 3, 0,
                     progressSec.minU(), progressSec.minV(),
-                    (int)166 - coolDownWidth.get(), progressSec.height(),
+                    (int)166 - coolDownWidth.get(), progressSec.height() - 3,
                     256, 256
             );
 

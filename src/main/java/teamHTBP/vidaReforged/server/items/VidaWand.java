@@ -1,8 +1,10 @@
 package teamHTBP.vidaReforged.server.items;
 
 import com.google.common.collect.ImmutableList;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -68,14 +70,15 @@ public class VidaWand extends Item implements IVidaManaConsumable {
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
+        Style defaultStyle = Style.EMPTY.withColor(ChatFormatting.GRAY).withItalic(true);
         this.getContainerCapability(itemStack).ifPresent((containerCap) ->{
             if(containerCap.getContainer() != null){
                 VidaMagicContainer container = containerCap.getContainer();
-                components.add(Component.translatable("attribute.vida_forged.amount").append(String.valueOf(container.amount())));
-                components.add(Component.translatable("attribute.vida_forged.damage").append(String.valueOf(container.damage())));
-                components.add(Component.translatable("attribute.vida_forged.speed").append(String.valueOf(container.speed()) + 'x'));
-                components.add(Component.translatable("attribute.vida_forged.max_age").append(String.valueOf(container.maxAge())));
-                components.add(Component.translatable("attribute.vida_forged.cool_down").append(String.valueOf(container.coolDown())));
+                components.add(Component.translatable("attribute.vida_forged.amount").append(String.valueOf(container.amount())).withStyle(defaultStyle));
+                components.add(Component.translatable("attribute.vida_forged.damage").append(String.valueOf(container.damage())).withStyle(defaultStyle));
+                components.add(Component.translatable("attribute.vida_forged.speed").append(String.format("%.2f x",container.speed())).withStyle(defaultStyle));
+                components.add(Component.translatable("attribute.vida_forged.max_age").append(String.valueOf(container.maxAge())).withStyle(defaultStyle));
+                components.add(Component.translatable("attribute.vida_forged.cool_down").append(String.valueOf(container.coolDown() / 1000) + 's').withStyle(defaultStyle));
 
 
                 final List<String> magicList = container.magic();
@@ -84,11 +87,11 @@ public class VidaWand extends Item implements IVidaManaConsumable {
 
                 if(currentMagic != null){
                     VidaElement element = currentMagic.element() == null ? VidaElement.EMPTY : currentMagic.element();
-                    components.add(Component.translatable("attribute.vida_forged.current_consume_element").append(
+                    components.add(Component.translatable("attribute.vida_forged.current_consume_element").withStyle(defaultStyle).append(
                             Component.translatable(String.format("element.vida_reforged.%s",currentMagic.element().toString().toLowerCase(Locale.ROOT)))
                                     .withStyle(style -> style.withColor(element.baseColor.argb()))
                     ));
-                    components.add(Component.translatable("attribute.vida_forged.current_consume").append(String.valueOf(container.costMana())));
+                    components.add(Component.translatable("attribute.vida_forged.current_consume").withStyle(defaultStyle).append(String.valueOf(container.costMana())));
 
                 }
 

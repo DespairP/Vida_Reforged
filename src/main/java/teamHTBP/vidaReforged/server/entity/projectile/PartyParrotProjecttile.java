@@ -38,7 +38,7 @@ public class PartyParrotProjecttile extends Projectile {
     public void initProjectile(@NotNull Player player, MagicParticle particle) {
         setOwner(player);
         Vec3 lookAngle = player.getLookAngle();
-        setPos(player.getEyePosition().x - 0.5F, player.getEyeY() - (double)0.6F, player.getZ());
+        setPos(player.getEyePosition().x - 0.5F, player.getEyeY() - (double)0.6F, player.getZ() - 0.5f);
         this.shootFromRotation(this, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
         setDeltaMovement(lookAngle.scale(particle.speed().value()));
         this.entityData.set(AGE, 0);
