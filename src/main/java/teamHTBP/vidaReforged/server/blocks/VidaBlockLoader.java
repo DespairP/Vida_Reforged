@@ -358,6 +358,19 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> INJECT_TABLE = BLOCKS.register("inject_table", InjectTable::new);
 
+    @RegisterItemBlock
+    public final static RegistryObject<Block> MAGIC_MANA_PROVIDER_GOLD = BLOCKS.register("magic_mana_provider_gold", ()->new MagicManaProvider(VidaElement.GOLD));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> MAGIC_MANA_PROVIDER_WOOD = BLOCKS.register("magic_mana_provider_wood", ()->new MagicManaProvider(VidaElement.WOOD));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> MAGIC_MANA_PROVIDER_AQUA = BLOCKS.register("magic_mana_provider_aqua", ()->new MagicManaProvider(VidaElement.AQUA));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> MAGIC_MANA_PROVIDER_FIRE = BLOCKS.register("magic_mana_provider_fire", ()->new MagicManaProvider(VidaElement.FIRE));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> MAGIC_MANA_PROVIDER_EARTH = BLOCKS.register("magic_mana_provider_earth", ()->new MagicManaProvider(VidaElement.EARTH));
+
+
+
     /**
      * @param name 注册名称
      * @param block 方块provider

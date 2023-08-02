@@ -68,7 +68,12 @@ public class VidaManaCapability implements IVidaManaCapability {
 
     @Override
     public double addMana(VidaElement element, double energy) {
-        return 0;
+        final double currentElementManaAmount = getMana(element);
+
+        // 取较小的一方，但是必须大于0
+        double setEnergy = setMana(element, currentElementManaAmount + energy);
+
+        return energy >= 0 ? energy - setEnergy : 0;
     }
 
     /**
