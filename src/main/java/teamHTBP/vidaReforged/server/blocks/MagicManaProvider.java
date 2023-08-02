@@ -27,7 +27,7 @@ public class MagicManaProvider extends Block {
     VidaElement element = VidaElement.EMPTY;
 
     public MagicManaProvider(VidaElement element) {
-        super(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK));
+        super(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion());
         this.element = element;
     }
 
@@ -64,7 +64,7 @@ public class MagicManaProvider extends Block {
                 new BaseParticleType(
                     VidaParticleTypeLoader.CUBOID_PARTICLE_TYPE.get(),
                     color,
-                    1
+                    0.5f + source.nextDouble()
                 ),
                 pos.getX() + d1,
                 pos.getY() + 1.2f,
