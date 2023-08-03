@@ -116,6 +116,8 @@ public class VidaWand extends Item implements IVidaManaConsumable {
         return Optional.ofNullable(componentReference.get());
     }
 
+
+
     /**发送Packet到Client端时，Server端需要将Capability解析*/
     @Override
     public @Nullable CompoundTag getShareTag(ItemStack stack) {
@@ -133,12 +135,13 @@ public class VidaWand extends Item implements IVidaManaConsumable {
             tag.get().put("container", manaTag);
         });
 
-        return tag.get();
+        return super.getShareTag(stack);
     }
 
     /**处理Server端发来的CompoundTag，然后解析成Capability*/
     @Override
     public void readShareTag(ItemStack stack, @Nullable CompoundTag nbt) {
+        super.readShareTag(stack, nbt);
         if(nbt == null){
             return;
         }

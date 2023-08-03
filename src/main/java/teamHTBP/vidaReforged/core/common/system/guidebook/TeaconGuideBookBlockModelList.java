@@ -13,6 +13,7 @@ import java.util.List;
 
 public class TeaconGuideBookBlockModelList implements IGuideBookSection {
     public ResourceLocation[] blocklist = new ResourceLocation[]{new ResourceLocation("minecraft:air")};
+    public String type = "BLOCKLIST";
 
     @Override
     public String getType() {

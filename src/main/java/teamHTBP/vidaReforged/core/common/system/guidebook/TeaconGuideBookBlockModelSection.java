@@ -9,6 +9,8 @@ import teamHTBP.vidaReforged.core.api.screen.IGuideBookSection;
 
 public class TeaconGuideBookBlockModelSection implements IGuideBookSection {
     public ResourceLocation block;
+    public String type = "BLOCK";
+
     @Override
     public String getType() {
         return "BLOCK";

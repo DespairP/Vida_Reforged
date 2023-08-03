@@ -71,5 +71,23 @@ public class VidaPacketManager {
                 OpenMagicWordScreenPacket::fromBytes,
                 OpenMagicWordScreenPacket::handler,
                 server);
+        INSTANCE.registerMessage(id++,
+                MagicWordDatapackPacket.class,
+                MagicWordDatapackPacket::toBytes,
+                MagicWordDatapackPacket::fromBytes,
+                MagicWordDatapackPacket::handler,
+                client);
+        INSTANCE.registerMessage(id++,
+                MagicSkillDatapackPacket.class,
+                MagicSkillDatapackPacket::toBytes,
+                MagicSkillDatapackPacket::fromBytes,
+                MagicSkillDatapackPacket::handler,
+                client);
+        INSTANCE.registerMessage(id++,
+                MagicGuidePacket.class,
+                MagicGuidePacket::toBytes,
+                MagicGuidePacket::fromBytes,
+                MagicGuidePacket::handler,
+                client);
     }
 }

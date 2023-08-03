@@ -7,7 +7,8 @@ import teamHTBP.vidaReforged.client.screen.components.guidebooks.IGuidebookCompo
 import teamHTBP.vidaReforged.core.api.screen.IGuideBookSection;
 
 public class TeaconGuideBookTextSection implements IGuideBookSection {
-    private String text;
+    public String text;
+    public String type = "TEXT";
     @Override
     public String getType() {
         return "TEXT";

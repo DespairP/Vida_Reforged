@@ -29,7 +29,7 @@ public class VidaMagic {
     /***/
     private Integer iconIndex;
     /**魔法介绍*/
-    private Component description;
+    private transient Component description;
     /**所属元素*/
     private VidaElement element;
     /**玩家是否可用*/
