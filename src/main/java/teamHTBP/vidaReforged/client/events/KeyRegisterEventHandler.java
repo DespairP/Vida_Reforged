@@ -17,7 +17,7 @@ public class KeyRegisterEventHandler {
             KeyConflictContext.IN_GAME,
             KeyModifier.NONE,
             InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_RIGHT_ALT,
+            GLFW.GLFW_KEY_RIGHT_CONTROL,
             "key.category.vida");
 
     public static final Lazy<KeyMapping> OPEN_MAGIC_WORD_KEY_MAPPING = Lazy.of(() -> OPEN_MAGIC_WORD_KEY);

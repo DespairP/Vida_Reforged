@@ -19,7 +19,7 @@ public class KeyPressedEventHandler {
 
     @SubscribeEvent
     public static void onKeyPress(InputEvent.Key event){
-        if(event.getKey() == KeyRegisterEventHandler.OPEN_MAGIC_WORD_KEY.getKey().getValue()){
+        if( KeyRegisterEventHandler.OPEN_MAGIC_WORD_KEY.isDown() ){
             DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
                 if(!(Minecraft.getInstance().screen instanceof MagicWordScreen)) {
                     VidaPacketManager.sendToServer(new OpenMagicWordScreenPacket());
