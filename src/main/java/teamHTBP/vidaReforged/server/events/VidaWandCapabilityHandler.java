@@ -5,10 +5,13 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.core.api.capability.IVidaMagicWordCapability;
 import teamHTBP.vidaReforged.core.common.VidaConstant;
 import teamHTBP.vidaReforged.server.capabilities.provider.VidaMagicCapabilityProvider;
 import teamHTBP.vidaReforged.server.capabilities.provider.VidaMagicWordCapabilityProvider;
@@ -33,6 +36,20 @@ public class VidaWandCapabilityHandler {
         Entity entity = event.getObject();
         if(entity instanceof Player player){
            event.addCapability(new ResourceLocation(VidaReforged.MOD_ID,VidaConstant.DATA_MAGIC_WORD),new VidaMagicWordCapabilityProvider());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerCloned(PlayerEvent.Clone event) {
+        event.getOriginal().reviveCaps();
+        LazyOptional<IVidaMagicWordCapability> oldCap = event.getOriginal().getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_WORD);
+        LazyOptional<IVidaMagicWordCapability> newCap = event.getEntity().getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_WORD);
+        if (oldCap.isPresent() && newCap.isPresent()) {
+            newCap.ifPresent((newCap$1) -> {
+                oldCap.ifPresent((oldCap$1) -> {
+                    newCap$1.deserializeNBT(oldCap$1.serializeNBT());
+                });
+            });
         }
     }
 }

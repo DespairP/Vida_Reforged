@@ -28,16 +28,22 @@ public class PartyParrotProjectileRenderer extends EntityRenderer<PartyParrotPro
 
     private static List<ResourceLocation> locations = ImmutableList.of(
             new ResourceLocation(MOD_ID, "block/parrots/partyparrot"),
-            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_opensource"),
-            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_disco"),
-            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_shuffle"),
+            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_coffee"),
             new ResourceLocation(MOD_ID, "block/parrots/partyparrot_deal"),
-            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_rythm"),
-            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_vue"),
+            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_deployee"),
+            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_disco"),
+            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_github"),
+            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_merged_twins"),
+            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_mongodb"),
+            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_opensource"),
+            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_python"),
             new ResourceLocation(MOD_ID, "block/parrots/partyparrot_react"),
-            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_coffee")
-
-
+            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_rythm"),
+            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_shuffle"),
+            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_stable"),
+            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_too_fast"),
+            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_two"),
+            new ResourceLocation(MOD_ID, "block/parrots/partyparrot_vue")
     );
 
     public PartyParrotProjectileRenderer(EntityRendererProvider.Context context) {
@@ -59,7 +65,7 @@ public class PartyParrotProjectileRenderer extends EntityRenderer<PartyParrotPro
 
         TextureAtlasSprite textureAtlasSprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(locations.get(tile.getTypeOfParrot() % locations.size()));
 
-        VertexConsumer builder = bufferSource.getBuffer(RenderType.translucent());
+        VertexConsumer builder = bufferSource.getBuffer(RenderType.cutoutMipped());
         poseStack.translate(0.5f, 1.2F, 0.5f);
         poseStack.mulPose(this.context.getEntityRenderDispatcher().cameraOrientation());
         poseStack.scale(0.5f, 0.5f, 0.5f);

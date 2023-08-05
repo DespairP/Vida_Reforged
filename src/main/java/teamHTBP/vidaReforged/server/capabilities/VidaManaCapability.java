@@ -6,10 +6,11 @@ import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class VidaManaCapability implements IVidaManaCapability {
     private double maxMana;
-    private Map<VidaElement,Double> elementMana = new LinkedHashMap<>();
+    private Map<VidaElement,Double> elementMana = new ConcurrentHashMap<>();
     private double efficiency;
 
     public VidaManaCapability(double maxMana) {
@@ -110,10 +111,10 @@ public class VidaManaCapability implements IVidaManaCapability {
         if(this.elementMana == null){
             return tag;
         }
-        for(VidaElement element : elementMana.keySet()){
+        for(VidaElement element: VidaElement.values()){
             tag.putDouble(
                     String.format("%s:%s", "mana", element.getElementName()),
-                    elementMana.get(element)
+                    elementMana.getOrDefault(element, 0.0)
             );
         }
 
@@ -131,6 +132,6 @@ public class VidaManaCapability implements IVidaManaCapability {
             }
             elementMana.put(element, nbt.getDouble(key));
         }
-        this. efficiency = nbt.getDouble("efficiency");
+        this.efficiency = nbt.getDouble("efficiency");
     }
 }

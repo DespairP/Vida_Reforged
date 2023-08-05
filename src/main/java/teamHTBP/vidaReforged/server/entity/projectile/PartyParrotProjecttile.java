@@ -49,7 +49,7 @@ public class PartyParrotProjecttile extends Projectile {
     protected void defineSynchedData() {
         this.entityData.define(AGE, 0);
         this.entityData.define(MAX_AGE, 30);
-        this.entityData.define(TYPE, random.nextInt(9));
+        this.entityData.define(TYPE, random.nextInt(17));
     }
 
     @Override

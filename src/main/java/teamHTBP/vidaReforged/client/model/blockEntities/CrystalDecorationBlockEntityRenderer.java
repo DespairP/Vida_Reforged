@@ -73,8 +73,11 @@ public class CrystalDecorationBlockEntityRenderer implements BlockEntityRenderer
         float vMin = 0;
         float vMax = 1;
 
-        // 渲染中间的宝石块
+        if(iconLocation == null){
+            return;
+        }
 
+        // 渲染中间的宝石块
         poseStack.pushPose();
         RenderSystem.enableBlend();
 
@@ -108,7 +111,7 @@ public class CrystalDecorationBlockEntityRenderer implements BlockEntityRenderer
                  VidaItemLoader.FIRE_GEM.get(), new ResourceLocation(MOD_ID, String.format("textures/icons/%slogo.png", "fire")),
                  VidaItemLoader.EARTH_GEM.get(), new ResourceLocation(MOD_ID, String.format("textures/icons/%slogo.png", "earth"))
         );
-         return iconMap.get(item);
+         return iconMap.getOrDefault(item, new ResourceLocation(MOD_ID, String.format("textures/icons/%slogo.png", "gold")) );
     }
 
 
