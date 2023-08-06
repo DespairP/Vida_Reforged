@@ -20,5 +20,8 @@ public class BlockRendererHandler {
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.FLOATING_CRYSTAL.get(), FloatingCrystalBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.GEM_SHELF.get(), CrystalDecorationBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.INJECT_TABLE.get(), InjectTableBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(VidaBlockEntityLoader.CRYSTAL_LANTERN.get(), CrystalLanternRenderer::new);
+        event.registerBlockEntityRenderer(VidaBlockEntityLoader.GLOWING_LIGHT.get(), GlowingLightBlockEntityRenderer::new);
+
     }
 }

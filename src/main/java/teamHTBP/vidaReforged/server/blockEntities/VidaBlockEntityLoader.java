@@ -4,10 +4,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import teamHTBP.vidaReforged.server.blocks.InjectTable;
-import teamHTBP.vidaReforged.server.blocks.PurificationCauldron;
-import teamHTBP.vidaReforged.server.blocks.TeaconGuideBookBlock;
-import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
+import teamHTBP.vidaReforged.server.blocks.*;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
@@ -16,7 +13,15 @@ public class VidaBlockEntityLoader {
 
     public static final RegistryObject<BlockEntityType<GlowingLightBlockEntity>> GLOWING_LIGHT = BLOCK_ENTITIES.register(
             "glowing_light",
-            () -> BlockEntityType.Builder.of(GlowingLightBlockEntity::new, VidaBlockLoader.GLOWING_LIGHT_BLOCK.get()).build(null)
+            () -> BlockEntityType.Builder.of(
+                    GlowingLightBlockEntity::new,
+                    VidaBlockLoader.GLOWING_LIGHT_BLOCK.get(),
+                    VidaBlockLoader.GLOWING_LIGHT_BLOCK_GOLD.get(),
+                    VidaBlockLoader.GLOWING_LIGHT_BLOCK_WOOD.get(),
+                    VidaBlockLoader.GLOWING_LIGHT_BLOCK_AQUA.get(),
+                    VidaBlockLoader.GLOWING_LIGHT_BLOCK_FIRE.get(),
+                    VidaBlockLoader.GLOWING_LIGHT_BLOCK_EARTH.get()
+            ).build(null)
     );
 
     public static final RegistryObject<BlockEntityType<BasePurificationCauldronBlockEntity>> PURIFICATION_CAULDRON = BLOCK_ENTITIES.register(
@@ -81,7 +86,12 @@ public class VidaBlockEntityLoader {
             "gem_shelf", () -> BlockEntityType.Builder.of(CrystalDecorationBlockEntity::new, VidaBlockLoader.CRYSTAL_DECORATION_BLOCK.get()).build(null)
     );
 
+
     public static final RegistryObject<BlockEntityType<InjectTableBlockEntity>> INJECT_TABLE = BLOCK_ENTITIES.register(
             "inject_table", () -> BlockEntityType.Builder.of(InjectTableBlockEntity::new, VidaBlockLoader.INJECT_TABLE.get()).build(null)
+    );
+
+    public static final RegistryObject<BlockEntityType<CrystalLanternBlockEntity>> CRYSTAL_LANTERN = BLOCK_ENTITIES.register(
+            "crystal_lantern", () -> BlockEntityType.Builder.of(CrystalLanternBlockEntity::new, VidaBlockLoader.CRYSTAL_LANTERN.get()).build(null)
     );
 }

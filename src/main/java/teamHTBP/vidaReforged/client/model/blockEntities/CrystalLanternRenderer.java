@@ -1,7 +1,5 @@
 package teamHTBP.vidaReforged.client.model.blockEntities;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -13,31 +11,29 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
-import teamHTBP.vidaReforged.server.blockEntities.GlowingLightBlockEntity;
+import teamHTBP.vidaReforged.server.blockEntities.CrystalLanternBlockEntity;
+import teamHTBP.vidaReforged.server.blockEntities.FloatingCrystalBlockEntity;
 
 import java.util.Locale;
 
-import static com.mojang.blaze3d.platform.GlConst.*;
-import static org.lwjgl.opengl.GL30C.glBindFramebuffer;
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
-public class GlowingLightBlockEntityRenderer implements BlockEntityRenderer<GlowingLightBlockEntity> {
-
+public class CrystalLanternRenderer implements BlockEntityRenderer<CrystalLanternBlockEntity> {
     private final BlockEntityRendererProvider.Context context;
 
-    public GlowingLightBlockEntityRenderer(BlockEntityRendererProvider.Context context){
+    public CrystalLanternRenderer(BlockEntityRendererProvider.Context context){
         this.context = context;
     }
+    
     @Override
-    public void render(GlowingLightBlockEntity entity, float pPartialTick, PoseStack poseStack, MultiBufferSource bufferSource, int pPackedLight, int pPackedOverlay) {
-        ResourceLocation location = new ResourceLocation(MOD_ID, String.format("block/crystal/%s_crystal_animate", entity.element.toString().toLowerCase(Locale.ROOT)));
+    public void render(CrystalLanternBlockEntity block, float p_112308_, PoseStack poseStack, MultiBufferSource bufferSource, int lightIn, int layoutIn) {
+        ResourceLocation location = new ResourceLocation(MOD_ID, "block/crystal/gold_crystal_animate");
 
 
         long time = System.currentTimeMillis();
-        float angle = (time / 70) % 360;
-        float floatWave = (float) (Math.sin(Math.toRadians(angle)) * 0.3F);
+        float angle = (time / 50) % 360;
+        float floatWave = (float) (Math.sin(Math.toRadians(angle)) * 0.4F);
         final float size = 0.3f;
         VertexConsumer builder = bufferSource.getBuffer(RenderType.translucent());
 

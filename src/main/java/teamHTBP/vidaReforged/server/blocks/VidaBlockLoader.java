@@ -7,12 +7,9 @@ import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.block.DecoBlockFactory;
-import teamHTBP.vidaReforged.core.utils.reg.CustomModelBlock;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterItemBlock;
 import teamHTBP.vidaReforged.server.blocks.crops.ParticleCropBlock;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
-
-import java.awt.event.WindowAdapter;
 
 import static teamHTBP.vidaReforged.core.common.block.DecoBlockFactory.DecoBlockType.*;
 import static teamHTBP.vidaReforged.core.common.block.DecoBlockFactory.DecoPropertyType.*;
@@ -296,7 +293,16 @@ public class VidaBlockLoader {
 
     @RegisterItemBlock
     public static RegistryObject<Block> GLOWING_LIGHT_BLOCK = BLOCKS.register("glowing_light", GlowingLightBlock::new);
-
+    @RegisterItemBlock
+    public static RegistryObject<Block> GLOWING_LIGHT_BLOCK_GOLD = BLOCKS.register("glowing_light_gold", () -> new GlowingLightBlock(VidaElement.GOLD));
+    @RegisterItemBlock
+    public static RegistryObject<Block> GLOWING_LIGHT_BLOCK_WOOD = BLOCKS.register("glowing_light_wood", () -> new GlowingLightBlock(VidaElement.WOOD));
+    @RegisterItemBlock
+    public static RegistryObject<Block> GLOWING_LIGHT_BLOCK_AQUA = BLOCKS.register("glowing_light_aqua", () -> new GlowingLightBlock(VidaElement.AQUA));
+    @RegisterItemBlock
+    public static RegistryObject<Block> GLOWING_LIGHT_BLOCK_FIRE = BLOCKS.register("glowing_light_fire", () -> new GlowingLightBlock(VidaElement.FIRE));
+    @RegisterItemBlock
+    public static RegistryObject<Block> GLOWING_LIGHT_BLOCK_EARTH = BLOCKS.register("glowing_light_earth", () -> new GlowingLightBlock(VidaElement.EARTH));
     @RegisterItemBlock
     public final static RegistryObject<Block> TIME_ELEMENT_CRAFTING_TABLE = BLOCKS.register("time_element_crafting_table", TimeElementCraftingTable::new);
 
@@ -368,6 +374,8 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> MAGIC_MANA_PROVIDER_FIRE = BLOCKS.register("magic_mana_provider_fire", ()->new MagicManaProvider(VidaElement.FIRE));
     @RegisterItemBlock
     public final static RegistryObject<Block> MAGIC_MANA_PROVIDER_EARTH = BLOCKS.register("magic_mana_provider_earth", ()->new MagicManaProvider(VidaElement.EARTH));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> CRYSTAL_LANTERN = BLOCKS.register("crystal_lantern", CrystalLantern::new);
 
 
 
