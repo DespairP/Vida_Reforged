@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -25,23 +26,18 @@ import teamHTBP.vidaReforged.server.blockEntities.BasePurificationCauldronBlockE
 import teamHTBP.vidaReforged.server.blockEntities.VidaBlockEntityLoader;
 
 public class PurificationCauldron extends VidaBaseEntityBlock<BasePurificationCauldronBlockEntity> implements EntityBlock {
-    private static final VoxelShape SHAPE;
+    private static VoxelShape SHAPE = Shapes.empty();
 
     static {
-        VoxelShape aPillar = Block.box(0.25, 2, 0.25, 2.25, 12, 2.25);//↖
-        VoxelShape aBase = Block.box(0, 0, 0, 3, 3, 3);//↖基底
-        VoxelShape upBase = Block.box(2, 1.75, 1, 14, 10.75, 2);
-        VoxelShape bPillar = Block.box(13.75, 2, 0.25, 15.75, 12, 2.25);//↗
-        VoxelShape bBase = Block.box(13, 0, 0, 16, 3, 3);//↗基底
-        VoxelShape rightBase = Block.box(14, 1.75, 2, 15, 10.75, 14);
-        VoxelShape cPillar = Block.box(13.75, 2, 13.75, 15.75, 12, 15.75);//↘
-        VoxelShape cBase = Block.box(13, 0, 13, 16, 3, 16);//↘基底
-        VoxelShape downBase = Block.box(2, 1.75, 14, 14, 10.75, 15);
-        VoxelShape dPillar = Block.box(0.25, 2, 13.75, 2.25, 12, 15.75);//↙
-        VoxelShape dBase = Block.box(0, 0, 13, 3, 3, 16);//↙基底
-        VoxelShape leftBase = Block.box(1, 1.75, 2, 2, 10.75, 14);
-        VoxelShape base = Block.box(1, 0.75, 1, 15, 1.75, 15);
-        SHAPE = Shapes.or(aPillar, aBase, upBase, bPillar, bBase, rightBase, cPillar, cBase, downBase, dPillar, dBase, leftBase, base);
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0, 0, 0, 0.1875, 0.875, 0.1875), BooleanOp.OR);
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0.8125, 0, 0, 1, 0.875, 0.1875), BooleanOp.OR);
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0.8125, 0, 0.8125, 1, 0.875, 1), BooleanOp.OR);
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0, 0, 0.8125, 0.1875, 0.875, 1), BooleanOp.OR);
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0.0625, 0.125, 0.0625, 0.9375, 0.25, 0.9375), BooleanOp.OR);
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0.8125, 0.25, 0.1875, 0.9375, 0.8125, 0.8125), BooleanOp.OR);
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0.1875, 0.25, 0.0625, 0.8125, 0.8125, 0.1875), BooleanOp.OR);
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0.0625, 0.25, 0.1875, 0.1875, 0.8125, 0.8125), BooleanOp.OR);
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0.1875, 0.25, 0.8125, 0.8125, 0.8125, 0.9375), BooleanOp.OR);
     }
 
 

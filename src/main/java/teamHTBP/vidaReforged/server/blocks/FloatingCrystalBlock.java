@@ -29,7 +29,7 @@ public class FloatingCrystalBlock extends VidaBaseEntityBlock<FloatingCrystalBlo
     public final VoxelShape SHAPE = Block.box(6, 6, 6, 12, 12, 12);
 
     public FloatingCrystalBlock(VidaElement element) {
-        super(BlockBehaviour.Properties.copy(Blocks.GLASS).noOcclusion(), null);
+        super(BlockBehaviour.Properties.copy(Blocks.GLASS).noOcclusion().lightLevel((state) -> 9), null);
         this.crystalElement = element;
     }
 

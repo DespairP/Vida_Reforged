@@ -6,12 +6,17 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import teamHTBP.vidaReforged.core.common.blockentity.VidaBaseEntityBlock;
 import teamHTBP.vidaReforged.server.blockEntities.BasePurificationCauldronBlockEntity;
 import teamHTBP.vidaReforged.server.blockEntities.CollectorBlockEntity;
@@ -24,6 +29,24 @@ import java.util.function.Supplier;
 public class CollectorBlock extends VidaBaseEntityBlock<CollectorBlockEntity> {
     public CollectorBlock() {
         super(BlockBehaviour.Properties.of().noOcclusion(), VidaBlockEntityLoader.COLLECTOR);
+    }
+
+    public static VoxelShape SHAPE = Shapes.empty();
+
+    static {
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0.1875, 0, 0.1875, 0.8125, 0.1875, 0.8125), BooleanOp.OR);
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0.1875, 0.6875, 0.1875, 0.8125, 0.875, 0.8125), BooleanOp.OR);
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0.1875, 0.6875, 0.1875, 0.8125, 0.875, 0.8125), BooleanOp.OR);
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0.3125, 0.1875, 0.3125, 0.6875, 0.6875, 0.6875), BooleanOp.OR);
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0.0625, 0.5625, 0.0625, 0.25, 1, 0.25), BooleanOp.OR);
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0.0625, 0.5625, 0.75, 0.25, 1, 0.9375), BooleanOp.OR);
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0.75, 0.5625, 0.75, 0.9375, 1, 0.9375), BooleanOp.OR);
+        SHAPE = Shapes.join(SHAPE, Shapes.box(0.75, 0.5625, 0.0625, 0.9375, 1, 0.25), BooleanOp.OR);
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
+        return SHAPE;
     }
 
     /**填入水*/
