@@ -7,8 +7,8 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
 
 public class VidaCollectorScreen extends GuiGraphics implements IVidaScreen {
-    public VidaCollectorScreen(Minecraft p_283406_, MultiBufferSource.BufferSource p_282238_) {
-        super(p_283406_, p_282238_);
+    public VidaCollectorScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource) {
+        super(minecraft, bufferSource);
     }
 
     @Override

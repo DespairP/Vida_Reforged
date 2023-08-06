@@ -31,6 +31,7 @@ import teamHTBP.vidaReforged.server.entity.projectile.MagicParticleProjectile;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -102,17 +103,23 @@ public class VidaWand extends Item implements IVidaManaConsumable {
     /***/
     @Override
     public Optional<TooltipComponent> getTooltipImage(ItemStack itemStack) {
-        AtomicReference<TooltipComponent> componentReference = new AtomicReference<>(null);
+        AtomicReference<VidaWandTooltipComponent> componentReference = new AtomicReference<>(new VidaWandTooltipComponent());
         // 获取container中所存的魔法
         this.getContainerCapability(itemStack).ifPresent((containerCap) ->{
             if(containerCap.getContainer() != null){
                 final List<String> magics = containerCap.getContainer().magic() == null ? ImmutableList.of() : containerCap.getContainer().magic();
-                componentReference.set(
-                        new VidaWandTooltipComponent(magics)
-                );
+                componentReference.get().setMagics(magics);
             }
-
         });
+
+        //
+        this.getManaCapability(itemStack).ifPresent((manaCap)->{
+            if(manaCap.getCurrentMana() != null){
+                componentReference.get().setMana(new HashMap<>(manaCap.getCurrentMana()));
+                componentReference.get().setMaxMana(manaCap.maxMana());
+            }
+        });
+
         return Optional.ofNullable(componentReference.get());
     }
 
