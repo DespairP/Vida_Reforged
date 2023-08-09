@@ -9,7 +9,7 @@ import java.util.Optional;
 public class DecoTrapDoorBlock extends TrapDoorBlock {
     public DecoTrapDoorBlock(Properties properties, DecoBlockProperties decoBlockProperties) {
         super(
-            properties,
+            properties.noOcclusion(),
             Optional.ofNullable(decoBlockProperties.blockSetType()).orElse(BlockSetType.OAK)
         );
     }
