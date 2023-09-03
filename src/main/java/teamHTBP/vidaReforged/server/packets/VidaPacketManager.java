@@ -1,8 +1,10 @@
 package teamHTBP.vidaReforged.server.packets;
 
+import net.minecraft.client.gui.screens.social.PlayerEntry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
@@ -29,9 +31,14 @@ public class VidaPacketManager {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
     }
 
+    public static void sendToPlayer(Object message, Player player) {
+        INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), message);
+    }
+
     public static void sendToEntity(Object message, Entity entity) {
         INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), message);
     }
+
 
     private static int id = 0;
 

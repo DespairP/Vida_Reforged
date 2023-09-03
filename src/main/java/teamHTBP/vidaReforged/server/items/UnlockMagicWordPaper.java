@@ -46,7 +46,7 @@ public class UnlockMagicWordPaper extends Item {
         if(!isAdded.get()){
             return InteractionResultHolder.fail(stack);
         }
-        VidaPacketManager.sendToEntity(new UnlockMagicWordCraftingPacket(wordId), player);
+        VidaPacketManager.sendToPlayer(new UnlockMagicWordCraftingPacket(wordId), player);
         stack.shrink(1);
         return InteractionResultHolder.success(stack);
     }
