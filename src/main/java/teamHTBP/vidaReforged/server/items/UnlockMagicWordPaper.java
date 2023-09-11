@@ -2,6 +2,7 @@ package teamHTBP.vidaReforged.server.items;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -13,6 +14,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicWordCapability;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
+import teamHTBP.vidaReforged.server.advancement.VidaAdvancementTriggers;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.packets.UnlockMagicWordCraftingPacket;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
@@ -47,6 +49,7 @@ public class UnlockMagicWordPaper extends Item {
             return InteractionResultHolder.fail(stack);
         }
         VidaPacketManager.sendToPlayer(new UnlockMagicWordCraftingPacket(wordId), player);
+        VidaAdvancementTriggers.MAGIC_WORD_TRIGGER.trigger((ServerPlayer) player);
         stack.shrink(1);
         return InteractionResultHolder.success(stack);
     }

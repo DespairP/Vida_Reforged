@@ -94,4 +94,9 @@ public class VidaBlockEntityLoader {
     public static final RegistryObject<BlockEntityType<CrystalLanternBlockEntity>> CRYSTAL_LANTERN = BLOCK_ENTITIES.register(
             "crystal_lantern", () -> BlockEntityType.Builder.of(CrystalLanternBlockEntity::new, VidaBlockLoader.CRYSTAL_LANTERN.get()).build(null)
     );
+
+
+    public static final RegistryObject<BlockEntityType<VidaWandCraftingTableBlockEntity>> VIDA_WAND_CRAFTING_TABLE = BLOCK_ENTITIES.register(
+            "vida_wand_crafting_table", () -> BlockEntityType.Builder.of(VidaWandCraftingTableBlockEntity::new, VidaBlockLoader.VIDA_WAND_CRATING_TABLE.get()).build(null)
+    );
 }

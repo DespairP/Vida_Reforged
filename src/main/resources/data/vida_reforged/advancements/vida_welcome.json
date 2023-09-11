@@ -1,0 +1,27 @@
+{
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.vida_reforged.welcome.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "vida_reforged:vida_wand"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.vida_reforged.welcome.title"
+    },
+    "background": "vida_reforged:textures/block/tremble_magic_stone.png"
+  },
+  "criteria": {
+    "root": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    ["root"]
+  ]
+}

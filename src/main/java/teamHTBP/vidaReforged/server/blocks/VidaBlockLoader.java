@@ -357,12 +357,12 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> EARTH_FLOATING_ELEMENT_CRYSTAL = BLOCKS.register("earth_floating_element_crystal", ()-> new FloatingCrystalBlock(VidaElement.EARTH));
     @RegisterItemBlock
     public final static RegistryObject<Block> CRYSTAL_DECORATION_BLOCK = BLOCKS.register("gem_shelf", CrystalDecorationBlock::new);
-
     @RegisterItemBlock
     public final static RegistryObject<Block> PRISM = BLOCKS.register("prism", PrismBlock::new);
-
     @RegisterItemBlock
     public final static RegistryObject<Block> INJECT_TABLE = BLOCKS.register("inject_table", InjectTable::new);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> VIDA_WAND_CRATING_TABLE = BLOCKS.register("vida_wand_crating_table", VidaWandCraftingTable::new);
 
     @RegisterItemBlock
     public final static RegistryObject<Block> MAGIC_MANA_PROVIDER_GOLD = BLOCKS.register("magic_mana_provider_gold", ()->new MagicManaProvider(VidaElement.GOLD));

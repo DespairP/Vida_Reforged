@@ -321,5 +321,13 @@
  "attribute.vida_forged.max_age": "⟗ 施法时长: ",
  "attribute.vida_forged.cool_down": "⟗ 冷却时间: ",
  "attribute.vida_forged.current_consume_element": "⟗ 消耗元素: ",
- "attribute.vida_forged.current_consume": "⟗ 消耗能量: "
+ "attribute.vida_forged.current_consume": "⟗ 消耗能量: ",
+ "advancements.vida_reforged.magic_word_master.description": "收集25种不同的词条",
+ "advancements.vida_reforged.magic_word_master.title": "词条大师",
+ "advancements.vida_reforged.magic_word_expert.description": "收集15种不同的词条",
+ "advancements.vida_reforged.magic_word_expert.title": "词条专家",
+ "advancements.vida_reforged.magic_word_lover.description": "收集5种不同的词条",
+ "advancements.vida_reforged.magic_word_lover.title": "词条启蒙者",
+ "advancements.vida_reforged.welcome.description": "初始之光",
+ "advancements.vida_reforged.welcome.title": "生命"
 }

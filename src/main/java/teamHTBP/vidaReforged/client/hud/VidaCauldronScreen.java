@@ -58,7 +58,7 @@ public class VidaCauldronScreen extends GuiGraphics implements IVidaScreen {
         int cauldronY = plateY + 20;
 
         RenderSystem.enableBlend();
-        RenderSystem.setShaderColor(1, 1, 1, alpha);
+        RenderSystem.setShaderColor(1, 1, 1, 1);
 
         blit(
                 plateSection.location(),

@@ -21,10 +21,7 @@ import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teamHTBP.vidaReforged.VidaConfig;
-import teamHTBP.vidaReforged.client.hud.VidaCauldronScreen;
-import teamHTBP.vidaReforged.client.hud.VidaDebugScreen;
-import teamHTBP.vidaReforged.client.hud.VidaManaBarScreen;
-import teamHTBP.vidaReforged.client.hud.VidaUnlockScreen;
+import teamHTBP.vidaReforged.client.hud.*;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.server.blockEntities.BasePurificationCauldronBlockEntity;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
@@ -51,7 +48,7 @@ public class HudHandler {
         renderDebugOverlay(event);
 
         // 渲染
-        renderCauldronOverlay(event);
+        renderBlockEntityOverlay(event);
 
         // 渲染法杖魔力界面
         renderVidaManaScreen(event);
@@ -124,7 +121,8 @@ public class HudHandler {
         debugScreen.render(matrixStack);
     }
 
-    public static void renderCauldronOverlay(RenderGuiOverlayEvent event){
+    /***/
+    public static void renderBlockEntityOverlay(RenderGuiOverlayEvent event){
         Player player = Minecraft.getInstance().player;
         Minecraft mc = Minecraft.getInstance();
         if(player == null || event.getOverlay() != VanillaGuiOverlay.EXPERIENCE_BAR.type()){
@@ -136,6 +134,10 @@ public class HudHandler {
         MultiBufferSource.BufferSource bufferSource = event.getGuiGraphics().bufferSource();
         if(entity != null && entity.getBlockState().is(VidaBlockLoader.PURIFICATION_CAULDRON.get())){
             new VidaCauldronScreen(mc, bufferSource).render(graphics.pose(), entity, globalHudAlpha.increase(0.02f));
+            return;
+        }
+        if(entity != null && entity.getBlockState().is(VidaBlockLoader.COLLECTOR.get())){
+            new VidaCollectorScreen(mc, bufferSource).render(graphics.pose(), entity, globalHudAlpha.increase(0.02f));
             return;
         }
         globalHudAlpha.decrease(0.02f);
