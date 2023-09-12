@@ -65,7 +65,9 @@ public class CollectorBlockEntity extends VidaBlockEntity implements IVidaTickab
     }
 
     public ItemStack getItem(){
-        return this.collectItem.copyAndClear();
+        ItemStack stack = this.collectItem.copyAndClear();
+        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 1 | 2);
+        return stack;
     }
 
     public boolean canGetItem(){
@@ -101,7 +103,7 @@ public class CollectorBlockEntity extends VidaBlockEntity implements IVidaTickab
         }
         if(!this.isInProgress){
             this.isInProgress = true;
-            this.step = 0.1f;
+            this.step = 1f;
             this.collectElement = pLevel.dimension() == Level.NETHER ? VidaElement.FIRE : VidaElement.EARTH;
         }
     }
@@ -120,6 +122,9 @@ public class CollectorBlockEntity extends VidaBlockEntity implements IVidaTickab
         //this.collectItem = ItemStack.EMPTY;
         this.progress = 0;
         this.collectElement = VidaElement.EMPTY;
+        ItemStack stack = new ItemStack(VidaItemLoader.UNLOCK_MAGIC_WORD_PAPER.get(), 1);
+        stack.getOrCreateTag().putString("wordId","vida_reforged:energy");
+        this.collectItem = stack;
         this.isInProgress = false;
     }
 
@@ -130,7 +135,7 @@ public class CollectorBlockEntity extends VidaBlockEntity implements IVidaTickab
         this.progress += step;
         if(progress >= MAX_PROGRESS){
             //generate
-            //reset();
+            reset();
             this.step = 0;
         }
     }
@@ -146,4 +151,10 @@ public class CollectorBlockEntity extends VidaBlockEntity implements IVidaTickab
                 "collectItem", this.collectItem.toString()
         );
     }
+
+    public float getProgress() {
+        return progress;
+    }
+
+
 }

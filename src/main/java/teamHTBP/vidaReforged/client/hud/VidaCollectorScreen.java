@@ -23,6 +23,10 @@ public class VidaCollectorScreen extends AbstractVidaHUDScreen implements IVidaS
 
     public final TextureSection ITEM_SLOT = new TextureSection(LOCATION, 1, 1,24,24);
 
+    public final TextureSection BAR = new TextureSection(LOCATION, 19, 29,22,6);
+
+    public final TextureSection PROGRESS = new TextureSection(LOCATION, 22, 38,16,2);
+
 
     public VidaCollectorScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource) {
         super(minecraft, bufferSource);
@@ -39,9 +43,9 @@ public class VidaCollectorScreen extends AbstractVidaHUDScreen implements IVidaS
 
         poseStack.pushPose();
 
+        // 渲染方块小图标
         final int blockX = centerX(BLOCK);
         final int blockY = centerY(BLOCK) - 30;
-
         blit(
                 LOCATION,
                 blockX, blockY, 0,
@@ -50,9 +54,9 @@ public class VidaCollectorScreen extends AbstractVidaHUDScreen implements IVidaS
                 RESOLUTION, RESOLUTION
         );
 
+        // 渲染槽位
         final int slotX = centerX(ITEM_SLOT);
         final int slotY = blockY - 30;
-
         blit(
                 LOCATION,
                 slotX, slotY, 0,
@@ -61,13 +65,38 @@ public class VidaCollectorScreen extends AbstractVidaHUDScreen implements IVidaS
                 RESOLUTION, RESOLUTION
         );
 
-        if(!collectorBlockEntity.collectItem.isEmpty()){
+        // 渲染能量条
+        final int barX = centerX(BAR);
+        final int barY = blockY + ITEM_SLOT.h();
+        blit(
+                LOCATION,
+                barX, barY, 0,
+                BAR.minU(), BAR.minV(),
+                BAR.w(), BAR.h(),
+                RESOLUTION, RESOLUTION
+        );
 
+
+        if(!collectorBlockEntity.collectItem.isEmpty()){
+            // 渲染物品
+            renderItem(collectorBlockEntity.collectItem.copy(), slotX + 4, slotY + 4);
+            // 渲染进度
+            final int progressX = barX + 3;
+            final int progressY = barY + 2;
+            blit(
+                    LOCATION,
+                    progressX, progressY, 0,
+                    PROGRESS.minU(), PROGRESS.minV(),
+                    (int)(PROGRESS.w()  * collectorBlockEntity.getProgress() / collectorBlockEntity.getMaxProgress()), PROGRESS.h(),
+                    RESOLUTION, RESOLUTION
+            );
         }
 
         poseStack.popPose();
 
     }
+
+
 
     @Override
     public void render(PoseStack poseStack) {

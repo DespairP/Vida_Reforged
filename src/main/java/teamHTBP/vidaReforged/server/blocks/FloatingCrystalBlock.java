@@ -26,7 +26,7 @@ import java.util.function.Supplier;
 
 public class FloatingCrystalBlock extends VidaBaseEntityBlock<FloatingCrystalBlockEntity> {
     private VidaElement crystalElement = VidaElement.EMPTY;
-    public final VoxelShape SHAPE = Block.box(6, 6, 6, 12, 12, 12);
+    public final VoxelShape SHAPE = Block.box(7, 6, 7, 13, 12, 13);
 
     public FloatingCrystalBlock(VidaElement element) {
         super(BlockBehaviour.Properties.copy(Blocks.GLASS).noOcclusion().lightLevel((state) -> 9), null);
