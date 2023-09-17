@@ -30,6 +30,8 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
     public ARGBColor color;
     /**粒子大小*/
     public double size = 1.0;
+    /**年龄*/
+    public int age = 1000;
 
     /**序列化器*/
     private final static Codec<BaseParticleType> CODEC = RecordCodecBuilder.create(it -> it.group(
@@ -37,7 +39,8 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
             Codec.INT.fieldOf("red").forGetter(BaseParticleType::getColorRed),
             Codec.INT.fieldOf("green").forGetter(BaseParticleType::getColorGreen),
             Codec.INT.fieldOf("blue").forGetter(BaseParticleType::getColorBlue),
-            Codec.DOUBLE.fieldOf("size").forGetter(BaseParticleType::getSize)
+            Codec.DOUBLE.fieldOf("size").forGetter(BaseParticleType::getSize),
+            Codec.INT.fieldOf("lifeTime").forGetter(BaseParticleType::getAge)
     ).apply(it,BaseParticleType::new));
 
     private static final ParticleOptions.Deserializer<BaseParticleType> DESERIALIZER = new ParticleOptions.Deserializer<BaseParticleType>(){
@@ -58,7 +61,11 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
             pReader.skipWhitespace();
 
             ARGBColor color = new ARGBColor(255, r, g, b);
-            return new BaseParticleType(ParticleProviderRegHandler.registerParticleType.get(particleName).getKey().get(), color, 1);
+
+            final int lifeTime = Optional.of(pReader.readInt()).orElse(1000);
+            pReader.skipWhitespace();
+
+            return new BaseParticleType(ParticleProviderRegHandler.registerParticleType.get(particleName).getKey().get(), color, 1, lifeTime);
         }
 
         /**从数据包获取数据*/
@@ -70,30 +77,34 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
                     pBuffer.getInt(1),
                     pBuffer.getInt(2),
                     pBuffer.getInt(3),
-                    pBuffer.getDouble(4)
+                    pBuffer.getDouble(4),
+                    pBuffer.getInt(5)
             );
         }
     };
 
     /**deserializer构造需要*/
-    public BaseParticleType(ParticleType<BaseParticleType> type,int alpha, int colorRed, int colorGreen, int colorBlue, double size) {
+    public BaseParticleType(ParticleType<BaseParticleType> type,int alpha, int colorRed, int colorGreen, int colorBlue, double size, int age) {
         super(true, DESERIALIZER);
         this.color = new ARGBColor(alpha,colorRed,colorGreen,colorBlue);
         this.size = size;
+        this.age = age;
     }
 
     /**Argb传入*/
-    public BaseParticleType(ParticleType<BaseParticleType> type,ARGBColor color, double size) {
+    public BaseParticleType(ParticleType<BaseParticleType> type,ARGBColor color, double size, int age) {
         super(true, DESERIALIZER);
         this.type = () -> type;
         this.color = color;
         this.size = size;
+        this.age = age;
     }
 
-    public BaseParticleType(int alpha, int colorRed, int colorGreen, int colorBlue, double size) {
+    public BaseParticleType(int alpha, int colorRed, int colorGreen, int colorBlue, double size, int age) {
         super(true, DESERIALIZER);
-        this.color = new ARGBColor(alpha,colorRed,colorGreen,colorBlue);
+        this.color = new ARGBColor(alpha, colorRed, colorGreen, colorBlue);
         this.size = size;
+        this.age = age;
     }
 
     Supplier<ParticleType<BaseParticleType>> type;
@@ -116,6 +127,7 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
         pBuffer.writeInt(this.color.getG());
         pBuffer.writeInt(this.color.getB());
         pBuffer.writeDouble(this.size);
+        pBuffer.writeInt(this.age);
     }
 
     @Override
@@ -148,7 +160,11 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
         return size;
     }
 
-    public void setColor(int r,int g,int b){
+    public int getAge() {
+        return age;
+    }
+
+    public void setColor(int r, int g, int b){
         this.color = new ARGBColor(255,r,g,b);
     }
 

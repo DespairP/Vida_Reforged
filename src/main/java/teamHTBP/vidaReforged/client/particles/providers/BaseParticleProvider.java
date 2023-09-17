@@ -2,11 +2,17 @@ package teamHTBP.vidaReforged.client.particles.providers;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
 import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
 import teamHTBP.vidaReforged.client.particles.particles.Cube3DParticle;
 import teamHTBP.vidaReforged.client.particles.particles.CuboidParticle;
+import teamHTBP.vidaReforged.core.utils.reg.RegisterParticleType;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 
 /**粒子提供工厂*/
 public class BaseParticleProvider implements ParticleProvider<BaseParticleType> {
@@ -23,39 +29,55 @@ public class BaseParticleProvider implements ParticleProvider<BaseParticleType> 
     @Nullable
     @Override
     public Particle createParticle(BaseParticleType pType, ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
-        if(pType.getType() == VidaParticleTypeLoader.CUBE_PARTICLE_TYPE.get()) {
-            Cube3DParticle particleCube = new Cube3DParticle(
-                    pLevel,
-                    pX,
-                    pY,
-                    pZ,
-                    pXSpeed,
-                    pYSpeed,
-                    pZSpeed,
-                    pType.getAlpha(),
-                    pType.getColorRed(),
-                    pType.getColorGreen(),
-                    pType.getColorBlue(),
-                    (int) pType.getSize()
-            );
-            particleCube.pickSprite(spriteSet);
-            return particleCube;
+        for(Field field : VidaParticleTypeLoader.class.getDeclaredFields()){
+            //
+            if(!field.isAnnotationPresent(RegisterParticleType.class)){
+                continue;
+            }
+
+            try {
+                RegistryObject<ParticleType<BaseParticleType>> type = (RegistryObject<ParticleType<BaseParticleType>>)field.get(null);
+                if(pType.getType() == type.get()){
+                    Class<? extends TextureSheetParticle> particleClass = field.getAnnotation(RegisterParticleType.class).value();
+                    Constructor<? extends TextureSheetParticle> constructor = particleClass.getConstructor(
+                            ClientLevel.class,
+                            double.class,
+                            double.class,
+                            double.class,
+                            double.class,
+                            double.class,
+                            double.class,
+                            int.class,
+                            int.class,
+                            int.class,
+                            int.class,
+                            int.class,
+                            int.class
+                    );
+                    TextureSheetParticle particle = constructor.newInstance(
+                            pLevel,
+                            pX,
+                            pY,
+                            pZ,
+                            pXSpeed,
+                            pYSpeed,
+                            pZSpeed,
+                            pType.getAlpha(),
+                            pType.getColorRed(),
+                            pType.getColorGreen(),
+                            pType.getColorBlue(),
+                            (int) pType.getSize(),
+                            pType.getAge()
+                    );
+                    particle.pickSprite(spriteSet);
+                    return particle;
+                }
+            } catch (IllegalAccessException e) {
+                System.out.println(e);
+            } catch (Exception e){
+                System.out.println(e);
+            }
         }
-        CuboidParticle particleCuboid = new CuboidParticle(
-                pLevel,
-                pX,
-                pY,
-                pZ,
-                pXSpeed,
-                pYSpeed,
-                pZSpeed,
-                pType.getAlpha(),
-                pType.getColorRed(),
-                pType.getColorGreen(),
-                pType.getColorBlue(),
-                (int) pType.getSize()
-        );
-        particleCuboid.pickSprite(spriteSet);
-        return particleCuboid;
+        return null;
     }
 }

@@ -1,37 +1,25 @@
 package teamHTBP.vidaReforged.client.model.blockEntities;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.Util;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.Item;
 import org.joml.Matrix4f;
-import teamHTBP.vidaReforged.client.events.RenderTypeHandler;
-import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.client.RenderTypeHandler;
 import teamHTBP.vidaReforged.core.utils.animation.Animator;
 import teamHTBP.vidaReforged.core.utils.animation.DestinationAnimator;
 import teamHTBP.vidaReforged.core.utils.animation.TimeInterpolator;
 import teamHTBP.vidaReforged.core.utils.animation.calculator.IValueProvider;
-import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.server.blockEntities.CrystalDecorationBlockEntity;
-import teamHTBP.vidaReforged.server.blockEntities.FloatingCrystalBlockEntity;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.function.Function;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 

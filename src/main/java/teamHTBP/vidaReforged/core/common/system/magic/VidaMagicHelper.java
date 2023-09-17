@@ -26,6 +26,8 @@ public class VidaMagicHelper {
         return VidaElement.EMPTY;
     }
 
+
+
     public static List<VidaElement> getCurrentMagicElements(ItemStack wandStack){
         return ImmutableList.of(VidaElement.EMPTY);
     }
@@ -41,23 +43,24 @@ public class VidaMagicHelper {
     }
 
     /**触发魔法*/
-    public static void invokeMagic(IVidaMagicContainerCapability magicContainer, IVidaManaCapability manaContainer, Level level, Player player, VidaMagic currentMagic){
-        Entity entity = VidaEntityLoader.PARTY_PARROT.get().create(level);
+    public static void invokeMagic(IVidaMagicContainerCapability magicContainer, IVidaManaCapability manaContainer, Level level, Player player, VidaMagic currentMagic,ItemStack handInItem){
+        LazyOptional<VidaMagic.IInvokable> optInvokable = LazyOptional.empty();
 
-        VidaMagicContainer container = magicContainer.getContainer();
-        MagicParticle particle = new MagicParticle(
-                0xFFFFFF,
-                0xFFFFFF,
-                new MagicParticleAttribute((float)container.speed()),
-                new MagicParticleAttribute(container.amount()),
-                new MagicParticleAttribute(container.maxAge()),
-                new MagicParticleType(),
-                new MagicParticleAttribute((float) container.damage()),
-                Optional.ofNullable(currentMagic).orElse(new VidaMagic("")).element()
-        );
-        if (entity instanceof PartyParrotProjecttile mpp) {
-            mpp.initProjectile(player, particle);
-            level.addFreshEntity(entity);
+        if(currentMagic == null){
+            return;
         }
+
+        if(currentMagic.regex() == null){
+            optInvokable = VidaMagicManager.getMagicInvokable(currentMagic.magicName());
+        }else{
+            optInvokable = VidaMagicManager.getMagicInvokableRegex(currentMagic.regex());
+        }
+
+
+        optInvokable.ifPresent((invokable) -> {
+            invokable.invokeMagic(handInItem, currentMagic, magicContainer.getContainer(), manaContainer, level, player);
+        });
+
+
     }
 }

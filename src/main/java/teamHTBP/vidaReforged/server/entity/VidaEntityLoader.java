@@ -33,4 +33,13 @@ public class VidaEntityLoader {
                     .clientTrackingRange(4)
                     .updateInterval(10)
                     .build("party_parrot_projectile"));
+
+    public static final RegistryObject<EntityType<SparkEntity>> SPARK = ENTITIES
+            .register("spark", () -> EntityType.Builder
+                    .of(SparkEntity::new, MobCategory.MISC)
+                    .sized(1F, 1F)
+                    .clientTrackingRange(4)
+                    .updateInterval(10)
+                    .build("spark_entity")
+            );
 }

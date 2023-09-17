@@ -5,14 +5,18 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
@@ -31,10 +35,8 @@ import teamHTBP.vidaReforged.server.entity.projectile.MagicParticleProjectile;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static teamHTBP.vidaReforged.core.common.system.magic.VidaMagicHelper.getCurrentMagic;
@@ -46,11 +48,62 @@ public class VidaWand extends Item implements IVidaManaConsumable {
     }
 
     @Override
+    public void releaseUsing(ItemStack itemStack, Level level, LivingEntity entity, int power) {
+        if(!(entity instanceof ServerPlayer)){
+            return;
+        }
+        ServerPlayer player = (ServerPlayer) entity;
+        int lastPower = this.getUseDuration(itemStack) - power;
+        releaseMagic(level, player, player.getUsedItemHand());
+    }
+
+
+    /**使用时判定能不能释放技能*/
+    @Override
     @NotNull
     public InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
-        if(level.isClientSide){
-            return super.use(level, player, hand);
+        ItemStack handInItem = player.getItemInHand(hand);
+
+        if(!canReleaseMagic(handInItem)){
+            return InteractionResultHolder.fail(handInItem);
         }
+        player.startUsingItem(hand);
+        return InteractionResultHolder.consume(handInItem);
+    }
+
+    /**是否能释放技能*/
+    public boolean canReleaseMagic(ItemStack itemStack){
+        final long currentMillSecond = System.currentTimeMillis();
+        // 判定有没有魔法，是否在冷却状态
+        final List<String> magicIdList = new ArrayList<>();
+        final AtomicBoolean isInCoolDown = new AtomicBoolean();
+        final VidaMagicContainer magicContainer = this.getMagicContainer(itemStack);
+        LazyOptional.of( () -> magicContainer).ifPresent((container) ->{
+            magicIdList.addAll(magicContainer.magic() == null ? ImmutableList.of() : magicContainer.magic());
+            isInCoolDown.set(currentMillSecond - container.lastInvokeMillSec() - container.coolDown() < 0);
+        });
+
+        // 没有capabilities，没有魔法，还在冷却中都不能释放魔法
+        if(magicContainer == null || magicIdList.size() == 0 || isInCoolDown.get()){
+            return false;
+        }
+
+        // 判定有没有足够的能量
+        final VidaMagic currentMagic = MagicTemplateManager.getMagicById(magicIdList.get(0));
+        final AtomicBoolean hasEnoughMana = new AtomicBoolean();
+        this.getManaCapability(itemStack).ifPresent(manaCap -> {
+            hasEnoughMana.set(manaCap.testConsume(currentMagic.element(), magicContainer.costMana()));
+        });
+
+        //
+        return hasEnoughMana.get();
+    }
+
+    /**
+     * 施法
+     * @return 魔法是否被释放
+     * */
+    public boolean releaseMagic(Level level, Player player, InteractionHand hand){
         ItemStack itemInHand = player.getItemInHand(hand);
         // 获取此次释放魔法需要的信息
         LazyOptional<IVidaMagicContainerCapability> containerCap = itemInHand.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER);
@@ -58,17 +111,19 @@ public class VidaWand extends Item implements IVidaManaConsumable {
         // 获取物品的能量
         LazyOptional<IVidaManaCapability> manaCap = itemInHand.getCapability(VidaCapabilityRegisterHandler.VIDA_MANA);
 
+        AtomicBoolean isMagicReleased = new AtomicBoolean();
+
         //处理
         manaCap.ifPresent((manaCapability) -> {
             containerCap.ifPresent((container)->{
-                 boolean isMagicReleased = doMagic(container, manaCapability, level, player, itemInHand);
-             });
+                isMagicReleased.set( doMagic(container, manaCapability, level, player, itemInHand) );
+            });
         });
 
-
-        return super.use(level, player, hand);
+        return isMagicReleased.get();
     }
 
+    /**显示法杖各个属性*/
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
         Style defaultStyle = Style.EMPTY.withColor(ChatFormatting.GRAY).withItalic(true);
@@ -168,6 +223,14 @@ public class VidaWand extends Item implements IVidaManaConsumable {
         return itemStack.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER);
     }
 
+    public VidaMagicContainer getMagicContainer(ItemStack itemStack) {
+        final AtomicReference<VidaMagicContainer> magicContainer = new AtomicReference<>();
+        itemStack.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER).ifPresent(containerCap -> {
+            magicContainer.set(containerCap.getContainer());
+        });
+        return magicContainer.get();
+    }
+
     /**魔法释放处理逻辑*/
     public boolean doMagic(IVidaMagicContainerCapability magicContainer,IVidaManaCapability mana, Level level, Player player, ItemStack handInItem){
         final long currentMillSecond = System.currentTimeMillis();
@@ -194,8 +257,17 @@ public class VidaWand extends Item implements IVidaManaConsumable {
         mana.consumeMana(currentMagic.element(), container.costMana());
         container.lastInvokeMillSec(currentMillSecond);
 
-        VidaMagicHelper.invokeMagic(magicContainer, mana, level, player, currentMagic);
+        VidaMagicHelper.invokeMagic(magicContainer, mana, level, player, currentMagic, handInItem);
 
         return true;
+    }
+
+
+    public int getUseDuration(ItemStack itemStack) {
+        return 2000;
+    }
+
+    public UseAnim getUseAnimation(ItemStack itemStack) {
+        return UseAnim.BOW;
     }
 }

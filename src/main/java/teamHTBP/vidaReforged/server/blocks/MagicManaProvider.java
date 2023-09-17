@@ -64,7 +64,8 @@ public class MagicManaProvider extends Block {
                 new BaseParticleType(
                     VidaParticleTypeLoader.CUBOID_PARTICLE_TYPE.get(),
                     color,
-                    0.5f + source.nextDouble()
+                    0.5f + source.nextDouble(),
+                    source.nextInt(150) + 30
                 ),
                 pos.getX() + d1,
                 pos.getY() + 1.2f,

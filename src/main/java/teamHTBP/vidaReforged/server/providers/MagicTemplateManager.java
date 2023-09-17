@@ -48,6 +48,7 @@ public class MagicTemplateManager extends AbstractVidaManager{
             return;
         }
         VidaMagic magic = new VidaMagic(String.format("%s:%s", modId, magicJsonObject.get("name").getAsString()))
+                .regex(!magicJsonObject.has("regex") ? null : magicJsonObject.get("regex").getAsString())
                 .magicLocation(location)
                 .magicType(!magicJsonObject.has("type") ? VidaMagic.VidaMagicType.NONE : VidaMagic.VidaMagicType.of(magicJsonObject.get("magicType").getAsString()))
                 .icon(!magicJsonObject.has("icon") ? null : new ResourceLocation(magicJsonObject.get("icon").getAsString()))

@@ -8,6 +8,7 @@ import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
 import teamHTBP.vidaReforged.client.particles.particles.Cube3DParticle;
 import teamHTBP.vidaReforged.client.particles.particles.CuboidParticle;
+import teamHTBP.vidaReforged.client.particles.particles.SparkParticle;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterParticleType;
 
 
@@ -19,4 +20,7 @@ public class VidaParticleTypeLoader {
 
     @RegisterParticleType(CuboidParticle.class)
     public final static RegistryObject<ParticleType<BaseParticleType>> CUBOID_PARTICLE_TYPE = PARTICLE_TYPE_REGISTER.register("cuboid_particle", ()->new BaseParticleType(VidaParticleTypeLoader.CUBOID_PARTICLE_TYPE));
+
+    @RegisterParticleType(SparkParticle.class)
+    public final static RegistryObject<ParticleType<BaseParticleType>> SPARK_PARTICLE_TYPE = PARTICLE_TYPE_REGISTER.register("spark_particle", ()->new BaseParticleType(VidaParticleTypeLoader.SPARK_PARTICLE_TYPE));
 }

@@ -5,5 +5,6 @@
   "iconIndex": 0,
   "description": "vida_reforged.description.summon_partyparrot",
   "element": "AQUA",
-  "isPlayerUsable": true
+  "isPlayerUsable": true,
+  "regex": "party_parrot"
 }

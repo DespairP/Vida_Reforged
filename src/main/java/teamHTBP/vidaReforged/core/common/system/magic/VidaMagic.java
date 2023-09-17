@@ -2,15 +2,17 @@ package teamHTBP.vidaReforged.core.common.system.magic;
 
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 
 /**
  * 魔法模板
@@ -36,6 +38,8 @@ public class VidaMagic {
     private boolean isPlayerUsable;
     /***/
     private ResourceLocation location;
+    /**找到invokable的正则*/
+    private String regex;
 
 
     public Component getCommandHoverComponents(){
@@ -77,5 +81,10 @@ public class VidaMagic {
                 return NONE;
             }
         }
+    }
+
+    /**执行魔法*/
+    public interface IInvokable {
+        public void invokeMagic(ItemStack stack, VidaMagic invokeMagic, VidaMagicContainer container, IVidaManaCapability mana, Level level, Player player);
     }
 }

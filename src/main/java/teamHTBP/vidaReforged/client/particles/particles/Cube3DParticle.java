@@ -23,9 +23,9 @@ import teamHTBP.vidaReforged.core.utils.color.VidaColor;
  * */
 public class Cube3DParticle extends TextureSheetParticle {
 
-    public Cube3DParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, int a, int r, int g, int b, int size) {
+    public Cube3DParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, int a, int r, int g, int b, int size, int age) {
         super(level, x, y ,z, speedX, speedY, speedZ);
-        this.lifetime = 300;
+        this.lifetime = age;
         this.quadSize = 0.1f;
         this.hasPhysics = true;
         this.alpha = a / 255.0f;

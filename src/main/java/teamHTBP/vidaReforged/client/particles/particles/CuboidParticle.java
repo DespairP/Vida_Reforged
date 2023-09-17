@@ -19,7 +19,7 @@ public class CuboidParticle extends TextureSheetParticle {
     private float rotation = 0;
     private float extraYLength = 0;
 
-    public CuboidParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, int a, int r, int g, int b, int size) {
+    public CuboidParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, int a, int r, int g, int b, int size, int age) {
         super(level, x, y ,z, speedX, speedY, speedZ);
         Random rand = new Random();
         xd = speedX;

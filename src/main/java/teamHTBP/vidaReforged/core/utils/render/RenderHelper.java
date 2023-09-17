@@ -7,14 +7,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.VidaReforged;
 import net.minecraft.client.gui.GuiGraphics;
-import teamHTBP.vidaReforged.client.events.RenderTypeHandler;
+import teamHTBP.vidaReforged.client.RenderTypeHandler;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 
 import static java.lang.Math.cos;

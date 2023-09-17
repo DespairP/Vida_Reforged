@@ -17,5 +17,6 @@ public class VidaEntityRendererLoader {
     public static void onEvent(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(VidaEntityLoader.MAGIC_PARTICLE_PROJECTILE.get(), MagicParticleProjectileRenderer::new);
         event.registerEntityRenderer(VidaEntityLoader.PARTY_PARROT.get(), PartyParrotProjectileRenderer::new);
+        event.registerEntityRenderer(VidaEntityLoader.SPARK.get(), SparkEntityRenderer::new);
     }
 }

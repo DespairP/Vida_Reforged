@@ -65,7 +65,8 @@ public class HudHandler {
                 VanillaGuiOverlay.PLAYER_HEALTH.type(),
                 VanillaGuiOverlay.EXPERIENCE_BAR.type(),
                 VanillaGuiOverlay.FOOD_LEVEL.type(),
-                VanillaGuiOverlay.ITEM_NAME.type()
+                VanillaGuiOverlay.ITEM_NAME.type(),
+                VanillaGuiOverlay.ARMOR_LEVEL.type()
         );
         final boolean isVidaManaHudRendered = getOrCreateVidaManaScreen(event.getGuiGraphics().bufferSource()).isRendered();
         final PoseStack poseStack = event.getGuiGraphics().pose();
@@ -83,7 +84,8 @@ public class HudHandler {
                 VanillaGuiOverlay.PLAYER_HEALTH.type(),
                 VanillaGuiOverlay.EXPERIENCE_BAR.type(),
                 VanillaGuiOverlay.FOOD_LEVEL.type(),
-                VanillaGuiOverlay.ITEM_NAME.type()
+                VanillaGuiOverlay.ITEM_NAME.type(),
+                VanillaGuiOverlay.ARMOR_LEVEL.type()
         );
         final PoseStack poseStack = event.getGuiGraphics().pose();
         if(TYPE_OFFSET_OVERLAY.contains(event.getOverlay())){
