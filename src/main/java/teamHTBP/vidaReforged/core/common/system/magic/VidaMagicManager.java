@@ -55,19 +55,19 @@ public class VidaMagicManager {
         Entity _entity1 = VidaEntityLoader.TRAIL.get().create(level);
         ((TrailEntity)_entity1).initParticle(player, new Bezier3Curve(
                 new Vector3d(x, y, z),
-                new Vector3d(x, y + 10, z),
+                new Vector3d(x + 10, y + 10, z),
                 new Vector3d(x + 10, y + 10, z + 10),
                 new Vector3d(speedX, speedY, speedZ)
-        ));
+        ), new ARGBColor(255, 255, 255, 255), new ARGBColor(255, 226, 235, 240));
         level.addFreshEntity(_entity1);
 
         Entity _entity2 = VidaEntityLoader.TRAIL.get().create(level);
         ((TrailEntity)_entity2).initParticle(player, new Bezier3Curve(
                 new Vector3d(x, y, z),
-                new Vector3d(x, y + 10, z),
+                new Vector3d(x, y + 10, z - 10),
                 new Vector3d(x - 10, y + 10, z - 10),
                 new Vector3d(speedX, speedY, speedZ)
-        ));
+        ), new ARGBColor(255, 255, 255, 255), new ARGBColor(255, 226, 235, 240));
         level.addFreshEntity(_entity2);
     };
 

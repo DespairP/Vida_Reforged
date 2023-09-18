@@ -7,6 +7,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import org.joml.Vector3d;
 import org.joml.Vector3f;
 import teamHTBP.vidaReforged.client.particles.options.BaseBezierParticleType;
+import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.Bezier3Curve;
 
 import static net.minecraft.network.syncher.EntityDataSerializers.registerSerializer;
@@ -72,9 +73,27 @@ public class EntityDataSerializer {
         }
     };
 
-    static {
+    public static final net.minecraft.network.syncher.EntityDataSerializer<ARGBColor> COLOR = new net.minecraft.network.syncher.EntityDataSerializer.ForValueType<ARGBColor>() {
+
+        @Override
+        public void write(FriendlyByteBuf buf, ARGBColor color) {
+            buf.writeInt(color.a());
+            buf.writeInt(color.r());
+            buf.writeInt(color.g());
+            buf.writeInt(color.b());
+
+        }
+
+        @Override
+        public ARGBColor read(FriendlyByteBuf buf) {
+            return new ARGBColor(buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt());
+        }
+    };
+
+        static {
         registerSerializer(BEZIER_PARTICLE);
         registerSerializer(CURVE);
+        registerSerializer(COLOR);
     }
 
     public static void init(){}

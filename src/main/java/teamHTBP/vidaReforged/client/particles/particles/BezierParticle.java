@@ -9,6 +9,7 @@ import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.Mth;
 import org.joml.Vector3d;
+import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.Bezier3Curve;
 
 import javax.annotation.Nonnull;
@@ -22,6 +23,10 @@ public class BezierParticle extends TrailParticle {
         super(level, x, y ,z, 0, 0, 0, a, r, g, b, size, age);
         this.tails = tails;
         this.lifetime = 5;
+        this.rCol = r / 255.0F;
+        this.gCol = g / 255.0F;
+        this.bCol = b / 255.0F;
+
     }
 
     public void render(@Nonnull VertexConsumer pBuffer, @Nonnull Camera camera, float partialTicks) {
@@ -31,9 +36,12 @@ public class BezierParticle extends TrailParticle {
 
 
         RenderSystem.setShader(GameRenderer::getParticleShader);
+        RenderSystem.setShaderColor(rCol, gCol, bCol,1);
         builder.begin(VertexFormat.Mode.TRIANGLES, DefaultVertexFormat.PARTICLE);
         renderTails(pBuffer, camera, partialTicks);
         tesselator.end();
+        RenderSystem.setShaderColor(1,1,1,1);
+        RenderSystem.disableBlend();
     }
 
 
