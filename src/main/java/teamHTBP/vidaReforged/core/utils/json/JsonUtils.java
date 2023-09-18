@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.joml.Vector3d;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.screen.IGuideBookSection;
 import teamHTBP.vidaReforged.core.common.system.guidebook.TeaconGuideBookSectionSerializer;

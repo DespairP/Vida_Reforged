@@ -27,8 +27,8 @@ public class SparkParticle extends TextureSheetParticle {
     @Override
     public void tick() {
         super.tick();
-        if(this.age < 20){
-            this.alpha += 0.05f;
+        if(this.age < 40){
+            this.alpha += 0.025f;
             return;
         }
         float lifeDecreaseStep = (float) this.age / (float) this.lifetime;

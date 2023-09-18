@@ -10,6 +10,7 @@ import teamHTBP.vidaReforged.server.advancement.VidaAdvancementTriggers;
 import teamHTBP.vidaReforged.server.blockEntities.VidaBlockEntityLoader;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
 import teamHTBP.vidaReforged.server.commands.VidaCommandManager;
+import teamHTBP.vidaReforged.server.entity.EntityDataSerializer;
 import teamHTBP.vidaReforged.server.entity.VidaEntityLoader;
 import teamHTBP.vidaReforged.server.events.VidaItemGroupLoader;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
@@ -48,5 +49,6 @@ public class VidaReforged {
         //VidaCommandManager.ARGUMENT_TYPE.register(bus);
         VidaAdvancementTriggers.init();
         VidaPacketManager.register();
+        EntityDataSerializer.init();
     }
 }

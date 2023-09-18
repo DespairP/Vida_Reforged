@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
 import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
+import teamHTBP.vidaReforged.client.particles.providers.BaseBezierParticleProvider;
 import teamHTBP.vidaReforged.client.particles.providers.BaseParticleProvider;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterParticleType;
 
@@ -41,6 +42,8 @@ public class ParticleProviderRegHandler {
                 //注册
                 registerProvider(particleType.get(), (particleSprite)->new BaseParticleProvider(particleSprite, particleClazz));
             });
+
+            registerProvider(VidaParticleTypeLoader.BEZIER_PARTICLE.get(), BaseBezierParticleProvider::new);
         }
     }
 

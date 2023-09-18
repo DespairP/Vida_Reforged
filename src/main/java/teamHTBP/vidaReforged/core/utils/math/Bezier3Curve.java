@@ -2,6 +2,7 @@ package teamHTBP.vidaReforged.core.utils.math;
 
 import lombok.AllArgsConstructor;
 import org.joml.Vector3d;
+import org.joml.Vector3f;
 
 /**
  * @author DustW
@@ -30,10 +31,10 @@ public class Bezier3Curve extends Curve {
     public static Vector3d bezier3(Vector3d pos0, Vector3d pos1, Vector3d pos2, Vector3d pos3, double t) {
         double k = 1 - t;
 
-        Vector3d pos0f = pos0.mul(k * k * k);
-        Vector3d pos1f = pos1.mul(3 * t * k * k);
-        Vector3d pos2f = pos2.mul(3 * t * t * k);
-        Vector3d pos3f = pos3.mul(t * t * t);
+        Vector3d pos0f = new Vector3d(pos0).mul(k * k * k);
+        Vector3d pos1f = new Vector3d(pos1).mul(3 * t * k * k);
+        Vector3d pos2f = new Vector3d(pos2).mul(3 * t * t * k);
+        Vector3d pos3f = new Vector3d(pos3).mul(t * t * t);
 
         return pos0f.add(pos1f).add(pos2f).add(pos3f);
     }

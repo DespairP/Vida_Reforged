@@ -3,51 +3,25 @@ package teamHTBP.vidaReforged.client.particles.particles;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Camera;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.Mth;
 import org.joml.Vector3d;
-import org.joml.Vector3f;
 import teamHTBP.vidaReforged.core.utils.math.Bezier3Curve;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.function.Consumer;
+import java.util.List;
 
-import static teamHTBP.vidaReforged.client.RenderTypeHandler.TRAIL_SHADER;
+public class BezierParticle extends TrailParticle {
+    public List<Vector3d> tails = new ArrayList<>();
 
-public class TrailParticle extends TextureSheetParticle {
-    public Minecraft mc = Minecraft.getInstance();
-    private Bezier3Curve curve;
-    protected ArrayList<Vector3d> tails = new ArrayList<>();
-    protected int maxTail;
-    protected int freq;
-    protected boolean cull = true;
-    protected float width;
-    protected Consumer<TrailParticle> onUpdate;
-
-    public TrailParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, int a, int r, int g, int b, int size,int age) {
-        super(level, x, y ,z, 0, 0, 0);
-        maxTail = 40;
-        freq = 1;
-        width = 0.5f;
-        cull = false;
-        this.curve = new Bezier3Curve(
-                new Vector3d(x, y, z),
-                new Vector3d(x, y + 10, z),
-                new Vector3d(x + 10, y + 10, z + 10),
-                new Vector3d(speedX, speedY, speedZ)
-        );
-        this.lifetime = 200;
-    }
-
-
-    @Override
-    public ParticleRenderType getRenderType() {
-        return TRAIL_SHADER;
+    public BezierParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, int a, int r, int g, int b, int size, int age, List<Vector3d> tails) {
+        super(level, x, y ,z, 0, 0, 0, a, r, g, b, size, age);
+        this.tails = tails;
+        this.lifetime = 5;
     }
 
     public void render(@Nonnull VertexConsumer pBuffer, @Nonnull Camera camera, float partialTicks) {
@@ -107,84 +81,4 @@ public class TrailParticle extends TextureSheetParticle {
         verts[i * 2 + 1] = new Vector3d(current).add(new Vector3d(normal).mul(-size)).sub(cameraPos);
     }
 
-    public float getWidth(int tail, float pPartialTicks) {
-        return width;
-    }
-    protected Vector3d getTail() {
-        return new Vector3d(this.xo, this.yo, this.zo);
-    }
-    @Override
-    public void tick() {
-        if (age % freq == 0) {
-            tails.add(getTail());
-            while (tails.size() > maxTail) {
-                tails.remove(0);
-            }
-        }
-
-
-        this.xo = this.x;
-        this.yo = this.y;
-        this.zo = this.z;
-        if (this.age++ >= this.lifetime && lifetime > 0) {
-            this.remove();
-        } else if (onUpdate == null) {
-            update();
-        } else {
-            onUpdate.accept(this);
-        }
-    }
-
-    public void setOnUpdate(Consumer<TrailParticle> onUpdate) {
-        this.onUpdate = onUpdate;
-    }
-
-    public void update() {
-        if (getLifetime() > 0) {
-            var t = (mc.getFrameTime() + age) / lifetime;
-            Vector3d point = curve.getPoint(t);
-            setPos(point.x, point.y, point.z);
-        }
-
-        if (this.lifetime - this.age < 15) {
-            tails.remove(0);
-        }
-    }
-
-    @Override
-    public boolean shouldCull() {
-        return false;
-    }
-
-    public int getLightColor(int tail, float pPartialTicks) {
-        return getLightColor(pPartialTicks);
-    }
-
-    protected float getU0(int tail, float pPartialTicks) {
-        return  1 - (tail + 1 + pPartialTicks) / (maxTail - 1f);
-    }
-
-    protected float getV0(int tail, float pPartialTicks) {
-        return 0;
-    }
-
-    protected float getU1(int tail, float pPartialTicks) {
-        return  1 - (tail + pPartialTicks) / (maxTail - 1f);
-    }
-
-    protected float getV1(int tail, float pPartialTicks) {
-        return 1;
-    }
-    protected final float getU0(float pPartialTicks) {
-        return 0;
-    }
-    protected final float getU1(float pPartialTicks) {
-        return 0;
-    }
-    protected final float getV0(float pPartialTicks) {
-        return 0;
-    }
-    protected final float getV1(float pPartialTicks) {
-        return 0;
-    }
 }

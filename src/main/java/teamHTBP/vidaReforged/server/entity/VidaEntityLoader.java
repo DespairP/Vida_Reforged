@@ -42,4 +42,14 @@ public class VidaEntityLoader {
                     .updateInterval(10)
                     .build("spark_entity")
             );
+
+
+    public static final RegistryObject<EntityType<TrailEntity>> TRAIL = ENTITIES
+            .register("trail", () -> EntityType.Builder
+                    .of(TrailEntity::new, MobCategory.MISC)
+                    .sized(1F, 1F)
+                    .clientTrackingRange(4)
+                    .updateInterval(10)
+                    .build("trail_entity")
+            );
 }

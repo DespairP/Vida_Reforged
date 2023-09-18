@@ -132,7 +132,7 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
 
     @Override
     public @NotNull String writeToString() {
-        return String.format(Locale.ROOT,"%s %d %d %d %d %.2f",this.toString(), getAlpha(), getColorRed(), getColorGreen(), getColorBlue(), getSize());
+        return String.format(Locale.ROOT,"%s %d %d %d %d %.2f", this.toString(), getAlpha(), getColorRed(), getColorGreen(), getColorBlue(), getSize());
     }
 
     @Override

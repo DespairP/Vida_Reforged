@@ -89,6 +89,9 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
 
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
+        if(magicWordCraftingButton != null && magicWordCraftingButton.isHovered()){
+            graphics.renderTooltip(this.font, Component.translatable("tootip.vida_reforged.word_crafting_notice"),  mouseX,  mouseY);
+        }
     }
 
     @Override
@@ -99,6 +102,7 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
         this.renderTooltip(graphics,mouseX,mouseY);
         this.compareServerAndClientSideAndUpdate();
         renderMagicWords(graphics, mouseX, mouseY, partialTicks);
+        this.renderLabels(graphics, mouseX, mouseY);
     }
 
     public void renderInventory(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){

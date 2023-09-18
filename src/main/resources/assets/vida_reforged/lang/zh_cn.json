@@ -274,6 +274,7 @@
  "guidebook.subtitle.vida_reforged.vida_21":"魔法作物",
  "tootip.vida_reforged.unlock_magic_word_paper": "<右键解锁以下词条>",
  "tootip.vida_reforged.prism_screen_notice": "将宝石放入，调整镜片旋钮至蓝色火焰出现",
+ "tootip.vida_reforged.word_crafting_notice": "将合适物品放入，选择合适的词条（再次点击词条取消选择），点击合成可获得合成品",
  "key.category.vida": "生命",
  "key.keyboard.open_magic_word": "打开词条界面",
  "element.vida_reforged.void": "虚空",
