@@ -122,9 +122,6 @@ public class CollectorBlockEntity extends VidaBlockEntity implements IVidaTickab
         //this.collectItem = ItemStack.EMPTY;
         this.progress = 0;
         this.collectElement = VidaElement.EMPTY;
-        ItemStack stack = new ItemStack(VidaItemLoader.UNLOCK_MAGIC_WORD_PAPER.get(), 1);
-        stack.getOrCreateTag().putString("wordId","vida_reforged:energy");
-        this.collectItem = stack;
         this.isInProgress = false;
     }
 
@@ -136,6 +133,10 @@ public class CollectorBlockEntity extends VidaBlockEntity implements IVidaTickab
         if(progress >= MAX_PROGRESS){
             //generate
             reset();
+            //
+            ItemStack stack = new ItemStack(VidaItemLoader.UNLOCK_MAGIC_WORD_PAPER.get(), 1);
+            stack.getOrCreateTag().putString("wordId","vida_reforged:energy");
+            this.collectItem = stack;
             this.step = 0;
         }
     }

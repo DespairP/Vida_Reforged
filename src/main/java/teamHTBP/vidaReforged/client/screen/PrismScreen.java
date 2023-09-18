@@ -70,8 +70,10 @@ public class PrismScreen extends AbstractContainerScreen<PrismMenu> {
     }
 
     @Override
-    protected void renderLabels(GuiGraphics p_281635_, int p_282681_, int p_283686_) {
-
+    protected void renderLabels(GuiGraphics graphics, int x, int y) {
+        if(this.resultButton.isHovered()){
+            graphics.renderTooltip(this.font, Component.translatable("tootip.vida_reforged.prism_screen_notice"), x, y);
+        }
     }
 
     @Override
@@ -92,6 +94,7 @@ public class PrismScreen extends AbstractContainerScreen<PrismMenu> {
         this.button$2.render(graphics, mouseX, mouseY, partialTicks);
         this.resultButton.render(graphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(graphics,mouseX,mouseY);
+        this.renderLabels(graphics, mouseX, mouseY);
     }
 
     public void renderMirror(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){

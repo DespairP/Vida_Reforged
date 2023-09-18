@@ -1,5 +1,7 @@
 package teamHTBP.vidaReforged.client;
 
+import com.mojang.blaze3d.pipeline.RenderTarget;
+import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -9,16 +11,23 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL30;
+import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.plugin.ModsInfo;
 
+import javax.annotation.Nonnull;
 import java.util.function.Function;
 
 
 public class RenderTypeHandler extends RenderStateShard{
+    static final ResourceLocation TAIL = new ResourceLocation(VidaReforged.MOD_ID, "textures/particle/trail.png");
 
     public RenderTypeHandler(String p_110161_, Runnable p_110162_, Runnable p_110163_) {
         super(p_110161_, p_110162_, p_110163_);
@@ -66,6 +75,33 @@ public class RenderTypeHandler extends RenderStateShard{
         @Override
         public String toString() {
             return "vida_reforged:em_rend";
+        }
+    };
+
+    public static final ParticleRenderType TRAIL_SHADER = new ParticleRenderType() {
+        @Override
+        public void begin(BufferBuilder bufferBuilder, TextureManager textureManager) {
+            setShader();
+            RenderSystem.setShaderTexture(0, TAIL);
+            RenderSystem.setShaderColor(
+                    1,
+                    1,
+                    1,
+                    1
+            );
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+            RenderSystem.depthMask(true);
+            RenderSystem.enableCull();
+        }
+
+        void setShader() {
+            RenderSystem.setShader(GameRenderer::getParticleShader);
+        }
+
+        @Override
+        public void end(@Nonnull Tesselator tesselator) {
+            RenderSystem.depthMask(true);
         }
     };
 
