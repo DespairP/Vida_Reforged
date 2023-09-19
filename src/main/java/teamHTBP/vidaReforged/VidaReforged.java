@@ -49,6 +49,6 @@ public class VidaReforged {
         //VidaCommandManager.ARGUMENT_TYPE.register(bus);
         VidaAdvancementTriggers.init();
         VidaPacketManager.register();
-        EntityDataSerializer.init();
+        EntityDataSerializer.DATA_SERIALIZER.register(bus);
     }
 }

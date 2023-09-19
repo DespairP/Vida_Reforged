@@ -26,12 +26,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class TrailEntity extends Entity implements IEntityAdditionalSpawnData {
-    private static final EntityDataAccessor<BaseBezierParticleType> PARTICLE = SynchedEntityData.defineId(TrailEntity.class, EntityDataSerializer.BEZIER_PARTICLE);
+    private static final EntityDataAccessor<BaseBezierParticleType> PARTICLE = SynchedEntityData.defineId(TrailEntity.class, EntityDataSerializer.BEZIER_PARTICLE_SERIALIZER.get());
     private static final EntityDataAccessor<Integer> MAX_LIFE_TIME = SynchedEntityData.defineId(TrailEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> LIFE_TIME = SynchedEntityData.defineId(TrailEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Bezier3Curve> BEZ = SynchedEntityData.defineId(TrailEntity.class, EntityDataSerializer.CURVE);
-    private static final EntityDataAccessor<ARGBColor> FROM_COLOR = SynchedEntityData.defineId(TrailEntity.class, EntityDataSerializer.COLOR);
-    private static final EntityDataAccessor<ARGBColor> TO_COLOR = SynchedEntityData.defineId(TrailEntity.class, EntityDataSerializer.COLOR);
+    private static final EntityDataAccessor<Bezier3Curve> BEZ = SynchedEntityData.defineId(TrailEntity.class, EntityDataSerializer.CURVE_SERIALIZER.get());
+    private static final EntityDataAccessor<ARGBColor> FROM_COLOR = SynchedEntityData.defineId(TrailEntity.class, EntityDataSerializer.COLOR_SERIALIZER.get());
+    private static final EntityDataAccessor<ARGBColor> TO_COLOR = SynchedEntityData.defineId(TrailEntity.class, EntityDataSerializer.COLOR_SERIALIZER.get());
     private int maxLifeTime = 200;
 
     public void initParticle(Player player, Bezier3Curve curve){
@@ -134,7 +134,7 @@ public class TrailEntity extends Entity implements IEntityAdditionalSpawnData {
             }
         }
 
-        var t = (Minecraft.getInstance().getFrameTime() + this.entityData.get(LIFE_TIME)) / this.entityData.get(MAX_LIFE_TIME);
+        var t = (this.entityData.get(LIFE_TIME)) / this.entityData.get(MAX_LIFE_TIME);
         Vector3d point = this.entityData.get(BEZ).getPoint(t);
         setPos(point.x, point.y, point.z);
 

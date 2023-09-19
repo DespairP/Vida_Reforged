@@ -4,13 +4,14 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import org.joml.Vector3d;
-import org.joml.Vector3f;
+import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.client.particles.options.BaseBezierParticleType;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.Bezier3Curve;
-
-import static net.minecraft.network.syncher.EntityDataSerializers.registerSerializer;
 
 public class EntityDataSerializer {
     public static final net.minecraft.network.syncher.EntityDataSerializer<BaseBezierParticleType> BEZIER_PARTICLE = new net.minecraft.network.syncher.EntityDataSerializer.ForValueType<BaseBezierParticleType>() {
@@ -90,11 +91,12 @@ public class EntityDataSerializer {
         }
     };
 
-        static {
-        registerSerializer(BEZIER_PARTICLE);
-        registerSerializer(CURVE);
-        registerSerializer(COLOR);
-    }
+    public final static DeferredRegister<net.minecraft.network.syncher.EntityDataSerializer<?>> DATA_SERIALIZER = DeferredRegister.create(ForgeRegistries.Keys.ENTITY_DATA_SERIALIZERS, VidaReforged.MOD_ID);
 
-    public static void init(){}
+    public final static RegistryObject<net.minecraft.network.syncher.EntityDataSerializer<BaseBezierParticleType>> BEZIER_PARTICLE_SERIALIZER = DATA_SERIALIZER.register("bezier_particle", ()-> BEZIER_PARTICLE);
+
+    public final static RegistryObject<net.minecraft.network.syncher.EntityDataSerializer<Bezier3Curve>> CURVE_SERIALIZER = DATA_SERIALIZER.register("curve", ()-> CURVE);
+
+    public final static RegistryObject<net.minecraft.network.syncher.EntityDataSerializer<ARGBColor>> COLOR_SERIALIZER = DATA_SERIALIZER.register("color", ()-> COLOR);
+
 }
