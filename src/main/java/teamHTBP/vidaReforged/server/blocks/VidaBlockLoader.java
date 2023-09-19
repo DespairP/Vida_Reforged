@@ -303,6 +303,23 @@ public class VidaBlockLoader {
     public static RegistryObject<Block> GLOWING_LIGHT_BLOCK_FIRE = BLOCKS.register("glowing_light_fire", () -> new GlowingLightBlock(VidaElement.FIRE));
     @RegisterItemBlock
     public static RegistryObject<Block> GLOWING_LIGHT_BLOCK_EARTH = BLOCKS.register("glowing_light_earth", () -> new GlowingLightBlock(VidaElement.EARTH));
+
+    /*食物*/
+    @RegisterItemBlock
+    public final static RegistryObject<Block> FRIED_CRIMSON_CREST_PLACED = registerDecoBlock("fried_crimson_crest_placed", STONE,YAXIS,true);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> HEART_OF_WAL_JUICE_PLACED = registerDecoBlock("heart_of_wal_juice_placed", STONE,YAXIS,true);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> NITRITE_TEA_PLACED = registerDecoBlock("nitrite_tea_placed", STONE,YAXIS,true);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> PLAM_STEM_TEA_PLACED = registerDecoBlock("plam_stem_tea_placed", STONE,YAXIS,true);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> PROCESSED_SULLEN_HYDRANGEA_BERRY_PLACED = registerDecoBlock("processed_sullen_hydrangea_berry_placed", STONE,YAXIS,true);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SULLEN_HYDRANGEA_SOUP_PLACED = registerDecoBlock("sullen_hydrangea_soup_placed", STONE,YAXIS,true);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> DRIED_SWEET_CYAN_REED_PLACED = registerDecoBlock("dried_sweet_cyan_reed_placed", STONE,YAXIS,true);
+
     @RegisterItemBlock
     public final static RegistryObject<Block> TIME_ELEMENT_CRAFTING_TABLE = BLOCKS.register("time_element_crafting_table", TimeElementCraftingTable::new);
 

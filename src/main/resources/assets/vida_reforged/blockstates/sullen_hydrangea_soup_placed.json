@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=east":  { "model": "vida_reforged:block/food/sullen_hydrangea_soup_placed","y": 90},
+    "facing=south":  { "model": "vida_reforged:block/food/sullen_hydrangea_soup_placed"},
+    "facing=west": {"model": "vida_reforged:block/food/sullen_hydrangea_soup_placed","y": 270},
+    "facing=north": {"model": "vida_reforged:block/food/sullen_hydrangea_soup_placed","y": 180}
+  }
+}

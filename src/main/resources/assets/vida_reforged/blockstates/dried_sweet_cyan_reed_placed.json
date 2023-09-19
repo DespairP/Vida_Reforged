@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=east":  { "model": "vida_reforged:block/food/dried_sweet_cyan_reed_placed","y": 90},
+    "facing=south":  { "model": "vida_reforged:block/food/dried_sweet_cyan_reed_placed"},
+    "facing=west": {"model": "vida_reforged:block/food/dried_sweet_cyan_reed_placed","y": 270},
+    "facing=north": {"model": "vida_reforged:block/food/dried_sweet_cyan_reed_placed","y": 180}
+  }
+}

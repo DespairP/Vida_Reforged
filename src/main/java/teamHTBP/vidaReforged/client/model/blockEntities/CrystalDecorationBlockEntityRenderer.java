@@ -54,6 +54,8 @@ public class CrystalDecorationBlockEntityRenderer implements BlockEntityRenderer
         if(!entity.hasItem()){
             return;
         }
+        return;
+        /*
         ResourceLocation iconLocation = icon(entity.getItemWithoutClear().getItem());
 
         float uMin = 0;
@@ -65,6 +67,9 @@ public class CrystalDecorationBlockEntityRenderer implements BlockEntityRenderer
             return;
         }
 
+        if(iconLocation == null){
+            return;
+        }
         // 渲染中间的宝石块
         poseStack.pushPose();
         RenderSystem.enableBlend();
@@ -89,6 +94,8 @@ public class CrystalDecorationBlockEntityRenderer implements BlockEntityRenderer
 
         ((MultiBufferSource.BufferSource)bufferSource).endBatch(renderType);
         poseStack.popPose();
+        */
+
     }
 
     public ResourceLocation icon(Item item){
