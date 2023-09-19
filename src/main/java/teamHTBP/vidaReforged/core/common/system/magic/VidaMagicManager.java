@@ -82,6 +82,7 @@ public class VidaMagicManager {
     public static final Map<String,VidaMagic.IInvokable> NAME_TO_MAGIC_MAP = ImmutableMap.of(
             "party_parrot", PARTY_PARROT,
             "spark", SPARK
+
     );
 
 
