@@ -12,7 +12,7 @@ public class HideJEIGuiHandler<T extends AbstractContainerScreen<?>> implements 
 
     @Override
     public @NotNull List<Rect2i> getGuiExtraAreas(@NotNull T containerScreen) {
-        return ImmutableList.of(new Rect2i(0,0,containerScreen.width, containerScreen.height));
+        return ImmutableList.of(new Rect2i(0,0, containerScreen.width, containerScreen.height));
     }
 
     public static <T extends AbstractContainerScreen<?>> HideJEIGuiHandler<T> create(Class<T> clazz){

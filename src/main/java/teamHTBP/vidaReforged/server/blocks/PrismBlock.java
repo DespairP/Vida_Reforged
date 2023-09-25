@@ -59,13 +59,12 @@ public class PrismBlock extends VidaBaseEntityBlock<PrismBlockEntity> {
         return SHAPE;
     }
 
+    @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if (pLevel.isClientSide) {
-            return InteractionResult.SUCCESS;
-        } else {
+        if (!pLevel.isClientSide) {
             this.openContainer(pLevel, pPos, pPlayer);
-            return InteractionResult.SUCCESS;
         }
+        return InteractionResult.SUCCESS;
     }
 
     protected void openContainer(Level pLevel, BlockPos pPos, Player pPlayer) {

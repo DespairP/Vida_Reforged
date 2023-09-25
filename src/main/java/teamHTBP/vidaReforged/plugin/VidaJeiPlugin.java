@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import teamHTBP.vidaReforged.client.screen.MagicWordCraftingTableScreen;
 import teamHTBP.vidaReforged.client.screen.MagicWordScreen;
 import teamHTBP.vidaReforged.client.screen.PrismScreen;
+import teamHTBP.vidaReforged.client.screen.VidaWandCraftingScreen;
 import teamHTBP.vidaReforged.core.common.system.guidebook.TeaconGuideBook;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
@@ -26,6 +27,7 @@ public class VidaJeiPlugin implements IModPlugin {
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addGuiContainerHandler(MagicWordScreen.class, HideJEIGuiHandler.create(MagicWordScreen.class));
         registration.addGuiContainerHandler(MagicWordCraftingTableScreen.class, HideJEIGuiHandler.create(MagicWordCraftingTableScreen.class));
+        registration.addGuiContainerHandler(VidaWandCraftingScreen.class, HideJEIGuiHandler.create(VidaWandCraftingScreen.class));
         registration.addGuiContainerHandler(PrismScreen.class, HideJEIGuiHandler.create(PrismScreen.class));
         registration.addGlobalGuiHandler(new HideJEIScreenHandler());
     }

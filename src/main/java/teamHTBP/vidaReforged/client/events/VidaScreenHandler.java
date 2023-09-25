@@ -23,6 +23,7 @@ public class VidaScreenHandler {
             MenuScreens.register(VidaMenuContainerTypeLoader.MAGIC_WORD_CRAFTING.get(), MagicWordCraftingTableScreen::new);
             MenuScreens.register(VidaMenuContainerTypeLoader.PRISM.get(), PrismScreen::new);
             MenuScreens.register(VidaMenuContainerTypeLoader.MAGIC_WORD_VIEWING.get(), MagicWordScreen::new);
+            MenuScreens.register(VidaMenuContainerTypeLoader.VIDA_WAND_CRAFTING_TABLE.get(), VidaWandCraftingScreen::new);
         });
     }
 }

@@ -102,4 +102,18 @@ public class VidaMenuContainerTypeLoader {
                     }
             )
     );
+
+
+    public final static RegistryObject<MenuType<VidaWandCraftingTableMenu>> VIDA_WAND_CRAFTING_TABLE = MENU_CONTAINER_TYPE.register(
+            VidaWandCraftingTableMenu.MENU_NAME,
+            () -> IForgeMenuType.create(
+                    (windowId, inv, data) ->{
+                        return new VidaWandCraftingTableMenu(
+                                windowId,
+                                inv,
+                                data.readBlockPos()
+                        );
+                    }
+            )
+    );
 }

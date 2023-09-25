@@ -18,6 +18,7 @@ import teamHTBP.vidaReforged.client.model.armors.head.VidaBasedHelmet;
 import teamHTBP.vidaReforged.client.model.armors.leggings.BlackMetalLeggings;
 import teamHTBP.vidaReforged.client.model.armors.leggings.VidaBasedLeggings;
 import teamHTBP.vidaReforged.client.model.blockModel.InjectTableModel;
+import teamHTBP.vidaReforged.client.model.itemModel.VidaWandModel;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
@@ -41,6 +42,7 @@ public class LayerRegistryHandler {
         register(event, VidaBasedLeggings.APPRENTICE_LAYER_LOCATION, LayerManager::createApprenticeBodyLayer, VidaBasedLeggings.class);
         register(event, VidaApprenticeBoots.APPRENTICE_LAYER_LOCATION, LayerManager::createApprenticeBodyLayer, VidaApprenticeBoots.class);
         register(event, InjectTableModel.APPRENTICE_LAYER_LOCATION, InjectTableModel::createBodyLayer, InjectTableModel.class);
+        register(event, VidaWandModel.LAYER_LOCATION, VidaWandModel::createBodyLayer, VidaWandModel.class);
 
     }
 
@@ -63,7 +65,7 @@ public class LayerRegistryHandler {
     }
 
 
-    public static <T extends Model> Supplier<T> getModelSupplier(ModelLayerLocation layerLocation,Class<T> clazz){
+    public static <T extends Model> Supplier<T> getModelSupplier(ModelLayerLocation layerLocation, Class<T> clazz){
         return (Supplier<T>) modelSuppliers.get(layerLocation);
     }
 }

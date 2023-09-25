@@ -14,11 +14,12 @@ public class VidaWandEquipment extends Item {
     /**所属元素*/
     public VidaElement element = VidaElement.EMPTY;
     /***/
-    public int count = 0;
 
 
 
     public VidaWandEquipment() {
         super(new Properties().stacksTo(1));
     }
+
+
 }

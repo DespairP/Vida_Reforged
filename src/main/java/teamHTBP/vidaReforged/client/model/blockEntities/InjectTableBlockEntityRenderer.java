@@ -47,7 +47,7 @@ public class InjectTableBlockEntityRenderer implements BlockEntityRenderer<Injec
             poseStack.pushPose();
             poseStack.translate(0.5f,-0.2f, 0.5f);
             poseStack.mulPose(Axis.YP.rotationDegrees(angle));
-            cubeModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityTranslucent(TEXTURE)), lightOverlayIn,packetOverlayIn,1, 1, 1, 1);
+            cubeModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityTranslucent(TEXTURE)), lightOverlayIn, packetOverlayIn,1, 1, 1, 1);
             poseStack.popPose();
         }
 
