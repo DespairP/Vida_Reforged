@@ -142,13 +142,13 @@ public class VidaWandCraftingScreen extends AbstractContainerScreen<VidaWandCraf
         //思考中
         VidaWandModel model = LayerRegistryHandler.getModelSupplier(VidaWandModel.LAYER_LOCATION, VidaWandModel.class).get();
         this.equipmentSlots.forEach(((position, slot) -> {
-            int packedLight = 15728880;
-            float alphaIn = 0.4f;
-            if(this.isHovering(slot, (double)mouseX, (double)mouseY) && slot.isActive()){
-                alphaIn = 1;
+            int packedLight = 7 << 4 | 7 << 20;
+
+            if(this.isHovering(slot, mouseX, mouseY) && slot.isActive()){
+                packedLight = 15 << 4 | 15 << 20;
             }
 
-            model.renderPartToBuffer(position, pPoseStack, graphics.bufferSource().getBuffer(RenderType.entityTranslucent(VIDA_WAND_MODEL)), packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, alphaIn);
+            model.renderPartToBuffer(position, pPoseStack, graphics.bufferSource().getBuffer(RenderType.entityTranslucent(VIDA_WAND_MODEL)), packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
         }));
 
         graphics.bufferSource().endBatch();
