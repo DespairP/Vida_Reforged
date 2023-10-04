@@ -3,6 +3,8 @@ package teamHTBP.vidaReforged.core.common.system.magic;
 import lombok.Data;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.item.Position;
 
@@ -21,8 +23,10 @@ public class VidaMagicEquipmentAttribute {
     /**饰品所属元素*/
     private VidaElement element = VidaElement.EMPTY;
     /**饰品对应的模型路径，{@link teamHTBP.vidaReforged.client.events.LayerRegistryHandler}*/
+    @OnlyIn(Dist.CLIENT)
     private ModelLayerLocation modelLayerLocation;
     /**饰品对应的模型材质*/
+    @OnlyIn(Dist.CLIENT)
     private ResourceLocation modelTexture;
     /**饰品影响的发射物个数*/
     private int shootBaseCount = 1;

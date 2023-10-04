@@ -21,9 +21,16 @@ import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static teamHTBP.vidaReforged.client.screen.components.magicWords.MagicWordWidget.*;
+import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
+
+@Deprecated(forRemoval = true)
 public class MagicWordSingleWidget extends AbstractWidget {
+    public static final int HEIGHT = 20;
+    public static final int WIDTH = 85;
+    public static ResourceLocation QUESTION_MARK = new ResourceLocation(MOD_ID, "textures/icons/magic_word/question_mark.png");
+    public static ResourceLocation DINKFONT = new ResourceLocation(MOD_ID, "dinkie");
+    public static Integer ICON_PIXEL = 16;
     public final MagicWord magicWord;
     public FloatRange upperBorderPoint = new FloatRange(0,0, getWidth());
     public FloatRange downBorderPoint = new FloatRange(0,0, getWidth());
@@ -183,6 +190,6 @@ public class MagicWordSingleWidget extends AbstractWidget {
 
     @Override
     public void onClick(double x, double y) {
-        this.model.setSelectWord(magicWord.element(),magicWord.name());
+        this.model.setSelectWord(magicWord.name());
     }
 }

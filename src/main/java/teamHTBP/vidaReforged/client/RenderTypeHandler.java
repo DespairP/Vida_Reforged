@@ -105,6 +105,18 @@ public class RenderTypeHandler extends RenderStateShard{
         }
     };
 
+    public static final Function<ResourceLocation, RenderType> ENTITY_GLOW_WAND = Util.memoize((p_286151_) -> {
+        RenderType.CompositeState rendertype$compositestate = RenderType.CompositeState.builder()
+                .setShaderState(RENDERTYPE_ENTITY_SHADOW_SHADER)
+                .setTextureState(new RenderStateShard.TextureStateShard(p_286151_, false, false))
+                .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                .setCullState(NO_CULL)
+                .setLightmapState(LIGHTMAP)
+                .setOverlayState(OVERLAY)
+                .createCompositeState(true);
+        return RenderType.create("entity_glowing_wand", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, false, false, rendertype$compositestate);
+    });
+
     private static RenderType.CompositeState translucentState(RenderStateShard.ShaderStateShard p_173208_) {
         return RenderType.CompositeState.builder().setLightmapState(LIGHTMAP).setShaderState(p_173208_).setTextureState(BLOCK_SHEET_MIPPED).setTransparencyState(TRANSLUCENT_TRANSPARENCY).setOutputState(TRANSLUCENT_TARGET).createCompositeState(true);
     }

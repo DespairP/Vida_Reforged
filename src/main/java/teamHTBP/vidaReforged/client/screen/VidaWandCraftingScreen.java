@@ -7,18 +7,17 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import teamHTBP.vidaReforged.client.RenderTypeHandler;
 import teamHTBP.vidaReforged.client.events.LayerRegistryHandler;
 import teamHTBP.vidaReforged.client.model.itemModel.VidaWandModel;
 import teamHTBP.vidaReforged.core.common.item.Position;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
-import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 import teamHTBP.vidaReforged.server.items.VidaWandEquipment;
 import teamHTBP.vidaReforged.server.menu.VidaWandCraftingTableMenu;
 import teamHTBP.vidaReforged.server.menu.slots.VidaWandEquipmentSlot;
@@ -158,7 +157,7 @@ public class VidaWandCraftingScreen extends AbstractContainerScreen<VidaWandCraf
 
         // 按X轴旋转
         pPoseStack.mulPose(Axis.XP.rotationDegrees(20));
-        // 再按Y轴转45度，让方块左边和右边面向玩家，呈现三视图的状态
+        // 再按Y轴转95度
         pPoseStack.mulPose(Axis.YP.rotationDegrees(95 + rotateY));
 
         // 渲染模型
@@ -173,7 +172,7 @@ public class VidaWandCraftingScreen extends AbstractContainerScreen<VidaWandCraf
             if(!slotItem.isEmpty() && slotItem.getItem() instanceof VidaWandEquipment equipment){
                 ResourceLocation texture = equipment.getAttribute().getModelTexture();;
                 VidaWandModel equipmentModel = LayerRegistryHandler.getModelSupplier(equipment.getAttribute().getModelLayerLocation(), VidaWandModel.class).get();
-                equipmentModel.renderPartToBuffer(position, pPoseStack, graphics.bufferSource().getBuffer(RenderType.entityShadow(texture)), packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+                equipmentModel.renderPartToBuffer(position, pPoseStack, graphics.bufferSource().getBuffer(RenderTypeHandler.ENTITY_GLOW_WAND.apply(texture)), packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
                 return;
             }
 

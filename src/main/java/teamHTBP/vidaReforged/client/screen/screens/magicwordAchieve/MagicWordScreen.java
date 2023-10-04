@@ -1,17 +1,14 @@
-package teamHTBP.vidaReforged.client.screen;
+package teamHTBP.vidaReforged.client.screen.screens.magicwordAchieve;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import teamHTBP.vidaReforged.client.screen.components.guidebooks.GuideBookScrollTextArea;
 import teamHTBP.vidaReforged.client.screen.components.magicWords.MagicWordShowSection;
-import teamHTBP.vidaReforged.client.screen.components.magicWords.MagicWordSingleListWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaViewMagicWordViewModel;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
@@ -24,7 +21,6 @@ public class MagicWordScreen extends AbstractContainerScreen<MagicWordViewMenu> 
     FloatRange alphaRange = new FloatRange(0, 0, 0.75f);
     VidaViewMagicWordViewModel model;
     MagicWordSingleListWidget singleList;
-
     MagicWordShowSection textArea;
 
     public MagicWordScreen(MagicWordViewMenu menu, Inventory playerInventory, Component component) {
@@ -89,13 +85,25 @@ public class MagicWordScreen extends AbstractContainerScreen<MagicWordViewMenu> 
         super.clearWidgets();
     }
 
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double partialTicks) {
+        List<GuiEventListener> listeners = new ArrayList<>();
 
+        for(GuiEventListener guieventlistener : this.children()) {
+            if (guieventlistener.isMouseOver(mouseX, mouseY)) {
+                listeners.add(guieventlistener);
+            }
+        }
 
+        boolean isScrolled = listeners.stream().reduce(false, (total, listener) -> listener.mouseScrolled(mouseX, mouseY, partialTicks), Boolean::logicalOr);
+
+        return isScrolled;
+    }
 
     @Override
     public List<? extends GuiEventListener> children() {
         List<GuiEventListener> listeners = new ArrayList<>();
-        //listeners.addAll(this.singleList.getChildren());
+        listeners.addAll(this.singleList.getChildren());
         listeners.add(this.singleList);
         listeners.add(this.textArea.getChildren());
         return listeners;

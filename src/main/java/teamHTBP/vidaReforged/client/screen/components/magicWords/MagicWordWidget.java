@@ -11,6 +11,7 @@ import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
+import teamHTBP.vidaReforged.client.screen.screens.magicwordCrafting.MagicWordListWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.ui.component.IDataObserver;
@@ -25,6 +26,10 @@ import java.util.Optional;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
+/**
+ * migrate to {@link teamHTBP.vidaReforged.client.screen.components.common.MagicWordButton}
+ * */
+@Deprecated(forRemoval = true)
 public class MagicWordWidget extends AbstractWidget {
     public static final int HEIGHT = 20;
     public static final int WIDTH = 85;
@@ -177,7 +182,7 @@ public class MagicWordWidget extends AbstractWidget {
     }
 
     public int getScroll(){
-        return this.container == null ? 0 : this.container.getScroll();
+        return 0;
     }
 
     @Override

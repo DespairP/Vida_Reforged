@@ -20,11 +20,12 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Optional;
 
-import static teamHTBP.vidaReforged.client.screen.components.magicWords.MagicWordWidget.QUESTION_MARK;
+import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
 public class MagicWordShowSection extends AbstractWidget {
     VidaViewMagicWordViewModel viewModel;
     GuideBookScrollTextArea textArea;
+    public static ResourceLocation QUESTION_MARK = new ResourceLocation(MOD_ID, "textures/icons/magic_word/question_mark.png");
     public int topHeight = 32;
 
     public MagicWord magicWord = null;

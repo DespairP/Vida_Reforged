@@ -3,16 +3,12 @@ package teamHTBP.vidaReforged.plugin;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.helpers.IPlatformFluidHelper;
 import mezz.jei.api.registration.*;
-import mezz.jei.api.runtime.IJeiRuntime;
-import mezz.jei.api.runtime.config.IJeiConfigManager;
 import net.minecraft.resources.ResourceLocation;
-import teamHTBP.vidaReforged.client.screen.MagicWordCraftingTableScreen;
-import teamHTBP.vidaReforged.client.screen.MagicWordScreen;
-import teamHTBP.vidaReforged.client.screen.PrismScreen;
+import teamHTBP.vidaReforged.client.screen.screens.magicwordCrafting.MagicWordCraftingTableScreen;
+import teamHTBP.vidaReforged.client.screen.screens.magicwordAchieve.MagicWordScreen;
+import teamHTBP.vidaReforged.client.screen.screens.common.PrismScreen;
 import teamHTBP.vidaReforged.client.screen.VidaWandCraftingScreen;
-import teamHTBP.vidaReforged.core.common.system.guidebook.TeaconGuideBook;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 

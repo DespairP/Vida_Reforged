@@ -9,10 +9,13 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import teamHTBP.vidaReforged.core.common.item.Position;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
+@OnlyIn(Dist.CLIENT)
 public class VidaWandModel extends Model {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "vida_wand_model"), "main");
     public static final ModelLayerLocation TEST_LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "vida_wand_model_test"), "main");

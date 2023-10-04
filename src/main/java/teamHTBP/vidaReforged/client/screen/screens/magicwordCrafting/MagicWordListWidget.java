@@ -1,35 +1,32 @@
-package teamHTBP.vidaReforged.client.screen.components.magicWords;
+package teamHTBP.vidaReforged.client.screen.screens.magicwordCrafting;
 
 import com.google.common.collect.ImmutableMap;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
-import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.client.screen.components.common.MagicWordButton;
+import teamHTBP.vidaReforged.client.screen.components.common.ScrolledContainer;
 import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
-import teamHTBP.vidaReforged.core.utils.math.FloatRange;
-import teamHTBP.vidaReforged.helper.RenderHelper;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * VidaWandCraftingTableScreen子组件
+ * 用于显示右边的词条
+ * */
 public class MagicWordListWidget extends AbstractWidget {
     public final static int WIDTH = 180;
     public final Map<VidaElement, List<MagicWordButton>> widgetMap;
     public VidaElement currentSelectedElement = VidaElement.GOLD;
-    private AtomicInteger scroll = new AtomicInteger(0);
-    private FloatRange scrollBarAlpha = new FloatRange(0,0,0.3f);
+    public ScrolledContainer<MagicWordButton> scrolledContainer;
     VidaMagicWordViewModel model;
     MagicWordButton.ClickListener clickListener = (element, magicId)->{
         this.model.setSelectWord(element, magicId);
@@ -43,10 +40,13 @@ public class MagicWordListWidget extends AbstractWidget {
     }
 
     public void initWidget(){
+        //
+        this.scrolledContainer = new ScrolledContainer<>(getX(), getY(), this.width, this.height);
+
+        //
         for(VidaElement element : VidaElement.values()){
             widgetMap.put(element,new LinkedList<>());
         }
-
 
         Map<VidaElement,AtomicInteger> offset = ImmutableMap.of(
                 VidaElement.GOLD, new AtomicInteger(0),
@@ -57,12 +57,13 @@ public class MagicWordListWidget extends AbstractWidget {
         );
 
         // 开始初始化词条按钮
+        for (int k = 0; k < 10; k++) {
         for(MagicWord word : MagicWordManager.getAllMagicWords()){
             // 元素内第n个词条
             int i = offset.getOrDefault(word.element(), new AtomicInteger(0)).getAndIncrement();
 
-            int x = (i % 2) * MagicWordWidget.WIDTH;
-            int y = (int)Math.floor(i / 2.0f) * MagicWordWidget.HEIGHT;
+            int x = (i % 2) * MagicWordButton.WIDTH;
+            int y = (int)Math.floor(i / 2.0f) * MagicWordButton.HEIGHT;
             int offsetX = (i % 2) * 5;
             int offsetY = (int)Math.floor(i / 2.0f) * 10;
             boolean isUnLocked = Optional.ofNullable(this.model.playerMagicWords.getValue()).orElse(new ArrayList<>()).contains(word.name());
@@ -79,8 +80,7 @@ public class MagicWordListWidget extends AbstractWidget {
             button.setVisible(false);
 
             widgetMap.get(word.element()).add(button);
-        }
-
+        }}
 
 
         // 初始化过滤器
@@ -107,8 +107,8 @@ public class MagicWordListWidget extends AbstractWidget {
                 .forEach(element -> this.widgetMap.get(element).forEach(filteredWord -> filteredWord.setVisible(false)));
 
         //
-        this.scroll.set(0);
-        this.scrollChildren(0, 0);
+        this.scrolledContainer.clearAllComponent();
+        filteredWords.forEach(widget -> this.scrolledContainer.add(widget));
     }
 
 
@@ -129,58 +129,14 @@ public class MagicWordListWidget extends AbstractWidget {
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        PoseStack poseStack = graphics.pose();
         // 背景
-        poseStack.pushPose();
-        graphics.fillGradient( getX(), getY(), getX() + this.width, getY() + this.height, -1072689136, -804253680);
-        poseStack.popPose();
-
-        // 画子组件
-        poseStack.pushPose();
-        RenderSystem.enableBlend();
-        RenderHelper.renderScissor(getX(),getY(), width, height);
-        getCurrentWidgetList().forEach((magicWordWidget -> magicWordWidget.render(graphics, mouseX, mouseY, partialTicks)));
-        RenderSystem.disableScissor();
-        RenderSystem.disableBlend();
-        poseStack.popPose();
-
-        // 画滚动条
-        drawScrollBar(graphics, mouseX, mouseY, partialTicks);
+        this.scrolledContainer.render(graphics, mouseX, mouseY, partialTicks);
     }
 
-    private void drawScrollBar(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
-        float alpha = scrollBarAlpha.change(isHovered, 0.02f);
-
-        PoseStack poseStack = graphics.pose();
-        poseStack.pushPose();
-        VertexConsumer consumer = graphics.bufferSource().getBuffer(RenderType.gui());
-        int iconHeight = getHeight() - getMaxScrollHeight();
-        Matrix4f matrix4f = poseStack.last().pose();
-        matrix4f.translate(getX() + getWidth(), getY() - scroll.get(), 0);
-        consumer.vertex(matrix4f, 0, 0, 0).color(0.8f, 0.8f, 0.8f, alpha).endVertex();
-        consumer.vertex(matrix4f, 0, iconHeight, 0).color(0.8f, 0.8f, 0.8f, alpha).endVertex();
-        consumer.vertex(matrix4f, 6, iconHeight, 0).color(0.8f, 0.8f, 0.8f, alpha).endVertex();
-        consumer.vertex(matrix4f, 6, 0, 0).color(0.8f, 0.8f, 0.8f, alpha).endVertex();
-        poseStack.popPose();
-    }
 
     @Override
     protected void updateWidgetNarration(NarrationElementOutput output) {}
 
-    @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double scroll) {
-        int nextScroll = this.scroll.get() + (int)scroll * 10;
-        int maxScroll = getMaxScrollHeight();
-        this.scroll.set(nextScroll);
-        if(nextScroll * -1 > maxScroll){
-            this.scroll.set(maxScroll * -1);
-        }
-        if(nextScroll > 0){
-            this.scroll.set(0);
-        }
-        this.scrollChildren(0, this.scroll.get());
-        return true;
-    }
 
     public void scrollChildren(int scrollXOffset, int scrollYOffset){
         this.widgetMap.values()
@@ -188,18 +144,8 @@ public class MagicWordListWidget extends AbstractWidget {
                         magicWordButtons.forEach(magicWordButton -> magicWordButton.setOffsetY(scrollYOffset)));
     }
 
-    public int getScroll() {
-        return scroll.get();
-    }
-
     public List<MagicWordButton> getCurrentWidgetList(){
         return widgetMap.get(currentSelectedElement);
-    }
-
-    public int getMaxScrollHeight(){
-        int size = getCurrentWidgetList().size();
-        int allWordHeight = (int)Math.floor(size / 2.0f) * (MagicWordWidget.HEIGHT + 10);
-        return Math.max(0, allWordHeight - getHeight());
     }
 
 
@@ -209,8 +155,9 @@ public class MagicWordListWidget extends AbstractWidget {
     public void playDownSound(SoundManager manager) {}
 
     public Collection<? extends GuiEventListener> getChildren(){
-        List<MagicWordButton> listeners = new ArrayList<>();
-        this.widgetMap.forEach( (key,value)-> listeners.addAll(value) );
+        List<VidaWidget> listeners = new ArrayList<>();
+        this.widgetMap.forEach( (key,value)-> listeners.addAll( value ) );
+        listeners.add(this.scrolledContainer);
         return listeners;
     }
 }

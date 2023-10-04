@@ -4,12 +4,9 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import org.joml.Matrix4f;
-import teamHTBP.vidaReforged.client.screen.components.magicWords.MagicWordWidget;
-import teamHTBP.vidaReforged.core.common.ui.style.Padding;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.helper.RenderHelper;
 
@@ -18,7 +15,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
-import java.util.function.BinaryOperator;
 
 /**
  * 可滚动的容器
@@ -38,7 +34,7 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
     /**每个内容物在容器内渲染逻辑*/
     private BiConsumer<GuiGraphics, VidaWidget> renderFunc;
 
-    public ScrolledContainer(int x, int y, int width, int height, Component component) {
+    public ScrolledContainer(int x, int y, int width, int height) {
         super(x, y, width, height, Component.literal("scrollable container"));
         this.contents = new ArrayList<>();
     }
@@ -72,7 +68,8 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
         //设置初始
         widget.setOffsetX(0);
         widget.setOffsetY(0);
-
+        //加入component
+        this.contents.add(widget);
         //
         shouldUpdateCache = true;
     }
@@ -107,6 +104,7 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
 
         renderBackground(graphics);
 
+        renderContents(graphics, mouseX, mouseY, partialTicks);
 
         renderThumbIcon(graphics, mouseX, mouseY);
     }
@@ -119,9 +117,8 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
         poseStack.popPose();
     }
 
-    protected void renderContents(GuiGraphics graphics, float mouseX, float mouseY){
+    protected void renderContents(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
         PoseStack poseStack = graphics.pose();
-
 
         // 画子组件
         poseStack.pushPose();
@@ -129,7 +126,7 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
         poseStack.pushPose();
         RenderHelper.renderScissor(getX(),getY(), width, height);
 
-
+        this.contents.forEach(widget -> widget.render(graphics, mouseX, mouseY, partialTicks));
 
         poseStack.popPose();
         RenderSystem.disableScissor();
@@ -139,6 +136,8 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
 
 
     protected void renderThumbIcon(GuiGraphics graphics, float mouseX, float mouseY){
+        float alpha = this.scrollThumbAlpha.get();
+
         PoseStack poseStack = graphics.pose();
         poseStack.pushPose();
         VertexConsumer consumer = graphics.bufferSource().getBuffer(RenderType.gui());
@@ -155,7 +154,11 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
     }
 
     public float getSliderThumbHeight(){
-        return (float) (Math.pow(height, 2) / getAllContentsHeight());
+        final int contentHeight = getAllContentsHeight();
+        if(contentHeight <= height){
+            return height;
+        }
+        return (float) (Math.pow(height, 2) / contentHeight);
     }
 
     @Override
@@ -185,10 +188,14 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
         if(!shouldUpdateCache){
             return cachedContentHeight;
         }
-        final VidaWidget minYWidget = this.contents.stream().min(Comparator.comparing(VidaWidget::getY)).get();
-        final VidaWidget maxYWidget = this.contents.stream().max(Comparator.comparing(VidaWidget::getY)).get();
-        cachedContentHeight = maxYWidget.getY() + maxYWidget.getHeight() - minYWidget.getY();
-        shouldUpdateCache = false;
-        return cachedContentHeight;
+        try {
+            final VidaWidget minYWidget = this.contents.stream().min(Comparator.comparing(VidaWidget::getY)).orElseThrow();
+            final VidaWidget maxYWidget = this.contents.stream().max(Comparator.comparing(VidaWidget::getY)).orElseThrow();
+            cachedContentHeight = maxYWidget.getY() + maxYWidget.getHeight() - minYWidget.getY();
+            shouldUpdateCache = false;
+            return cachedContentHeight;
+        }catch (Exception ex){
+            return 0;
+        }
     }
 }

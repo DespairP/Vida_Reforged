@@ -3,6 +3,8 @@ package teamHTBP.vidaReforged.server.items;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.item.Position;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicEquipmentAttribute;
@@ -51,17 +53,19 @@ public class VidaWandEquipment extends Item {
             return this;
         }
 
+        @OnlyIn(Dist.CLIENT)
         public Builder setModelLocation(String modId, String layerLocation,String layerUsed){
             this.attribute.setModelLayerLocation(new ModelLayerLocation(new ResourceLocation(modId, layerLocation), layerUsed));
             return this;
         }
 
-
+        @OnlyIn(Dist.CLIENT)
         public Builder setModelLocation(ModelLayerLocation location){
             this.attribute.setModelLayerLocation(location);
             return this;
         }
 
+        @OnlyIn(Dist.CLIENT)
         public Builder setTextureLocation(ResourceLocation textureLocation){
             this.attribute.setModelTexture(textureLocation);
             return this;

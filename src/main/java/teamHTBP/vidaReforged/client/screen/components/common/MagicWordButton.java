@@ -234,6 +234,11 @@ public class MagicWordButton extends VidaWidget {
         return magicWordId;
     }
 
+    @Override
+    public boolean mouseScrolled(double p_94734_, double p_94735_, double p_94736_) {
+        return false;
+    }
+
     public interface ClickListener{
         public void onclick(VidaElement element, String magicId);
     }

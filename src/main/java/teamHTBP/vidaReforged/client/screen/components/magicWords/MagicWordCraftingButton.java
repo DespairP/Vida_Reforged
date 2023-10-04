@@ -15,12 +15,12 @@ import teamHTBP.vidaReforged.server.packets.MagicWordCraftingPacket;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
-import static teamHTBP.vidaReforged.client.screen.components.magicWords.MagicWordWidget.DINKFONT;
 
 public class MagicWordCraftingButton extends AbstractWidget {
     public static final int WIDTH = 48;
-
     public static final int HEIGHT = 16;
+
+    public static ResourceLocation DINKFONT = new ResourceLocation(MOD_ID, "dinkie");
 
     public final ResourceLocation location = new ResourceLocation(MOD_ID, "textures/gui/magic_word_crafting.png");
 

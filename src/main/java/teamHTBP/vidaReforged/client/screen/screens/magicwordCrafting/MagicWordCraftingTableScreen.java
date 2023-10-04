@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.screen;
+package teamHTBP.vidaReforged.client.screen.screens.magicwordCrafting;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;

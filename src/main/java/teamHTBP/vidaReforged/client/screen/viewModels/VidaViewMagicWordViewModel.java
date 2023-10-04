@@ -10,7 +10,7 @@ public class VidaViewMagicWordViewModel {
 
     public LiveData<List<String>> playerMagicWords = new LiveData<>(new ArrayList<>());
 
-    public void setSelectWord(VidaElement element,String magicWordId){
+    public void setSelectWord(String magicWordId){
         String replacedMagicWordId = magicWordId;
         // 如果没有就添加
         selectedMagicWord.setValue(replacedMagicWordId);
