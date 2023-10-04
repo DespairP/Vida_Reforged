@@ -338,5 +338,6 @@
  "advancements.vida_reforged.magic_word_lover.description": "收集5种不同的词条",
  "advancements.vida_reforged.magic_word_lover.title": "词条启蒙者",
  "advancements.vida_reforged.welcome.description": "初始之光",
- "advancements.vida_reforged.welcome.title": "生命"
+ "advancements.vida_reforged.welcome.title": "生命",
+ "gui.vida_reforged.name.magic_word": "生命词条%s"
 }

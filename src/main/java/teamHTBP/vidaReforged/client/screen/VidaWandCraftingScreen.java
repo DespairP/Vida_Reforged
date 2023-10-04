@@ -12,12 +12,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import teamHTBP.vidaReforged.client.events.LayerRegistryHandler;
 import teamHTBP.vidaReforged.client.model.itemModel.VidaWandModel;
 import teamHTBP.vidaReforged.core.common.item.Position;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
+import teamHTBP.vidaReforged.server.items.VidaItemLoader;
+import teamHTBP.vidaReforged.server.items.VidaWandEquipment;
 import teamHTBP.vidaReforged.server.menu.VidaWandCraftingTableMenu;
+import teamHTBP.vidaReforged.server.menu.slots.VidaWandEquipmentSlot;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -43,7 +47,7 @@ public class VidaWandCraftingScreen extends AbstractContainerScreen<VidaWandCraf
     private final Field slotFieldY;
     private final Field slotFieldX;
     /**装备栏*/
-    private Map<Position,Slot> equipmentSlots = new HashMap<>();
+    private Map<Position,VidaWandEquipmentSlot> equipmentSlots = new HashMap<>();
 
     public VidaWandCraftingScreen(VidaWandCraftingTableMenu menu, Inventory inventory, Component component) {
         super(menu, inventory, component);
@@ -67,9 +71,9 @@ public class VidaWandCraftingScreen extends AbstractContainerScreen<VidaWandCraf
         //改变slot的实际位置
         try {
             List<Position> positions = Arrays.stream(Position.values()).toList();
-            Map<Position,Slot> slots = this.menu.getEquipmentSlots();
+            Map<Position, VidaWandEquipmentSlot> slots = this.menu.getEquipmentSlots();
             for(Position position : slots.keySet()){
-                Slot slot = slots.get(position);
+                VidaWandEquipmentSlot slot = slots.get(position);
                 this.slotFieldY.set(slot, -topPos + offsetY + positions.indexOf(position) * 36);
                 this.slotFieldX.set(slot, -leftPos + WAND_START_X + WAND_WIDTH + 30);
                 this.equipmentSlots.put(position, slot);
@@ -97,6 +101,8 @@ public class VidaWandCraftingScreen extends AbstractContainerScreen<VidaWandCraf
         renderModel(graphics, mouseX, mouseY);
 
         super.render(graphics, mouseX, mouseY, partialTicks);
+        RenderSystem.setShaderColor(1, 1, 1,1);
+        renderTooltip(graphics, mouseX, mouseY);
     }
 
 
@@ -110,7 +116,21 @@ public class VidaWandCraftingScreen extends AbstractContainerScreen<VidaWandCraf
                 384, 384
         );
 
-        for(Slot slot : equipmentSlots.values()){
+        // 高亮
+        ItemStack hoveredStack = hoveredSlot == null ? ItemStack.EMPTY : hoveredSlot.getItem();
+        hoveredStack = this.menu.getCarried().isEmpty() ? hoveredStack : this.menu.getCarried().copy();
+
+        for(VidaWandEquipmentSlot slot : equipmentSlots.values()){
+            RenderSystem.enableBlend();
+
+            if(hoveredStack.getItem() instanceof VidaWandEquipment equipment && equipment.getAttribute().getPosition() == slot.getPosition()){
+                RenderSystem.setShaderColor(1, 1, 1, 1);
+            }else if(!slot.getItem().isEmpty()){
+                RenderSystem.setShaderColor(0.99f, 0.99f, 0.8f, 1);
+            }else{
+                RenderSystem.setShaderColor(0.5f, 0.5f, 0.5f, 1);
+            }
+
             graphics.blit(
                     SLOT.location(),
                     this.leftPos + slot.x - 4, this.topPos + slot.y - 4, 0,
@@ -118,6 +138,8 @@ public class VidaWandCraftingScreen extends AbstractContainerScreen<VidaWandCraf
                     SLOT.w(), SLOT.h(),
                     384, 384
             );
+            RenderSystem.setShaderColor(1, 1, 1,1);
+            RenderSystem.disableBlend();
         }
 
     }
@@ -139,19 +161,25 @@ public class VidaWandCraftingScreen extends AbstractContainerScreen<VidaWandCraf
         // 再按Y轴转45度，让方块左边和右边面向玩家，呈现三视图的状态
         pPoseStack.mulPose(Axis.YP.rotationDegrees(95 + rotateY));
 
-        //思考中
+        // 渲染模型
         VidaWandModel model = LayerRegistryHandler.getModelSupplier(VidaWandModel.LAYER_LOCATION, VidaWandModel.class).get();
         this.equipmentSlots.forEach(((position, slot) -> {
-            int packedLight = 7 << 4 | 7 << 20;
+            int packedLight = 3 << 4 | 7 << 20;
 
             if(this.isHovering(slot, mouseX, mouseY) && slot.isActive()){
                 packedLight = 15 << 4 | 15 << 20;
+            }
+            ItemStack slotItem = slot.getItem();
+            if(!slotItem.isEmpty() && slotItem.getItem() instanceof VidaWandEquipment equipment){
+                ResourceLocation texture = equipment.getAttribute().getModelTexture();;
+                VidaWandModel equipmentModel = LayerRegistryHandler.getModelSupplier(equipment.getAttribute().getModelLayerLocation(), VidaWandModel.class).get();
+                equipmentModel.renderPartToBuffer(position, pPoseStack, graphics.bufferSource().getBuffer(RenderType.entityShadow(texture)), packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+                return;
             }
 
             model.renderPartToBuffer(position, pPoseStack, graphics.bufferSource().getBuffer(RenderType.entityTranslucent(VIDA_WAND_MODEL)), packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
         }));
 
-        graphics.bufferSource().endBatch();
         RenderSystem.setShaderColor(1, 1, 1, 1);
         pPoseStack.popPose();
         RenderSystem.enableCull();

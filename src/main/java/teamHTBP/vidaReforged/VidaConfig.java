@@ -14,4 +14,8 @@ public class VidaConfig {
         builder.pop();
         CONFIG_SPEC = builder.build();
     }
+
+    public static boolean isGuiDebug(){
+        return false;
+    }
 }

@@ -1,6 +1,5 @@
 package teamHTBP.vidaReforged.client.screen.components.magicWords;
 
-import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -12,16 +11,14 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import org.joml.Matrix4f;
-import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaViewMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
-import teamHTBP.vidaReforged.core.utils.render.RenderHelper;
+import teamHTBP.vidaReforged.helper.RenderHelper;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class MagicWordSingleListWidget extends AbstractWidget {

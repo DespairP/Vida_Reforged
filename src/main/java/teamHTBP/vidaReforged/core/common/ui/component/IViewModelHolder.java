@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.core.common.component;
+package teamHTBP.vidaReforged.core.common.ui.component;
 
 public interface IViewModelHolder {
     public IViewModelHolder getHolder();

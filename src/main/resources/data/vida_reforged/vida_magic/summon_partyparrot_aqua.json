@@ -1,7 +1,8 @@
 {
   "name": "summon_partyparrot_aqua",
   "magicType": "ATTACK_SHOOTABLE",
-  "icon": "vida_reforged:textures/icons/summon_partyparrot.png",
+  "sprite": "vida_reforged:textures/icons/summon_partyparrot.png",
+  "spriteSize": 32,
   "iconIndex": 0,
   "description": "vida_reforged.description.summon_partyparrot",
   "element": "AQUA",

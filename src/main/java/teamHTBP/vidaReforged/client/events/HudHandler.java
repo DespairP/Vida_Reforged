@@ -20,22 +20,30 @@ import net.minecraftforge.client.gui.overlay.NamedGuiOverlay;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import teamHTBP.vidaReforged.VidaConfig;
 import teamHTBP.vidaReforged.client.hud.*;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.server.blockEntities.BasePurificationCauldronBlockEntity;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
 
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class HudHandler {
     protected static VidaManaBarScreen screen;
     protected static VidaUnlockScreen unlockScreen;
+    protected static VidaWandStaminaScreen staminaScreen;
     protected static final float MAX_PLAYER_BAR_OFFSET = 12f;
     protected static FloatRange playerBarOffset = new FloatRange(0,0,MAX_PLAYER_BAR_OFFSET);
     protected static FloatRange globalHudAlpha = new FloatRange(0,0, 1);
+    /** logger */
+    public static final Logger LOGGER = LogManager.getLogger();
 
     @SubscribeEvent
     public static void onOverlayRender(RenderGuiOverlayEvent event) {
@@ -53,9 +61,13 @@ public class HudHandler {
         // 渲染法杖魔力界面
         renderVidaManaScreen(event);
 
+        // 渲染法杖蓄力条
+        renderVidaStaminaScreen(event);
+
         //渲染解锁界面
         renderUnlockOverlay(event);
     }
+
 
     /**当渲染魔力界面时，原版血条等等ui都往上偏移12个像素，入栈*/
     @SubscribeEvent
@@ -151,7 +163,13 @@ public class HudHandler {
             VidaManaBarScreen screen = getOrCreateVidaManaScreen(event.getGuiGraphics().bufferSource());
             screen.render(event.getGuiGraphics().pose());
         }
+    }
 
+    public static void renderVidaStaminaScreen(RenderGuiOverlayEvent event) {
+        if(event.getOverlay() == VanillaGuiOverlay.EXPERIENCE_BAR.type()){
+            HudHandler.staminaScreen = getOrCreateScreen(HudHandler.staminaScreen, event.getGuiGraphics().bufferSource(), VidaWandStaminaScreen.class);
+            staminaScreen.render(event.getGuiGraphics().pose(), event.getPartialTick());
+        }
     }
 
     public static VidaManaBarScreen getOrCreateVidaManaScreen(MultiBufferSource.BufferSource bufferSource){
@@ -163,6 +181,20 @@ public class HudHandler {
 
     public static VidaUnlockScreen getOrUnlockVidaManaScreen(MultiBufferSource.BufferSource bufferSource){
         return new VidaUnlockScreen(Minecraft.getInstance(), bufferSource);
+    }
+
+    public static <T extends GuiGraphics> T getOrCreateScreen(T screen, MultiBufferSource.BufferSource bufferSource, Class<T> screenClazz){
+        try {
+            if(screen == null){
+                Constructor<T> constructor = screenClazz.getConstructor(Minecraft.class, MultiBufferSource.BufferSource.class);
+                return constructor.newInstance(Minecraft.getInstance(), bufferSource);
+            }
+            return screen;
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            LOGGER.error("getOrUnlockScreen cannot parse the class:{}", screenClazz);
+            LOGGER.error(e);
+        }
+        return screen;
     }
 
 

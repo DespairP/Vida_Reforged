@@ -14,6 +14,8 @@ import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 import java.util.LinkedHashMap;
 import java.util.function.Supplier;
 
+import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
+
 public class MagicSkillDatapackPacket {
     LinkedHashMap<String, VidaMagic> magicMap = new LinkedHashMap<>();
 
@@ -52,7 +54,7 @@ public class MagicSkillDatapackPacket {
                 (buf,value) -> {
                     Gson gson = JsonUtils.getGson(JsonUtils.JsonUtilType.NORMAL);
                     if(value == null){
-                        value = new VidaMagic("vida_reforged:empty");
+                        value = new VidaMagic(MOD_ID, "EMPTY");
                     }
                     String magicWrapper = gson.toJson(value);
                     buf.writeUtf(magicWrapper);

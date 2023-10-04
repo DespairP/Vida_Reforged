@@ -76,6 +76,9 @@ public class VidaItemGroupLoader {
             event.accept(VidaItemLoader.APPRENTICE_CHESTPLATE.get());
             event.accept(VidaItemLoader.APPRENTICE_LEGGINGS.get());
             event.accept(VidaItemLoader.APPRENTICE_BOOTS.get());
+            event.accept(VidaItemLoader.TEST_EQUIPMENT.get());
+            event.accept(VidaItemLoader.TEST_CORE_EQUIPMENT.get());
+
         }
     }
 

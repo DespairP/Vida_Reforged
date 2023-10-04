@@ -4,6 +4,7 @@ package teamHTBP.vidaReforged.core.utils.animation;
  * 动画机
  * 具体使用见：{@link  DestinationAnimator#of}
  * */
+@Deprecated
 public abstract class Animator<T> implements IAnimator{
     public final static int INFINITE = -1;
     public final static int RESTART = 1;

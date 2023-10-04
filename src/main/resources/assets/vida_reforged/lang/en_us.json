@@ -198,5 +198,6 @@
  "magic_word.name.vida_reforged.tree": "tree",
  "magic_word.name.vida_reforged.vision": "vision",
  "key.category.vida": "Vida",
- "key.keyboard.open_magic_word": "Open Magic Word Screen"
+ "key.keyboard.open_magic_word": "Open Magic Word Screen",
+ "gui.vida_reforged.name.magic_word": "magic word button"
 }

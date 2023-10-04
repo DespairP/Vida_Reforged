@@ -11,6 +11,7 @@ import static java.lang.Math.sin;
  * 时间插值器
  * @author DustW
  */
+@Deprecated
 @FunctionalInterface
 public interface TimeInterpolator {
 

@@ -8,4 +8,5 @@ public interface VidaConstant {
     public String DATA_GUIDE = "vida_guide";
     public String CAP_VIDA_MANA = "vida_wand_mana";
     public String CAP_VIDA_MAGIC_CONTAINER = "vida_wand_magic_container";
+    public String TAG_HOLD_TIME = "holdTime";
 }

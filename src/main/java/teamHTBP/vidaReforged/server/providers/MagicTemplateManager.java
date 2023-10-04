@@ -33,10 +33,11 @@ public class MagicTemplateManager extends AbstractVidaManager{
     protected void apply(Map<ResourceLocation, JsonElement> jsonElementMap, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         magicResourceMap.clear();
         magicIdMap.clear();
-        jsonElementMap.forEach(this::processElementMap);
+        jsonElementMap.forEach(this::processSkillMap);
     }
 
-    protected void processElementMap(ResourceLocation location,JsonElement element){
+    /**解析每个技能json文件*/
+    protected void processSkillMap(ResourceLocation location,JsonElement element){
         if(!element.isJsonObject()){
             LOGGER.warn(String.format("%s is not a valid magic", location.getPath()));
             return;
@@ -47,16 +48,18 @@ public class MagicTemplateManager extends AbstractVidaManager{
             LOGGER.warn(String.format("%s has no valid magic name", location.getPath()));
             return;
         }
-        VidaMagic magic = new VidaMagic(String.format("%s:%s", modId, magicJsonObject.get("name").getAsString()))
+        VidaMagic magic = new VidaMagic(modId, magicJsonObject.get("name").getAsString())
                 .regex(!magicJsonObject.has("regex") ? null : magicJsonObject.get("regex").getAsString())
-                .magicLocation(location)
-                .magicType(!magicJsonObject.has("type") ? VidaMagic.VidaMagicType.NONE : VidaMagic.VidaMagicType.of(magicJsonObject.get("magicType").getAsString()))
-                .icon(!magicJsonObject.has("icon") ? null : new ResourceLocation(magicJsonObject.get("icon").getAsString()))
+                .path(location)
+                .magicType(!magicJsonObject.has("type") ? null : magicJsonObject.get("magicType").getAsString())
+                .spriteLocation(!magicJsonObject.has("sprite") ? null : new ResourceLocation(magicJsonObject.get("sprite").getAsString()))
+                .spriteSize(!magicJsonObject.has("spriteSize") ? 192 : magicJsonObject.get("spriteSize").getAsInt())
                 .iconIndex(!magicJsonObject.has("iconIndex") ? 0 : magicJsonObject.get("iconIndex").getAsInt())
+                .iconSize(!magicJsonObject.has("iconSize") ? 32 : magicJsonObject.get("spriteSize").getAsInt())
                 .element(!magicJsonObject.has("element") ? VidaElement.EMPTY : VidaElement.of(magicJsonObject.get("element").getAsString()))
                 .isPlayerUsable(!magicJsonObject.has("usable") || magicJsonObject.get("usable").getAsBoolean())
                 .description(magicJsonObject.has("description") ? Component.empty() : Component.translatable(magicJsonObject.get("description").getAsString()));
-        magicIdMap.put(magic.magicName(), magic);
+        magicIdMap.put(magic.magicId(), magic);
         magicResourceMap.put(location, magic);
     }
 
@@ -73,8 +76,8 @@ public class MagicTemplateManager extends AbstractVidaManager{
         return
                 magicIdMap.values()
                         .stream()
-                        .filter(magic -> magicIdList.contains(magic.magicName()))
-                        .collect(Collectors.toMap(VidaMagic::magicName, vidaMagic -> vidaMagic));
+                        .filter(magic -> magicIdList.contains(magic.magicId()))
+                        .collect(Collectors.toMap(VidaMagic::magicId, vidaMagic -> vidaMagic));
     }
 
     public static LinkedHashMap<String, VidaMagic> getMagicIdMap() {
@@ -85,7 +88,7 @@ public class MagicTemplateManager extends AbstractVidaManager{
     public static void setMagicIdMap(LinkedHashMap<String, VidaMagic> magics){
         magicIdMap = new LinkedHashMap<>();
         magicIdMap.putAll(magics);
-        magicResourceMap = magicIdMap.values().stream().collect(Collectors.toMap(VidaMagic::location,vidaMagic -> vidaMagic, (a,b) -> a));
+        magicResourceMap = magicIdMap.values().stream().collect(Collectors.toMap(VidaMagic::path,vidaMagic -> vidaMagic, (a,b) -> a));
     }
 
     public static Set<String> getMagicsKey(){

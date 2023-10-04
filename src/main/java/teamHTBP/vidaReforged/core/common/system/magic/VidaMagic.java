@@ -15,41 +15,53 @@ import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 
 /**
- * 魔法模板
+ * 魔法模板，
+ * 包含魔法的基本信息，但是不包含魔法
+ * 具体魔法释放逻辑见{@link VidaMagicManager}
+ *
  * */
 @Data
 @Accessors(chain = true,fluent = true)
 public class VidaMagic {
-    /**魔法名字*/
-    private String magicName;
-    /**魔法唯一id*/
-    private ResourceLocation magicLocation;
-    /**魔法类别*/
-    private VidaMagicType magicType;
-    /**魔法图标*/
-    private ResourceLocation icon;
-    /***/
-    private Integer iconIndex;
-    /**魔法介绍*/
+    /** 注册模板 */
+    public final static String MAGIC_ID_IDENTIFY = "%s:%s";
+
+    /** 魔法Id,具体为 MOD_ID:magicBasicName */
+    private String magicId;
+    /** 魔法唯一id */
+    private ResourceLocation magicIdLocation;
+    /** 实际注册路径 */
+    private ResourceLocation path;
+    /** 魔法名字 */
+    private String magicBasicName;
+    /** 魔法类别，显示魔法的类别 */
+    private String magicType;
+    /** 魔法图标精灵图路径 */
+    private ResourceLocation spriteLocation;
+    /** 整个精灵图大小 */
+    private int spriteSize = 32;
+    /** 魔法图标位于精灵图的第几个 */
+    private int iconIndex;
+    /** 图标大小 */
+    private int iconSize = 32;
+    /** 魔法介绍Key */
     private transient Component description;
-    /**所属元素*/
+    /** 所属元素 */
     private VidaElement element;
-    /**玩家是否可用*/
-    private boolean isPlayerUsable;
-    /***/
-    private ResourceLocation location;
-    /**找到invokable的正则*/
+    /** 玩家是否可用 */
+    private boolean isPlayerUsable = true;
+    /** 找到invokable的正则，{@link VidaMagicManager} */
     private String regex;
 
 
     public Component getCommandHoverComponents(){
-        return ComponentUtils.wrapInSquareBrackets(Component.translatable(this.magicName)).withStyle((style) ->{
+        return ComponentUtils.wrapInSquareBrackets(Component.translatable(this.magicBasicName)).withStyle((style) ->{
             return style.withColor(ChatFormatting.GREEN)
                     .withHoverEvent(
                             new HoverEvent(
                                     HoverEvent.Action.SHOW_TEXT,
                                     Component.empty()
-                                            .append(this.magicName).append("\n")
+                                            .append(this.magicBasicName).append("\n")
                                             .append(this.element.name).append("\n")
                                             .append(this.isPlayerUsable ? "player usable" : "player not usable").append("\n")
                                             .append(description.getString())
@@ -58,29 +70,20 @@ public class VidaMagic {
         });
     }
 
-    public VidaMagic(String magicName) {
-        this.magicName = magicName;
+
+    public VidaMagic(String modId,String magicBasicName) {
+        this.magicId = String.format(MAGIC_ID_IDENTIFY, modId, magicBasicName);
+        this.magicBasicName = magicBasicName;
     }
 
-    public enum VidaMagicType{
-        ATTACK_SHOOTABLE,
-        ATTACK_NORMAL,
-        BUILD,
-        HEAL,
-        SUMMON,
-        OTHER,
-        NONE;
+    /**获取图标所在精灵图的U*/
+    public int getIconU(){
+        return (iconSize * iconIndex % spriteSize) * iconSize;
+    }
 
-        public static VidaMagicType of(String value){
-            try{
-                if(value == null){
-                    return NONE;
-                }
-                return VidaMagic.VidaMagicType.valueOf(value.toUpperCase());
-            }catch (Exception ex){
-                return NONE;
-            }
-        }
+    /**获取图标所在精灵图的V*/
+    public int getIconV(){
+        return (iconSize * iconIndex / spriteSize) * iconSize;
     }
 
     /**执行魔法*/

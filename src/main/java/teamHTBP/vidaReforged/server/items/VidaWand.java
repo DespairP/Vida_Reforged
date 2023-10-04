@@ -7,9 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
@@ -18,20 +16,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import teamHTBP.vidaReforged.client.hud.VidaWandStaminaScreen;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.api.items.IVidaManaConsumable;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
-import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicHelper;
+import teamHTBP.vidaReforged.helper.VidaMagicInvokeHelper;
 import teamHTBP.vidaReforged.server.components.VidaWandTooltipComponent;
-import teamHTBP.vidaReforged.server.entity.VidaEntityLoader;
-import teamHTBP.vidaReforged.server.entity.projectile.MagicParticleProjectile;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
 
@@ -39,7 +35,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static teamHTBP.vidaReforged.core.common.system.magic.VidaMagicHelper.getCurrentMagic;
+import static teamHTBP.vidaReforged.core.common.VidaConstant.TAG_HOLD_TIME;
 
 /**Vida法杖*/
 public class VidaWand extends Item implements IVidaManaConsumable {
@@ -47,6 +43,7 @@ public class VidaWand extends Item implements IVidaManaConsumable {
         super(new Item.Properties().stacksTo(1));
     }
 
+    /**释放技能*/
     @Override
     public void releaseUsing(ItemStack itemStack, Level level, LivingEntity entity, int power) {
         if(!(entity instanceof ServerPlayer)){
@@ -54,9 +51,22 @@ public class VidaWand extends Item implements IVidaManaConsumable {
         }
         ServerPlayer player = (ServerPlayer) entity;
         int lastPower = this.getUseDuration(itemStack) - power;
+
         releaseMagic(level, player, player.getUsedItemHand());
+
+        // 重置蓄力时长
+        VidaWandStaminaScreen.holdTime = 0;
     }
 
+    /**保存蓄力时长*/
+    @Override
+    public void onUseTick(Level level, LivingEntity livingEntity, ItemStack itemStack, int time) {
+        super.onUseTick(level, livingEntity, itemStack, time);
+        if(!level.isClientSide){
+            return;
+        }
+        VidaWandStaminaScreen.holdTime =  Math.min(this.getUseDuration(itemStack) - time, getMaxUseDuration(itemStack));
+    }
 
     /**使用时判定能不能释放技能*/
     @Override
@@ -68,7 +78,7 @@ public class VidaWand extends Item implements IVidaManaConsumable {
             return InteractionResultHolder.fail(handInItem);
         }
         player.startUsingItem(hand);
-        return InteractionResultHolder.consume(handInItem);
+        return InteractionResultHolder.pass(handInItem);
     }
 
     /**是否能释放技能*/
@@ -257,14 +267,18 @@ public class VidaWand extends Item implements IVidaManaConsumable {
         mana.consumeMana(currentMagic.element(), container.costMana());
         container.lastInvokeMillSec(currentMillSecond);
 
-        VidaMagicHelper.invokeMagic(magicContainer, mana, level, player, currentMagic, handInItem);
+        VidaMagicInvokeHelper.invokeMagic(magicContainer, mana, level, player, currentMagic, handInItem);
 
         return true;
     }
 
 
     public int getUseDuration(ItemStack itemStack) {
-        return 2000;
+        return 20000;
+    }
+
+    public static int getMaxUseDuration(ItemStack itemStack){
+        return 20;
     }
 
     public UseAnim getUseAnimation(ItemStack itemStack) {

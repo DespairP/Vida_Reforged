@@ -43,9 +43,19 @@ public class LayerRegistryHandler {
         register(event, VidaApprenticeBoots.APPRENTICE_LAYER_LOCATION, LayerManager::createApprenticeBodyLayer, VidaApprenticeBoots.class);
         register(event, InjectTableModel.APPRENTICE_LAYER_LOCATION, InjectTableModel::createBodyLayer, InjectTableModel.class);
         register(event, VidaWandModel.LAYER_LOCATION, VidaWandModel::createBodyLayer, VidaWandModel.class);
+        register(event, VidaWandModel.TEST_LAYER_LOCATION, VidaWandModel::createTestLayer, VidaWandModel.class);
+        register(event, VidaWandModel.TEST_CORE_LAYER_LOCATION, VidaWandModel::createTestCoreLayer, VidaWandModel.class);
 
     }
 
+
+    /**
+     * 注册模型layer
+     * @param event 注册事件
+     * @param layerLocation 模型路径
+     * @param supplier 模型构建方法
+     * @param modelClazz
+     */
     public static void register(EntityRenderersEvent.RegisterLayerDefinitions event, ModelLayerLocation layerLocation, Supplier<LayerDefinition> supplier,Class<? extends Model> modelClazz){
         event.registerLayerDefinition(layerLocation, supplier);
         try {

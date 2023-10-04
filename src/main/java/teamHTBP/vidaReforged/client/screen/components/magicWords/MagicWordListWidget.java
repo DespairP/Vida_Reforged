@@ -9,13 +9,16 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import org.joml.Matrix4f;
+import teamHTBP.vidaReforged.client.screen.components.common.MagicWordButton;
+import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
-import teamHTBP.vidaReforged.core.utils.render.RenderHelper;
+import teamHTBP.vidaReforged.helper.RenderHelper;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
 import java.util.*;
@@ -23,14 +26,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MagicWordListWidget extends AbstractWidget {
     public final static int WIDTH = 180;
-    public final Map<VidaElement, List<MagicWordWidget>> widgetMap;
+    public final Map<VidaElement, List<MagicWordButton>> widgetMap;
     public VidaElement currentSelectedElement = VidaElement.GOLD;
     private AtomicInteger scroll = new AtomicInteger(0);
     private FloatRange scrollBarAlpha = new FloatRange(0,0,0.3f);
     VidaMagicWordViewModel model;
+    MagicWordButton.ClickListener clickListener = (element, magicId)->{
+        this.model.setSelectWord(element, magicId);
+    };
 
     public MagicWordListWidget(VidaMagicWordViewModel model, int x, int y, int width, int height,double factor) {
-        super(x, y, width, height, Component.translatable("Magic Word List"));
+        super(x, y, width, height, Component.literal("Magic Word List"));
         this.widgetMap = new LinkedHashMap<>();
         this.model = model;
         this.initWidget();
@@ -40,6 +46,8 @@ public class MagicWordListWidget extends AbstractWidget {
         for(VidaElement element : VidaElement.values()){
             widgetMap.put(element,new LinkedList<>());
         }
+
+
         Map<VidaElement,AtomicInteger> offset = ImmutableMap.of(
                 VidaElement.GOLD, new AtomicInteger(0),
                 VidaElement.WOOD, new AtomicInteger(0),
@@ -48,20 +56,74 @@ public class MagicWordListWidget extends AbstractWidget {
                 VidaElement.EARTH, new AtomicInteger(0)
         );
 
+        // 开始初始化词条按钮
         for(MagicWord word : MagicWordManager.getAllMagicWords()){
+            // 元素内第n个词条
             int i = offset.getOrDefault(word.element(), new AtomicInteger(0)).getAndIncrement();
+
             int x = (i % 2) * MagicWordWidget.WIDTH;
             int y = (int)Math.floor(i / 2.0f) * MagicWordWidget.HEIGHT;
             int offsetX = (i % 2) * 5;
             int offsetY = (int)Math.floor(i / 2.0f) * 10;
-            MagicWordWidget magicWordWidget = new MagicWordWidget(model, this, getX() + x + offsetX, getY() + y + offsetY, word);
-            widgetMap.get(word.element()).add(magicWordWidget);
+            boolean isUnLocked = Optional.ofNullable(this.model.playerMagicWords.getValue()).orElse(new ArrayList<>()).contains(word.name());
+
+            MagicWordButton button = new MagicWordButton(
+                    getX() + x + offsetX,
+                    getY() + y + offsetY,
+                    MagicWordButton.WIDTH,
+                    MagicWordButton.HEIGHT,
+                    word.name()
+            );
+            button.setOnClickListener(clickListener);
+            button.setLocked(!isUnLocked);
+            button.setVisible(false);
+
+            widgetMap.get(word.element()).add(button);
         }
 
+
+
+        // 初始化过滤器
         this.currentSelectedElement = this.model.selectedFilterElement.getValue();
-        this.model.selectedFilterElement.observe(newValue -> {
-            this.currentSelectedElement = newValue;
-            this.scroll.set(0);
+        this.model.selectedFilterElement.observe(this::onFilterChange);
+
+        // 设置
+        this.model.selectedMagicWord.observe(this::onMagicWordChange);
+
+        this.onFilterChange(this.currentSelectedElement);
+        this.onMagicWordChange(this.model.selectedMagicWord.getValue());
+    }
+
+    protected void onFilterChange(VidaElement newValue){
+        this.currentSelectedElement = newValue;
+        // 设置显示当前filter显示的词条
+        List<MagicWordButton> filteredWords = this.widgetMap.get(this.currentSelectedElement);
+        filteredWords.forEach(filteredWord -> filteredWord.setVisible(true));
+
+        // 其他词条隐藏
+        this.widgetMap.keySet()
+                .stream()
+                .filter(element -> element != this.currentSelectedElement)
+                .forEach(element -> this.widgetMap.get(element).forEach(filteredWord -> filteredWord.setVisible(false)));
+
+        //
+        this.scroll.set(0);
+        this.scrollChildren(0, 0);
+    }
+
+
+    protected void onMagicWordChange(Map<VidaElement, String> newValue){
+        this.widgetMap.forEach((element, magicWordButtons) -> {
+            String selectedWordId = newValue.get(element);
+
+            magicWordButtons.forEach(button ->{
+                if(Objects.equals(selectedWordId, button.getMagicWordId())){
+                    button.setSelected(true);
+                    return;
+                }
+                button.setSelected(false);
+            });
+
         });
     }
 
@@ -103,9 +165,7 @@ public class MagicWordListWidget extends AbstractWidget {
     }
 
     @Override
-    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
-
-    }
+    protected void updateWidgetNarration(NarrationElementOutput output) {}
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scroll) {
@@ -118,14 +178,21 @@ public class MagicWordListWidget extends AbstractWidget {
         if(nextScroll > 0){
             this.scroll.set(0);
         }
+        this.scrollChildren(0, this.scroll.get());
         return true;
+    }
+
+    public void scrollChildren(int scrollXOffset, int scrollYOffset){
+        this.widgetMap.values()
+                .forEach(magicWordButtons ->
+                        magicWordButtons.forEach(magicWordButton -> magicWordButton.setOffsetY(scrollYOffset)));
     }
 
     public int getScroll() {
         return scroll.get();
     }
 
-    public List<MagicWordWidget> getCurrentWidgetList(){
+    public List<MagicWordButton> getCurrentWidgetList(){
         return widgetMap.get(currentSelectedElement);
     }
 
@@ -135,14 +202,15 @@ public class MagicWordListWidget extends AbstractWidget {
         return Math.max(0, allWordHeight - getHeight());
     }
 
+
+
+    /**不要播放声音*/
     @Override
-    public void onClick(double x, double y) {
-        widgetMap.get(currentSelectedElement).forEach(widget -> widget.mouseClicked(x, y, 0));
-    }
+    public void playDownSound(SoundManager manager) {}
 
     public Collection<? extends GuiEventListener> getChildren(){
-        List<MagicWordWidget> listeners = new ArrayList<>();
-        this.widgetMap.forEach((key,value)->listeners.addAll(value));
+        List<MagicWordButton> listeners = new ArrayList<>();
+        this.widgetMap.forEach( (key,value)-> listeners.addAll(value) );
         return listeners;
     }
 }

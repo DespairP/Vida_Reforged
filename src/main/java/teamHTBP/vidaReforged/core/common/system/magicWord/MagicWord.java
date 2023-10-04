@@ -42,4 +42,8 @@ public class MagicWord {
     public Component getDescriptionComponent(){
         return Component.translatable(description);
     }
+
+    public static int getIconSize(){
+        return 16;
+    }
 }

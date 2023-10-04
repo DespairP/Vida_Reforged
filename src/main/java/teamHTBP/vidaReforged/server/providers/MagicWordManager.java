@@ -77,4 +77,5 @@ public class MagicWordManager extends SimpleJsonResourceReloadListener {
     public static Set<String> getAllMagicWordIds(){
         return magicWordIdMap.keySet();
     }
+
 }

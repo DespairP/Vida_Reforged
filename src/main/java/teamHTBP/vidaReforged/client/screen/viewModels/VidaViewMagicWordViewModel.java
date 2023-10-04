@@ -1,9 +1,7 @@
 package teamHTBP.vidaReforged.client.screen.viewModels;
 
 import teamHTBP.vidaReforged.core.api.VidaElement;
-import teamHTBP.vidaReforged.core.common.component.LiveData;
-import teamHTBP.vidaReforged.server.packets.MagicWordPacket;
-import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
+import teamHTBP.vidaReforged.core.common.ui.component.LiveData;
 
 import java.util.*;
 

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * 法器组合
  * 每个魔法强度上都有不同,MagicContainer是为了方便存储每个物品而准备的
  * */
 @NoArgsConstructor

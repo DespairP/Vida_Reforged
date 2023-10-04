@@ -13,13 +13,10 @@ import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
-import teamHTBP.vidaReforged.client.screen.components.magicWords.MagicWordWidget;
-import teamHTBP.vidaReforged.core.utils.animation.Animator;
 import teamHTBP.vidaReforged.core.utils.animation.DestinationAnimator;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
-import teamHTBP.vidaReforged.core.utils.render.RenderHelper;
+import teamHTBP.vidaReforged.helper.RenderHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +24,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
 public class GuideBookScrollTextArea extends AbstractWidget implements IGuidebookComponent {
     /**字体*/

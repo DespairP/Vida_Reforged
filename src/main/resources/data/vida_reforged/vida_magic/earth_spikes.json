@@ -1,8 +1,8 @@
 {
   "name": "earth_spikes",
   "magicType": "ATTACK_SHOOTABLE",
-  "icon": "vida_reforged:textures/icons/earth_spikes.png",
-  "iconIndex": 0,
+  "sprite": "vida_reforged:textures/icons/all_skills.png",
+  "iconIndex": 6,
   "description": "vida_reforged.description.earth_spikes",
   "element": "EARTH",
   "isPlayerUsable": true

@@ -12,15 +12,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaViewMagicWordViewModel;
-import teamHTBP.vidaReforged.core.api.VidaElement;
-import teamHTBP.vidaReforged.core.common.component.IDataObserver;
+import teamHTBP.vidaReforged.core.common.ui.component.IDataObserver;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Optional;
 
 import static teamHTBP.vidaReforged.client.screen.components.magicWords.MagicWordWidget.*;

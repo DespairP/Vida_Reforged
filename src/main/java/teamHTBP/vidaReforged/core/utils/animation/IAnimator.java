@@ -4,6 +4,7 @@ package teamHTBP.vidaReforged.core.utils.animation;
 /**
  * 动画机接口
  */
+@Deprecated
 public interface IAnimator {
     /**开始动画*/
     void start();

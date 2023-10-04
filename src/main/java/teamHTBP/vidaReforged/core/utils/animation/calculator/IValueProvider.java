@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
+@Deprecated
 public interface IValueProvider<T>{
     public T addValue(T currentValue,float value);
 

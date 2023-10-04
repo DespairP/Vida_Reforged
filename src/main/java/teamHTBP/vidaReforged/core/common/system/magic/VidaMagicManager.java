@@ -32,7 +32,7 @@ public class VidaMagicManager {
                 new MagicParticleAttribute(container.maxAge()),
                 new MagicParticleType(),
                 new MagicParticleAttribute((float) container.damage()),
-                Optional.ofNullable(invokeMagic).orElse(new VidaMagic("")).element()
+                Optional.ofNullable(invokeMagic).orElse(new VidaMagic("", "")).element()
         );
         if (entity instanceof PartyParrotProjecttile mpp) {
             mpp.initProjectile(player, particle);
@@ -88,6 +88,14 @@ public class VidaMagicManager {
 
     public static LazyOptional<VidaMagic.IInvokable> getMagicInvokable(String magicId){
         return LazyOptional.of(() -> NAME_TO_MAGIC_MAP.get(magicId));
+    }
+
+    public static LazyOptional<VidaMagic.IInvokable> getMagicInvokable(VidaMagic magic){
+        if(magic.regex() == null){
+            return VidaMagicManager.getMagicInvokable(magic.magicId());
+        }
+        return VidaMagicManager.getMagicInvokableRegex(magic.regex());
+
     }
 
 

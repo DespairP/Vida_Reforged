@@ -100,11 +100,13 @@ public class VidaWandClientTooltipScreen implements ClientTooltipComponent {
         //render magic
         for(VidaMagic magic : magicMap.values()){
             final PoseStack poseStack = graphics.pose();
-            final ResourceLocation iconLocation = magic.icon();
-            final int iconSize = 32;
+            final ResourceLocation iconLocation = magic.spriteLocation();
+            final int iconSize = magic.iconSize();
+            final int iconU = magic.getIconU() ;
+            final int iconV = magic.getIconV();
 
             poseStack.pushPose();
-            this.blit(graphics, x + BORDER_SIZE, y + borderCount, new TextureSection(iconLocation, 0 , 0, 32, 32));
+            this.blit(graphics, x + BORDER_SIZE, y + borderCount, new TextureSection(iconLocation, iconU, iconV, 32, 32), magic.spriteSize());
             poseStack.popPose();
 
             borderCount += iconSize + BORDER_SIZE;
@@ -121,7 +123,7 @@ public class VidaWandClientTooltipScreen implements ClientTooltipComponent {
         return 64 + BORDER_SIZE * 2;
     }
 
-    private void blit(GuiGraphics graphics,int x, int y, TextureSection section) {
-        graphics.blit(section.location(), x, y, 0, (float)section.minU(), (float)section.minV(), section.w(), section.h(), 32, 32);
+    private void blit(GuiGraphics graphics,int x, int y, TextureSection section,int size) {
+        graphics.blit(section.location(), x, y, 0, (float)section.minU(), (float)section.minV(), section.w(), section.h(), size, size);
     }
 }

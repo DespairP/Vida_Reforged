@@ -1,5 +1,6 @@
 package teamHTBP.vidaReforged.server.items;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
@@ -9,12 +10,17 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.client.model.itemModel.VidaWandModel;
+import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.common.item.Position;
 import teamHTBP.vidaReforged.server.items.armors.ItemArmorApprentice;
 import teamHTBP.vidaReforged.server.items.armors.ItemArmorBlackMetal;
 
+import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
+
 public class VidaItemLoader {
     /**注册器*/
-    public final static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, VidaReforged.MOD_ID);
+    public final static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
 
     /**vida法杖*/
     public final static RegistryObject<Item> VIDA_WAND = ITEMS.register("vida_wand", VidaWand::new);
@@ -65,4 +71,25 @@ public class VidaItemLoader {
     public final static RegistryObject<Item> SULLEN_HYDRANGEA_SOUP = ITEMS.register("sullen_hydrangea_soup", () -> new VidaFood(BALANCE_FOOD));
     public final static RegistryObject<Item> NITRITE_TEA = ITEMS.register("nitrite_tea", () -> new VidaFood(BALANCE_FOOD));
     public final static RegistryObject<Item> DRIED_SWEET_CYAN_REED = ITEMS.register("dried_sweet_cyan_reed", () -> new VidaFood(BALANCE_FOOD));
+
+    public final static RegistryObject<Item> TEST_EQUIPMENT = ITEMS.register("test_wand_equipment", () ->
+            new VidaWandEquipment.Builder()
+                    .setElement(VidaElement.WOOD)   // 配件属性
+                    .setManaBaseCost(100)           // 装配上去的基础魔力花费
+                    .setPosition(Position.TOP)      // 能装在哪个槽位
+                    .setModelLocation(VidaWandModel.TEST_LAYER_LOCATION)    // 模型位置
+                    .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_2.png"))   // 贴图位置
+                    .build()
+    );
+
+    public final static RegistryObject<Item> TEST_CORE_EQUIPMENT = ITEMS.register("test_wand_core_equipment", () ->
+            new VidaWandEquipment.Builder()
+                    .setElement(VidaElement.FIRE)   // 配件属性
+                    .setManaBaseCost(100)           // 装配上去的基础魔力花费
+                    .setPosition(Position.CORE)      // 能装在哪个槽位
+                    .setModelLocation(VidaWandModel.TEST_CORE_LAYER_LOCATION)    // 模型位置
+                    .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_core.png"))   // 贴图位置
+                    .build()
+    );
+
 }

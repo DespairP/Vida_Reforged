@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import teamHTBP.vidaReforged.core.common.item.Position;
 import teamHTBP.vidaReforged.server.blockEntities.VidaWandCraftingTableBlockEntity;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
+import teamHTBP.vidaReforged.server.menu.slots.VidaWandEquipmentSlot;
 
 import java.util.*;
 
@@ -26,7 +27,7 @@ public class VidaWandCraftingTableMenu extends AbstractContainerMenu {
     /**物品栏里面的行数*/
     private final static int INVENTORY_ROW_AMOUNT = 3;
     /***/
-    private Map<Position,Slot> equipmentSlots = new HashMap<>();
+    private Map<Position,VidaWandEquipmentSlot> equipmentSlots = new HashMap<>();
 
     public VidaWandCraftingTableMenu(int windowId, Inventory inventory, BlockPos pos) {
         super(VidaMenuContainerTypeLoader.VIDA_WAND_CRAFTING_TABLE.get(), windowId);
@@ -57,7 +58,7 @@ public class VidaWandCraftingTableMenu extends AbstractContainerMenu {
             VidaWandCraftingTableBlockEntity entity = (VidaWandCraftingTableBlockEntity) level.getBlockEntity(pPos);
             Position[] position = Position.values();
             for(int i = 0; i < Objects.requireNonNull(entity).getEquipmentSlots().getContainerSize(); i++){
-                Slot slot = new Slot(entity.getEquipmentSlots(),i, 0, 0);
+                VidaWandEquipmentSlot slot = new VidaWandEquipmentSlot(entity.getEquipmentSlots(), i, 0, 0, position[i]);
                 this.equipmentSlots.put(position[i], slot);
                 this.addSlot(slot);
             }
@@ -81,7 +82,7 @@ public class VidaWandCraftingTableMenu extends AbstractContainerMenu {
         return blockPos;
     }
 
-    public Map<Position, Slot> getEquipmentSlots() {
+    public Map<Position, VidaWandEquipmentSlot> getEquipmentSlots() {
         return equipmentSlots;
     }
 }

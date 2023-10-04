@@ -6,6 +6,7 @@ import teamHTBP.vidaReforged.core.utils.animation.calculator.IValueProvider;
 import static java.lang.Math.abs;
 import static java.lang.Math.round;
 
+@Deprecated
 public class DestinationAnimator<T extends Comparable> extends Animator<T>{
     private final T fromValue;
     private final T toValue;

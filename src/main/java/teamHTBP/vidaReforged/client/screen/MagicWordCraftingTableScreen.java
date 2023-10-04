@@ -43,8 +43,8 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
     public MagicWordCraftingTableScreen(MagicWordCraftingTableMenu menu, Inventory inventory, Component p_97743_) {
         super(menu, inventory, Component.translatable("magic_word_crafting_table"));
         viewModel = new VidaMagicWordViewModel();
-        viewModel.blockPos.setValue(menu.getBlockPos());
         viewModel.playerMagicWords.setValue(getMenu().getPlayerMagicWords());
+        viewModel.blockPos.setValue(menu.getBlockPos());
         this.inventory = inventory;
     }
 
@@ -65,6 +65,8 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
         magicSelectedWordListWidget = new MagicSelectedWordListWidget(viewModel,this.leftPos + 46,this.topPos - 140);
         magicWordCraftingButton = new MagicWordCraftingButton(viewModel, this.leftPos + 64, this.topPos - 50);
         magicSlots = new ArrayList<>();
+
+
         this.addMagicSlots();
     }
 
@@ -237,8 +239,8 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
     public List<? extends GuiEventListener> children() {
         List<GuiEventListener> listeners = new ArrayList<>();
         listeners.addAll(this.magicWordFilterLists.getChildren());
-        listeners.add(this.magicWordWidget);
         listeners.addAll(this.magicWordWidget.getChildren());
+        listeners.add(this.magicWordWidget);
         listeners.addAll(this.magicSelectedWordListWidget.getChildren());
         listeners.add(this.magicWordCraftingButton);
         return listeners;

@@ -1,7 +1,7 @@
 package teamHTBP.vidaReforged.client.screen.viewModels;
 
-import teamHTBP.vidaReforged.core.common.component.LiveData;
-import teamHTBP.vidaReforged.core.common.component.ViewModel;
+import teamHTBP.vidaReforged.core.common.ui.component.LiveData;
+import teamHTBP.vidaReforged.core.common.ui.component.ViewModel;
 import teamHTBP.vidaReforged.core.common.system.guidebook.TeaconGuideBook;
 
 public class VidaTeaconGuidebookViewModel extends ViewModel {

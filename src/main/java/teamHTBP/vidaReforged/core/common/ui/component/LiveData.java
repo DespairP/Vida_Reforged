@@ -1,6 +1,4 @@
-package teamHTBP.vidaReforged.core.common.component;
-
-import net.minecraftforge.client.model.renderable.IRenderable;
+package teamHTBP.vidaReforged.core.common.ui.component;
 
 import java.util.LinkedList;
 

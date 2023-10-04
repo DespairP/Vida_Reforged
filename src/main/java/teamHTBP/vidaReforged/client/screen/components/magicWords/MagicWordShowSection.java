@@ -10,12 +10,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import teamHTBP.vidaReforged.client.screen.components.guidebooks.GuideBookScrollTextArea;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaViewMagicWordViewModel;
-import teamHTBP.vidaReforged.core.common.component.ViewModel;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.color.VidaColor;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
-import teamHTBP.vidaReforged.server.menu.MagicWordViewMenu;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
 import java.util.ArrayList;

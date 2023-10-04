@@ -5,16 +5,13 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.joml.Vector2i;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
-import teamHTBP.vidaReforged.core.utils.render.RenderHelper;
+import teamHTBP.vidaReforged.helper.RenderHelper;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.blockEntities.BasePurificationCauldronBlockEntity;
 

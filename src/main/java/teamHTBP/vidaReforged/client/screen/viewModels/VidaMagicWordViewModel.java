@@ -2,8 +2,8 @@ package teamHTBP.vidaReforged.client.screen.viewModels;
 
 import net.minecraft.core.BlockPos;
 import teamHTBP.vidaReforged.core.api.VidaElement;
-import teamHTBP.vidaReforged.core.common.component.LiveData;
-import teamHTBP.vidaReforged.core.common.component.ViewModel;
+import teamHTBP.vidaReforged.core.common.ui.component.LiveData;
+import teamHTBP.vidaReforged.core.common.ui.component.ViewModel;
 import teamHTBP.vidaReforged.server.packets.MagicWordPacket;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
 

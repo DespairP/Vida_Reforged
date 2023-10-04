@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.core.utils.render;
+package teamHTBP.vidaReforged.helper;
 
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -8,6 +8,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Math;
 import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.VidaReforged;
 import net.minecraft.client.gui.GuiGraphics;
@@ -65,6 +66,47 @@ public class RenderHelper {
                     (float) (radius * sin(i - Math.toRadians(90))),
                     (float) 0
             ).color(color.r() / 255.0f, color.g() / 255.0f, color.b() / 255.0f, color.a() / 255.0f).endVertex();
+        }
+
+        RenderSystem.disableBlend();
+        poseStack.popPose();
+    }
+
+    /**
+     * 画圆圈
+     * */
+    public static void renderHollowCircle(GuiGraphics graphics, PoseStack poseStack, int posX, int posY, float lineWidth, float radius, float degree, ARGBColor fromColor, ARGBColor toColor){
+        poseStack.pushPose();
+        poseStack.translate(posX, posY,0);
+        Matrix4f matrix4f = poseStack.last().pose();
+        VertexConsumer buffer = graphics.bufferSource().getBuffer(RenderTypeHandler.GUI_LINE);
+        RenderSystem.enableBlend();
+        RenderSystem.disableCull();
+        // 可能没有用...
+        RenderSystem.lineWidth(lineWidth);
+
+        final double _360Radians = Math.toRadians(360);
+
+        for (double i = Math.toRadians(0); i < Math.toRadians(degree); i += 0.01)   {
+            float percent = (float) (i / _360Radians);
+            float r = (fromColor.r() + (toColor.r() - fromColor.r()) * percent) / 255.0f;
+            float g = (fromColor.g() + (toColor.g() - fromColor.g()) * percent) / 255.0f;
+            float b = (fromColor.b() + (toColor.b() - fromColor.b()) * percent) / 255.0f;
+
+            //double angle = (TWICE_PI * i / sides) + Math.toRadians(180);
+            buffer.vertex(
+                    matrix4f,
+                    (float) (radius * cos(i - Math.toRadians(90))),
+                    (float) (radius * sin(i - Math.toRadians(90))),
+                    (float) 0
+            ).color(r, g, b, fromColor.a() / 255.0f).endVertex();
+
+            buffer.vertex(
+                    matrix4f,
+                    (float) ((radius - lineWidth) * cos(i - Math.toRadians(90))),
+                    (float) ((radius - lineWidth) * sin(i - Math.toRadians(90))),
+                    (float) 0
+            ).color(r, g, b, fromColor.a() / 255.0f).endVertex();
         }
 
         RenderSystem.disableBlend();
