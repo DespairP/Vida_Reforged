@@ -78,6 +78,10 @@ public class VidaItemGroupLoader {
             event.accept(VidaItemLoader.APPRENTICE_BOOTS.get());
             event.accept(VidaItemLoader.TEST_EQUIPMENT.get());
             event.accept(VidaItemLoader.TEST_CORE_EQUIPMENT.get());
+            event.accept(VidaItemLoader.HEART_OF_WOOD.get());
+            event.accept(VidaItemLoader.HEART_OF_WOOD_CORE.get());
+            event.accept(VidaItemLoader.HEART_OF_WOOD_CENTER.get());
+            event.accept(VidaItemLoader.HEART_OF_WOOD_BOTTOM.get());
 
         }
     }

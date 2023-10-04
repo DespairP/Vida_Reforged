@@ -45,6 +45,10 @@ public class LayerRegistryHandler {
         register(event, VidaWandModel.LAYER_LOCATION, VidaWandModel::createBodyLayer, VidaWandModel.class);
         register(event, VidaWandModel.TEST_LAYER_LOCATION, VidaWandModel::createTestLayer, VidaWandModel.class);
         register(event, VidaWandModel.TEST_CORE_LAYER_LOCATION, VidaWandModel::createTestCoreLayer, VidaWandModel.class);
+        register(event, VidaWandModel.STYLE_001_TOP_LAYER_LOCATION, VidaWandModel::createStyle_001_TopLayer, VidaWandModel.class);
+        register(event, VidaWandModel.STYLE_001_CORE_LAYER_LOCATION, VidaWandModel::createStyle_001_CoreLayer, VidaWandModel.class);
+        register(event, VidaWandModel.STYLE_001_CENTER_LAYER_LOCATION, VidaWandModel::createStyle_001_CenterLayer, VidaWandModel.class);
+        register(event, VidaWandModel.STYLE_001_BOTTOM_LAYER_LOCATION, VidaWandModel::createStyle_001_BottomLayer, VidaWandModel.class);
 
     }
 

@@ -92,4 +92,42 @@ public class VidaItemLoader {
                     .build()
     );
 
+    public final static RegistryObject<Item> HEART_OF_WOOD = ITEMS.register("heart_of_wood", () ->
+            new VidaWandEquipment.Builder()
+                    .setElement(VidaElement.WOOD)   // 配件属性
+                    .setManaBaseCost(100)           // 装配上去的基础魔力花费
+                    .setPosition(Position.TOP)      // 能装在哪个槽位
+                    .setModelLocation(VidaWandModel.STYLE_001_TOP_LAYER_LOCATION)    // 模型位置
+                    .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_2.png"))   // 贴图位置
+                    .build()
+    );
+
+    public final static RegistryObject<Item> HEART_OF_WOOD_CORE = ITEMS.register("heart_of_wood_core", () ->
+            new VidaWandEquipment.Builder()
+                    .setElement(VidaElement.WOOD)   // 配件属性
+                    .setManaBaseCost(100)           // 装配上去的基础魔力花费
+                    .setPosition(Position.CORE)      // 能装在哪个槽位
+                    .setModelLocation(VidaWandModel.STYLE_001_CORE_LAYER_LOCATION)    // 模型位置
+                    .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_2.png"))   // 贴图位置
+                    .build()
+    );
+    public final static RegistryObject<Item> HEART_OF_WOOD_CENTER = ITEMS.register("heart_of_wood_center", () ->
+            new VidaWandEquipment.Builder()
+                    .setElement(VidaElement.WOOD)   // 配件属性
+                    .setManaBaseCost(100)           // 装配上去的基础魔力花费
+                    .setPosition(Position.CENTER)      // 能装在哪个槽位
+                    .setModelLocation(VidaWandModel.STYLE_001_CENTER_LAYER_LOCATION)    // 模型位置
+                    .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_2.png"))   // 贴图位置
+                    .build()
+    );
+    public final static RegistryObject<Item> HEART_OF_WOOD_BOTTOM = ITEMS.register("heart_of_wood_bottom", () ->
+            new VidaWandEquipment.Builder()
+                    .setElement(VidaElement.WOOD)   // 配件属性
+                    .setManaBaseCost(100)           // 装配上去的基础魔力花费
+                    .setPosition(Position.BOTTOM)      // 能装在哪个槽位
+                    .setModelLocation(VidaWandModel.STYLE_001_BOTTOM_LAYER_LOCATION)    // 模型位置
+                    .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_2.png"))   // 贴图位置
+                    .build()
+    );
+
 }
