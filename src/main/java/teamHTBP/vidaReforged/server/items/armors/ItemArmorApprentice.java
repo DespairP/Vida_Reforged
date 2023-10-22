@@ -8,6 +8,8 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 import teamHTBP.vidaReforged.client.events.LayerRegistryHandler;
@@ -28,6 +30,7 @@ public class ItemArmorApprentice extends ArmorItem {
         super(ArmorMaterials.LEATHER, type, new Properties().stacksTo(1));
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.extensions.common.IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {

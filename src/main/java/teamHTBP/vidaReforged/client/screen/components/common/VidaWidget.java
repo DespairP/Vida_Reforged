@@ -7,11 +7,13 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
 public abstract class VidaWidget extends AbstractWidget {
-    protected final int initialX;
-    protected final int initialY;
+    protected int initialX;
+    protected int initialY;
     protected int offsetX;
     protected int offsetY;
     private Screen parent;
+
+    private String id;
 
     public VidaWidget(int x, int y, int width, int height, Component component) {
         super(x, y, width, height, component);
@@ -19,6 +21,15 @@ public abstract class VidaWidget extends AbstractWidget {
         this.initialY = y;
     }
 
+    @Override
+    public void setY(int y) {
+        this.initialY = y;
+    }
+
+    @Override
+    public void setX(int x) {
+        this.initialX = x;
+    }
 
     @Override
     public int getX() {
@@ -58,6 +69,14 @@ public abstract class VidaWidget extends AbstractWidget {
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override

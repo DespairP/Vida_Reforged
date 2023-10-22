@@ -1,9 +1,13 @@
 package teamHTBP.vidaReforged.client.screen;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.layouts.GridLayout;
+import net.minecraft.client.gui.layouts.SpacerElement;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -16,6 +20,8 @@ import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import teamHTBP.vidaReforged.client.RenderTypeHandler;
 import teamHTBP.vidaReforged.client.events.LayerRegistryHandler;
 import teamHTBP.vidaReforged.client.model.itemModel.VidaWandModel;
+import teamHTBP.vidaReforged.client.screen.components.common.IconButton;
+import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.core.common.item.Position;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.items.VidaWandEquipment;
@@ -47,6 +53,9 @@ public class VidaWandCraftingScreen extends AbstractContainerScreen<VidaWandCraf
     private final Field slotFieldX;
     /**装备栏*/
     private Map<Position,VidaWandEquipmentSlot> equipmentSlots = new HashMap<>();
+    /***/
+    GridLayout gridLayout;
+    List<VidaWidget> widgets = new ArrayList<>();
 
     public VidaWandCraftingScreen(VidaWandCraftingTableMenu menu, Inventory inventory, Component component) {
         super(menu, inventory, component);
@@ -77,10 +86,27 @@ public class VidaWandCraftingScreen extends AbstractContainerScreen<VidaWandCraf
                 this.slotFieldX.set(slot, -leftPos + WAND_START_X + WAND_WIDTH + 30);
                 this.equipmentSlots.put(position, slot);
             }
-
         } catch (IllegalAccessException  e) {
             throw new RuntimeException(e);
         }
+
+        gridLayout = new GridLayout(WAND_START_X + WAND_WIDTH + 90, offsetY);
+
+        TextureSection section = new TextureSection(new ResourceLocation(MOD_ID, "textures/icons/woodlogo.png"), 0, 0, 16, 16);
+
+        widgets.clear();
+        widgets.add(new IconButton(gridLayout.getX(),gridLayout.getY(),100,50).setIcon(section).setText(Component.literal("木元素")).setPadding(0, 10));
+        widgets.add(new IconButton(gridLayout.getX(),gridLayout.getY(),50,50).setIcon(section));
+        widgets.add(new IconButton(gridLayout.getX(),gridLayout.getY(),50,30).setText(Component.literal("木元素")));
+
+
+        gridLayout.columnSpacing(10);
+        gridLayout.addChild(widgets.get(0), 0, 0, this.gridLayout.newCellSettings().padding(0, 0, 0, 0));
+        this.gridLayout.addChild(SpacerElement.width(40), 0, 1);
+        this.gridLayout.addChild(widgets.get(1), 1, 0);
+        this.gridLayout.addChild(widgets.get(2), 1, 1);
+
+        gridLayout.arrangeElements();
     }
 
     @Override
@@ -97,7 +123,9 @@ public class VidaWandCraftingScreen extends AbstractContainerScreen<VidaWandCraf
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         renderBackground(graphics);
         renderInventory(graphics);
+        widgets.forEach(widget -> widget.render(graphics, mouseX, mouseY, partialTicks));
         renderModel(graphics, mouseX, mouseY);
+
 
         super.render(graphics, mouseX, mouseY, partialTicks);
         RenderSystem.setShaderColor(1, 1, 1,1);
@@ -194,5 +222,12 @@ public class VidaWandCraftingScreen extends AbstractContainerScreen<VidaWandCraf
 
     private boolean isHovering(Slot p_97775_, double p_97776_, double p_97777_) {
         return this.isHovering(p_97775_.x, p_97775_.y, 16, 16, p_97776_, p_97777_);
+    }
+
+    @Override
+    public List<? extends GuiEventListener> children() {
+        List<GuiEventListener> listeners = new ArrayList<>();
+        listeners.addAll(this.widgets);
+        return listeners;
     }
 }

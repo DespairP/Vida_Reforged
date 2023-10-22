@@ -4,12 +4,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegistryObject;
-import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.client.model.itemModel.VidaWandModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.item.Position;
@@ -84,48 +82,48 @@ public class VidaItemLoader {
 
     public final static RegistryObject<Item> TEST_CORE_EQUIPMENT = ITEMS.register("test_wand_core_equipment", () ->
             new VidaWandEquipment.Builder()
-                    .setElement(VidaElement.FIRE)   // 配件属性
-                    .setManaBaseCost(100)           // 装配上去的基础魔力花费
-                    .setPosition(Position.CORE)      // 能装在哪个槽位
-                    .setModelLocation(VidaWandModel.TEST_CORE_LAYER_LOCATION)    // 模型位置
+                    .setElement(VidaElement.FIRE)
+                    .setManaBaseCost(100)
+                    .setPosition(Position.CORE)
+                    .setModelLocation(VidaWandModel.TEST_CORE_LAYER_LOCATION)
                     .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_core.png"))   // 贴图位置
                     .build()
     );
 
     public final static RegistryObject<Item> HEART_OF_WOOD = ITEMS.register("heart_of_wood", () ->
             new VidaWandEquipment.Builder()
-                    .setElement(VidaElement.WOOD)   // 配件属性
-                    .setManaBaseCost(100)           // 装配上去的基础魔力花费
-                    .setPosition(Position.TOP)      // 能装在哪个槽位
-                    .setModelLocation(VidaWandModel.STYLE_001_TOP_LAYER_LOCATION)    // 模型位置
+                    .setElement(VidaElement.WOOD)
+                    .setManaBaseCost(100)
+                    .setPosition(Position.TOP)
+                    .setModelLocation(VidaWandModel.STYLE_001_TOP_LAYER_LOCATION)
                     .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_2.png"))   // 贴图位置
                     .build()
     );
 
     public final static RegistryObject<Item> HEART_OF_WOOD_CORE = ITEMS.register("heart_of_wood_core", () ->
             new VidaWandEquipment.Builder()
-                    .setElement(VidaElement.WOOD)   // 配件属性
-                    .setManaBaseCost(100)           // 装配上去的基础魔力花费
-                    .setPosition(Position.CORE)      // 能装在哪个槽位
-                    .setModelLocation(VidaWandModel.STYLE_001_CORE_LAYER_LOCATION)    // 模型位置
+                    .setElement(VidaElement.WOOD)
+                    .setManaBaseCost(100)
+                    .setPosition(Position.CORE)
+                    .setModelLocation(VidaWandModel.STYLE_001_CORE_LAYER_LOCATION)
                     .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_2.png"))   // 贴图位置
                     .build()
     );
     public final static RegistryObject<Item> HEART_OF_WOOD_CENTER = ITEMS.register("heart_of_wood_center", () ->
             new VidaWandEquipment.Builder()
-                    .setElement(VidaElement.WOOD)   // 配件属性
-                    .setManaBaseCost(100)           // 装配上去的基础魔力花费
-                    .setPosition(Position.CENTER)      // 能装在哪个槽位
-                    .setModelLocation(VidaWandModel.STYLE_001_CENTER_LAYER_LOCATION)    // 模型位置
+                    .setElement(VidaElement.WOOD)
+                    .setManaBaseCost(100)
+                    .setPosition(Position.CENTER)
+                    .setModelLocation(VidaWandModel.STYLE_001_CENTER_LAYER_LOCATION)
                     .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_2.png"))   // 贴图位置
                     .build()
     );
     public final static RegistryObject<Item> HEART_OF_WOOD_BOTTOM = ITEMS.register("heart_of_wood_bottom", () ->
             new VidaWandEquipment.Builder()
-                    .setElement(VidaElement.WOOD)   // 配件属性
-                    .setManaBaseCost(100)           // 装配上去的基础魔力花费
-                    .setPosition(Position.BOTTOM)      // 能装在哪个槽位
-                    .setModelLocation(VidaWandModel.STYLE_001_BOTTOM_LAYER_LOCATION)    // 模型位置
+                    .setElement(VidaElement.WOOD)
+                    .setManaBaseCost(100)
+                    .setPosition(Position.BOTTOM)
+                    .setModelLocation(VidaWandModel.STYLE_001_BOTTOM_LAYER_LOCATION)
                     .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_2.png"))   // 贴图位置
                     .build()
     );

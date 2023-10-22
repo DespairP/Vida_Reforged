@@ -15,43 +15,22 @@ import java.util.Random;
 
 public class ParticleCropBlock extends BaseElementCropBlock{
     /**种子*/
-    private final ItemLike provider;
-    /***/
-    protected boolean isMutations = false;
-
+    private final ItemLike itemProvider;
 
     /**
      * 一个可以在成年时生成粒子的植物
      *
-     * @param stage    最大生长数
      * @param element  所属元素
      * @param provider 所提供的itemseed
-     * @param color   粒子颜色，使用ColorHelper来表现rgb
      */
     public ParticleCropBlock(VidaElement element, ItemLike provider) {
         super(element);
-        this.provider = provider;
+        this.itemProvider = provider;
     }
-
-    /**
-     * 一个*可变异*|*不变异时的植物成年时生成粒子*的植物
-     *
-     * @param stage       最大生长数
-     * @param element     所属元素
-     * @param provider    所提供的itemseed
-     * @param color      粒子颜色，使用ColorHelper来表现rgb
-     * @param isMutations 是否可以变异
-     */
-    public ParticleCropBlock(VidaElement element, ItemLike provider, VidaColor color, boolean isMutations) {
-        super(element);
-        this.provider = provider;
-        this.isMutations = isMutations;
-    }
-
 
     @Override
     protected ItemLike getSeedsItem() {
-        return provider != null ? provider : super.getSeedsItem();
+        return itemProvider != null ? itemProvider : super.getSeedsItem();
     }
 
     @Override

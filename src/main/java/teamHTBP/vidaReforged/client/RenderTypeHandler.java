@@ -107,7 +107,7 @@ public class RenderTypeHandler extends RenderStateShard{
 
     public static final Function<ResourceLocation, RenderType> ENTITY_GLOW_WAND = Util.memoize((p_286151_) -> {
         RenderType.CompositeState rendertype$compositestate = RenderType.CompositeState.builder()
-                .setShaderState(RENDERTYPE_ENTITY_SHADOW_SHADER)
+                .setShaderState(RENDERTYPE_ENTITY_ALPHA_SHADER)
                 .setTextureState(new RenderStateShard.TextureStateShard(p_286151_, false, false))
                 .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
                 .setCullState(NO_CULL)

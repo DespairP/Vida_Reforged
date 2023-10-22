@@ -9,9 +9,13 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import teamHTBP.vidaReforged.core.common.item.Position;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
@@ -24,7 +28,6 @@ public class VidaWandModel extends Model {
     public static final ModelLayerLocation STYLE_001_CORE_LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "wand_style_001_model_core"), "main");
     public static final ModelLayerLocation STYLE_001_CENTER_LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "wand_style_001_model_center"), "main");
     public static final ModelLayerLocation STYLE_001_BOTTOM_LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "wand_style_001_model_bottom"), "main");
-
     private final ModelPart bone;
     private final ModelPart top;
     private final ModelPart center;
@@ -40,8 +43,22 @@ public class VidaWandModel extends Model {
         this.top = bone.getChild("top");
     }
 
-    public static MeshDefinition createWandBaseLayer(){
+
+    public static MeshDefinition createBodyLayer(){
         MeshDefinition meshdefinition = new MeshDefinition();
+        PartDefinition partdefinition = meshdefinition.getRoot();
+
+        PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 11.0F, 0.0F, 0.0873F, 0.0F, 0.0F));
+        PartDefinition bottom = bone.addOrReplaceChild("bottom", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 2.875F, -1.35F, -0.1309F, 0.0F, 0.0F));
+        PartDefinition top = bone.addOrReplaceChild("top", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, -5.0F, -0.1F, -0.2618F, 0.0F, 0.0F));
+        PartDefinition core = bone.addOrReplaceChild("core", CubeListBuilder.create(), PartPose.offset(0.0F, -8.65F, -0.25F));
+        PartDefinition center = bone.addOrReplaceChild("center", CubeListBuilder.create(), PartPose.offset(0.0F, 13.0F, 0.0F));
+
+        return meshdefinition;
+    }
+
+    public static LayerDefinition createWandBaseLayer(){
+        MeshDefinition meshdefinition = createBodyLayer();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
         PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 11.0F, 0.0F, 0.0873F, 0.0F, 0.0F));
@@ -67,16 +84,12 @@ public class VidaWandModel extends Model {
         PartDefinition core = bone.addOrReplaceChild("core", CubeListBuilder.create(), PartPose.offset(0.0F, -8.65F, -0.25F));
         PartDefinition cube_r14 = core.addOrReplaceChild("cube_r14", CubeListBuilder.create().texOffs(16, 0).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.5061F, 0.0F, 0.0F));
 
-        return meshdefinition;
+        return LayerDefinition.create(meshdefinition, 32, 32);
     }
 
-    public static LayerDefinition createBodyLayer() {
-        MeshDefinition wandBaseLayer = createWandBaseLayer();
-        return LayerDefinition.create(wandBaseLayer, 32, 32);
-    }
 
     public static LayerDefinition createTestLayer(){
-        MeshDefinition meshdefinition = createWandBaseLayer();
+        MeshDefinition meshdefinition = createBodyLayer();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
         PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 11.0F, 0.0F, 0.0873F, 0.0F, 0.0F));
@@ -94,20 +107,18 @@ public class VidaWandModel extends Model {
 
 
     public static LayerDefinition createTestCoreLayer(){
-        MeshDefinition meshdefinition = createWandBaseLayer();
+        MeshDefinition meshdefinition = createBodyLayer();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
         PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 11.0F, 0.0F, 0.0873F, 0.0F, 0.0F));
-
         PartDefinition core = bone.addOrReplaceChild("core", CubeListBuilder.create(), PartPose.offset(0.0F, -8.65F, -0.25F));
-
         PartDefinition cube_r1 = core.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(16, 0).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.5061F, 0.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 32, 32);
     }
 
     public static LayerDefinition createStyle_001_TopLayer() {
-        MeshDefinition meshdefinition = createWandBaseLayer();
+        MeshDefinition meshdefinition = createBodyLayer();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
         PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 11.0F, 0.0F, 0.0873F, 0.0F, 0.0F));
@@ -115,13 +126,9 @@ public class VidaWandModel extends Model {
         PartDefinition top = bone.addOrReplaceChild("top", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, -5.0F, -0.1F, -0.2618F, 0.0F, 0.0F));
 
         PartDefinition cube_r1 = top.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(25, 23).addBox(-0.002F, -4.75F, -1.75F, 0.001F, 4.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.7453F, 0.0F, 0.0F));
-
         PartDefinition cube_r2 = top.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(25, 23).addBox(-0.001F, -5.0F, -2.0F, 0.001F, 4.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.0036F, 0.0F, 0.0F));
-
         PartDefinition cube_r3 = top.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -8.5F, -7.525F, 2.0F, 10.0F, 2.0F, new CubeDeformation(-0.002F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.3054F, 0.0F, 0.0F));
-
         PartDefinition cube_r4 = top.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -7.25F, -6.875F, 2.0F, 10.0F, 2.0F, new CubeDeformation(-0.001F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.6545F, 0.0F, 0.0F));
-
         PartDefinition cube_r5 = top.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -5.25F, -1.875F, 2.0F, 6.0F, 2.0F, new CubeDeformation(-0.002F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 1.0036F, 0.0F, 0.0F));
 
         PartDefinition cube_r6 = top.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -2.25F, -0.5F, 2.0F, 3.0F, 2.0F, new CubeDeformation(-0.003F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.9599F, 0.0F, 0.0F));
@@ -130,7 +137,7 @@ public class VidaWandModel extends Model {
     }
 
     public static LayerDefinition createStyle_001_CoreLayer() {
-        MeshDefinition meshdefinition = createWandBaseLayer();
+        MeshDefinition meshdefinition = createBodyLayer();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
         PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 11.0F, 0.0F, 0.0873F, 0.0F, 0.0F));
@@ -145,7 +152,7 @@ public class VidaWandModel extends Model {
     }
 
     public static LayerDefinition createStyle_001_CenterLayer() {
-        MeshDefinition meshdefinition = createWandBaseLayer();
+        MeshDefinition meshdefinition = createBodyLayer();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
         PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 11.0F, 0.0F, 0.0873F, 0.0F, 0.0F));
@@ -159,7 +166,7 @@ public class VidaWandModel extends Model {
         return LayerDefinition.create(meshdefinition, 32, 32);
     }
     public static LayerDefinition createStyle_001_BottomLayer() {
-        MeshDefinition meshdefinition = createWandBaseLayer();
+        MeshDefinition meshdefinition = createBodyLayer();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
         PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 11.0F, 0.0F, 0.0873F, 0.0F, 0.0F));

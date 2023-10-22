@@ -42,7 +42,7 @@ public class LayerRegistryHandler {
         register(event, VidaBasedLeggings.APPRENTICE_LAYER_LOCATION, LayerManager::createApprenticeBodyLayer, VidaBasedLeggings.class);
         register(event, VidaApprenticeBoots.APPRENTICE_LAYER_LOCATION, LayerManager::createApprenticeBodyLayer, VidaApprenticeBoots.class);
         register(event, InjectTableModel.APPRENTICE_LAYER_LOCATION, InjectTableModel::createBodyLayer, InjectTableModel.class);
-        register(event, VidaWandModel.LAYER_LOCATION, VidaWandModel::createBodyLayer, VidaWandModel.class);
+        register(event, VidaWandModel.LAYER_LOCATION, VidaWandModel::createWandBaseLayer, VidaWandModel.class);
         register(event, VidaWandModel.TEST_LAYER_LOCATION, VidaWandModel::createTestLayer, VidaWandModel.class);
         register(event, VidaWandModel.TEST_CORE_LAYER_LOCATION, VidaWandModel::createTestCoreLayer, VidaWandModel.class);
         register(event, VidaWandModel.STYLE_001_TOP_LAYER_LOCATION, VidaWandModel::createStyle_001_TopLayer, VidaWandModel.class);

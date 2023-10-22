@@ -1,6 +1,7 @@
 package teamHTBP.vidaReforged.server.blocks;
 
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -8,6 +9,7 @@ import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.block.DecoBlockFactory;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterItemBlock;
+import teamHTBP.vidaReforged.server.blocks.crops.MutationCrop;
 import teamHTBP.vidaReforged.server.blocks.crops.ParticleCropBlock;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
@@ -251,7 +253,13 @@ public class VidaBlockLoader {
 
     /**作物*/
     @RegisterItemBlock
-    public static RegistryObject<Block> CRIMSON_CREST = BLOCKS.register("crimson_crest", () -> new ParticleCropBlock(VidaElement.FIRE, ()-> VidaItemLoader.CRIMSON_CREST_SEED_ITEM.get()));
+    public static RegistryObject<Block> CRIMSON_CREST = BLOCKS.register("crimson_crest", () ->
+            new MutationCrop(
+                    VidaElement.FIRE,
+                    5,
+                    ()-> SILENT_FOREST_BRICK_0.get(),
+                    ()-> VidaItemLoader.BREATH_CATCHER.get())
+    );
     @RegisterItemBlock
     public static RegistryObject<Block> HEART_OF_WAL = BLOCKS.register("heart_of_wal", () -> new ParticleCropBlock(VidaElement.WOOD, ()-> VidaItemLoader.HEART_OF_WAL_SEED_ITEM.get()));
     @RegisterItemBlock
