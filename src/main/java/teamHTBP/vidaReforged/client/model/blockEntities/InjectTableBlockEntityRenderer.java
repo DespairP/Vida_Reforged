@@ -5,7 +5,6 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -14,11 +13,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
-import org.joml.Quaternionf;
 import teamHTBP.vidaReforged.VidaReforged;
-import teamHTBP.vidaReforged.client.events.LayerRegistryHandler;
+import teamHTBP.vidaReforged.client.events.registries.LayerRegistryHandler;
 import teamHTBP.vidaReforged.client.model.blockModel.InjectTableModel;
-import teamHTBP.vidaReforged.server.blockEntities.GlowingLightBlockEntity;
 import teamHTBP.vidaReforged.server.blockEntities.InjectTableBlockEntity;
 
 public class InjectTableBlockEntityRenderer implements BlockEntityRenderer<InjectTableBlockEntity> {

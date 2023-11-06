@@ -9,14 +9,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
+import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
-public class MagicSelectedWordWidget extends AbstractWidget {
+public class MagicSelectedWordWidget extends AbstractWidget implements IVidaNodes {
     VidaElement element = VidaElement.EMPTY;
 
     public final static ResourceLocation EMPTY_WORD_LOCATION = new ResourceLocation(MOD_ID, "textures/gui/magic_word_crafting.png");
@@ -29,14 +31,16 @@ public class MagicSelectedWordWidget extends AbstractWidget {
 
     private VidaMagicWordViewModel model;
 
-    public MagicSelectedWordWidget(VidaMagicWordViewModel model, int x, int y, VidaElement element) {
-        super(x, y, 16, 16, Component.translatable("selected_magic_word"));
+    public MagicSelectedWordWidget(int x, int y, VidaElement element) {
+        super(x, y, 16, 16, Component.literal("selected_magic_word"));
         this.element = element;
-        this.model = model;
         this.init();
     }
 
     public void init(){
+        //
+        this.model = new ViewModelProvider(requireParent()).get(VidaMagicWordViewModel.class);
+
         this.model.selectedMagicWord.observe(newValue -> {
             this.selectWordId = this.model.selectedMagicWord.getValue().getOrDefault(element,"");
         });

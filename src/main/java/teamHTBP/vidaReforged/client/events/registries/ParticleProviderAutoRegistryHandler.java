@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.events;
+package teamHTBP.vidaReforged.client.events.registries;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -22,7 +22,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class ParticleProviderRegHandler {
+public class ParticleProviderAutoRegistryHandler {
     /** logger */
     public static final Logger LOGGER = LogManager.getLogger();
     /** 准备注册的Particle */
@@ -76,7 +76,7 @@ public class ParticleProviderRegHandler {
             }
         }
         //最后
-        ParticleProviderRegHandler.registerParticleType = registerObjs;
+        ParticleProviderAutoRegistryHandler.registerParticleType = registerObjs;
     }
 
     /**注册*/

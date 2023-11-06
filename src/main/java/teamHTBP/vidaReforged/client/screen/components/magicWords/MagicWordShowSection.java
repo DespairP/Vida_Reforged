@@ -10,7 +10,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import teamHTBP.vidaReforged.client.screen.components.guidebooks.GuideBookScrollTextArea;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaViewMagicWordViewModel;
+import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
+import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.color.VidaColor;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
@@ -22,18 +24,20 @@ import java.util.Optional;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
-public class MagicWordShowSection extends AbstractWidget {
+public class MagicWordShowSection extends AbstractWidget implements IVidaNodes {
     VidaViewMagicWordViewModel viewModel;
     GuideBookScrollTextArea textArea;
     public static ResourceLocation QUESTION_MARK = new ResourceLocation(MOD_ID, "textures/icons/magic_word/question_mark.png");
     public int topHeight = 32;
 
     public MagicWord magicWord = null;
-    public MagicWordShowSection(VidaViewMagicWordViewModel viewModel, int x, int y, int width, int height) {
+    public MagicWordShowSection(int x, int y, int width, int height) {
         super(x, y, width, height, Component.empty());
-        this.viewModel = viewModel;
+        this.viewModel = new ViewModelProvider(requireParent()).get(VidaViewMagicWordViewModel.class);
         init();
     }
+
+
 
     private void init() {
         this.topHeight = (int)(height * 1.0f / 4);

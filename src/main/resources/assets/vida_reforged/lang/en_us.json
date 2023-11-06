@@ -199,5 +199,6 @@
  "magic_word.name.vida_reforged.vision": "vision",
  "key.category.vida": "Vida",
  "key.keyboard.open_magic_word": "Open Magic Word Screen",
- "gui.vida_reforged.name.magic_word": "magic word button"
+ "gui.vida_reforged.name.magic_word": "magic word button",
+ "gui.vida_reforged.vida_wand_slot.no_item": "No Item"
 }

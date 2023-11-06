@@ -50,7 +50,7 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
     }
 
     @Override
-    public void render(PoseStack poseStack) {
+    public void render(PoseStack poseStack, float partialTicks) {
         if(!VidaConfig.DEBUG_MODE.get()){
             return;
         }

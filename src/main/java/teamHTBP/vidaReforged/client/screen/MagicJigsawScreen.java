@@ -10,6 +10,8 @@ import teamHTBP.vidaReforged.server.menu.MagicJigsawMenu;
 
 import java.util.List;
 
+/**拼图，不再维护*/
+@Deprecated
 public class MagicJigsawScreen extends AbstractContainerScreen<MagicJigsawMenu> {
     /**显示客户端玩家的拼图*/
     private NonNullList<?> playerJigsawList = NonNullList.create();

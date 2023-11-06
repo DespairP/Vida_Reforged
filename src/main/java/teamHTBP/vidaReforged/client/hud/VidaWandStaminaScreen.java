@@ -1,11 +1,9 @@
 package teamHTBP.vidaReforged.client.hud;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
@@ -16,9 +14,7 @@ import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 import teamHTBP.vidaReforged.server.items.VidaWand;
 
-import static teamHTBP.vidaReforged.core.common.VidaConstant.TAG_HOLD_TIME;
-import static teamHTBP.vidaReforged.helper.RenderHelper.renderCircle;
-import static teamHTBP.vidaReforged.helper.RenderHelper.renderHollowCircle;
+import static teamHTBP.vidaReforged.helper.GuiHelper.renderHollowCircle;
 
 /**
  * 法杖蓄力槽
@@ -69,11 +65,6 @@ public class VidaWandStaminaScreen extends GuiGraphics implements IVidaScreen {
         poseStack.popPose();
 
         this.lastDegree = degrees;
-
-    }
-
-    @Override
-    public void render(PoseStack poseStack) {
 
     }
 }

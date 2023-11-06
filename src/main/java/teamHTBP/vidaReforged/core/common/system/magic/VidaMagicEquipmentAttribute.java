@@ -5,6 +5,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import teamHTBP.vidaReforged.client.events.registries.LayerRegistryHandler;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.item.Position;
 
@@ -22,7 +23,7 @@ public class VidaMagicEquipmentAttribute {
     private double factor = 1;
     /**饰品所属元素*/
     private VidaElement element = VidaElement.EMPTY;
-    /**饰品对应的模型路径，{@link teamHTBP.vidaReforged.client.events.LayerRegistryHandler}*/
+    /**饰品对应的模型路径，{@link LayerRegistryHandler}*/
     @OnlyIn(Dist.CLIENT)
     private ModelLayerLocation modelLayerLocation;
     /**饰品对应的模型材质*/

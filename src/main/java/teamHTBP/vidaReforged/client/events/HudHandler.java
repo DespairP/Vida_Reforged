@@ -113,7 +113,7 @@ public class HudHandler {
             return;
         }
 
-        unlockScreen.render(event.getGuiGraphics().pose());
+        unlockScreen.render(event.getGuiGraphics().pose(), event.getPartialTick());
     }
 
     /**显示debug界面*/
@@ -132,7 +132,7 @@ public class HudHandler {
         );
 
 
-        debugScreen.render(matrixStack);
+        debugScreen.render(matrixStack, event.getPartialTick());
     }
 
     /***/
@@ -161,7 +161,7 @@ public class HudHandler {
     public static void renderVidaManaScreen(RenderGuiOverlayEvent event){
         if(event.getOverlay() == VanillaGuiOverlay.EXPERIENCE_BAR.type()){
             VidaManaBarScreen screen = getOrCreateVidaManaScreen(event.getGuiGraphics().bufferSource());
-            screen.render(event.getGuiGraphics().pose());
+            screen.render(event.getGuiGraphics().pose(), event.getPartialTick());
         }
     }
 

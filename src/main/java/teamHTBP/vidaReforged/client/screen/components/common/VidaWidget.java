@@ -1,12 +1,15 @@
 package teamHTBP.vidaReforged.client.screen.components.common;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
+import teamHTBP.vidaReforged.core.common.ui.component.IViewModelStoreProvider;
 
-public abstract class VidaWidget extends AbstractWidget {
+public abstract class VidaWidget extends AbstractWidget implements IVidaNodes {
     protected int initialX;
     protected int initialY;
     protected int offsetX;
@@ -80,11 +83,18 @@ public abstract class VidaWidget extends AbstractWidget {
     }
 
     @Override
-    protected void updateWidgetNarration(NarrationElementOutput output) {
-
-    }
+    protected void updateWidgetNarration(NarrationElementOutput output) {}
 
     public Screen getParent(){
-        return parent;
+        return Minecraft.getInstance().screen;
+    }
+
+    @Override
+    public <T extends IViewModelStoreProvider> T requireParent() {
+        Screen parent = getParent();
+        if(parent instanceof IViewModelStoreProvider){
+            return (T) parent;
+        }
+        return null;
     }
 }

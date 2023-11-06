@@ -13,7 +13,7 @@ import teamHTBP.vidaReforged.core.common.ui.style.Padding;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
-import teamHTBP.vidaReforged.helper.RenderHelper;
+import teamHTBP.vidaReforged.helper.GuiHelper;
 
 public class IconButton extends VidaWidget{
     /**材质路径*/
@@ -97,7 +97,7 @@ public class IconButton extends VidaWidget{
 
         poseStack.pushPose();
         RenderSystem.enableBlend();
-        RenderHelper.renderScissor(getX(), getY(), width, height);
+        GuiHelper.renderScissor(getX(), getY(), width, height);
 
         renderWidgetBackground(graphics);
         renderHoverBackground(graphics);

@@ -1,5 +1,6 @@
 package teamHTBP.vidaReforged.server.blocks;
 
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.DeferredRegister;
@@ -257,8 +258,8 @@ public class VidaBlockLoader {
             new MutationCrop(
                     VidaElement.FIRE,
                     5,
-                    ()-> SILENT_FOREST_BRICK_0.get(),
-                    ()-> VidaItemLoader.BREATH_CATCHER.get())
+                    ()-> Blocks.WHEAT,
+                    ()-> Items.REDSTONE)
     );
     @RegisterItemBlock
     public static RegistryObject<Block> HEART_OF_WAL = BLOCKS.register("heart_of_wal", () -> new ParticleCropBlock(VidaElement.WOOD, ()-> VidaItemLoader.HEART_OF_WAL_SEED_ITEM.get()));

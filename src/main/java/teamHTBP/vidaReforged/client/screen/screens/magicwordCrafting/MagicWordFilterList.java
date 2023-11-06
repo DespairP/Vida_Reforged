@@ -7,22 +7,26 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
+import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 
 import java.util.*;
 
-public class MagicWordFilterList extends AbstractWidget {
+public class MagicWordFilterList extends AbstractWidget implements IVidaNodes {
     public final static int BUTTON_AMOUNT = 5;
     public final Map<VidaElement, MagicWordFilter> widgetMap;
     private VidaElement selectedElement = VidaElement.EMPTY;
-    private final VidaMagicWordViewModel model;
-    public MagicWordFilterList(VidaMagicWordViewModel model, int x, int y) {
-        super(x, y, MagicWordFilter.PIXEL, MagicWordFilter.PIXEL * BUTTON_AMOUNT, Component.translatable("magic filter button list"));
+    private VidaMagicWordViewModel model;
+    public MagicWordFilterList(int x, int y) {
+        super(x, y, MagicWordFilter.PIXEL, MagicWordFilter.PIXEL * BUTTON_AMOUNT, Component.literal("magic filter button list"));
         this.widgetMap = new LinkedHashMap<>();
-        this.model = model;
         this.initWidget();
     }
 
     public void initWidget(){
+        //
+        this.model = new ViewModelProvider(requireParent()).get(VidaMagicWordViewModel.class);
+
         int count = 0;
         for(VidaElement element : VidaElement.values()){
             if(element == VidaElement.EMPTY || element == VidaElement.VOID){

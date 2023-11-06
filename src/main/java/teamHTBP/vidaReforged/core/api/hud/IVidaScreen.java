@@ -6,5 +6,5 @@ import net.minecraft.client.Minecraft;
 public interface IVidaScreen {
     public final Minecraft mc = Minecraft.getInstance();
 
-    public void render(PoseStack poseStack);
+    void render(PoseStack poseStack, float partialTicks);
 }

@@ -16,7 +16,7 @@ import net.minecraft.network.chat.Style;
 import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.core.utils.animation.DestinationAnimator;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
-import teamHTBP.vidaReforged.helper.RenderHelper;
+import teamHTBP.vidaReforged.helper.GuiHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,7 +134,7 @@ public class GuideBookScrollTextArea extends AbstractWidget implements IGuideboo
         poseStack.pushPose();
         RenderSystem.enableBlend();
 
-        RenderHelper.renderScissor(getX() + 3,getY(), getWidth(), getHeight());
+        GuiHelper.renderScissor(getX() + 3,getY(), getWidth(), getHeight());
         poseStack.translate(10, 10 + scroll.get() , 0);
         graphics.drawWordWrap(font, component, getX(), getY(), getWidth() - 13, 0xFFFFFFFF);
 

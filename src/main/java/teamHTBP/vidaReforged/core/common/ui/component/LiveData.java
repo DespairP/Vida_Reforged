@@ -1,6 +1,7 @@
 package teamHTBP.vidaReforged.core.common.ui.component;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class LiveData<T> {
     T data;
@@ -9,6 +10,10 @@ public class LiveData<T> {
     public LiveData(T data) {
         this.data = data;
         this.observersList = new LinkedList<>();
+    }
+
+    public LiveData(){
+        this(null);
     }
 
     public void observe(IDataObserver<T> observer){

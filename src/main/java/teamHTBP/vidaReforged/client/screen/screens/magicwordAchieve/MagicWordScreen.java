@@ -8,8 +8,11 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.client.screen.components.magicWords.MagicWordShowSection;
+import teamHTBP.vidaReforged.client.screen.screens.common.VidaContainerScreen;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaViewMagicWordViewModel;
+import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.server.menu.MagicWordViewMenu;
@@ -17,7 +20,7 @@ import teamHTBP.vidaReforged.server.menu.MagicWordViewMenu;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MagicWordScreen extends AbstractContainerScreen<MagicWordViewMenu> {
+public class MagicWordScreen extends VidaContainerScreen<MagicWordViewMenu> {
     FloatRange alphaRange = new FloatRange(0, 0, 0.75f);
     VidaViewMagicWordViewModel model;
     MagicWordSingleListWidget singleList;
@@ -25,22 +28,29 @@ public class MagicWordScreen extends AbstractContainerScreen<MagicWordViewMenu> 
 
     public MagicWordScreen(MagicWordViewMenu menu, Inventory playerInventory, Component component) {
         super(menu, Minecraft.getInstance().player.getInventory(), Component.literal("view magic word"));
-        model = new VidaViewMagicWordViewModel();
-        this.model.playerMagicWords.setValue(menu.getPlayerMagicWords());
+    }
+
+    @Override
+    public void added() {
+        this.model = new ViewModelProvider(this).get(VidaViewMagicWordViewModel.class);
     }
 
     @Override
     protected void init() {
         super.init();
+        this.model.playerMagicWords.setValue(menu.getPlayerMagicWords());
+
         int width = (int) (this.width * 0.8f / 3);
         int height = (int) (this.height - 28);
         int x = (int) (this.width * 0.2 / 3);
         int y = (int)((this.height - height) / 2);
 
-        int textWidth = (int) (this.width * 1.8f / 3.0f);
 
-        singleList = new MagicWordSingleListWidget(model, x, y, width, height);
-        textArea = new MagicWordShowSection(model, this.width - textWidth - 10, y, textWidth, height);
+        int textWidth = (int) (this.width * 1.8f / 3.0f);
+        int textX = this.width - textWidth - 10;
+
+        singleList = new MagicWordSingleListWidget(x, y, width, height);
+        textArea = new MagicWordShowSection(textX, y, textWidth, height);
     }
 
     @Override
@@ -86,21 +96,6 @@ public class MagicWordScreen extends AbstractContainerScreen<MagicWordViewMenu> 
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double partialTicks) {
-        List<GuiEventListener> listeners = new ArrayList<>();
-
-        for(GuiEventListener guieventlistener : this.children()) {
-            if (guieventlistener.isMouseOver(mouseX, mouseY)) {
-                listeners.add(guieventlistener);
-            }
-        }
-
-        boolean isScrolled = listeners.stream().reduce(false, (total, listener) -> listener.mouseScrolled(mouseX, mouseY, partialTicks), Boolean::logicalOr);
-
-        return isScrolled;
-    }
-
-    @Override
     public List<? extends GuiEventListener> children() {
         List<GuiEventListener> listeners = new ArrayList<>();
         listeners.addAll(this.singleList.getChildren());
@@ -108,4 +103,11 @@ public class MagicWordScreen extends AbstractContainerScreen<MagicWordViewMenu> 
         listeners.add(this.textArea.getChildren());
         return listeners;
     }
+
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int mouseButton, double dragX, double dragY) {
+        boolean isItemStackDragged = super.mouseDragged(mouseX, mouseY, mouseButton, dragX, dragY);
+        return this.getFocused() != null && this.isDragging() && mouseButton == 0 ? this.getFocused().mouseDragged(mouseX, mouseY, mouseButton, dragX, dragY) : false;
+    }
+
 }

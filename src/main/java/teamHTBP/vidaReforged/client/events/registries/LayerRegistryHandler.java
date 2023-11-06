@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.events;
+package teamHTBP.vidaReforged.client.events.registries;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.Model;
@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
-import static teamHTBP.vidaReforged.client.events.ParticleProviderRegHandler.LOGGER;
+import static teamHTBP.vidaReforged.client.events.registries.ParticleProviderAutoRegistryHandler.LOGGER;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = MOD_ID, value = Dist.CLIENT)
 public class LayerRegistryHandler {
@@ -49,7 +49,6 @@ public class LayerRegistryHandler {
         register(event, VidaWandModel.STYLE_001_CORE_LAYER_LOCATION, VidaWandModel::createStyle_001_CoreLayer, VidaWandModel.class);
         register(event, VidaWandModel.STYLE_001_CENTER_LAYER_LOCATION, VidaWandModel::createStyle_001_CenterLayer, VidaWandModel.class);
         register(event, VidaWandModel.STYLE_001_BOTTOM_LAYER_LOCATION, VidaWandModel::createStyle_001_BottomLayer, VidaWandModel.class);
-
     }
 
 

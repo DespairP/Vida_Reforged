@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.events;
+package teamHTBP.vidaReforged.client.events.registries;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
@@ -11,8 +11,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
 
+/** 注册键位 */
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class KeyRegisterEventHandler {
+public class KeyRegistryHandler {
     public static final KeyMapping OPEN_MAGIC_WORD_KEY = new KeyMapping("key.keyboard.open_magic_word",
             KeyConflictContext.IN_GAME,
             KeyModifier.NONE,

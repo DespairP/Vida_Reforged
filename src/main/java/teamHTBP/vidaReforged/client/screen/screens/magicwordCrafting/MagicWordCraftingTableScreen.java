@@ -16,9 +16,12 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
+import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.client.screen.components.magicWords.*;
+import teamHTBP.vidaReforged.client.screen.screens.common.VidaContainerScreen;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.blockEntities.MagicWordCraftingTableBlockEntity;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
@@ -29,30 +32,45 @@ import java.util.*;
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 import static teamHTBP.vidaReforged.core.utils.math.StringUtils.compareString;
 
-public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicWordCraftingTableMenu> {
+public class MagicWordCraftingTableScreen extends VidaContainerScreen<MagicWordCraftingTableMenu> {
+    /**显示所有持有的词条容器*/
     MagicWordListWidget magicWordWidget;
+    /**过滤器*/
     MagicWordFilterList magicWordFilterLists;
+    /**显示选择的词条*/
     MagicSelectedWordListWidget magicSelectedWordListWidget;
+    /**合成按钮*/
     MagicWordCraftingButton magicWordCraftingButton;
+    /**放入物品的槽位*/
     List<MagicSlotComponent> magicSlots;
-    final VidaMagicWordViewModel viewModel;
     final Inventory inventory;
-
     private final static ResourceLocation INVENTORY_LOCATION = new ResourceLocation(MOD_ID, "textures/gui/magic_word_inventory.png");
+    private VidaMagicWordViewModel viewModel;
+
 
     public MagicWordCraftingTableScreen(MagicWordCraftingTableMenu menu, Inventory inventory, Component p_97743_) {
-        super(menu, inventory, Component.translatable("magic_word_crafting_table"));
-        viewModel = new VidaMagicWordViewModel();
-        viewModel.playerMagicWords.setValue(getMenu().getPlayerMagicWords());
-        viewModel.blockPos.setValue(menu.getBlockPos());
+        super(menu, inventory, Component.literal("magic_word_crafting_table"));
         this.inventory = inventory;
     }
 
     @Override
+    public void added() {
+        // init view model
+        this.viewModel = new ViewModelProvider(this).get(VidaMagicWordViewModel.class);
+    }
+
+    @Override
     protected void init() {
+        super.init();
+
+        viewModel.playerMagicWords.setValue(menu.getPlayerMagicWords());
+        viewModel.blockPos.setValue(menu.getBlockPos());
+
         // 200 is right panel, 20 is button list
         this.leftPos = (Minecraft.getInstance().getWindow().getGuiScaledWidth() - 200 - 20 - 196) / 2;
         this.topPos = (Minecraft.getInstance().getWindow().getGuiScaledHeight() - 84);
+
+
         double factor = minecraft.getWindow().getGuiScale();
         int screenWidth = this.width;
         int screenHeight = minecraft.getWindow().getGuiScaledHeight();
@@ -60,10 +78,10 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
         int x = screenWidth - 200;
         int y = (int)((screenHeight - componentHeight) / 2);
 
-        magicWordWidget = new MagicWordListWidget( viewModel, x, y, MagicWordListWidget.WIDTH, componentHeight, factor);
-        magicWordFilterLists = new MagicWordFilterList(viewModel, x - MagicWordFilter.PIXEL, y + componentHeight - MagicWordFilter.PIXEL * MagicWordFilterList.BUTTON_AMOUNT);
-        magicSelectedWordListWidget = new MagicSelectedWordListWidget(viewModel,this.leftPos + 46,this.topPos - 140);
-        magicWordCraftingButton = new MagicWordCraftingButton(viewModel, this.leftPos + 64, this.topPos - 50);
+        magicWordWidget = new MagicWordListWidget(x, y, MagicWordListWidget.WIDTH, componentHeight, factor);
+        magicWordFilterLists = new MagicWordFilterList(x - MagicWordFilter.PIXEL, y + componentHeight - MagicWordFilter.PIXEL * MagicWordFilterList.BUTTON_AMOUNT);
+        magicSelectedWordListWidget = new MagicSelectedWordListWidget(this.leftPos + 46,this.topPos - 140);
+        magicWordCraftingButton = new MagicWordCraftingButton( this.leftPos + 64, this.topPos - 50);
         magicSlots = new ArrayList<>();
 
 
@@ -229,12 +247,6 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
 
     }
 
-
-    @Override
-    public boolean mouseScrolled(double p_94686_, double p_94687_, double p_94688_) {
-        return super.mouseScrolled(p_94686_, p_94687_, p_94688_);
-    }
-
     @Override
     public List<? extends GuiEventListener> children() {
         List<GuiEventListener> listeners = new ArrayList<>();
@@ -251,5 +263,20 @@ public class MagicWordCraftingTableScreen extends AbstractContainerScreen<MagicW
         this.viewModel.selectedMagicWord.clearObservers();
         this.viewModel.selectedFilterElement.clearObservers();
         super.clearWidgets();
+    }
+
+
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int mouseButton, double dragX, double dragY) {
+        boolean isItemStackDragged = super.mouseDragged(mouseX, mouseY, mouseButton, dragX, dragY);
+        return this.getFocused() != null && this.isDragging() && mouseButton == 0 ? this.getFocused().mouseDragged(mouseX, mouseY, mouseButton, dragX, dragY) : false;
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int key) {
+        if(this.getFocused() != null){
+            this.getFocused().mouseReleased(mouseX, mouseY, key);
+        }
+        return super.mouseReleased(mouseX, mouseY, key);
     }
 }

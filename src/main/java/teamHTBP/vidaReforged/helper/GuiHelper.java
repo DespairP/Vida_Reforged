@@ -13,16 +13,19 @@ import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.VidaReforged;
 import net.minecraft.client.gui.GuiGraphics;
 import teamHTBP.vidaReforged.client.RenderTypeHandler;
+import teamHTBP.vidaReforged.client.events.ClientTickHandler;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
-public class RenderHelper {
-    public static Font fontRenderer = Minecraft.getInstance().font;
+public class GuiHelper {
+    public static Font FONT = Minecraft.getInstance().font;
     /***/
     public final static ResourceLocation DUNGEON_FONT = new ResourceLocation(VidaReforged.MOD_ID, "dungeonfont");
     //public final static ResourceLocation fusionpixel = new ResourceLocation("vida", "fusionpixel");
+    /***/
+    public static long newTime = System.currentTimeMillis();
 
     /**
      * 裁剪屏幕
@@ -136,5 +139,20 @@ public class RenderHelper {
         bufferbuilder.vertex(m4, x2, y1, z).uv(maxU, minV).endVertex();
         bufferbuilder.vertex(m4, x1, y1, z).uv(minU, minV).endVertex();
         bufferbuilder.end();
+    }
+
+
+    public static class Style{
+        public static int vw(float count){
+            return (int)((Minecraft.getInstance().getWindow().getGuiScaledWidth() / 100.0f) * count);
+        }
+
+        public static int vh(float count){
+            return (int)((Minecraft.getInstance().getWindow().getGuiScaledHeight() / 100.0f) * count);
+        }
+    }
+
+    public static long getTimeTicks(){
+        return ClientTickHandler.ticks;
     }
 }

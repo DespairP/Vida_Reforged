@@ -4,22 +4,19 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import org.joml.Matrix4f;
-import teamHTBP.vidaReforged.client.events.Shaders;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
+import static teamHTBP.vidaReforged.helper.GuiHelper.getTimeTicks;
 
 public class VidaUnlockScreen extends GuiGraphics implements IVidaScreen {
     private static int tick = 0;
@@ -42,7 +39,7 @@ public class VidaUnlockScreen extends GuiGraphics implements IVidaScreen {
     }
 
     @Override
-    public void render(PoseStack poseStack) {
+    public void render(PoseStack poseStack, float partialTicks) {
         if(magicWords.size() <= 0){
             tick = 0;
             lengthRange = new FloatRange(32,32,guiWidth() * 1f / 3);
@@ -52,17 +49,20 @@ public class VidaUnlockScreen extends GuiGraphics implements IVidaScreen {
             textRange.set(0f);
             return;
         }
-        renderPopup(poseStack);
-        renderText(poseStack);
+        renderPopup(poseStack, partialTicks);
+        renderText(poseStack, partialTicks);
         renderFadeOut();
         renderOver();
         tick++;
     }
 
-    public void renderPopup(PoseStack poseStack){
+    public void renderPopup(PoseStack poseStack, float partialTicks){
         final float height = HEIGHT;
         final float alpha = alphaRange.increase(0.01f);
+        long tick = getTimeTicks();
         final float width = lengthRange.increase(2f);
+
+
 
         this.x = (guiWidth() - width) / 2;
         this.y = 16;
@@ -142,7 +142,7 @@ public class VidaUnlockScreen extends GuiGraphics implements IVidaScreen {
         poseStack.popPose();
     }
 
-    public void renderText(PoseStack poseStack){
+    public void renderText(PoseStack poseStack, float partialTicks){
         if(tick <= 70){
             return;
         }

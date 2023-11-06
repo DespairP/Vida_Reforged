@@ -66,16 +66,16 @@ public class VidaManaBarScreen extends GuiGraphics implements IVidaScreen {
     }
 
     @Override
-    public void render(PoseStack poseStack) {
+    public void render(PoseStack poseStack, float partialTicks) {
         ItemStack handInItem = getHandInItem();
         // 获取手中的物品
         if(handInItem.isEmpty() || !handInItem.is(VidaItemLoader.VIDA_WAND.get())){
             this.isRendered = false;
-            alpha.decrease(0.01f);
+            alpha.decrease(0.01f * partialTicks);
             return;
         }
         // 如果要显示alpha就增加反之就减少
-        float guiAlpha = alpha.increase(0.01f);
+        float guiAlpha = alpha.increase(0.01f * partialTicks);
 
         // 根据物品的capabilities来计算每种元素要渲染的长度
         final LazyOptional<IVidaManaCapability> manaCap = handInItem.getCapability(VidaCapabilityRegisterHandler.VIDA_MANA);

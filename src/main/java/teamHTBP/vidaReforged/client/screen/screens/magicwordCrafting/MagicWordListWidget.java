@@ -12,7 +12,9 @@ import teamHTBP.vidaReforged.client.screen.components.common.ScrolledContainer;
 import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
+import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
 import java.util.*;
@@ -22,24 +24,26 @@ import java.util.concurrent.atomic.AtomicInteger;
  * VidaWandCraftingTableScreen子组件
  * 用于显示右边的词条
  * */
-public class MagicWordListWidget extends AbstractWidget {
+public class MagicWordListWidget extends AbstractWidget implements IVidaNodes {
     public final static int WIDTH = 180;
     public final Map<VidaElement, List<MagicWordButton>> widgetMap;
     public VidaElement currentSelectedElement = VidaElement.GOLD;
     public ScrolledContainer<MagicWordButton> scrolledContainer;
-    VidaMagicWordViewModel model;
+    private VidaMagicWordViewModel model;
     MagicWordButton.ClickListener clickListener = (element, magicId)->{
         this.model.setSelectWord(element, magicId);
     };
 
-    public MagicWordListWidget(VidaMagicWordViewModel model, int x, int y, int width, int height,double factor) {
+
+    public MagicWordListWidget(int x, int y, int width, int height,double factor) {
         super(x, y, width, height, Component.literal("Magic Word List"));
         this.widgetMap = new LinkedHashMap<>();
-        this.model = model;
         this.initWidget();
     }
 
     public void initWidget(){
+        this.model = new ViewModelProvider(requireParent()).get(VidaMagicWordViewModel.class);
+
         //
         this.scrolledContainer = new ScrolledContainer<>(getX(), getY(), this.width, this.height);
 
@@ -138,19 +142,8 @@ public class MagicWordListWidget extends AbstractWidget {
     protected void updateWidgetNarration(NarrationElementOutput output) {}
 
 
-    public void scrollChildren(int scrollXOffset, int scrollYOffset){
-        this.widgetMap.values()
-                .forEach(magicWordButtons ->
-                        magicWordButtons.forEach(magicWordButton -> magicWordButton.setOffsetY(scrollYOffset)));
-    }
 
-    public List<MagicWordButton> getCurrentWidgetList(){
-        return widgetMap.get(currentSelectedElement);
-    }
-
-
-
-    /**不要播放声音*/
+    /**取消播放点击声音*/
     @Override
     public void playDownSound(SoundManager manager) {}
 

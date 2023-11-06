@@ -14,6 +14,8 @@ import teamHTBP.vidaReforged.server.providers.TeaconGuideBookManager;
 import java.util.ArrayList;
 import java.util.List;
 
+/**专门为teacon比赛做的说明书，准备移除*/
+@Deprecated
 public class TeaconGuideBookScreen extends Screen {
     GuideBookScrollTextArea textArea;
     TeaconGuideBook book;

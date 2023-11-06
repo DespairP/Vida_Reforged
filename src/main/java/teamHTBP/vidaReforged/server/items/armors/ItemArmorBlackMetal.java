@@ -9,7 +9,7 @@ import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
-import teamHTBP.vidaReforged.client.events.LayerRegistryHandler;
+import teamHTBP.vidaReforged.client.events.registries.LayerRegistryHandler;
 import teamHTBP.vidaReforged.client.model.armors.chestplate.BlackMetalChestPlate;
 import teamHTBP.vidaReforged.client.model.armors.head.BlackMetalHelmet;
 import teamHTBP.vidaReforged.client.model.armors.leggings.BlackMetalLeggings;

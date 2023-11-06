@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.events;
+package teamHTBP.vidaReforged.client.events.registries;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -7,11 +7,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teamHTBP.vidaReforged.client.model.blockEntities.*;
 import teamHTBP.vidaReforged.server.blockEntities.VidaBlockEntityLoader;
-import teamHTBP.vidaReforged.server.entity.VidaEntityLoader;
 
+/**
+ * 注册每种BlockEntity的BlockEntityRenderer
+ * */
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class BlockRendererHandler {
+public class BlockEntityRendererRegistryHandler {
     @SubscribeEvent
     public static void onClientEvent(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.PURIFICATION_CAULDRON.get(), PurificationCauldronBlockEntityRenderer::new);
@@ -22,6 +24,5 @@ public class BlockRendererHandler {
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.INJECT_TABLE.get(), InjectTableBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.CRYSTAL_LANTERN.get(), CrystalLanternRenderer::new);
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.GLOWING_LIGHT.get(), GlowingLightBlockEntityRenderer::new);
-
     }
 }

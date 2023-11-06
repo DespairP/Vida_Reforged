@@ -43,4 +43,14 @@ public class VidaMagicWordViewModel extends ViewModel {
         VidaPacketManager.sendToServer(new MagicWordPacket(blockPos.getValue(), selectedMagicWord.getValue()));
         selectedMagicWord.setValue(map);
     }
+
+
+    @Override
+    public void onCleared() {
+        this.playerMagicWords.clearObservers();
+        this.selectedMagicWord.clearObservers();
+        this.isCrafting.clearObservers();
+        this.blockPos.clearObservers();
+        this.isCrafting.clearObservers();
+    }
 }

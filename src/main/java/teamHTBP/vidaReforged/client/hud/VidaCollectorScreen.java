@@ -99,7 +99,7 @@ public class VidaCollectorScreen extends AbstractVidaHUDScreen implements IVidaS
 
 
     @Override
-    public void render(PoseStack poseStack) {
+    public void render(PoseStack poseStack, float partialTicks) {
 
     }
 }

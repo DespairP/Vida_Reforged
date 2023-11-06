@@ -4,21 +4,15 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.Registry;
-import net.minecraft.core.particles.DustParticleOptionsBase;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.registries.RegistryObject;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.jetbrains.annotations.NotNull;
-import teamHTBP.vidaReforged.client.events.ParticleProviderRegHandler;
-import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
+import teamHTBP.vidaReforged.client.events.registries.ParticleProviderAutoRegistryHandler;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 
 import java.util.*;
-import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 /**
@@ -65,7 +59,7 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
             final int lifeTime = Optional.of(pReader.readInt()).orElse(1000);
             pReader.skipWhitespace();
 
-            return new BaseParticleType(ParticleProviderRegHandler.registerParticleType.get(particleName).getKey().get(), color, 1, lifeTime);
+            return new BaseParticleType(ParticleProviderAutoRegistryHandler.registerParticleType.get(particleName).getKey().get(), color, 1, lifeTime);
         }
 
         /**从数据包获取数据*/

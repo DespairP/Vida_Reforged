@@ -5,10 +5,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
-import teamHTBP.vidaReforged.helper.RenderHelper;
+import teamHTBP.vidaReforged.helper.GuiHelper;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -33,6 +34,10 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
     private boolean shouldUpdateCache = true;
     /**每个内容物在容器内渲染逻辑*/
     private BiConsumer<GuiGraphics, VidaWidget> renderFunc;
+    /**滑动按钮大小*/
+    public int thumbWidth = 6;
+    /***/
+    public boolean isThumbActive = false;
 
     public ScrolledContainer(int x, int y, int width, int height) {
         super(x, y, width, height, Component.literal("scrollable container"));
@@ -100,12 +105,12 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        scrollThumbAlpha.change(isHovered, 0.02f);
+        this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width + this.thumbWidth && mouseY < this.getY() + this.height;
+        scrollThumbAlpha.change(isHovered || isThumbActive, 0.02f);
+
 
         renderBackground(graphics);
-
         renderContents(graphics, mouseX, mouseY, partialTicks);
-
         renderThumbIcon(graphics, mouseX, mouseY);
     }
 
@@ -120,11 +125,10 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
     protected void renderContents(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
         PoseStack poseStack = graphics.pose();
 
-        // 画子组件
         poseStack.pushPose();
         RenderSystem.enableBlend();
         poseStack.pushPose();
-        RenderHelper.renderScissor(getX(),getY(), width, height);
+        GuiHelper.renderScissor(getX(),getY(), width, height);
 
         this.contents.forEach(widget -> widget.render(graphics, mouseX, mouseY, partialTicks));
 
@@ -142,14 +146,17 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
         poseStack.pushPose();
         VertexConsumer consumer = graphics.bufferSource().getBuffer(RenderType.gui());
 
-        final float iconHeight = getSliderThumbHeight();
+        final float iconHeight = this.contents.size() == 0 ? getHeight() : getSliderThumbHeight();
 
         Matrix4f matrix4f = poseStack.last().pose();
-        matrix4f.translate(getX() + getWidth(), getY() - (scrollY.get() * height * 1.0f / getAllContentsHeight()), 0);
+        matrix4f.translate(getX() + getWidth(), getY(), 0);
+        if(this.contents.size() > 0){
+            matrix4f.translate(0, - (scrollY.get() * height * 1.0f / getAllContentsHeight()), 0);
+        }
         consumer.vertex(matrix4f, 0, 0, 0).color(0.8f, 0.8f, 0.8f, alpha).endVertex();
         consumer.vertex(matrix4f, 0, iconHeight, 0).color(0.8f, 0.8f, 0.8f, alpha).endVertex();
-        consumer.vertex(matrix4f, 6, iconHeight, 0).color(0.8f, 0.8f, 0.8f, alpha).endVertex();
-        consumer.vertex(matrix4f, 6, 0, 0).color(0.8f, 0.8f, 0.8f, alpha).endVertex();
+        consumer.vertex(matrix4f, thumbWidth, iconHeight, 0).color(0.8f, 0.8f, 0.8f, alpha).endVertex();
+        consumer.vertex(matrix4f, thumbWidth, 0, 0).color(0.8f, 0.8f, 0.8f, alpha).endVertex();
         poseStack.popPose();
     }
 
@@ -197,5 +204,53 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
         }catch (Exception ex){
             return 0;
         }
+    }
+
+
+
+    @Override
+    protected void onDrag(double mouseX, double mouseY, double dragX, double dragY) {
+        if(!this.isThumbActive){
+            return;
+        }
+        mouseScrolled(mouseX, mouseY, -dragY / 1.5);
+    }
+
+    @Override
+    public void onClick(double mouseX, double mouseY) {
+        final float iconHeight = getSliderThumbHeight();
+        final float iconY = scrollY.get() * height * 1.0f / getAllContentsHeight();
+        this.isThumbActive = mouseX >= this.getX() + this.width
+                && mouseY >= this.getY() - iconY
+                && mouseX < this.getX() + this.width + this.thumbWidth
+                && mouseY < this.getY() - iconY + this.height + iconHeight;
+    }
+
+    @Override
+    public boolean isMouseOver(double mouseX, double mouseY) {
+        return this.active
+                && this.visible
+                && mouseX >= this.getX()
+                && mouseY >= this.getY()
+                && mouseX < this.getX() + this.width + this.thumbWidth
+                && mouseY < this.getY() + this.height;
+    }
+
+    @Override
+    protected boolean clicked(double mouseX, double mouseY) {
+        return this.active
+                && this.visible
+                && mouseX >= this.getX()
+                && mouseY >= this.getY()
+                && mouseX < this.getX() + this.width + this.thumbWidth
+                && mouseY < this.getY() + this.height;
+    }
+
+    @Override
+    public void playDownSound(SoundManager manager) {}
+
+    @Override
+    public void onRelease(double p_93669_, double p_93670_) {
+        this.isThumbActive = false;
     }
 }

@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import teamHTBP.vidaReforged.client.screen.screens.magicwordCrafting.MagicWordCraftingTableScreen;
 import teamHTBP.vidaReforged.client.screen.screens.magicwordAchieve.MagicWordScreen;
 import teamHTBP.vidaReforged.client.screen.screens.common.PrismScreen;
-import teamHTBP.vidaReforged.client.screen.VidaWandCraftingScreen;
+import teamHTBP.vidaReforged.client.screen.screens.wandCrafting.VidaWandCraftingScreen;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 

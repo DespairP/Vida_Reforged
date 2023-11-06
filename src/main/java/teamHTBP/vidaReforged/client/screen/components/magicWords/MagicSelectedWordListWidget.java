@@ -9,15 +9,17 @@ import net.minecraft.network.chat.Component;
 import org.joml.Vector2f;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
+import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class MagicSelectedWordListWidget extends AbstractWidget {
+public class MagicSelectedWordListWidget extends AbstractWidget implements IVidaNodes {
     public static final int WIDTH = 80;
     public static final int HEIGHT = 78;
-    private final VidaMagicWordViewModel viewModel;
+    private VidaMagicWordViewModel model;
     private final Map<VidaElement, Vector2f> offsetMap = ImmutableMap.of(
             VidaElement.GOLD, new Vector2f(33, 1),
             VidaElement.WOOD, new Vector2f(1, 25),
@@ -28,17 +30,18 @@ public class MagicSelectedWordListWidget extends AbstractWidget {
 
     private Map<VidaElement,MagicSelectedWordWidget> widgetMap = new LinkedHashMap<>();
 
-    public MagicSelectedWordListWidget(VidaMagicWordViewModel viewModel,int x, int y) {
-        super(x, y, WIDTH, HEIGHT, Component.translatable("selected_magic_words"));
-        this.viewModel = viewModel;
+    public MagicSelectedWordListWidget(int x, int y) {
+        super(x, y, WIDTH, HEIGHT, Component.literal("selected_magic_words"));
         this.init();
     }
 
     public void init(){
+        //
+        this.model = new ViewModelProvider(requireParent()).get(VidaMagicWordViewModel.class);
+
         for(VidaElement element : offsetMap.keySet()){
             Vector2f offsetXY = offsetMap.get(element);
             widgetMap.put(element, new MagicSelectedWordWidget(
-                    viewModel,
                     getX() + (int) offsetXY.x,
                     getY() + (int) offsetXY.y,
                     element

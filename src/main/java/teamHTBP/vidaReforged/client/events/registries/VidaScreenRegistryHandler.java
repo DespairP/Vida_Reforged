@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.events;
+package teamHTBP.vidaReforged.client.events.registries;
 
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -7,12 +7,12 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import teamHTBP.vidaReforged.client.screen.*;
 import teamHTBP.vidaReforged.client.screen.screens.common.PrismScreen;
 import teamHTBP.vidaReforged.client.screen.screens.magicwordAchieve.MagicWordScreen;
-import teamHTBP.vidaReforged.client.screen.VidaWandCraftingScreen;
+import teamHTBP.vidaReforged.client.screen.screens.wandCrafting.VidaWandCraftingScreen;
 import teamHTBP.vidaReforged.client.screen.screens.magicwordCrafting.MagicWordCraftingTableScreen;
 import teamHTBP.vidaReforged.server.menu.VidaMenuContainerTypeLoader;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class VidaScreenHandler {
+public class VidaScreenRegistryHandler {
 
     @SubscribeEvent
     public static void onClientSetupEvent(FMLClientSetupEvent event) {

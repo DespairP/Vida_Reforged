@@ -11,20 +11,22 @@ import teamHTBP.vidaReforged.client.screen.components.common.ScrolledContainer;
 import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaViewMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
+import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
 import java.util.*;
 
-public class MagicWordSingleListWidget extends AbstractWidget {
+public class MagicWordSingleListWidget extends AbstractWidget implements IVidaNodes {
     VidaViewMagicWordViewModel viewModel;
     public final Map<VidaElement, List<MagicWordButton>> widgetMap;
     public ScrolledContainer<MagicWordButton> scrolledContainer;
     public MagicWordButton.ClickListener clickListener = (element, magicId) -> this.viewModel.setSelectWord(magicId);
 
-    public MagicWordSingleListWidget(VidaViewMagicWordViewModel model,int x, int y, int width, int height) {
+    public MagicWordSingleListWidget(int x, int y, int width, int height) {
         super(x, y, width, height, Component.literal("magic word single list"));
-        this.viewModel = model;
+        this.viewModel = new ViewModelProvider(requireParent()).get(VidaViewMagicWordViewModel.class);
         this.widgetMap = new LinkedHashMap<>();
         initWidget();
     }

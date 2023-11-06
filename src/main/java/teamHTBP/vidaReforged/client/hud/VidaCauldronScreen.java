@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import org.joml.Vector2i;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
-import teamHTBP.vidaReforged.helper.RenderHelper;
+import teamHTBP.vidaReforged.helper.GuiHelper;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.blockEntities.BasePurificationCauldronBlockEntity;
 
@@ -126,7 +126,7 @@ public class VidaCauldronScreen extends GuiGraphics implements IVidaScreen {
 
         float degree = 360.0f * blockEntity.progress / blockEntity.getMaxSubTaskProgress();
 
-        RenderHelper.renderCircle(
+        GuiHelper.renderCircle(
                 this,
                 this.pose(),
                 plate.x + 12,
@@ -137,7 +137,7 @@ public class VidaCauldronScreen extends GuiGraphics implements IVidaScreen {
     }
 
     @Override
-    public void render(PoseStack poseStack) {
+    public void render(PoseStack poseStack, float partialTicks) {
 
     }
 }
