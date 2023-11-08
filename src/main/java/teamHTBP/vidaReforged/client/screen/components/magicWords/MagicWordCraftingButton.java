@@ -21,27 +21,25 @@ import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 public class MagicWordCraftingButton extends AbstractWidget implements IVidaNodes {
     public static final int WIDTH = 48;
     public static final int HEIGHT = 16;
-
     public static ResourceLocation DINKFONT = new ResourceLocation(MOD_ID, "dinkie");
-
     public final ResourceLocation location = new ResourceLocation(MOD_ID, "textures/gui/magic_word_crafting.png");
-
     public final TextureSection section = new TextureSection(location, 32, 112, WIDTH, HEIGHT);
-
     FloatRange hoverAlpha = new FloatRange(0.4F,0.4F, 0.7F);
     FloatRange disableAlpha = new FloatRange(0.0F,0.0F, 0.3F);
-
     VidaMagicWordViewModel model;
+    public Minecraft mc;
+
     public MagicWordCraftingButton(int x, int y) {
         super(x, y, WIDTH, HEIGHT, Component.literal("craft"));
         this.model = new ViewModelProvider(requireParent()).get(VidaMagicWordViewModel.class);
+        this.mc = Minecraft.getInstance();
     }
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         float alpha = 0;
-        alpha += hoverAlpha.change(isHovered,0.02f);
-        alpha -= disableAlpha.change(model.isCrafting.getValue(), 0.02f);
+        alpha += hoverAlpha.change(isHovered,0.04f * mc.getDeltaFrameTime());
+        alpha -= disableAlpha.change(model.isCrafting.getValue(), 0.04f * mc.getDeltaFrameTime());
 
         PoseStack poseStack = graphics.pose();
 

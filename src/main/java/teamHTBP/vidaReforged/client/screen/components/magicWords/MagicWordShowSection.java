@@ -29,8 +29,8 @@ public class MagicWordShowSection extends AbstractWidget implements IVidaNodes {
     GuideBookScrollTextArea textArea;
     public static ResourceLocation QUESTION_MARK = new ResourceLocation(MOD_ID, "textures/icons/magic_word/question_mark.png");
     public int topHeight = 32;
-
     public MagicWord magicWord = null;
+
     public MagicWordShowSection(int x, int y, int width, int height) {
         super(x, y, width, height, Component.empty());
         this.viewModel = new ViewModelProvider(requireParent()).get(VidaViewMagicWordViewModel.class);

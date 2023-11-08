@@ -76,7 +76,7 @@ public class MagicWordButton extends VidaWidget {
 
     /**渲染按钮被选中背景*/
     public void renderSelectedBg(GuiGraphics graphics, float partialTicks){
-        float alpha = this.selectedAlpha.change(this.selected, 0.05f);
+        float alpha = this.selectedAlpha.change(this.selected, 0.3f * mc.getDeltaFrameTime());
 
         PoseStack poseStack = graphics.pose();
         poseStack.pushPose();
@@ -107,8 +107,8 @@ public class MagicWordButton extends VidaWidget {
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         // 动画
-        upperBorderPoint.change(isHovered, width / 30.0f);
-        downBorderPoint.change(isHovered, width / 30.5f);
+        upperBorderPoint.change(isHovered, width / 4.5f * mc.getDeltaFrameTime());
+        downBorderPoint.change(isHovered, width / 4.6f * mc.getDeltaFrameTime());
 
         // 绘制选择的背景
         renderSelectedBg(graphics, partialTicks);

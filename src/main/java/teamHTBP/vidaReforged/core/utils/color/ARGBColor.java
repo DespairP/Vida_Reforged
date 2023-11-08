@@ -66,7 +66,12 @@ public class ARGBColor extends VidaColor {
 
     @Override
     public int argb() {
-        return a << 24 | r << 16 | g << 8 | b;
+        return (a & 255) << 24 | (r & 255) << 16 | (g & 255) << 8 | b & 255;
+    }
+
+    public int fontColor(){
+        int alpha = Math.max(this.a, 25);
+        return (alpha & 255) << 24 | (r & 255) << 16 | (g & 255) << 8 | b & 255;
     }
 
     @Override
@@ -75,7 +80,7 @@ public class ARGBColor extends VidaColor {
     }
 
     public int rgba() {
-        return r << 24 | g << 16 | b << 8 | a;
+        return (r & 255) << 24 | (g & 255) << 16 | (b & 255) << 8 | (a & 255);
     }
 
     @Override

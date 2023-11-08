@@ -9,6 +9,8 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.VidaElement;
@@ -19,6 +21,7 @@ import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
+import teamHTBP.vidaReforged.helper.GuiHelper;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
@@ -27,31 +30,30 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@OnlyIn(Dist.CLIENT)
 public class VidaManaBarScreen extends GuiGraphics implements IVidaScreen {
+    /**最大能量条长度*/
     private static final float MAX_BAR_WIDTH = 166.0f;
-    /**现在能量条的进度*/
-    private FloatRange progressGold = new FloatRange(0,0,MAX_BAR_WIDTH);
-    private FloatRange progressWood = new FloatRange(0,0,MAX_BAR_WIDTH);
-    private FloatRange progressAqua = new FloatRange(0,0,MAX_BAR_WIDTH);
-    private FloatRange progressFire = new FloatRange(0,0,MAX_BAR_WIDTH);
-    private FloatRange progressEarth = new FloatRange(0,0,MAX_BAR_WIDTH);
+    /**元素能量条的长度*/
     private Map<VidaElement,FloatRange> progressMap = ImmutableMap.of(
-            VidaElement.GOLD, progressGold,
-            VidaElement.WOOD, progressWood,
-            VidaElement.AQUA, progressAqua,
-            VidaElement.FIRE, progressFire,
-            VidaElement.EARTH, progressEarth
+            VidaElement.GOLD, new FloatRange(0,0,MAX_BAR_WIDTH),
+            VidaElement.WOOD, new FloatRange(0,0,MAX_BAR_WIDTH),
+            VidaElement.AQUA, new FloatRange(0,0,MAX_BAR_WIDTH),
+            VidaElement.FIRE, new FloatRange(0,0,MAX_BAR_WIDTH),
+            VidaElement.EARTH, new FloatRange(0,0,MAX_BAR_WIDTH)
     );
     /**整体透明度*/
     private FloatRange alpha = new FloatRange(0,0,1);
-
     /**ui材质路径*/
     private final static ResourceLocation GUI_LOCATION = new ResourceLocation(VidaReforged.MOD_ID, "textures/gui/vida_wand_mana_bar.png");
+    /**槽位区域的材质路径*/
     private TextureSection barSec = new TextureSection(GUI_LOCATION, 0, 18, 182, 12);
+    /**能量条的材质路径*/
     private TextureSection progressSec = new TextureSection(GUI_LOCATION, 8, 6, 166, 4);
     /**是否正在渲染*/
     private boolean isRendered = false;
-
+    /**计数器*/
+    GuiHelper.TickHelper ticker = new GuiHelper.TickHelper();
 
 
     public VidaManaBarScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource) {
@@ -68,14 +70,15 @@ public class VidaManaBarScreen extends GuiGraphics implements IVidaScreen {
     @Override
     public void render(PoseStack poseStack, float partialTicks) {
         ItemStack handInItem = getHandInItem();
+        ticker.tick(partialTicks);
         // 获取手中的物品
         if(handInItem.isEmpty() || !handInItem.is(VidaItemLoader.VIDA_WAND.get())){
             this.isRendered = false;
-            alpha.decrease(0.01f * partialTicks);
+            alpha.decrease(ticker.getTickPercent(0.05f));
             return;
         }
         // 如果要显示alpha就增加反之就减少
-        float guiAlpha = alpha.increase(0.01f * partialTicks);
+        float guiAlpha = alpha.increase(ticker.getTickPercent(0.03f));
 
         // 根据物品的capabilities来计算每种元素要渲染的长度
         final LazyOptional<IVidaManaCapability> manaCap = handInItem.getCapability(VidaCapabilityRegisterHandler.VIDA_MANA);

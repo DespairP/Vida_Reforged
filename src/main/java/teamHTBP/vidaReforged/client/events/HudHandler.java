@@ -83,7 +83,7 @@ public class HudHandler {
         final boolean isVidaManaHudRendered = getOrCreateVidaManaScreen(event.getGuiGraphics().bufferSource()).isRendered();
         final PoseStack poseStack = event.getGuiGraphics().pose();
         if(TYPE_OFFSET_OVERLAY.contains(event.getOverlay())){
-            final float offset = playerBarOffset.change(isVidaManaHudRendered,0.1f);
+            final float offset = playerBarOffset.change(isVidaManaHudRendered,0.9f * Minecraft.getInstance().getDeltaFrameTime());
             poseStack.pushPose();
             poseStack.translate(0f, -1 * offset, 0);
         }

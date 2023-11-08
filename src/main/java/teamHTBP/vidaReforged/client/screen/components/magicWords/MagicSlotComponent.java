@@ -3,6 +3,7 @@ package teamHTBP.vidaReforged.client.screen.components.magicWords;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -16,9 +17,11 @@ public class MagicSlotComponent extends AbstractWidget {
     Slot slot;
     FloatRange hoverAlpha = new FloatRange(0.0F,0.0F, 0.15F);
     FloatRange itemAlpha = new FloatRange(0.1F,0.1F,0.85F);
+    Minecraft mc;
 
     public MagicSlotComponent(Slot slot, int x, int y) {
         super(x, y, 20, 20, Component.translatable("slot"));
+        this.mc = Minecraft.getInstance();
         this.slot = slot;
     }
 
@@ -28,8 +31,8 @@ public class MagicSlotComponent extends AbstractWidget {
         RenderSystem.enableBlend();
         RenderSystem.disableCull();
         float a = 0;
-        a += hoverAlpha.change(isHovered, 0.02F);
-        a += itemAlpha.change(slot != null && slot.hasItem(), 0.04F);
+        a += hoverAlpha.change(isHovered, 0.1F * mc.getDeltaFrameTime());
+        a += itemAlpha.change(slot != null && slot.hasItem(), 0.08F * mc.getDeltaFrameTime());
 
         poseStack.pushPose();
         poseStack.translate(getX() - 2, getY() - 2, 0);

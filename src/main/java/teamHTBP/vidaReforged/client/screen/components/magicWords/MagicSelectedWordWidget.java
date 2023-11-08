@@ -2,6 +2,7 @@ package teamHTBP.vidaReforged.client.screen.components.magicWords;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -20,20 +21,18 @@ import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
 public class MagicSelectedWordWidget extends AbstractWidget implements IVidaNodes {
     VidaElement element = VidaElement.EMPTY;
-
     public final static ResourceLocation EMPTY_WORD_LOCATION = new ResourceLocation(MOD_ID, "textures/gui/magic_word_crafting.png");
-
     public final static TextureSection section = new TextureSection(EMPTY_WORD_LOCATION,48,8,16,16);
-
     FloatRange range = new FloatRange(0.7f, 0.7f, 1);
-
     private String selectWordId;
-
     private VidaMagicWordViewModel model;
+    public Minecraft mc;
+
 
     public MagicSelectedWordWidget(int x, int y, VidaElement element) {
         super(x, y, 16, 16, Component.literal("selected_magic_word"));
         this.element = element;
+        this.mc = Minecraft.getInstance();
         this.init();
     }
 
@@ -49,7 +48,7 @@ public class MagicSelectedWordWidget extends AbstractWidget implements IVidaNode
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        float alpha = range.change(isHovered,0.02f);
+        float alpha = range.change(isHovered,0.04f * mc.getDeltaFrameTime());
 
         RenderSystem.enableBlend();
 

@@ -6,6 +6,8 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.blockEntities.BasePurificationCauldronBlockEntity;
@@ -13,6 +15,7 @@ import teamHTBP.vidaReforged.server.blockEntities.CollectorBlockEntity;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
+@OnlyIn(Dist.CLIENT)
 public class VidaCollectorScreen extends AbstractVidaHUDScreen implements IVidaScreen {
 
     public final ResourceLocation LOCATION = new ResourceLocation(MOD_ID, "textures/gui/collector_hud.png");

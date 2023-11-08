@@ -8,6 +8,8 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Vector2i;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
@@ -20,6 +22,7 @@ import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 /**
  * 纯净锅HUD
  */
+@OnlyIn(Dist.CLIENT)
 public class VidaCauldronScreen extends GuiGraphics implements IVidaScreen {
 
     ResourceLocation location = new ResourceLocation(MOD_ID, "textures/gui/cauldron_hud.png");

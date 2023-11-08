@@ -152,7 +152,44 @@ public class GuiHelper {
         }
     }
 
-    public static long getTimeTicks(){
-        return ClientTickHandler.ticks;
+    /**tick计数器*/
+    public static class TickHelper{
+        public long lastTick = 0L;
+        public long currentTick = 0L;
+        public float lastPartialTicks = 0f;
+        public float currentPartialTicks = 0f;
+        public boolean isInit = false;
+        public long startTick = 0L;
+
+        /**计数*/
+        public void tick(float partialTicks){
+            if(!isInit){
+                startTick = currentTick = lastTick = ClientTickHandler.ticks;
+                currentPartialTicks = lastPartialTicks = partialTicks;
+                this.isInit = true;
+                return;
+            }
+            lastTick = currentTick;
+            currentTick = ClientTickHandler.ticks;
+            lastPartialTicks = currentPartialTicks;
+            currentPartialTicks = partialTicks;
+        }
+
+        /**
+         * 计算该frame下需要增长多少
+         * @param step 每个ticks的增长步长
+         * @see Minecraft#getDeltaFrameTime()
+         * */
+        public float getTickPercent(float step){
+            return step * (float) ((currentTick - lastTick) + (currentPartialTicks - lastPartialTicks));
+        }
+
+        /**重置计数器*/
+        public void reset(){
+            this.isInit = false;
+            this.startTick = 0L;
+            this.currentTick = 0L;
+        }
     }
+
 }

@@ -13,6 +13,8 @@ public class ClientTickHandler {
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event){
-        ticks++;
+        if(event.phase == TickEvent.Phase.END){
+            ticks++;
+        }
     }
 }

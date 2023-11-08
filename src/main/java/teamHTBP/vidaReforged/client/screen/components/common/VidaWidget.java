@@ -15,13 +15,14 @@ public abstract class VidaWidget extends AbstractWidget implements IVidaNodes {
     protected int offsetX;
     protected int offsetY;
     private Screen parent;
-
     private String id;
+    public Minecraft mc;
 
     public VidaWidget(int x, int y, int width, int height, Component component) {
         super(x, y, width, height, component);
         this.initialX = x;
         this.initialY = y;
+        this.mc = Minecraft.getInstance();
     }
 
     @Override

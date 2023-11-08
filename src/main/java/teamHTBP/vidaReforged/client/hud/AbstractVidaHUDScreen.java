@@ -4,12 +4,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 
 /**
  *
  *
  * */
+@OnlyIn(Dist.CLIENT)
 public class AbstractVidaHUDScreen extends GuiGraphics {
 
     public AbstractVidaHUDScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource) {

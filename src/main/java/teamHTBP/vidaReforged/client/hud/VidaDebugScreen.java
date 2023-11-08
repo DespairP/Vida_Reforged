@@ -11,6 +11,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import teamHTBP.vidaReforged.VidaConfig;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.debug.IDebugObj;
@@ -22,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
+@OnlyIn(Dist.CLIENT)
 public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
     /***/
     private static final Minecraft minecraft = Minecraft.getInstance();
