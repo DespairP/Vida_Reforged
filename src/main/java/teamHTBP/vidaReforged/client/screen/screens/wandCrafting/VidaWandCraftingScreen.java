@@ -20,7 +20,9 @@ import teamHTBP.vidaReforged.client.events.registries.LayerRegistryHandler;
 import teamHTBP.vidaReforged.client.model.itemModel.VidaWandModel;
 import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.screens.common.VidaContainerScreen;
+import teamHTBP.vidaReforged.client.screen.viewModels.VidaWandCraftingViewModel;
 import teamHTBP.vidaReforged.core.common.item.Position;
+import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.items.VidaWandEquipment;
 import teamHTBP.vidaReforged.server.menu.VidaWandCraftingTableMenu;
@@ -37,6 +39,8 @@ public class VidaWandCraftingScreen extends VidaContainerScreen<VidaWandCrafting
     private static final ResourceLocation VIDA_WAND_MODEL = new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model.png");
     private final TextureSection INVENTORY = new TextureSection(CRAFTING_SCREEN, 0, 150, 176, 90);
     private final TextureSection SLOT = new TextureSection(CRAFTING_SCREEN, 76, 12, 24, 24);
+    private final TextureSection WAND_SLOT = new TextureSection(CRAFTING_SCREEN, 140, 12, 24, 24);
+
     /**旋转角度*/
     private int rotateY = 0;
     /**法杖渲染大小*/
@@ -60,6 +64,8 @@ public class VidaWandCraftingScreen extends VidaContainerScreen<VidaWandCrafting
     List<VidaWidget> widgets = new ArrayList<>();
     /**是否要更新布局*/
     boolean isUpdateLayout = false;
+    /**ViewModel*/
+    VidaWandCraftingViewModel viewModel;
 
     public VidaWandCraftingScreen(VidaWandCraftingTableMenu menu, Inventory inventory, Component component) {
         super(menu, inventory, component);
@@ -67,6 +73,12 @@ public class VidaWandCraftingScreen extends VidaContainerScreen<VidaWandCrafting
         this.slotFieldY.setAccessible(true);
         this.slotFieldX = ObfuscationReflectionHelper.findField(Slot.class,"f_40220_");
         this.slotFieldX.setAccessible(true);
+    }
+
+    @Override
+    public void added() {
+        viewModel = new ViewModelProvider(this).get(VidaWandCraftingViewModel.class);
+        viewModel.setSlots(this.menu.getEquipmentSlots());
     }
 
     @Override
@@ -155,6 +167,7 @@ public class VidaWandCraftingScreen extends VidaContainerScreen<VidaWandCrafting
                 384, 384
         );
 
+
         // 高亮
         ItemStack hoveredStack = hoveredSlot == null ? ItemStack.EMPTY : hoveredSlot.getItem();
         hoveredStack = this.menu.getCarried().isEmpty() ? hoveredStack : this.menu.getCarried().copy();
@@ -181,6 +194,14 @@ public class VidaWandCraftingScreen extends VidaContainerScreen<VidaWandCrafting
             RenderSystem.disableBlend();
         }
 
+        //法杖槽
+        graphics.blit(
+                WAND_SLOT.location(),
+                this.leftPos - 68 - 4, this.topPos - 4, 0,
+                WAND_SLOT.minU(), WAND_SLOT.minV(),
+                WAND_SLOT.w(), WAND_SLOT.h(),
+                384, 384
+        );
     }
 
     /**渲染模型*/

@@ -9,7 +9,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VidaWandCraftingViewModel extends ViewModel {
-    LiveData<Map<Position, VidaWandEquipmentSlot>> slots = new LiveData<>();
+    public LiveData<Map<Position, VidaWandEquipmentSlot>> slots = new LiveData<>();
+    public LiveData<Boolean> needUpdate = new LiveData<>(false);
 
+    public void setSlots(Map<Position, VidaWandEquipmentSlot> slots){
+        this.slots.setValue(slots);
+    }
 
+    public VidaWandEquipmentSlot getSlot(Position position){
+        return this.slots.getValue().get(position);
+    }
+
+    public void setUpdate(){
+        needUpdate.setValue(true);
+        needUpdate.setValueWithoutNotify(false);
+    }
 }

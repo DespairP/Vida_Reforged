@@ -10,6 +10,8 @@ import net.minecraft.world.item.ItemStack;
 import teamHTBP.vidaReforged.core.common.item.Position;
 import teamHTBP.vidaReforged.server.blockEntities.VidaWandCraftingTableBlockEntity;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
+import teamHTBP.vidaReforged.server.items.VidaItemLoader;
+import teamHTBP.vidaReforged.server.menu.slots.VidaWandSlot;
 import teamHTBP.vidaReforged.server.menu.slots.VidaWandEquipmentSlot;
 
 import java.util.*;
@@ -57,15 +59,17 @@ public class VidaWandCraftingTableMenu extends AbstractContainerMenu {
         this.access.execute((level, pPos) -> {
             VidaWandCraftingTableBlockEntity entity = (VidaWandCraftingTableBlockEntity) level.getBlockEntity(pPos);
             Position[] position = Position.values();
-            for(int i = 0; i < Objects.requireNonNull(entity).getEquipmentSlots().getContainerSize(); i++){
+            //获取法杖下标
+            int index = Position.values().length;
+            //0~3是饰品槽位,4是法杖槽
+            for(int i = 0; i < index; i++){
                 VidaWandEquipmentSlot slot = new VidaWandEquipmentSlot(entity.getEquipmentSlots(), i, 0, 0, position[i]);
                 this.equipmentSlots.put(position[i], slot);
                 this.addSlot(slot);
             }
+            //添加法杖槽
+            this.addSlot(new VidaWandSlot(entity.getEquipmentSlots(), index, -68, 0, itemStack -> itemStack.is(VidaItemLoader.VIDA_WAND.get())));
         });
-
-        //添加法杖槽
-
     }
 
     @Override

@@ -1,6 +1,7 @@
 package teamHTBP.vidaReforged.server.menu.slots;
 
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import teamHTBP.vidaReforged.core.common.item.Position;
@@ -17,12 +18,21 @@ public class VidaWandEquipmentSlot extends Slot {
 
     @Override
     public boolean mayPlace(ItemStack itemStack) {
+        //
+        ItemStack wandItemStack = getVidaWandItemStack();
+        if(wandItemStack == null || wandItemStack.isEmpty()){
+            return false;
+        }
         return itemStack.is(itemHolder->{
             if(itemHolder.get() instanceof VidaWandEquipment ep){
                 return ep.getAttribute().getPosition() == position;
             }
             return false;
         });
+    }
+
+    public ItemStack getVidaWandItemStack(){
+        return this.container.getItem(this.container.getContainerSize() - 1);
     }
 
     public Position getPosition() {

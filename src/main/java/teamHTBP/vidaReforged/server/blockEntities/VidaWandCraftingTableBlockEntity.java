@@ -12,11 +12,8 @@ import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
 import teamHTBP.vidaReforged.server.items.VidaWandEquipment;
 
 public class VidaWandCraftingTableBlockEntity extends VidaBlockEntity implements IVidaTickableBlockEntity {
-    /**饰品槽位*/
-    SimpleContainer equipmentSlots = new SimpleContainer(4);
-    /**法杖槽位*/
-    SimpleContainer vidaWandSlot = new SimpleContainer(1);
-
+    /**饰品和法杖槽位*/
+    SimpleContainer equipmentSlots = new SimpleContainer(5);
 
     public VidaWandCraftingTableBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(VidaBlockEntityLoader.VIDA_WAND_CRAFTING_TABLE.get(), pPos, pBlockState);
@@ -30,4 +27,5 @@ public class VidaWandCraftingTableBlockEntity extends VidaBlockEntity implements
     public SimpleContainer getEquipmentSlots() {
         return equipmentSlots;
     }
+
 }

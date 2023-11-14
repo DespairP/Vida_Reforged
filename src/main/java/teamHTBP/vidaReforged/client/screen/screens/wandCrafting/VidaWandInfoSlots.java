@@ -7,24 +7,31 @@ import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.network.chat.Component;
 import teamHTBP.vidaReforged.client.screen.components.common.ScrolledContainer;
 import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.viewModels.VidaWandCraftingViewModel;
+import teamHTBP.vidaReforged.core.common.item.Position;
+import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VidaWandInfoSlots extends VidaWidget {
     public ScrolledContainer<VidaWidget> container;
-
+    private VidaWandCraftingViewModel viewModel;
     public VidaWandInfoSlots(int x, int y, int width, int height) {
         super(x, y, width, height, Component.literal(""));
+        this.viewModel = new ViewModelProvider(requireParent()).get(VidaWandCraftingViewModel.class);
         initWidget();
     }
 
     public void initWidget(){
         this.container = new ScrolledContainer<>(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        this.container.setCacheable(false);
+        this.container.setExtraSpacing(10);
 
-        VidaWandSlot slotMessage$0 = new VidaWandSlot(0, 0, getWidth() - 20, 50);
-        VidaWandSlot slotMessage$1 = new VidaWandSlot(0, 0, getWidth() - 20, 50);
-        VidaWandSlot slotMessage$2 = new VidaWandSlot(0, 0, getWidth() - 20, 50);
-        VidaWandSlot slotMessage$3 = new VidaWandSlot(0, 0, getWidth() - 20, 50);
+        VidaWandSlot slotMessage$0 = new VidaWandSlot(0, 0, getWidth() - 20, 50, Position.CORE);
+        VidaWandSlot slotMessage$1 = new VidaWandSlot(0, 0, getWidth() - 20, 50, Position.TOP);
+        VidaWandSlot slotMessage$2 = new VidaWandSlot(0, 0, getWidth() - 20, 50, Position.CENTER);
+        VidaWandSlot slotMessage$3 = new VidaWandSlot(0, 0, getWidth() - 20, 50, Position.BOTTOM);
 
 
         GridLayout gridLayout = new GridLayout(this.getX(), this.getY());
@@ -36,7 +43,8 @@ public class VidaWandInfoSlots extends VidaWidget {
 
 
         gridLayout.arrangeElements();
-        FrameLayout.alignInRectangle(gridLayout, getX(), getY(), getWidth(), getHeight(), 0.5f, 0.5f);
+
+        FrameLayout.alignInRectangle(gridLayout, getX(), getY(), getWidth(), gridLayout.getHeight() + 10, 0.5f, 0.5f);
 
 
         this.container.add(slotMessage$0);
@@ -44,10 +52,14 @@ public class VidaWandInfoSlots extends VidaWidget {
         this.container.add(slotMessage$2);
         this.container.add(slotMessage$3);
 
-        slotMessage$0.init();
-        slotMessage$1.init();
-        slotMessage$2.init();
-        slotMessage$3.init();
+        this.viewModel.needUpdate.observe(newValue -> {
+            gridLayout.arrangeElements();
+            container.notifyComponentToFresh();
+            slotMessage$0.setChanged();
+            slotMessage$1.setChanged();
+            slotMessage$2.setChanged();
+            slotMessage$3.setChanged();
+        });
 
     }
 

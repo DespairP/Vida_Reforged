@@ -38,10 +38,22 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
     public int thumbWidth = 6;
     /***/
     public boolean isThumbActive = false;
+    /**/
+    public boolean isCacheable = true;
+    /**/
+    public int extraSpacing = 0;
 
     public ScrolledContainer(int x, int y, int width, int height) {
         super(x, y, width, height, Component.literal("scrollable container"));
         this.contents = new ArrayList<>();
+    }
+
+    public void setCacheable(boolean cacheable) {
+        isCacheable = cacheable;
+    }
+
+    public void setExtraSpacing(int extraSpacing) {
+        this.extraSpacing = extraSpacing;
     }
 
     /**设置容器内容渲染逻辑*/
@@ -192,13 +204,13 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
 
     /**整个页面的高度*/
     public int getAllContentsHeight(){
-        if(!shouldUpdateCache){
+        if(!shouldUpdateCache && isCacheable){
             return cachedContentHeight;
         }
         try {
             final VidaWidget minYWidget = this.contents.stream().min(Comparator.comparing(VidaWidget::getY)).orElseThrow();
             final VidaWidget maxYWidget = this.contents.stream().max(Comparator.comparing(VidaWidget::getY)).orElseThrow();
-            cachedContentHeight = maxYWidget.getY() + maxYWidget.getHeight() - minYWidget.getY();
+            cachedContentHeight = maxYWidget.getY() + maxYWidget.getHeight() - minYWidget.getY() + extraSpacing;
             shouldUpdateCache = false;
             return cachedContentHeight;
         }catch (Exception ex){

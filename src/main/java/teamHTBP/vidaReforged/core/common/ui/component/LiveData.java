@@ -31,6 +31,10 @@ public class LiveData<T> {
         this.observersList.forEach(observer -> observer.observe(data));
     }
 
+    public void setValueWithoutNotify(T newValue){
+        this.data = newValue;
+    }
+
     public T getValue(){
         return this.data;
     }
