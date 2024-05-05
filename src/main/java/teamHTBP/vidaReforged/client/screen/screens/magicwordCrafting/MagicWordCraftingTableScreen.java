@@ -6,7 +6,6 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.core.BlockPos;
@@ -16,7 +15,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
-import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.client.screen.components.magicWords.*;
 import teamHTBP.vidaReforged.client.screen.screens.common.VidaContainerScreen;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
@@ -44,7 +42,7 @@ public class MagicWordCraftingTableScreen extends VidaContainerScreen<MagicWordC
     /**放入物品的槽位*/
     List<MagicSlotComponent> magicSlots;
     final Inventory inventory;
-    private final static ResourceLocation INVENTORY_LOCATION = new ResourceLocation(MOD_ID, "textures/gui/magic_word_inventory.png");
+    private final static ResourceLocation INVENTORY_LOCATION_RESOURCE = new ResourceLocation(MOD_ID, "textures/gui/magic_word_inventory.png");
     private VidaMagicWordViewModel viewModel;
 
 
@@ -55,6 +53,7 @@ public class MagicWordCraftingTableScreen extends VidaContainerScreen<MagicWordC
 
     @Override
     public void added() {
+        super.added();
         // init view model
         this.viewModel = new ViewModelProvider(this).get(VidaMagicWordViewModel.class);
     }
@@ -130,7 +129,7 @@ public class MagicWordCraftingTableScreen extends VidaContainerScreen<MagicWordC
         int startY = this.getGuiTop();
 
 
-        TextureSection section = new TextureSection(INVENTORY_LOCATION,0,0,176,90);
+        TextureSection section = new TextureSection(INVENTORY_LOCATION_RESOURCE,0,0,176,90, 176, 90);
 
         PoseStack poseStack = graphics.pose();
         poseStack.pushPose();
@@ -250,18 +249,18 @@ public class MagicWordCraftingTableScreen extends VidaContainerScreen<MagicWordC
     @Override
     public List<? extends GuiEventListener> children() {
         List<GuiEventListener> listeners = new ArrayList<>();
-        listeners.addAll(this.magicWordFilterLists.getChildren());
-        listeners.addAll(this.magicWordWidget.getChildren());
+        listeners.addAll(this.magicWordFilterLists.children());
+        listeners.addAll(this.magicWordWidget.children());
         listeners.add(this.magicWordWidget);
-        listeners.addAll(this.magicSelectedWordListWidget.getChildren());
+        listeners.addAll(this.magicSelectedWordListWidget.children());
         listeners.add(this.magicWordCraftingButton);
         return listeners;
     }
 
     @Override
     protected void clearWidgets() {
-        this.viewModel.selectedMagicWord.clearObservers();
-        this.viewModel.selectedFilterElement.clearObservers();
+        this.viewModel.selectedMagicWord.clearObservers(this);
+        this.viewModel.selectedFilterElement.clearObservers(this);
         super.clearWidgets();
     }
 

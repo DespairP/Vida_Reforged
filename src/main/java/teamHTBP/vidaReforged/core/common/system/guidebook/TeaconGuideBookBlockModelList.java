@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Deprecated
 public class TeaconGuideBookBlockModelList implements IGuideBookSection {
     public ResourceLocation[] blocklist = new ResourceLocation[]{new ResourceLocation("minecraft:air")};
     public String type = "BLOCKLIST";

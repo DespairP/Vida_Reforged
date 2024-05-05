@@ -59,7 +59,7 @@ public class MagicSelectedWordListWidget extends AbstractWidget implements IVida
 
     }
 
-    public Collection<? extends GuiEventListener> getChildren(){
+    public Collection<? extends GuiEventListener> children(){
         return this.widgetMap.values();
     }
 }

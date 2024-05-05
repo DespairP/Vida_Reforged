@@ -44,12 +44,12 @@ public class VidaEntityLoader {
             );
 
 
-    public static final RegistryObject<EntityType<TrailEntity>> TRAIL = ENTITIES
-            .register("trail", () -> EntityType.Builder
-                    .of(TrailEntity::new, MobCategory.MISC)
+    public static final RegistryObject<EntityType<MultiblockLazerEntity>> TRAIL = ENTITIES
+            .register("multiblock_trail", () -> EntityType.Builder
+                    .of(MultiblockLazerEntity::new, MobCategory.MISC)
                     .sized(1F, 1F)
                     .clientTrackingRange(4)
-                    .updateInterval(10)
+                    .updateInterval(2)
                     .build("trail_entity")
             );
 }

@@ -5,10 +5,11 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import teamHTBP.vidaReforged.core.common.ui.component.IViewModelStoreProvider;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface IVidaNodes {
-    default List<GuiEventListener> children(){
+    default Collection<? extends GuiEventListener> children(){
         return List.of();
     }
 

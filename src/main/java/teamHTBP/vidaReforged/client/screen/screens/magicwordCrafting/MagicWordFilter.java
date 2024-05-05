@@ -47,7 +47,7 @@ public class MagicWordFilter extends AbstractWidget {
             this.setFocused(value == this.element);
             this.setSelected(value == this.element);
         };
-        this.model.selectedFilterElement.observe(elementObserver);
+        this.model.selectedFilterElement.observeForever(elementObserver);
         this.setFocused(model.selectedFilterElement.getValue() == element);
         this.setSelected(model.selectedFilterElement.getValue() == element);
     }
@@ -59,7 +59,7 @@ public class MagicWordFilter extends AbstractWidget {
         // 渲染图标
         PoseStack poseStack = graphics.pose();
         poseStack.pushPose();
-        TextureSection section = new TextureSection(getElemenetIcon(),0,0,16,16);
+        TextureSection section = new TextureSection(getElemenetIcon(),0,0,16,16, 16, 16);
         graphics.blit(
                 section.location(),
                 getX() + 2 , getY() + 2, 0,

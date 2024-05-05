@@ -1,5 +1,7 @@
 package teamHTBP.vidaReforged.core.utils.render;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
 
 
@@ -11,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  * @param width 长度
  * @param height 高度
  */
-public record TextureSection(ResourceLocation location, int minU, int minV, int width, int height) {
+public record TextureSection(ResourceLocation location, int minU, int minV, int width, int height, int texWidth, int texHeight) {
     /**开始的U*/
     public int mu() {
         return minU;
@@ -41,4 +43,14 @@ public record TextureSection(ResourceLocation location, int minU, int minV, int 
     public int ch(){
         return height / 2;
     }
+
+    public static Codec<TextureSection> codec = RecordCodecBuilder.create(ins -> ins.group(
+            ResourceLocation.CODEC.fieldOf("location").forGetter(TextureSection::location),
+            Codec.INT.fieldOf("minU").orElse(0).forGetter(TextureSection::minU),
+            Codec.INT.fieldOf("minV").orElse(0).forGetter(TextureSection::minV),
+            Codec.INT.fieldOf("width").orElse(16).forGetter(TextureSection::width),
+            Codec.INT.fieldOf("height").orElse(16).forGetter(TextureSection::height),
+            Codec.INT.fieldOf("texWidth").orElse(16).forGetter(TextureSection::texWidth),
+            Codec.INT.fieldOf("texHeight").orElse(16).forGetter(TextureSection::texHeight)
+    ).apply(ins, TextureSection::new));
 }

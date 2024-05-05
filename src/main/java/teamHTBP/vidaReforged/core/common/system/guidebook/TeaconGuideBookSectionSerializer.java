@@ -12,6 +12,7 @@ import teamHTBP.vidaReforged.core.utils.json.JsonUtils;
 import java.lang.reflect.Type;
 import java.util.Map;
 
+@Deprecated
 public class TeaconGuideBookSectionSerializer implements JsonSerializer<IGuideBookSection>, JsonDeserializer<IGuideBookSection> {
     /**LOGGER*/
     private static final Logger LOGGER = LogManager.getLogger();

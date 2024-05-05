@@ -1,0 +1,8 @@
+{
+  "name": "vida_basic",
+  "icon": "vida_reforged:icons/goldlogo.png",
+  "click": {
+    "type": "open",
+    "data": {}
+  }
+}

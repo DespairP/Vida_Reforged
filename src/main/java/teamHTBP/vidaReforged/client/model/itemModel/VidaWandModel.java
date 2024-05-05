@@ -12,22 +12,25 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.common.item.Position;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
+import static teamHTBP.vidaReforged.client.events.registries.LayerRegistryHandler.registerLayer;
 
 @OnlyIn(Dist.CLIENT)
 public class VidaWandModel extends Model {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "vida_wand_model"), "main");
-    public static final ModelLayerLocation TEST_LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "vida_wand_model_test"), "main");
-    public static final ModelLayerLocation TEST_CORE_LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "vida_wand_model_core_test"), "main");
-    public static final ModelLayerLocation STYLE_001_TOP_LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "wand_style_001_model_top"), "main");
-    public static final ModelLayerLocation STYLE_001_CORE_LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "wand_style_001_model_core"), "main");
-    public static final ModelLayerLocation STYLE_001_CENTER_LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "wand_style_001_model_center"), "main");
-    public static final ModelLayerLocation STYLE_001_BOTTOM_LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "wand_style_001_model_bottom"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = registerLayer(new ResourceLocation(MOD_ID, "vida_wand_model"), "main");
+    public static final ModelLayerLocation TEST_LAYER_LOCATION = registerLayer(new ResourceLocation(MOD_ID, "vida_wand_model_test"), "main");
+    public static final ModelLayerLocation TEST_CORE_LAYER_LOCATION = registerLayer(new ResourceLocation(MOD_ID, "vida_wand_model_core_test"), "main");
+    public static final ModelLayerLocation STYLE_001_TOP_LAYER_LOCATION = registerLayer(new ResourceLocation(MOD_ID, "wand_style_001_model_top"), "main");
+    public static final ModelLayerLocation STYLE_001_CORE_LAYER_LOCATION = registerLayer(new ResourceLocation(MOD_ID, "wand_style_001_model_core"), "main");
+    public static final ModelLayerLocation STYLE_001_CENTER_LAYER_LOCATION = registerLayer(new ResourceLocation(MOD_ID, "wand_style_001_model_center"), "main");
+    public static final ModelLayerLocation STYLE_001_BOTTOM_LAYER_LOCATION = registerLayer(new ResourceLocation(MOD_ID, "wand_style_001_model_bottom"), "main");
+    public static final ResourceLocation DEFAULT_TEXTURE = new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model.png");
     private final ModelPart bone;
     private final ModelPart top;
     private final ModelPart center;

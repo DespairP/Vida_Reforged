@@ -5,10 +5,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import org.jetbrains.annotations.Nullable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import teamHTBP.vidaReforged.client.screen.components.magicWords.MagicWordShowSection;
 import teamHTBP.vidaReforged.client.screen.screens.common.VidaContainerScreen;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaViewMagicWordViewModel;
@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MagicWordScreen extends VidaContainerScreen<MagicWordViewMenu> {
+    private static final Logger LOGGER = LogManager.getLogger();
     FloatRange alphaRange = new FloatRange(0, 0, 0.75f);
     VidaViewMagicWordViewModel model;
     MagicWordSingleListWidget singleList;
@@ -30,8 +31,10 @@ public class MagicWordScreen extends VidaContainerScreen<MagicWordViewMenu> {
         super(menu, Minecraft.getInstance().player.getInventory(), Component.literal("view magic word"));
     }
 
+
     @Override
     public void added() {
+        super.added();
         this.model = new ViewModelProvider(this).get(VidaViewMagicWordViewModel.class);
     }
 
@@ -50,7 +53,11 @@ public class MagicWordScreen extends VidaContainerScreen<MagicWordViewMenu> {
         int textX = this.width - textWidth - 10;
 
         singleList = new MagicWordSingleListWidget(x, y, width, height);
-        textArea = new MagicWordShowSection(textX, y, textWidth, height);
+        try {
+            textArea = new MagicWordShowSection(textX, y, textWidth, height);
+        }catch (Exception exception){
+            LOGGER.error(exception);
+        }
     }
 
     @Override
@@ -90,17 +97,17 @@ public class MagicWordScreen extends VidaContainerScreen<MagicWordViewMenu> {
 
     @Override
     protected void clearWidgets() {
-        this.model.selectedMagicWord.clearObservers();
-        this.model.playerMagicWords.clearObservers();
+        this.model.selectedMagicWord.clearObservers(this);
+        this.model.playerMagicWords.clearObservers(this);
         super.clearWidgets();
     }
 
     @Override
     public List<? extends GuiEventListener> children() {
         List<GuiEventListener> listeners = new ArrayList<>();
-        listeners.addAll(this.singleList.getChildren());
+        listeners.addAll(this.singleList.children());
         listeners.add(this.singleList);
-        listeners.add(this.textArea.getChildren());
+        listeners.addAll(this.textArea.children());
         return listeners;
     }
 

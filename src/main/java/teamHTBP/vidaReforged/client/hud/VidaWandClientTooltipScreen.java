@@ -12,7 +12,7 @@ import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.components.VidaWandTooltipComponent;
-import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
+import teamHTBP.vidaReforged.server.providers.VidaMagicManager;
 
 import java.util.List;
 import java.util.Map;
@@ -21,15 +21,15 @@ import java.util.Map;
  * 渲染生命法杖的tooltip
  * */
 public class VidaWandClientTooltipScreen implements ClientTooltipComponent {
-    private final List<String> magics;
+    private final List<ResourceLocation> magics;
     private final Map<VidaElement, Double> manas;
     private final int magicAmount;
     private final double maxMana;
     public static final int BORDER_SIZE = 2;
     public static final int MANA_BAR_SIZE = 64;
     private final static ResourceLocation BAR_LOCATION = new ResourceLocation(VidaReforged.MOD_ID, "textures/gui/inventory_magic_bar.png");
-    private TextureSection barSection = new TextureSection(BAR_LOCATION, 0, 9, 62, 8);
-    private TextureSection progressSection = new TextureSection(BAR_LOCATION, 7, 3, 48, 2);
+    private final static TextureSection BAR_SECTION = new TextureSection(BAR_LOCATION, 0, 9, 62, 8, 256, 256);
+    private final static TextureSection PROGRESS_SECTION = new TextureSection(BAR_LOCATION, 7, 3, 48, 2, 256, 256);
 
 
     public VidaWandClientTooltipScreen(VidaWandTooltipComponent tooltip){
@@ -50,10 +50,10 @@ public class VidaWandClientTooltipScreen implements ClientTooltipComponent {
 
         poseStack.pushPose();
         graphics.blit(
-                barSection.location(),
+                BAR_SECTION.location(),
                 x, y + 2, 0,
-                barSection.minU(), barSection.minV(),
-                barSection.width(), barSection.height(),
+                BAR_SECTION.minU(), BAR_SECTION.minV(),
+                BAR_SECTION.width(), BAR_SECTION.height(),
                 256, 256
         );
         poseStack.popPose();
@@ -78,10 +78,10 @@ public class VidaWandClientTooltipScreen implements ClientTooltipComponent {
             );
             int manaWidth = (int) (manas.getOrDefault(element, 0.0) * 48.0 / maxMana);
             graphics.blit(
-                    progressSection.location(),
+                    PROGRESS_SECTION.location(),
                     x + offsetX, y + 2 + offsetY, 0,
-                    progressSection.minU() + offsetX - 8, progressSection.minV(),
-                    manaWidth, progressSection.height(),
+                    PROGRESS_SECTION.minU() + offsetX - 8, PROGRESS_SECTION.minV(),
+                    manaWidth, PROGRESS_SECTION.height(),
                     256, 256
             );
 
@@ -95,21 +95,19 @@ public class VidaWandClientTooltipScreen implements ClientTooltipComponent {
 
     /** 渲染魔法 */
     public void renderMagics(Font font, int x, int y, GuiGraphics graphics){
-        final Map<String,VidaMagic> magicMap = MagicTemplateManager.getMagicByIds(magics);
+        final Map<ResourceLocation,VidaMagic> magicMap = VidaMagicManager.getMagicByIds(magics);
         int borderCount = 0;
         //render magic
         for(VidaMagic magic : magicMap.values()){
             final PoseStack poseStack = graphics.pose();
-            final ResourceLocation iconLocation = magic.spriteLocation();
-            final int iconSize = magic.iconSize();
-            final int iconU = magic.getIconU() ;
-            final int iconV = magic.getIconV();
+            final TextureSection iconTexture = magic.icon();
+            final int iconWidth = iconTexture.w();
 
             poseStack.pushPose();
-            this.blit(graphics, x + BORDER_SIZE, y + borderCount, new TextureSection(iconLocation, iconU, iconV, 32, 32), magic.spriteSize());
+            this.blit(graphics, x + BORDER_SIZE, y + borderCount, iconTexture);
             poseStack.popPose();
 
-            borderCount += iconSize + BORDER_SIZE;
+            borderCount += iconWidth + BORDER_SIZE;
         }
     }
 
@@ -123,7 +121,7 @@ public class VidaWandClientTooltipScreen implements ClientTooltipComponent {
         return 64 + BORDER_SIZE * 2;
     }
 
-    private void blit(GuiGraphics graphics,int x, int y, TextureSection section,int size) {
-        graphics.blit(section.location(), x, y, 0, (float)section.minU(), (float)section.minV(), section.w(), section.h(), size, size);
+    private void blit(GuiGraphics graphics, int x, int y, TextureSection section) {
+        graphics.blit(section.location(), x, y, 0, (float)section.minU(), (float)section.minV(), section.w(), section.h(), (int) section.texWidth(), (int) section.texHeight());
     }
 }

@@ -21,17 +21,18 @@ import teamHTBP.vidaReforged.core.utils.color.VidaColor;
  * 3D方块粒子
  *
  * */
-public class Cube3DParticle extends TextureSheetParticle {
+public class Cube3DParticle extends VidaBaseParticle {
+    private int type = 0;
+    private float spinSpeed = 0;
+    private float alterSpinSpeed = 0;
 
-    public Cube3DParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, int a, int r, int g, int b, int size, int age) {
-        super(level, x, y ,z, speedX, speedY, speedZ);
-        this.lifetime = age;
+    public Cube3DParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, VidaParticleAttributes attributes) {
+        super(level, x, y ,z, speedX, speedY, speedZ, attributes);
         this.quadSize = 0.1f;
+        this.type = rand.nextInt(10);
         this.hasPhysics = true;
-        this.alpha = a / 255.0f;
-        this.rCol = r / 255.0f;
-        this.gCol = g / 255.0f;
-        this.bCol = b / 255.0f;
+        this.spinSpeed = rand.nextInt(8) * 0.01f;
+        this.alterSpinSpeed = rand.nextInt(8) * 0.01f;
     }
 
     @Override
@@ -41,12 +42,10 @@ public class Cube3DParticle extends TextureSheetParticle {
 
     @Override
     public void render(VertexConsumer buffer, Camera pRenderInfo, float partialTicks) {
-
         Vec3 vec3d = pRenderInfo.getPosition();
         float f = (float) (Mth.lerp(partialTicks, this.xo, this.x) - vec3d.x());
         float f1 = (float) (Mth.lerp(partialTicks, this.yo, this.y) - vec3d.y());
         float f2 = (float) (Mth.lerp(partialTicks, this.zo, this.z) - vec3d.z());
-
 
         Quaternionf quaternion = new Quaternionf(pRenderInfo.rotation());
 
@@ -58,10 +57,11 @@ public class Cube3DParticle extends TextureSheetParticle {
 
         for (int i = 0; i < avector3f.length; ++i) {
             Vector3f vector3f = avector3f[i];
+            vector3f.rotate(Axis.YP.rotation(this.yaw));
             vector3f.rotate(Axis.XP.rotation(this.roll));
+
             vector3f.mul(f4);
             vector3f.add(f, f1, f2);
-
         }
 
         float f7 = this.getU0();
@@ -138,8 +138,52 @@ public class Cube3DParticle extends TextureSheetParticle {
     public void tick() {
         super.tick();
         this.quadSize -= 0.0001f;
-        if (!this.onGround) this.roll += 0.02f;
+        if (!this.onGround){
+            switch (type) {
+                case 1 -> {
+                    this.roll += this.spinSpeed;
+                    this.yaw += this.spinSpeed;
+                }
+                case 2 -> {
+                    this.roll += this.spinSpeed;
+                    this.yaw += this.spinSpeed;
+                    this.pitch += this.spinSpeed;
+                }
+                case 3 -> {
+                    this.roll += this.alterSpinSpeed;
+                    this.yaw += this.spinSpeed;
+                    this.pitch += this.spinSpeed;
+                }
+                case 4 -> {
+                    this.roll += this.alterSpinSpeed;
+                    this.yaw += this.alterSpinSpeed;
+                    this.pitch += this.spinSpeed;
+                }
+                case 5 -> {
+                    this.roll += this.alterSpinSpeed;
+                    this.yaw += this.alterSpinSpeed;
+                    this.pitch += this.alterSpinSpeed;
+                }
+                case 6 -> {
+                    this.yaw += this.spinSpeed;
+                    this.pitch += this.alterSpinSpeed;
+                }
+                case 7 -> {
+                    this.pitch += this.alterSpinSpeed;
+                }
+                case 8 -> {
+                    this.roll += this.spinSpeed;
+                    this.pitch += this.alterSpinSpeed;
+                }
+                case 9 -> {
+                    this.pitch += this.spinSpeed;
+                }
+                case 10 -> {}
+            }
+        }
         if (this.roll >= 360) this.roll = 0;
+        if (this.yaw >= 360) this.yaw = 0;
+        if (this.pitch >= 360) this.pitch = 0;
         if (this.onGround) {
             this.quadSize -= 0.0005f;
             this.alpha -= 0.1f;

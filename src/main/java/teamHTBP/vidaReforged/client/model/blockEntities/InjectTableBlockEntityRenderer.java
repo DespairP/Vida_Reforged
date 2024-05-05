@@ -1,6 +1,6 @@
 package teamHTBP.vidaReforged.client.model.blockEntities;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -69,6 +69,8 @@ public class InjectTableBlockEntityRenderer implements BlockEntityRenderer<Injec
         itemRenderer.render(blockEntity.getItemForDisplay(), ItemDisplayContext.FIXED, true, poseStack, bufferSource, 240, packetOverlayIn, ibakedmodel);
         poseStack.popPose();
     }
+
+
 
     double sinWave(float ticks) {
         return (ticks * 0.1) % (Math.PI * 2);

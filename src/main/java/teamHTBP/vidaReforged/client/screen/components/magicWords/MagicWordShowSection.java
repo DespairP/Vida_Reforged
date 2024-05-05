@@ -18,9 +18,7 @@ import teamHTBP.vidaReforged.core.utils.color.VidaColor;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
@@ -43,7 +41,7 @@ public class MagicWordShowSection extends AbstractWidget implements IVidaNodes {
         this.topHeight = (int)(height * 1.0f / 4);
 
         textArea = new GuideBookScrollTextArea("description.word.vida_reforged.select", getX(), getY() + this.topHeight, width, height - topHeight);
-        viewModel.selectedMagicWord.observe(newValue -> {
+        viewModel.selectedMagicWord.observeForever(newValue -> {
             this.magicWord = MagicWordManager.getMagicWord(newValue);
             boolean isUnlocked = isUnlocked();
             textArea.setNewWord(this.magicWord == null ? "" : (!isUnlocked ? "description.word.vida_reforged.unlocked" :this.magicWord.description()));
@@ -69,6 +67,9 @@ public class MagicWordShowSection extends AbstractWidget implements IVidaNodes {
     }
 
     public boolean isUnlocked(){
+        if(magicWord == null){
+            return true;
+        }
         return Optional.ofNullable(this.viewModel.playerMagicWords.getValue()).orElse(new ArrayList<>()).contains(magicWord.name());
     }
 
@@ -81,7 +82,7 @@ public class MagicWordShowSection extends AbstractWidget implements IVidaNodes {
         poseStack.pushPose();
         final boolean isUnlocked = isUnlocked();
         ResourceLocation iconLocation = isUnlocked ? magicWord.icon() : QUESTION_MARK;
-        TextureSection section = new TextureSection(iconLocation,0,0,16,16);
+        TextureSection section = new TextureSection(iconLocation,0,0,16,16, 16, 16);
 
         final float factor = 1.5f;
 
@@ -115,8 +116,8 @@ public class MagicWordShowSection extends AbstractWidget implements IVidaNodes {
         poseStack.popPose();
     }
 
-    public GuiEventListener getChildren(){
-        return this.textArea;
+    public Collection<? extends GuiEventListener> children(){
+        return List.of(this, this.textArea);
     }
 
     @Override

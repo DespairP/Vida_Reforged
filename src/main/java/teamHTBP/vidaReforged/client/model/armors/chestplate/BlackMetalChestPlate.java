@@ -6,10 +6,11 @@ import net.minecraft.resources.ResourceLocation;
 import teamHTBP.vidaReforged.client.model.armors.AbstractVidaArmorModel;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
+import static teamHTBP.vidaReforged.client.events.registries.LayerRegistryHandler.registerLayer;
 
 
 public class BlackMetalChestPlate extends AbstractVidaArmorModel {
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "black_metal_chestplate"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = registerLayer(new ResourceLocation(MOD_ID, "black_metal_chestplate"), "main");
 
 	public BlackMetalChestPlate(ModelPart root) {
 		super(root);

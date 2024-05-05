@@ -21,9 +21,9 @@ import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 public class MagicWordCraftingButton extends AbstractWidget implements IVidaNodes {
     public static final int WIDTH = 48;
     public static final int HEIGHT = 16;
-    public static ResourceLocation DINKFONT = new ResourceLocation(MOD_ID, "dinkie");
-    public final ResourceLocation location = new ResourceLocation(MOD_ID, "textures/gui/magic_word_crafting.png");
-    public final TextureSection section = new TextureSection(location, 32, 112, WIDTH, HEIGHT);
+    public final static ResourceLocation DINKFONT = new ResourceLocation(MOD_ID, "dinkie");
+    public final static ResourceLocation LOCATION = new ResourceLocation(MOD_ID, "textures/gui/magic_word_crafting.png");
+    public final static TextureSection SECTION = new TextureSection(LOCATION, 32, 112, WIDTH, HEIGHT, 256, 256);
     FloatRange hoverAlpha = new FloatRange(0.4F,0.4F, 0.7F);
     FloatRange disableAlpha = new FloatRange(0.0F,0.0F, 0.3F);
     VidaMagicWordViewModel model;
@@ -47,10 +47,10 @@ public class MagicWordCraftingButton extends AbstractWidget implements IVidaNode
         RenderSystem.enableBlend();
         RenderSystem.setShaderColor(alpha, alpha, alpha,1);
         graphics.blit(
-                section.location(),
+                SECTION.location(),
                 getX(), getY(), 0,
-                section.minU(), section.minV(),
-                section.w(), section.h(),
+                SECTION.minU(), SECTION.minV(),
+                SECTION.w(), SECTION.h(),
                 256, 256
         );
         RenderSystem.disableBlend();

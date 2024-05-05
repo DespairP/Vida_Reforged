@@ -9,6 +9,8 @@ import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
 import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
 import teamHTBP.vidaReforged.client.particles.particles.Cube3DParticle;
 import teamHTBP.vidaReforged.client.particles.particles.CuboidParticle;
+import teamHTBP.vidaReforged.client.particles.particles.VidaParticleAttributes;
+import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterParticleType;
 
 import java.lang.reflect.Constructor;
@@ -34,7 +36,6 @@ public class BaseParticleProvider implements ParticleProvider<BaseParticleType> 
             if(!field.isAnnotationPresent(RegisterParticleType.class)){
                 continue;
             }
-
             try {
                 RegistryObject<ParticleType<BaseParticleType>> type = (RegistryObject<ParticleType<BaseParticleType>>)field.get(null);
                 if(pType.getType() == type.get()){
@@ -47,12 +48,7 @@ public class BaseParticleProvider implements ParticleProvider<BaseParticleType> 
                             double.class,
                             double.class,
                             double.class,
-                            int.class,
-                            int.class,
-                            int.class,
-                            int.class,
-                            int.class,
-                            int.class
+                            VidaParticleAttributes.class
                     );
                     TextureSheetParticle particle = constructor.newInstance(
                             pLevel,
@@ -62,20 +58,23 @@ public class BaseParticleProvider implements ParticleProvider<BaseParticleType> 
                             pXSpeed,
                             pYSpeed,
                             pZSpeed,
-                            pType.getAlpha(),
-                            pType.getColorRed(),
-                            pType.getColorGreen(),
-                            pType.getColorBlue(),
-                            (int) pType.getSize(),
-                            pType.getAge()
+                            new VidaParticleAttributes(
+                                    pType.getLifeTime(),
+                                    pType.getScale(),
+                                    new ARGBColor(
+                                        pType.getAlpha(),
+                                        pType.getColorRed(),
+                                        pType.getColorGreen(),
+                                        pType.getColorBlue()
+                                    ),
+                                    pType.getToPos()
+                            )
                     );
                     particle.pickSprite(spriteSet);
                     return particle;
                 }
-            } catch (IllegalAccessException e) {
-                System.out.println(e);
-            } catch (Exception e){
-                System.out.println(e);
+            } catch (Exception ex) {
+                System.out.println(ex);
             }
         }
         return null;

@@ -1,9 +1,0 @@
-{
-  "name": "ice_crystal",
-  "magicType": "ATTACK_SHOOTABLE",
-  "sprite": "vida_reforged:textures/icons/all_skills.png",
-  "iconIndex": 18,
-  "description": "vida_reforged.description.ice_crystal",
-  "element": "AQUA",
-  "isPlayerUsable": true
-}

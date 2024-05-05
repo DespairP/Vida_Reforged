@@ -12,6 +12,7 @@ import teamHTBP.vidaReforged.core.common.block.DecoBlockFactory;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterItemBlock;
 import teamHTBP.vidaReforged.server.blocks.crops.MutationCrop;
 import teamHTBP.vidaReforged.server.blocks.crops.ParticleCropBlock;
+import teamHTBP.vidaReforged.server.blocks.liquid.VividLiquidBlock;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
 import static teamHTBP.vidaReforged.core.common.block.DecoBlockFactory.DecoBlockType.*;
@@ -251,6 +252,26 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> MYSTIC_MUSHROOM = registerDecoBlock("mystic_mushroom", GRASS, FLOWER);
     @RegisterItemBlock
     public final static RegistryObject<Block> BLUE_JELLY_MUSHROOM = registerDecoBlock("blue_jelly_mushroom", GRASS, FLOWER);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> FRAGRANT_FLOWER = registerDecoBlock("fragrant_flower", GRASS, FLOWER);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SOULFUL_FLOWER = registerDecoBlock("soulful_flower", GRASS, FLOWER);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> AGATE_CORAL = registerDecoBlock("agate_coral", GRASS, FLOWER);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SEASIDE_ANEMONE = registerDecoBlock("seaside_anemone", GRASS, FLOWER);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SUNNY_FLOWER = registerDecoBlock("sunny_flower", GRASS, FLOWER);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> OOZE_BLOOM_FLOWER = registerDecoBlock("ooze_bloom_flower", GRASS, FLOWER);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> UMBRELLA_FLOWER = registerDecoBlock("umbrella_flower", GRASS, FLOWER);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> DAZZLING_FLOWER = registerDecoBlock("dazzling_flower", GRASS, FLOWER);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SNOW_FLOWER = registerDecoBlock("snow_flower", GRASS, FLOWER);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> MOONLIGHT_PURPLE_FLOWER = registerDecoBlock("moonlight_purple_flower", GRASS, FLOWER);
 
     /**作物*/
     @RegisterItemBlock
@@ -403,6 +424,8 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> CRYSTAL_LANTERN = BLOCKS.register("crystal_lantern", CrystalLantern::new);
 
+    /**液体*/
+    public final static RegistryObject<Block> VIVID_LIQUID = BLOCKS.register("vivid_liquid",  VividLiquidBlock::new);
 
 
     /**

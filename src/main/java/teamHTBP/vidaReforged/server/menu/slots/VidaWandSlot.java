@@ -23,7 +23,12 @@ public class VidaWandSlot extends Slot {
 
     @Override
     public boolean mayPlace(ItemStack itemStack) {
-        return tester.test(itemStack);
+        return false;
+    }
+
+    @Override
+    public boolean mayPickup(Player p_40228_) {
+        return false;
     }
 
     @Override

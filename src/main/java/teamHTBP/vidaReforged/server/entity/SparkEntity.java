@@ -19,6 +19,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3f;
 import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
 import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
@@ -91,7 +92,7 @@ public class SparkEntity extends Entity implements IEntityAdditionalSpawnData {
             if(colors.size() >= 4){
                 this.color = new ARGBColor(Integer.parseInt(colors.get(0)), Integer.parseInt(colors.get(1)), Integer.parseInt(colors.get(2)), Integer.parseInt(colors.get(3)));
             }
-            this.particleType = new BaseParticleType(VidaParticleTypeLoader.SPARK_PARTICLE_TYPE.get(), this.color, 1,  this.entityData.get(MAX_LIFE_TIME));
+            this.particleType = new BaseParticleType(VidaParticleTypeLoader.SPARK_PARTICLE_TYPE.get(), this.color, new Vector3f(), 1, this.entityData.get(MAX_LIFE_TIME));
             this.level().addParticle(this.particleType, this.getRandomX(0.5D), this.getRandomY(), this.getRandomZ(0.5D), 0, 0, 0);
         }
 

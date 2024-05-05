@@ -1,9 +1,0 @@
-{
-  "name": "stone_hurl",
-  "magicType": "ATTACK_SHOOTABLE",
-  "sprite": "vida_reforged:textures/icons/all_skills.png",
-  "iconIndex": 8,
-  "description": "vida_reforged.description.stone_hurl",
-  "element": "EARTH",
-  "isPlayerUsable": true
-}

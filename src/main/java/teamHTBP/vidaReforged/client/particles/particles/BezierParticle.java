@@ -9,6 +9,7 @@ import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.Mth;
 import org.joml.Vector3d;
+import org.joml.Vector3f;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.Bezier3Curve;
 
@@ -20,13 +21,12 @@ public class BezierParticle extends TrailParticle {
     public List<Vector3d> tails = new ArrayList<>();
 
     public BezierParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, int a, int r, int g, int b, int size, int age, List<Vector3d> tails) {
-        super(level, x, y ,z, 0, 0, 0, a, r, g, b, size, age);
+        super(level, x, y ,z, speedX, speedY, speedZ, new VidaParticleAttributes(age, size, new ARGBColor(a, r, g, b), new Vector3f()));
         this.tails = tails;
-        this.lifetime = 5;
+        this.lifetime = age;
         this.rCol = r / 255.0F;
         this.gCol = g / 255.0F;
         this.bCol = b / 255.0F;
-
     }
 
     public void render(@Nonnull VertexConsumer pBuffer, @Nonnull Camera camera, float partialTicks) {

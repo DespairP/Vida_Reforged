@@ -32,6 +32,7 @@ import org.joml.Quaternionf;
 import teamHTBP.vidaReforged.core.api.screen.IGuideBookSection;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 
+@Deprecated
 public class GuideBookBlockModel extends AbstractWidget implements IGuidebookComponent {
     FloatRange alphaRange = new FloatRange(0,0,0.6f);
     FloatRange hoverRange = new FloatRange(0,0,0.4f);

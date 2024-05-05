@@ -43,8 +43,10 @@ import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.model.data.ModelData;
 import org.joml.*;
 import org.lwjgl.opengl.GL30;
+import teamHTBP.vidaReforged.client.screen.components.common.IconButton;
 import teamHTBP.vidaReforged.core.common.mutiblock.VidaMultiblock;
 import teamHTBP.vidaReforged.core.common.vertex.LiquidBlockVertexConsumer;
+import teamHTBP.vidaReforged.core.utils.anim.SecondOrderDynamics;
 import teamHTBP.vidaReforged.core.utils.animation.Animator;
 import teamHTBP.vidaReforged.core.utils.animation.DestinationAnimator;
 import teamHTBP.vidaReforged.core.utils.animation.TimeInterpolator;
@@ -55,6 +57,8 @@ import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
 import teamHTBP.vidaReforged.server.menu.TimeElementCraftingTableMenuContainer;
 
 import java.lang.Math;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.lwjgl.opengl.GL11C.*;
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
@@ -77,10 +81,12 @@ public class TimeElementCraftTableScreen extends AbstractContainerScreen<TimeEle
     private float prevRotateY;
     private float rotateX;
     private float rotateY;
-
+    private SecondOrderDynamics size = new SecondOrderDynamics(1, 1, 0,  new Vector3f(1,1,1));
+    private final Vector3f sizeTarget = new Vector3f(16, 16, 16);
     private static final double MAX_STRUCTURE_WIDTH = Math.sqrt( 16 ^ 2 * 2) * 10f;
-
     VidaMultiblock multiblock = new VidaMultiblock();
+
+
 
     public TimeElementCraftTableScreen(TimeElementCraftingTableMenuContainer pMenu, Inventory pInventory, Component pTitle) {
         super(pMenu, pInventory, pTitle);
@@ -141,6 +147,7 @@ public class TimeElementCraftTableScreen extends AbstractContainerScreen<TimeEle
 
 
     public void renderBlockWithState(GuiGraphics graphics, BlockPos startPos, float partialTicks){
+        Vector3f scaleSize = size.update(Minecraft.getInstance().getDeltaFrameTime() * 0.2F, sizeTarget, null);
         // 获取blockRenderer、bufferSource与PoseStack
         final BlockRenderDispatcher blockRenderer = this.minecraft.getBlockRenderer();
         final MultiBufferSource.BufferSource buffers = graphics.bufferSource();
@@ -149,7 +156,7 @@ public class TimeElementCraftTableScreen extends AbstractContainerScreen<TimeEle
         // 入栈1：设置结构偏移
         pPoseStack.pushPose();
         pPoseStack.translate((width - MAX_STRUCTURE_WIDTH) / 2, 132.0F, 100.0F);
-        pPoseStack.scale(16.0F, 16.0F, 16.0F);
+        pPoseStack.scale(scaleSize.x, scaleSize.y, scaleSize.z);
         // 中心方块是-1,-1偏移后的方块
         pPoseStack.translate(-1.0F, -1.0F, 0.0F);
 
@@ -172,15 +179,31 @@ public class TimeElementCraftTableScreen extends AbstractContainerScreen<TimeEle
         // 方块Shader颜色
         RenderSystem.setShaderColor(1F, 1F, 1F, alphaAnimator.getValue());
 
+
+        final Map<BlockPos, BlockState> testMap = Map.of(
+                new BlockPos(0,0,0), VidaBlockLoader.VIDA_LOG.get().defaultBlockState(),
+                new BlockPos(0,1,0), VidaBlockLoader.VIDA_LOG.get().defaultBlockState()
+        );
+
         // 从中心开始 (-5,-5,-5) 到 (5,5,5) 渲染方块
-        for(BlockPos pos : BlockPos.betweenClosed(new BlockPos(-5,-1,-5),new BlockPos(5, 5, 5))){
-            BlockState state = multiblock.getBlockState(startPos.offset(pos));
+        for(BlockPos pos : testMap.keySet()){
+            BlockState state = testMap.get(pos);
             // 入栈2：设置单个方块
             pPoseStack.pushPose();
             pPoseStack.translate(pos.getX(), pos.getY(), pos.getZ());
             final FluidState fluidState = state.getFluidState();
 
-            // TOFIX:渲染液体方块
+            if(pos.getY() > 0){
+                pPoseStack.translate(0, 1, 0);
+
+                pPoseStack.translate(.5f, .5f, .5f);
+                pPoseStack.scale(0.5f,0.5f,0.5f);
+                pPoseStack.translate(-.5f, -.5f, -.5f);
+
+
+            }
+
+            // TODO:渲染液体方块
             if (!fluidState.isEmpty()) {
                 final RenderType layer = ItemBlockRenderTypes.getRenderLayer(fluidState);
                 final VertexConsumer buffer = buffers.getBuffer(layer);
@@ -200,6 +223,8 @@ public class TimeElementCraftTableScreen extends AbstractContainerScreen<TimeEle
             // 出栈2
             pPoseStack.popPose();
         }
+
+
 
         // 通知batch加入完毕
         buffers.endBatch();
@@ -325,6 +350,7 @@ public class TimeElementCraftTableScreen extends AbstractContainerScreen<TimeEle
         }
         return false;
     }
+
 
     public boolean isActive(){
         return true;

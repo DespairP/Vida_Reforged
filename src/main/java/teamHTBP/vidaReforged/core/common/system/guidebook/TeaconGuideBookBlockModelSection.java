@@ -7,6 +7,7 @@ import teamHTBP.vidaReforged.client.screen.components.guidebooks.GuideBookBlockM
 import teamHTBP.vidaReforged.client.screen.components.guidebooks.IGuidebookComponent;
 import teamHTBP.vidaReforged.core.api.screen.IGuideBookSection;
 
+@Deprecated
 public class TeaconGuideBookBlockModelSection implements IGuideBookSection {
     public ResourceLocation block;
     public String type = "BLOCK";

@@ -56,7 +56,7 @@ public class MagicWordWidget extends AbstractWidget {
 
     public void init(){
         IDataObserver<Map<VidaElement,String>> observer = this::checkIfSelected;
-        this.model.selectedMagicWord.observe(observer);
+        this.model.selectedMagicWord.observeForever(observer);
         this.checkIfSelected(this.model.selectedMagicWord.getValue());
         if(magicWord != null){
             this.isUnlocked = Optional.ofNullable(this.model.playerMagicWords.getValue()).orElse(new ArrayList<>()).contains(magicWord.name());
@@ -137,7 +137,7 @@ public class MagicWordWidget extends AbstractWidget {
         poseStack.popPose();
 
         // 绘制图标
-        TextureSection section = new TextureSection(iconLocation,0,0,16,16);
+        TextureSection section = new TextureSection(iconLocation,0,0,16,16, ICON_PIXEL, ICON_PIXEL);
         final int iconX = getX() + 4;
         final int iconY = getY() + ((HEIGHT - ICON_PIXEL) / 2) ;
 

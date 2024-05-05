@@ -6,10 +6,7 @@ import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
-import teamHTBP.vidaReforged.core.api.capability.IVidaMagicWordCapability;
-import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
-import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
+import teamHTBP.vidaReforged.core.api.capability.*;
 
 /**
  * 管理注册Capability的Event
@@ -19,6 +16,9 @@ public class VidaCapabilityRegisterHandler {
     public static Capability<IVidaManaCapability> VIDA_MANA = CapabilityManager.get(new CapabilityToken<>(){});
     public static Capability<IVidaMagicContainerCapability> VIDA_MAGIC_CONTAINER = CapabilityManager.get(new CapabilityToken<>(){});
     public static Capability<IVidaMagicWordCapability> VIDA_MAGIC_WORD = CapabilityManager.get(new CapabilityToken<>(){});
+    public static Capability<IVidaMultiBlockCapability> VIDA_MULTI_BLOCK = CapabilityManager.get(new CapabilityToken<>(){});
+    public static Capability<IVidaPlayerMagicCapability> VIDA_PLAYER_MAGIC = CapabilityManager.get(new CapabilityToken<>(){});
+
 
     /**注册Capability*/
     @SubscribeEvent
@@ -26,5 +26,7 @@ public class VidaCapabilityRegisterHandler {
         event.register(IVidaManaCapability.class);
         event.register(IVidaMagicContainerCapability.class);
         event.register(IVidaMagicWordCapability.class);
+        event.register(IVidaMultiBlockCapability.class);
+        event.register(IVidaPlayerMagicCapability.class);
     }
 }

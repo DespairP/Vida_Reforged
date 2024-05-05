@@ -6,6 +6,7 @@ import teamHTBP.vidaReforged.client.screen.components.guidebooks.GuideBookScroll
 import teamHTBP.vidaReforged.client.screen.components.guidebooks.IGuidebookComponent;
 import teamHTBP.vidaReforged.core.api.screen.IGuideBookSection;
 
+@Deprecated
 public class TeaconGuideBookTextSection implements IGuideBookSection {
     public String text;
     public String type = "TEXT";

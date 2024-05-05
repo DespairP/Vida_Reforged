@@ -1,11 +1,18 @@
 {
-  "name": "crystal_embrittlement",
-  "magicType": "ATTACK_SHOOTABLE",
-  "sprite": "vida_reforged:textures/icons/crystal_embrittlement.png",
-  "spriteSize": 32,
-  "iconIndex": 0,
-  "description": "vida_reforged.description.crystal_embrittlement",
+  "id": "crystal_embrittlement",
+  "type": "ATTACK_SHOOTABLE",
+  "icon": {
+    "location": "vida_reforged:textures/icons/skills_001.png",
+    "minU": 0,
+    "minV": 72,
+    "width": 24,
+    "height": 24,
+    "texWidth": 192,
+    "texHeight": 192
+  },
+  "description": {
+    "translate": "vida_reforged.description.crystal_embrittlement"
+  },
   "element": "GOLD",
-  "isPlayerUsable": true,
-  "regex": "lazer"
+  "isManuallyUsable": true
 }

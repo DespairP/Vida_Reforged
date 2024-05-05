@@ -19,16 +19,14 @@ import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 public class VidaCollectorScreen extends AbstractVidaHUDScreen implements IVidaScreen {
 
     public final ResourceLocation LOCATION = new ResourceLocation(MOD_ID, "textures/gui/collector_hud.png");
+    /**收集器*/
+    public final TextureSection BLOCK = new TextureSection(LOCATION, 1, 35,13,13, 48, 48);
 
-    private final int RESOLUTION = 48;
+    public final TextureSection ITEM_SLOT = new TextureSection(LOCATION, 1, 1,24,24, 48, 48);
 
-    public final TextureSection BLOCK = new TextureSection(LOCATION, 1, 35,13,13);
+    public final TextureSection BAR = new TextureSection(LOCATION, 19, 29,22,6, 48, 48);
 
-    public final TextureSection ITEM_SLOT = new TextureSection(LOCATION, 1, 1,24,24);
-
-    public final TextureSection BAR = new TextureSection(LOCATION, 19, 29,22,6);
-
-    public final TextureSection PROGRESS = new TextureSection(LOCATION, 22, 38,16,2);
+    public final TextureSection PROGRESS = new TextureSection(LOCATION, 22, 38,16,2, 48, 48);
 
 
     public VidaCollectorScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource) {
@@ -54,7 +52,7 @@ public class VidaCollectorScreen extends AbstractVidaHUDScreen implements IVidaS
                 blockX, blockY, 0,
                 BLOCK.minU(), BLOCK.minV(),
                 BLOCK.w(), BLOCK.h(),
-                RESOLUTION, RESOLUTION
+                BLOCK.texWidth(), BLOCK.texHeight()
         );
 
         // 渲染槽位
@@ -65,7 +63,7 @@ public class VidaCollectorScreen extends AbstractVidaHUDScreen implements IVidaS
                 slotX, slotY, 0,
                 ITEM_SLOT.minU(), ITEM_SLOT.minV(),
                 ITEM_SLOT.w(), ITEM_SLOT.h(),
-                RESOLUTION, RESOLUTION
+                ITEM_SLOT.texWidth(), ITEM_SLOT.texHeight()
         );
 
         // 渲染能量条
@@ -76,7 +74,7 @@ public class VidaCollectorScreen extends AbstractVidaHUDScreen implements IVidaS
                 barX, barY, 0,
                 BAR.minU(), BAR.minV(),
                 BAR.w(), BAR.h(),
-                RESOLUTION, RESOLUTION
+                BAR.texWidth(), BAR.texHeight()
         );
 
 
@@ -91,7 +89,7 @@ public class VidaCollectorScreen extends AbstractVidaHUDScreen implements IVidaS
                     progressX, progressY, 0,
                     PROGRESS.minU(), PROGRESS.minV(),
                     (int)(PROGRESS.w()  * collectorBlockEntity.getProgress() / collectorBlockEntity.getMaxProgress()), PROGRESS.h(),
-                    RESOLUTION, RESOLUTION
+                    PROGRESS.texWidth(), PROGRESS.texHeight()
             );
         }
 
@@ -102,7 +100,7 @@ public class VidaCollectorScreen extends AbstractVidaHUDScreen implements IVidaS
 
 
     @Override
-    public void render(PoseStack poseStack, float partialTicks) {
+    public void render(GuiGraphics graphics, float partialTicks) {
 
     }
 }

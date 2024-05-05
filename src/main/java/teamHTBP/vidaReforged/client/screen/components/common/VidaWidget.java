@@ -90,6 +90,11 @@ public abstract class VidaWidget extends AbstractWidget implements IVidaNodes {
         return Minecraft.getInstance().screen;
     }
 
+
+    public void onAdded(){
+
+    }
+
     @Override
     public <T extends IViewModelStoreProvider> T requireParent() {
         Screen parent = getParent();

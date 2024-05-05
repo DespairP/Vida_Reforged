@@ -41,7 +41,7 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
     /**图片路径*/
     public static final ResourceLocation LOCATION_ENTITY_FRIENDLY = new ResourceLocation(VidaReforged.MOD_ID, "textures/icons/entity_friendly.png");
     /**图片属性*/
-    private final TextureSection iconEntityFriendly = new TextureSection(LOCATION_ENTITY_FRIENDLY,0,0,16,16);
+    private final static TextureSection ICON_ENTITY_FRIENDLY_SECTION = new TextureSection(LOCATION_ENTITY_FRIENDLY,0,0,16,16, 16, 16);
 
 
     public VidaDebugScreen(MultiBufferSource.BufferSource bufferSource, Entity entity ,BlockEntity blockEntity) {
@@ -51,7 +51,6 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
         this.font = mc.font;
     }
 
-    @Override
     public void render(PoseStack poseStack, float partialTicks) {
         if(!VidaConfig.DEBUG_MODE.get()){
             return;
@@ -84,12 +83,12 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
         final String titleName = "Entity";
         //1.渲染图片
         pose().pushPose();
-        RenderSystem.setShaderTexture(0, iconEntityFriendly.location());
-        int beginX = width - font.width(titleName) - 8 - iconEntityFriendly.width();
+        RenderSystem.setShaderTexture(0, ICON_ENTITY_FRIENDLY_SECTION.location());
+        int beginX = width - font.width(titleName) - 8 - ICON_ENTITY_FRIENDLY_SECTION.width();
         blit(
-                iconEntityFriendly.location(),
+                ICON_ENTITY_FRIENDLY_SECTION.location(),
                 beginX, beginImgY, 0,
-                iconEntityFriendly.mu(), iconEntityFriendly.mv(),
+                ICON_ENTITY_FRIENDLY_SECTION.mu(), ICON_ENTITY_FRIENDLY_SECTION.mv(),
                 16,16,
                 16,16
         );
@@ -97,8 +96,8 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
 
         //2.渲染标题
         pose().pushPose();
-        beginX += iconEntityFriendly.width();
-        beginImgY += iconEntityFriendly.width() / 2;
+        beginX += ICON_ENTITY_FRIENDLY_SECTION.width();
+        beginImgY += ICON_ENTITY_FRIENDLY_SECTION.width() / 2;
 
         drawString(font, titleName, (float)(beginX + 1), (float)beginImgY, 0, false);
         drawString(font, titleName, (float)(beginX - 1), (float)beginImgY, 0, false);
@@ -143,12 +142,12 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
         final String titleName = "BlockEntity";
         //1.渲染图片
         pose().pushPose();
-        RenderSystem.setShaderTexture(0, iconEntityFriendly.location());
-        int beginX = width - font.width(titleName) - 8 - iconEntityFriendly.width();
+        RenderSystem.setShaderTexture(0, ICON_ENTITY_FRIENDLY_SECTION.location());
+        int beginX = width - font.width(titleName) - 8 - ICON_ENTITY_FRIENDLY_SECTION.width();
         blit(
-                iconEntityFriendly.location(),
+                ICON_ENTITY_FRIENDLY_SECTION.location(),
                 beginX, beginImgY, 0,
-                iconEntityFriendly.mu(), iconEntityFriendly.mv(),
+                ICON_ENTITY_FRIENDLY_SECTION.mu(), ICON_ENTITY_FRIENDLY_SECTION.mv(),
                 16,16,
                 16,16
         );
@@ -156,8 +155,8 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
 
         //2.渲染标题
         pose().pushPose();
-        beginX += iconEntityFriendly.width();
-        beginImgY += iconEntityFriendly.width() / 2;
+        beginX += ICON_ENTITY_FRIENDLY_SECTION.width();
+        beginImgY += ICON_ENTITY_FRIENDLY_SECTION.width() / 2;
 
         drawString(font, titleName, (float)(beginX + 1), (float)beginImgY, 0, false);
         drawString(font, titleName, (float)(beginX - 1), (float)beginImgY, 0, false);
@@ -212,4 +211,7 @@ public class VidaDebugScreen extends GuiGraphics implements IVidaScreen {
         //
         return Optional.of(infos).orElse(new LinkedList<>());
     }
+
+    @Override
+    public void render(GuiGraphics graphics, float partialTicks) {}
 }

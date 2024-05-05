@@ -2,6 +2,7 @@ package teamHTBP.vidaReforged.server.capabilities;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraftforge.common.util.INBTSerializable;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicWordCapability;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
@@ -9,7 +10,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class VidaMagicWordCapability implements IVidaMagicWordCapability {
+/** 玩家词条能力系统 */
+public class VidaMagicWordCapability implements IVidaMagicWordCapability, INBTSerializable<CompoundTag> {
     /**已经解锁的词条*/
     public List<String> unlockedMagicWord = new ArrayList<>();
 

@@ -7,7 +7,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
-import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicManager;
+import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicInvokableManager;
 
 /**
  * 释放
@@ -21,11 +21,11 @@ public class VidaMagicInvokeHelper {
             return;
         }
 
-        optInvokable = VidaMagicManager.getMagicInvokable(currentMagic);
+        optInvokable = VidaMagicInvokableManager.getMagicInvokable(currentMagic);
 
 
         optInvokable.ifPresent((invokable) -> {
-            invokable.invokeMagic(handInItem, currentMagic, magicContainer.getContainer(), manaContainer, level, player);
+            invokable.invokeMagic(handInItem, currentMagic, magicContainer.getAttribute(), manaContainer, level, player);
         });
 
     }

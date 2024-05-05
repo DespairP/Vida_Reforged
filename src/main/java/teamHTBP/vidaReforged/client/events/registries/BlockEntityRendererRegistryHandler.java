@@ -24,5 +24,6 @@ public class BlockEntityRendererRegistryHandler {
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.INJECT_TABLE.get(), InjectTableBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.CRYSTAL_LANTERN.get(), CrystalLanternRenderer::new);
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.GLOWING_LIGHT.get(), GlowingLightBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(VidaBlockEntityLoader.VIDA_WAND_CRAFTING_TABLE.get(), VidaWandCraftingTableBlockEntityRenderer::new);
     }
 }

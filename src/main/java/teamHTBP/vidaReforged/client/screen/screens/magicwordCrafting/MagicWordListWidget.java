@@ -89,10 +89,10 @@ public class MagicWordListWidget extends AbstractWidget implements IVidaNodes {
 
         // 初始化过滤器
         this.currentSelectedElement = this.model.selectedFilterElement.getValue();
-        this.model.selectedFilterElement.observe(this::onFilterChange);
+        this.model.selectedFilterElement.observeForever(this::onFilterChange);
 
         // 设置
-        this.model.selectedMagicWord.observe(this::onMagicWordChange);
+        this.model.selectedMagicWord.observeForever(this::onMagicWordChange);
 
         this.onFilterChange(this.currentSelectedElement);
         this.onMagicWordChange(this.model.selectedMagicWord.getValue());
@@ -147,7 +147,7 @@ public class MagicWordListWidget extends AbstractWidget implements IVidaNodes {
     @Override
     public void playDownSound(SoundManager manager) {}
 
-    public Collection<? extends GuiEventListener> getChildren(){
+    public Collection<? extends GuiEventListener> children(){
         List<VidaWidget> listeners = new ArrayList<>();
         this.widgetMap.forEach( (key,value)-> listeners.addAll( value ) );
         listeners.add(this.scrolledContainer);

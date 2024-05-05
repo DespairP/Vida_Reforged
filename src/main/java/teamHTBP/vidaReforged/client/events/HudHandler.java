@@ -27,6 +27,7 @@ import teamHTBP.vidaReforged.client.hud.*;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.server.blockEntities.BasePurificationCauldronBlockEntity;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
+import teamHTBP.vidaReforged.server.items.VidaWand;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -39,6 +40,7 @@ public class HudHandler {
     protected static VidaManaBarScreen screen;
     protected static VidaUnlockScreen unlockScreen;
     protected static VidaWandStaminaScreen staminaScreen;
+    protected static VidaWandMagicScreen magicScreen;
     protected static final float MAX_PLAYER_BAR_OFFSET = 12f;
     protected static FloatRange playerBarOffset = new FloatRange(0,0,MAX_PLAYER_BAR_OFFSET);
     protected static FloatRange globalHudAlpha = new FloatRange(0,0, 1);
@@ -63,6 +65,9 @@ public class HudHandler {
 
         // 渲染法杖蓄力条
         renderVidaStaminaScreen(event);
+
+        // 渲染技能条
+        renderVidaMagicScreen(event);
 
         //渲染解锁界面
         renderUnlockOverlay(event);
@@ -105,6 +110,7 @@ public class HudHandler {
         }
     }
 
+    /**显示词条解锁界面*/
     public static void renderUnlockOverlay(RenderGuiOverlayEvent event){
         Player player = Minecraft.getInstance().player;
         Minecraft mc = Minecraft.getInstance();
@@ -113,7 +119,7 @@ public class HudHandler {
             return;
         }
 
-        unlockScreen.render(event.getGuiGraphics().pose(), event.getPartialTick());
+        unlockScreen.render(event.getGuiGraphics(), event.getPartialTick());
     }
 
     /**显示debug界面*/
@@ -135,7 +141,7 @@ public class HudHandler {
         debugScreen.render(matrixStack, event.getPartialTick());
     }
 
-    /***/
+    /**显示方块HUD*/
     public static void renderBlockEntityOverlay(RenderGuiOverlayEvent event){
         Player player = Minecraft.getInstance().player;
         Minecraft mc = Minecraft.getInstance();
@@ -147,7 +153,7 @@ public class HudHandler {
         GuiGraphics graphics = event.getGuiGraphics();
         MultiBufferSource.BufferSource bufferSource = event.getGuiGraphics().bufferSource();
         if(entity != null && entity.getBlockState().is(VidaBlockLoader.PURIFICATION_CAULDRON.get())){
-            new VidaCauldronScreen(mc, bufferSource).render(graphics.pose(), entity, globalHudAlpha.increase(0.02f));
+            new VidaCauldronScreen(mc, bufferSource).render(graphics, entity, globalHudAlpha.increase(0.02f));
             return;
         }
         if(entity != null && entity.getBlockState().is(VidaBlockLoader.COLLECTOR.get())){
@@ -161,14 +167,22 @@ public class HudHandler {
     public static void renderVidaManaScreen(RenderGuiOverlayEvent event){
         if(event.getOverlay() == VanillaGuiOverlay.EXPERIENCE_BAR.type()){
             VidaManaBarScreen screen = getOrCreateVidaManaScreen(event.getGuiGraphics().bufferSource());
-            screen.render(event.getGuiGraphics().pose(), event.getPartialTick());
+            screen.render(event.getGuiGraphics(), event.getPartialTick());
         }
     }
 
+    /**显示蓄力槽*/
     public static void renderVidaStaminaScreen(RenderGuiOverlayEvent event) {
         if(event.getOverlay() == VanillaGuiOverlay.EXPERIENCE_BAR.type()){
             HudHandler.staminaScreen = getOrCreateScreen(HudHandler.staminaScreen, event.getGuiGraphics().bufferSource(), VidaWandStaminaScreen.class);
-            staminaScreen.render(event.getGuiGraphics().pose(), event.getPartialTick());
+            staminaScreen.render(event.getGuiGraphics(), event.getPartialTick());
+        }
+    }
+
+    public static void renderVidaMagicScreen(RenderGuiOverlayEvent event) {
+        if(event.getOverlay() == VanillaGuiOverlay.HOTBAR.type()){
+            HudHandler.magicScreen = getOrCreateScreen(HudHandler.magicScreen, event.getGuiGraphics().bufferSource(), VidaWandMagicScreen.class);
+            magicScreen.render(event.getGuiGraphics(), event.getPartialTick());
         }
     }
 

@@ -6,15 +6,12 @@ import net.minecraftforge.network.NetworkEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import teamHTBP.vidaReforged.core.common.system.guidebook.TeaconGuideBook;
-import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
 import teamHTBP.vidaReforged.core.utils.json.JsonUtils;
-import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
 import teamHTBP.vidaReforged.server.providers.TeaconGuideBookManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.function.Supplier;
 
 public class MagicGuidePacket {

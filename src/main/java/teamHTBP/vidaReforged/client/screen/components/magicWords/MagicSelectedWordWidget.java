@@ -22,7 +22,7 @@ import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 public class MagicSelectedWordWidget extends AbstractWidget implements IVidaNodes {
     VidaElement element = VidaElement.EMPTY;
     public final static ResourceLocation EMPTY_WORD_LOCATION = new ResourceLocation(MOD_ID, "textures/gui/magic_word_crafting.png");
-    public final static TextureSection section = new TextureSection(EMPTY_WORD_LOCATION,48,8,16,16);
+    public final static TextureSection section = new TextureSection(EMPTY_WORD_LOCATION,48,8,16,16, 256, 256);
     FloatRange range = new FloatRange(0.7f, 0.7f, 1);
     private String selectWordId;
     private VidaMagicWordViewModel model;
@@ -40,7 +40,7 @@ public class MagicSelectedWordWidget extends AbstractWidget implements IVidaNode
         //
         this.model = new ViewModelProvider(requireParent()).get(VidaMagicWordViewModel.class);
 
-        this.model.selectedMagicWord.observe(newValue -> {
+        this.model.selectedMagicWord.observeForever(newValue -> {
             this.selectWordId = this.model.selectedMagicWord.getValue().getOrDefault(element,"");
         });
         this.selectWordId = this.model.selectedMagicWord.getValue().getOrDefault(element,"");
@@ -71,7 +71,7 @@ public class MagicSelectedWordWidget extends AbstractWidget implements IVidaNode
 
         }
         // 绘制图标
-        TextureSection section = new TextureSection(word.icon(),0,0,16,16);
+        TextureSection section = new TextureSection(word.icon(),0,0,16,16, 16, 16);
         final int iconX = getX();
         final int iconY = getY();
 

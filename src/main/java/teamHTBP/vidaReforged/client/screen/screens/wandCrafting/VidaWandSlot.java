@@ -3,7 +3,6 @@ package teamHTBP.vidaReforged.client.screen.screens.wandCrafting;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.ImageWidget;
 import net.minecraft.client.gui.components.MultiLineTextWidget;
 import net.minecraft.client.gui.components.StringWidget;
 import net.minecraft.client.gui.layouts.FrameLayout;
@@ -11,7 +10,6 @@ import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import teamHTBP.vidaReforged.client.screen.components.common.ItemStackWidget;
 import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
@@ -21,20 +19,16 @@ import teamHTBP.vidaReforged.core.common.item.Position;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
-import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 import teamHTBP.vidaReforged.server.items.VidaWandEquipment;
 import teamHTBP.vidaReforged.server.menu.slots.VidaWandEquipmentSlot;
 
 import java.util.ArrayList;
 import java.util.List;
-import static teamHTBP.vidaReforged.helper.GuiHelper.FONT;
+import static teamHTBP.vidaReforged.helper.VidaGuiHelper.FONT;
 public class VidaWandSlot extends VidaWidget implements IVidaNodes {
-    /**显示信息的槽位*/
-    private VidaWandEquipmentSlot slot;
+    private final static int INIT_HEIGHT = 50;
     /***/
     StringWidget emptyTextWidget;
-    /**viewModel*/
-    private VidaWandCraftingViewModel viewModel;
     /**空槽位文字*/
     private final Component emptyComponent = Component.literal("-- ")
             .append(Component.translatable("gui.vida_reforged.vida_wand_slot.no_item"))
@@ -43,23 +37,23 @@ public class VidaWandSlot extends VidaWidget implements IVidaNodes {
     public FloatRange alpha = new FloatRange(0, 0, 1);
     /***/
     private ItemStack lastItemStack = ItemStack.EMPTY;
-    /**物品栏是否改变*/
-    private boolean isChanged = false;
+    private ItemStack currentItemStack = ItemStack.EMPTY;
     /***/
     private List<AbstractWidget> equipmentInfoWidgets = new ArrayList<>();
     /**/
-    protected Position position = Position.TOP;
     protected FrameLayout frameLayout;
 
     public ItemStack getSlotStack(){
-        return slot == null ? ItemStack.EMPTY : slot.getItem();
+        return currentItemStack == null ? ItemStack.EMPTY : currentItemStack;
     }
 
-    public VidaWandSlot(int x, int y, int width, int height, Position position) {
-        super(x, y, width, height, Component.literal(""));
-        this.viewModel = new ViewModelProvider(requireParent()).get(VidaWandCraftingViewModel.class);
-        this.position = position;
-        this.init();
+    public VidaWandSlot(int x, int y, int width, int height, ItemStack stack) {
+        super(x, y, width, height == 0 ? INIT_HEIGHT : height, Component.literal(""));
+    }
+
+    public void setSlotStack(ItemStack stack){
+        this.lastItemStack = currentItemStack;
+        this.currentItemStack = stack;
     }
 
     /***/
@@ -93,16 +87,7 @@ public class VidaWandSlot extends VidaWidget implements IVidaNodes {
         renderEquipmentInfo(graphics, mouseX, mouseY, partialTicks);
     }
 
-    public void setChanged() {
-        isChanged = true;
-    }
-
     public void renderEquipmentInfo(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
-        if(isChanged){
-            // 如果是父级组件通知的就不需要再发送
-            this.rearrangeComponent();
-            this.isChanged = false;
-        }
         this.frameLayout.setX(getX());
         this.frameLayout.setY(getY());
         this.frameLayout.arrangeElements();
@@ -148,11 +133,6 @@ public class VidaWandSlot extends VidaWidget implements IVidaNodes {
         equipmentInfoWidgets.addAll(List.of(itemWidget, itemDisplayNameWidget, itemInfoWidget));
     }
 
-    public void init(){
-        this.slot = viewModel.getSlot(position);
-        viewModel.slots.observe(newValue -> this.slot = newValue.get(position));
-    }
-
     /**渲染背景 */
     protected void renderBackground(GuiGraphics graphics){
         PoseStack poseStack = graphics.pose();
@@ -161,18 +141,21 @@ public class VidaWandSlot extends VidaWidget implements IVidaNodes {
         poseStack.popPose();
     }
 
+    public boolean isChange(){
+        return !this.currentItemStack.equals(this.lastItemStack, true);
+    }
+
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        if(this.lastItemStack != getSlotStack()){
+        if(isChange()){
             this.alpha.set(0);
             this.rearrangeComponent();
-            viewModel.setUpdate();
         }
         this.alpha.increase(0.2f * mc.getDeltaFrameTime());
 
         this.renderBackground(graphics);
         this.renderInfo(graphics, mouseX, mouseY, partialTicks);
 
-        this.lastItemStack = getSlotStack();
+        setSlotStack(lastItemStack);
     }
 }

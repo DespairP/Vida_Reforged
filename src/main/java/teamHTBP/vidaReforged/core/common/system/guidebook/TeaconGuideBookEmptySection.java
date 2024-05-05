@@ -5,6 +5,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import teamHTBP.vidaReforged.client.screen.components.guidebooks.IGuidebookComponent;
 import teamHTBP.vidaReforged.core.api.screen.IGuideBookSection;
 
+@Deprecated
 public class TeaconGuideBookEmptySection implements IGuideBookSection {
     public String type = "EMPTY";
 

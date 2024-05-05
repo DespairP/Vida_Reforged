@@ -6,15 +6,9 @@ import net.minecraft.client.particle.TextureSheetParticle;
 
 import static teamHTBP.vidaReforged.client.RenderTypeHandler.EMBER_RENDER;
 
-public class SparkParticle extends TextureSheetParticle {
-    public SparkParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, int a, int r, int g, int b, int size,int age) {
-        super(level, x, y ,z, 0, 0, 0);
-        this.rCol = r / 255.0f;
-        this.gCol = g / 255.0f;
-        this.bCol = b / 255.0f;
-        this.alpha = 0;
-        this.quadSize = 1;
-        this.lifetime = age;
+public class SparkParticle extends VidaBaseParticle {
+    public SparkParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, VidaParticleAttributes attributes) {
+        super(level, x, y ,z, 0, 0, 0, attributes);
         this.setParticleSpeed(0,0,0);
     }
 

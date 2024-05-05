@@ -15,7 +15,7 @@ import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
-import teamHTBP.vidaReforged.helper.GuiHelper;
+import teamHTBP.vidaReforged.helper.VidaGuiHelper;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
 import java.util.LinkedList;
@@ -30,14 +30,14 @@ public class VidaUnlockScreen extends GuiGraphics implements IVidaScreen {
     private float y;
     private static final int HEIGHT = 32;
     private static final int MAX_WIDTH = 100;
-    private static final GuiHelper.TickHelper tickHelper = new GuiHelper.TickHelper();
+    private static final VidaGuiHelper.TickHelper tickHelper = new VidaGuiHelper.TickHelper();
 
     public VidaUnlockScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource) {
         super(minecraft, bufferSource);
     }
 
     @Override
-    public void render(PoseStack poseStack, float partialTicks) {
+    public void render(GuiGraphics graphics, float partialTicks) {
         if(magicWords.size() <= 0){
             lengthRange = new FloatRange(32,32,guiWidth() * 0.3f);
             alphaRange = new FloatRange(0,0, 0.7f);
@@ -47,6 +47,9 @@ public class VidaUnlockScreen extends GuiGraphics implements IVidaScreen {
             tickHelper.reset();
             return;
         }
+
+        PoseStack poseStack = graphics.pose();
+
         tickHelper.tick(partialTicks);
         renderPopup(poseStack, partialTicks);
         renderText(poseStack, partialTicks);

@@ -24,10 +24,8 @@ public class VidaMagicEquipmentAttribute {
     /**饰品所属元素*/
     private VidaElement element = VidaElement.EMPTY;
     /**饰品对应的模型路径，{@link LayerRegistryHandler}*/
-    @OnlyIn(Dist.CLIENT)
-    private ModelLayerLocation modelLayerLocation;
+    private ResourceLocation modelLayerLocation;
     /**饰品对应的模型材质*/
-    @OnlyIn(Dist.CLIENT)
     private ResourceLocation modelTexture;
     /**饰品影响的发射物个数*/
     private int shootBaseCount = 1;

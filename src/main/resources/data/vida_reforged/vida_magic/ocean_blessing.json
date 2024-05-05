@@ -1,9 +1,0 @@
-{
-  "name": "ocean_blessing",
-  "magicType": "ATTACK_SHOOTABLE",
-  "sprite": "vida_reforged:textures/icons/all_skills.png",
-  "iconIndex": 15,
-  "description": "vida_reforged.description.ocean_blessing",
-  "element": "AQUA",
-  "isPlayerUsable": true
-}

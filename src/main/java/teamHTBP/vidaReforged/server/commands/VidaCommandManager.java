@@ -1,14 +1,12 @@
 package teamHTBP.vidaReforged.server.commands;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.brigadier.Command;
-import com.mojang.brigadier.arguments.ArgumentType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
@@ -20,21 +18,22 @@ import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicWordCapability;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
+import teamHTBP.vidaReforged.core.api.capability.Result;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
-import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
+import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicAttribute;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
-import teamHTBP.vidaReforged.server.commands.arguments.MagicArgument;
 import teamHTBP.vidaReforged.server.commands.arguments.MagicArgumentInfo;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 import teamHTBP.vidaReforged.server.packets.UnlockMagicWordCraftingPacket;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
-import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
+import teamHTBP.vidaReforged.server.providers.VidaMagicManager;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class VidaCommandManager {
     public final static DeferredRegister<ArgumentTypeInfo<?,?>> ARGUMENT_TYPE = DeferredRegister.create(ForgeRegistries.COMMAND_ARGUMENT_TYPES, VidaReforged.MOD_ID);
@@ -51,7 +50,7 @@ public class VidaCommandManager {
                 return 1;
             }
             LazyOptional<IVidaManaCapability> manaCap = handInItem.getCapability(VidaCapabilityRegisterHandler.VIDA_MANA);
-            manaCap.ifPresent(cap -> cap.setMaxMana(maxMana));
+            manaCap.ifPresent(cap -> cap.resetMaxMana(maxMana));
             context.getSource().sendSuccess(() -> Component.literal("vida wand max mana setted successfully"), false);
             return 1;
         }catch (Exception ex){
@@ -92,7 +91,7 @@ public class VidaCommandManager {
     };
 
     public final static Command<CommandSourceStack> MAGIC_CONTAINER = context -> {
-        VidaMagicContainer.MagicContainerArgument argument = context.getArgument("container_argument", VidaMagicContainer.MagicContainerArgument.class);
+        VidaMagicAttribute.MagicContainerArgument argument = context.getArgument("container_argument", VidaMagicAttribute.MagicContainerArgument.class);
         String value = context.getArgument("container_value", String.class);
         ServerPlayer player = context.getSource().getPlayerOrException();
         ItemStack handInItem = player.getItemInHand(InteractionHand.MAIN_HAND);
@@ -101,86 +100,51 @@ public class VidaCommandManager {
             return 1;
         }
         LazyOptional<IVidaMagicContainerCapability> containerCap = handInItem.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER);
-        containerCap.ifPresent(cap ->{
-            switch (argument){
-                case DAMAGE -> {
-                    cap.getContainer().damage(Long.parseLong(value));
-                }
-                case MULTIPLIER -> {
-                    cap.getContainer().multiplier(Double.parseDouble(value));
-                }
-                case DECREASER -> {
-                    cap.getContainer().decreaser(Double.parseDouble(value));
-                }
-                case COST_MANA -> {
-                    cap.getContainer().costMana(Double.parseDouble(value));
-                }
-                case AMOUNT -> {
-                    cap.getContainer().amount(Integer.parseInt(value));
-                }
-                case INVOKE_COUNT -> {
-                    cap.getContainer().invokeCount(Integer.parseInt(value));
-                }
-                case MAX_INVOKE_COUNT -> {
-                    cap.getContainer().maxInvokeCount(Integer.parseInt(value));
-                }
-                case COOLDOWN -> {
-                    cap.getContainer().coolDown(Long.parseLong(value));
-                }
-                case LAST_INVOKE_MILLSEC -> {
-                    cap.getContainer().lastInvokeMillSec(Long.parseLong(value));
-                }
-                case LEVEL -> {
-                    cap.getContainer().level(Integer.parseInt(value));
-                }
-                case SPEED -> {
-                    cap.getContainer().speed(Double.parseDouble(value));
-                }
-                case MAX_AGE -> {
-                    cap.getContainer().maxAge(Integer.parseInt(value));
-                }
-            }
-        });
-        context.getSource().sendSuccess(() -> Component.literal("argument set success"), false);
-        return 1;
+
+        context.getSource().sendFailure(Component.literal("argument set failed"));
+        return 0;
     };
 
-    public final static Command<CommandSourceStack> MAGIC_CONTAINER_ADD_SOURCE = context -> {
-        String magicId = context.getArgument("magic_id", String.class);
+    public final static Command<CommandSourceStack> MAGIC_SET = context -> {
+        ResourceLocation magicId = context.getArgument("magic", ResourceLocation.class);
+        Integer slotNumber = context.getArgument("slot", Integer.class);
+
+
         ServerPlayer player = context.getSource().getPlayerOrException();
         ItemStack handInItem = player.getItemInHand(InteractionHand.MAIN_HAND);
+        Integer slotIndex = slotNumber - 1;
 
-        //
+        // validation
+        // 检查输入槽位编号
+        if(slotIndex < 0){
+            context.getSource().sendFailure(Component.translatable("message.command.vida_reforged.add_magic.no_slot"));
+            return 1;
+        }
+
+        // 检查物品是否正确
         if(!handInItem.is(VidaItemLoader.VIDA_WAND.get())){
-            context.getSource().sendFailure(Component.literal("only vida wand and unlock paper can add Magic"));
+            context.getSource().sendFailure(Component.translatable("message.command.vida_reforged.add_magic.illegal_item"));
             return 1;
         }
 
-        //
-        VidaMagic magic = MagicTemplateManager.getMagicById(magicId);
+        // 检查魔法是否存在
+        VidaMagic magic = VidaMagicManager.getMagicByMagicId(magicId);
         if(magic == null){
-            context.getSource().sendFailure(Component.translatable("magic %s not exists", magicId));
+            context.getSource().sendFailure(Component.translatable("message.command.vida_reforged.illegal_id_magic", magicId));
             return 1;
         }
 
+        // set
+        // 设置魔法
+        LazyOptional<IVidaMagicContainerCapability> toolCapability = handInItem.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER);
+        AtomicReference<Result> result = new AtomicReference<>(Result.FAILED);
+        toolCapability.ifPresent(cap -> result.set(cap.setSingleMagic(slotIndex, magicId) ));
 
-        //
-        LazyOptional<IVidaMagicContainerCapability> containerCapability = handInItem.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER);
-        AtomicBoolean isAdded = new AtomicBoolean(false);
-        containerCapability.ifPresent((cap) ->{
-            List<String> magics = cap.getContainer().magic();
-            if(!magics.contains(magicId)){
-                magics.add(magicId);
-                isAdded.set(true);
-            }
-        });
-
-        if(!isAdded.get()){
-            context.getSource().sendFailure(Component.translatable("magic %s is already added", magicId));
-            return 1;
+        switch (result.get()){
+            case SUCCESS, PASS -> { context.getSource().sendSuccess( () -> Component.translatable("message.command.vida_reforged.add_magic.success", magic.getFormattedDisplayName()), false);}
+            case FAILED -> {context.getSource().sendFailure(Component.translatable("message.command.vida_reforged.add_magic.failed", magic.getFormattedDisplayName()));}
         }
 
-        context.getSource().sendSuccess(()->Component.translatable("magic %s is added", magicId), false);
         return 1;
     };
 
@@ -220,68 +184,23 @@ public class VidaCommandManager {
         return 1;
     };
 
-    public final static Command<CommandSourceStack> WAND_DICE = context -> {
-        ServerPlayer player = context.getSource().getPlayerOrException();
-        ItemStack handInItem = player.getItemInHand(InteractionHand.MAIN_HAND);
+    public final static Command<CommandSourceStack> OPEN_GUIDEBOOK_LIST = context -> {
+        ServerPlayer player = context.getSource().getPlayer();
 
-        //
-        try {
-            if (!handInItem.is(VidaItemLoader.VIDA_WAND.get())) {
-                context.getSource().sendFailure(Component.literal("only vida wand can random dice"));
-                return 1;
-            }
-
-            RandomSource source = RandomSource.create();
-            VidaElement randomElement = VidaElement.values()[2 + source.nextInt(4)];
-            int randomMaxAge = source.nextBoolean() ? 120 + source.nextInt(50) : 120 + source.nextInt(10);
-            double randomSpeed =  source.nextBoolean() ? source.nextDouble() * 2F / 3F : source.nextDouble() / 2.0F;
-            int randomCost = source.nextInt(10) + 30;
-            int randomCoolDown = source.nextInt(3000) + source.nextInt(1000);
-
-            //
-            String randomMagicId = String.format("vida_reforged:summon_partyparrot_%s", randomElement.toString().toLowerCase(Locale.ROOT));
-            VidaMagic magic = MagicTemplateManager.getMagicById(randomMagicId);
-            if (magic == null) {
-                context.getSource().sendFailure(Component.literal("cannot execute the command"));
-                return 1;
-            }
-
-            LazyOptional<IVidaMagicContainerCapability> containerCapability = handInItem.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER);
-            AtomicBoolean isAdded = new AtomicBoolean(false);
-            containerCapability.ifPresent((cap) ->{
-                VidaMagicContainer container = cap.getContainer();
-                if(container != null) {
-                    container.magic(new LinkedList<>(ImmutableList.of(randomMagicId)))
-                            .costMana(randomCost)
-                            .coolDown(randomCoolDown)
-                            .maxAge(randomMaxAge)
-                            .speed(randomSpeed)
-                            .amount(1);
-                    isAdded.set(true);
-                }
-            });
-            LazyOptional<IVidaManaCapability> manaCap = handInItem.getCapability(VidaCapabilityRegisterHandler.VIDA_MANA);
-            manaCap.ifPresent(cap -> cap.setMaxMana(3000));
-            context.getSource().sendSuccess(() -> Component.literal("dice complete"), false);
-            return 1;
-        }catch (Exception ex){
-            context.getSource().sendFailure(Component.literal("cannot execute the command"));
-            return 1;
-        }
+        return 1;
     };
 
-
     private static Component getMagicList(){
-        Map<String,VidaMagic> magicMap = MagicTemplateManager.getAllMagicAsString();
+        Map<ResourceLocation, VidaMagic> magicMap = VidaMagicManager.getMagicIdMap();
         return Component.translatable(
-                "Available Magics: %s",
+                "message.command.vida_reforged.list_magic",
                 ComponentUtils.formatList(magicMap.values(), VidaMagic::getCommandHoverComponents)
         );
     }
 
     public static <T> T convertInstanceOfObject(Object o, Class<T> clazz) {
         try {
-            return (T) clazz.getMethod("valueOf",String.class).invoke(null, o);
+            return (T) clazz.getMethod("valueOf", String.class).invoke(null, o);
         } catch(ClassCastException | InvocationTargetException | IllegalAccessException | NoSuchMethodException  e) {
             return null;
         }

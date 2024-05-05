@@ -12,7 +12,12 @@ public class TwoValueGradientColor {
     }
 
     public ARGBColor getColor(float progress){
-        return null;
+        int a = Math.round(fromColor.a() + (toColor.a() - fromColor.a()) * progress);
+        int r = Math.round(fromColor.r() + (toColor.r() - fromColor.r()) * progress);
+        int g = Math.round(fromColor.g() + (toColor.g() - fromColor.g()) * progress);
+        int b = Math.round(fromColor.b() + (toColor.b() - fromColor.b()) * progress);
+
+        return new ARGBColor(a, r, g, b);
     }
 
     public ARGBColor getFromColor() {

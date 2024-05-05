@@ -5,6 +5,7 @@ import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,11 +27,12 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
-import static teamHTBP.vidaReforged.client.events.registries.ParticleProviderAutoRegistryHandler.LOGGER;
+import static teamHTBP.vidaReforged.client.events.registries.VidaParticleProviderAutoRegistryHandler.LOGGER;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = MOD_ID, value = Dist.CLIENT)
 public class LayerRegistryHandler {
     private static Map<ModelLayerLocation, Supplier<? extends Model>> modelSuppliers = new HashMap<>();
+    private final static Map<ResourceLocation, ModelLayerLocation> LAYERS = new HashMap<>();
 
     @SubscribeEvent
     public static void onRegisterLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -80,5 +82,17 @@ public class LayerRegistryHandler {
 
     public static <T extends Model> Supplier<T> getModelSupplier(ModelLayerLocation layerLocation, Class<T> clazz){
         return (Supplier<T>) modelSuppliers.get(layerLocation);
+    }
+
+
+
+    public static ModelLayerLocation registerLayer(ResourceLocation id, String layer){
+        ModelLayerLocation layerLocation = new ModelLayerLocation(id, layer);
+        LAYERS.put(id, layerLocation);
+        return layerLocation;
+    }
+
+    public static ModelLayerLocation getLayerByResourceLocation(ResourceLocation id){
+        return LAYERS.get(id);
     }
 }

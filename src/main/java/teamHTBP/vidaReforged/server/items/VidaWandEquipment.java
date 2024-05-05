@@ -53,19 +53,11 @@ public class VidaWandEquipment extends Item {
             return this;
         }
 
-        @OnlyIn(Dist.CLIENT)
-        public Builder setModelLocation(String modId, String layerLocation,String layerUsed){
-            this.attribute.setModelLayerLocation(new ModelLayerLocation(new ResourceLocation(modId, layerLocation), layerUsed));
-            return this;
-        }
-
-        @OnlyIn(Dist.CLIENT)
-        public Builder setModelLocation(ModelLayerLocation location){
+        public Builder setModelLocation(ResourceLocation location){
             this.attribute.setModelLayerLocation(location);
             return this;
         }
 
-        @OnlyIn(Dist.CLIENT)
         public Builder setTextureLocation(ResourceLocation textureLocation){
             this.attribute.setModelTexture(textureLocation);
             return this;

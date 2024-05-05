@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -13,10 +12,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaTeaconGuidebookViewModel;
-import teamHTBP.vidaReforged.core.utils.animation.Animator;
-import teamHTBP.vidaReforged.core.utils.animation.DestinationAnimator;
-import teamHTBP.vidaReforged.core.utils.animation.TimeInterpolator;
-import teamHTBP.vidaReforged.core.utils.animation.calculator.IValueProvider;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 
@@ -24,10 +19,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static java.lang.Math.PI;
-import static java.lang.Math.sin;
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
+@Deprecated
 public class TeaconGuidebookPagesManager implements IGuidebookComponent{
     private final VidaTeaconGuidebookViewModel viewModel;
     private int width;
@@ -84,7 +78,7 @@ public class TeaconGuidebookPagesManager implements IGuidebookComponent{
         //标题和副标题
         this.title = viewModel.getGuidebook().getTitle();
         this.subTitle = viewModel.getGuidebook().pages().get(currentIndex).getSubTitle();
-        this.viewModel.page.observe(page -> {
+        this.viewModel.page.observeForever(page -> {
             this.rightComponent = viewModel.getGuidebook()
                     .pages()
                     .get(page - 1)

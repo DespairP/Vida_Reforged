@@ -199,6 +199,20 @@
  "magic_word.name.vida_reforged.vision": "vision",
  "key.category.vida": "Vida",
  "key.keyboard.open_magic_word": "Open Magic Word Screen",
+ "key.keyboard.vida_wand.switch_skills": "Switch Vida Wand magic",
  "gui.vida_reforged.name.magic_word": "magic word button",
- "gui.vida_reforged.vida_wand_slot.no_item": "No Item"
+ "gui.vida_reforged.vida_wand_slot.no_item": "No Item",
+ "gui.vida_reforged.vida_wand_crafting.equipment_section_choose": "Equipment",
+ "gui.vida_reforged.vida_wand_crafting.equipment_section_description": "Equip Wand",
+ "gui.vida_reforged.vida_wand_crafting.stats_section_choose": "Stats",
+ "gui.vida_reforged.vida_wand_crafting.stats_section_description": "Peek wand status",
+ "gui.vida_reforged.vida_wand_crafting.magic_section_choose": "Magic",
+ "gui.vida_reforged.vida_wand_crafting.magic_section_description": "Choose wand magic",
+ "gui.vida_reforged.vida_wand_crafting.magic_choose": "choose %s as wand magic",
+ "message.command.vida_reforged.add_magic.illegal_item": "Only [Vida Wand] can set the magic. Please hand in vida wand and retry the command.",
+ "message.command.vida_reforged.add_magic.no_slot": "Slot number is under 0. Please try to input the number which greater than 0.",
+ "message.command.vida_reforged.add_magic.success": "Set Vida Wand Magic: %s is success.",
+ "message.command.vida_reforged.add_magic.failed": "Set Vida Wand Magic: %s is failed.",
+ "message.command.vida_reforged.list_magic": "[Vida] current available magics are: %s",
+ "message.command.vida_reforged.illegal_id_magic": "No magic named : %s !"
 }

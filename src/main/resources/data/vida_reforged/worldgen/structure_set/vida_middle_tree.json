@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "vida_reforged:vida_middle_tree",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 8,
+    "separation": 6,
+    "salt": 4172555
+  }
+}

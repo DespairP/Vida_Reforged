@@ -23,17 +23,22 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelStore;
 import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
 import teamHTBP.vidaReforged.core.common.ui.component.IViewModelStoreProvider;
+import teamHTBP.vidaReforged.core.common.ui.lifecycle.ILifeCycleOwner;
+import teamHTBP.vidaReforged.core.common.ui.lifecycle.LifeCycle;
+import teamHTBP.vidaReforged.core.common.ui.lifecycle.LifeCycleRegistry;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
-public abstract class VidaContainerScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> implements IViewModelStoreProvider {
+public abstract class VidaContainerScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> implements ILifeCycleOwner, IViewModelStoreProvider {
     /**触屏模式下点击的格子*/
     protected Slot clickedSlot;
     /**触屏模式下最后点击的格子*/
@@ -41,6 +46,8 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
     /**触屏模式下拖拽的物品*/
     private ItemStack draggingItem = ItemStack.EMPTY;
     private ItemStack lastQuickMoved  = ItemStack.EMPTY;
+    /**是否可以投掷*/
+    protected boolean isAllowThrow = true;
     /**触屏模式下是否右键分割*/
     private boolean isSplittingStack;
     /***/
@@ -64,18 +71,43 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
     protected List<GuiEventListener> children;
     private ViewModelStore store;
     /**是否被*/
+    private boolean isRendered;
+    /***/
+    private final LifeCycleRegistry registry;
+
+    protected static final Logger LOGGER = LogManager.getLogger();
 
     protected VidaContainerScreen(T menu, Inventory inventory, Component component) {
         super(menu, inventory, component);
         this.skipNextRelease = true;
         this.children = new ArrayList<>();
+        this.registry = new LifeCycleRegistry(this);
+    }
+
+    @Override
+    public void added() {
+        super.added();
+        this.children.clear();
+        registry.handleLifecycleEvent(LifeCycle.Event.ON_CREATE);
     }
 
     @Override
     protected void init() {
         super.init();
+        registry.handleLifecycleEvent(LifeCycle.Event.ON_START);
+        registry.handleLifecycleEvent(LifeCycle.Event.ON_RESUME);
+    }
+
+    @Override
+    protected void rebuildWidgets() {
+        registry.handleLifecycleEvent(LifeCycle.Event.ON_PAUSE);
         this.children.clear();
-        this.renderables.clear();
+        super.rebuildWidgets();
+    }
+
+    @Override
+    public LifeCycle getLifeCycle() {
+        return registry;
     }
 
     @Override
@@ -88,10 +120,10 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
     }
 
     public void addComponentAndChild(VidaWidget widget){
-        children.add(widget);
         if(widget.children() != null){
             children.addAll(widget.children());
         }
+        children.add(widget);
         renderables.add(widget);
     }
 
@@ -398,9 +430,11 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
                                 // 左右SHIFT键按下时，快速移动物品
                                 this.lastQuickMoved = slot != null && slot.hasItem() ? slot.getItem().copy() : ItemStack.EMPTY;
                                 clicktype = ClickType.QUICK_MOVE;
-                            } else if (clickedSlotIndex == -999) {
+                            } else if (clickedSlotIndex == -999 && isAllowThrow) {
                                 // 其他状态下默认抛出物品
                                 clicktype = ClickType.THROW;
+                            } else if(clickedSlotIndex == -999){
+                                clicktype = ClickType.PICKUP;
                             }
 
                             this.slotClicked(slot, clickedSlotIndex, key, clicktype);
@@ -625,6 +659,10 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
             this.recalculateQuickCraftRemaining();
         }
 
+        if(children() != null && children().size() > 0){
+            children().forEach(child -> child.mouseDragged(mouseX, mouseY, key, dragX, dragY));
+        }
+
         return true;
     }
     
@@ -633,6 +671,7 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
     }
 
     public void onClose() {
+        this.registry.handleLifecycleEvent(LifeCycle.Event.ON_REMOVE);
         this.close();
         this.minecraft.player.closeContainer();
         this.minecraft.popGuiLayer();
@@ -671,5 +710,31 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
         boolean isScrolled = listeners.stream().reduce(false, (total, listener) -> listener.mouseScrolled(mouseX, mouseY, partialTicks), Boolean::logicalOr);
 
         return isScrolled;
+    }
+
+    @Override
+    public boolean keyPressed(int p_97765_, int p_97766_, int p_97767_) {
+        InputConstants.Key mouseKey = InputConstants.getKey(p_97765_, p_97766_);
+        if (super.keyPressed(p_97765_, p_97766_, p_97767_)) {
+            return true;
+        } else if (this.minecraft.options.keyInventory.isActiveAndMatches(mouseKey)) {
+            this.onClose();
+            return true;
+        } else {
+            boolean handled = this.checkHotbarKeyPressed(p_97765_, p_97766_);// Forge MC-146650: Needs to return true when the key is handled
+            if (this.hoveredSlot != null && this.hoveredSlot.hasItem()) {
+                if (this.minecraft.options.keyPickItem.isActiveAndMatches(mouseKey)) {
+                    this.slotClicked(this.hoveredSlot, this.hoveredSlot.index, 0, ClickType.CLONE);
+                    handled = true;
+                } else if (this.minecraft.options.keyDrop.isActiveAndMatches(mouseKey) && isAllowThrow) {
+                    this.slotClicked(this.hoveredSlot, this.hoveredSlot.index, hasControlDown() ? 1 : 0, ClickType.THROW);
+                    handled = true;
+                }
+            } else if (this.minecraft.options.keyDrop.isActiveAndMatches(mouseKey)) {
+                handled = true;
+            }
+
+            return handled;
+        }
     }
 }

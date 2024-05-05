@@ -58,7 +58,7 @@ public class MagicWordSingleListWidget extends AbstractWidget implements IVidaNo
             scrolledContainer.add(magicWordWidget);
         }
 
-        this.viewModel.selectedMagicWord.observe(this::onSelectedMagicWordChange);
+        this.viewModel.selectedMagicWord.observeForever(this::onSelectedMagicWordChange);
         this.viewModel.setSelectWord(this.viewModel.selectedMagicWord.getValue());
     }
 
@@ -94,7 +94,7 @@ public class MagicWordSingleListWidget extends AbstractWidget implements IVidaNo
 
     }
 
-    public Collection<? extends GuiEventListener> getChildren(){
+    public Collection<? extends GuiEventListener> children(){
         List<VidaWidget> listeners = new ArrayList<>();
         this.widgetMap.forEach((key,value)-> listeners.addAll(getMagicWordButtons()));
         listeners.add(scrolledContainer);

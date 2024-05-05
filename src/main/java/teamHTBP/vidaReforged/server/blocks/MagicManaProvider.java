@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
+import org.joml.Vector3f;
 import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
 import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
 import teamHTBP.vidaReforged.core.api.VidaElement;
@@ -64,7 +65,8 @@ public class MagicManaProvider extends Block {
                 new BaseParticleType(
                     VidaParticleTypeLoader.CUBOID_PARTICLE_TYPE.get(),
                     color,
-                    0.5f + source.nextDouble(),
+                    new Vector3f(),
+                    0.5f + source.nextFloat(),
                     source.nextInt(150) + 30
                 ),
                 pos.getX() + d1,

@@ -1,6 +1,6 @@
 package teamHTBP.vidaReforged.core.utils.reg;
 
-import teamHTBP.vidaReforged.client.events.ModelRenderTypeAutoRegisterHandler;
+import teamHTBP.vidaReforged.client.events.RenderTypeRegisterHandler;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -18,5 +18,5 @@ import java.lang.annotation.Target;
 @Deprecated
 public @interface CustomModelBlock {
     /**创建的渲染类型*/
-    ModelRenderTypeAutoRegisterHandler.CustomModelRenderType value();
+    RenderTypeRegisterHandler.CustomModelRenderType value();
 }

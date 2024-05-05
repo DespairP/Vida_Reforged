@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 @Data
 @AllArgsConstructor
 @Accessors(fluent = true,chain = true)

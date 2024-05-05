@@ -83,6 +83,7 @@ public class RenderTypeHandler extends RenderStateShard{
         public void begin(BufferBuilder bufferBuilder, TextureManager textureManager) {
             setShader();
             RenderSystem.setShaderTexture(0, TAIL);
+            RenderSystem.disableDepthTest();
             RenderSystem.setShaderColor(
                     1,
                     1,
@@ -92,6 +93,7 @@ public class RenderTypeHandler extends RenderStateShard{
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
             RenderSystem.depthMask(true);
+            RenderSystem.enableDepthTest();
             RenderSystem.enableCull();
         }
 
@@ -102,6 +104,27 @@ public class RenderTypeHandler extends RenderStateShard{
         @Override
         public void end(@Nonnull Tesselator tesselator) {
             RenderSystem.depthMask(true);
+        }
+    };
+
+    public static final ParticleRenderType PARTICLE_SHEET_NO_MASK = new ParticleRenderType() {
+        @Override
+        public void begin(BufferBuilder bufferBuilder, TextureManager textureManager) {
+            RenderSystem.enableBlend();
+            RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_PARTICLES);
+            RenderSystem.defaultBlendFunc();
+            RenderSystem.depthMask(false);
+            bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
+        }
+
+        @Override
+        public void end(@Nonnull Tesselator tesselator) {
+            tesselator.end();
+        }
+
+        @Override
+        public String toString() {
+            return "PARTICLE_SHEET_NO_MASK";
         }
     };
 

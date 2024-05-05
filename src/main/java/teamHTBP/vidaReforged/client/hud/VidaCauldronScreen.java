@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Vector2i;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
-import teamHTBP.vidaReforged.helper.GuiHelper;
+import teamHTBP.vidaReforged.helper.VidaGuiHelper;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.blockEntities.BasePurificationCauldronBlockEntity;
 
@@ -21,27 +21,28 @@ import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
 /**
  * 纯净锅HUD
- */
+ * @see teamHTBP.vidaReforged.client.events.HudHandler
+ * */
 @OnlyIn(Dist.CLIENT)
 public class VidaCauldronScreen extends GuiGraphics implements IVidaScreen {
 
     ResourceLocation location = new ResourceLocation(MOD_ID, "textures/gui/cauldron_hud.png");
-
-    TextureSection plateSection = new TextureSection(location, 2, 23, 22, 7);
-
-    TextureSection cauldronSection = new TextureSection(location, 2, 38, 22, 15);
-
-    TextureSection bubbleSection = new TextureSection(location, 9, 7, 10, 8);
-
-    TextureSection barSection = new TextureSection(location, 30, 14, 6, 22);
-
-    TextureSection barFillSection = new TextureSection(location, 40, 32, 2, 1);
+    /**托盘材质路径*/
+    TextureSection plateSection = new TextureSection(location, 2, 23, 22, 7, 64, 64);
+    /**坩埚icon材质路径*/
+    TextureSection cauldronSection = new TextureSection(location, 2, 38, 22, 15, 64, 64);
+    /**沸腾icon材质路径*/
+    TextureSection bubbleSection = new TextureSection(location, 9, 7, 10, 8, 64, 64);
+    /**进度条槽材质路径*/
+    TextureSection barSection = new TextureSection(location, 30, 14, 6, 22, 64, 64);
+    /**进度条材质路径*/
+    TextureSection barFillSection = new TextureSection(location, 40, 32, 2, 1, 64, 64);
 
     public VidaCauldronScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource) {
         super(minecraft, bufferSource);
     }
 
-    public void render(PoseStack poseStack, BlockEntity entity, float alpha) {
+    public void render(GuiGraphics graphics, BlockEntity entity, float alpha) {
         BasePurificationCauldronBlockEntity cauldronBlockEntity = null;
         if (entity instanceof BasePurificationCauldronBlockEntity blockEntity) {
             cauldronBlockEntity = blockEntity;
@@ -49,6 +50,8 @@ public class VidaCauldronScreen extends GuiGraphics implements IVidaScreen {
         if (cauldronBlockEntity == null) {
             return;
         }
+
+        PoseStack poseStack = graphics.pose();
         poseStack.pushPose();
 
         int plateX = (guiWidth() - plateSection.w()) / 2;
@@ -129,7 +132,7 @@ public class VidaCauldronScreen extends GuiGraphics implements IVidaScreen {
 
         float degree = 360.0f * blockEntity.progress / blockEntity.getMaxSubTaskProgress();
 
-        GuiHelper.renderCircle(
+        VidaGuiHelper.renderCircle(
                 this,
                 this.pose(),
                 plate.x + 12,
@@ -140,7 +143,7 @@ public class VidaCauldronScreen extends GuiGraphics implements IVidaScreen {
     }
 
     @Override
-    public void render(PoseStack poseStack, float partialTicks) {
+    public void render(GuiGraphics graphics, float partialTicks) {
 
     }
 }

@@ -5,9 +5,10 @@ import com.google.gson.GsonBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import org.joml.Vector3d;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.screen.IGuideBookSection;
+import teamHTBP.vidaReforged.core.common.system.guidebook.VidaPageComponentSerializer;
+import teamHTBP.vidaReforged.core.common.system.guidebook.IVidaPageComponent;
 import teamHTBP.vidaReforged.core.common.system.guidebook.TeaconGuideBookSectionSerializer;
 import teamHTBP.vidaReforged.server.recipe.ingredient.ItemStackListIngredient;
 
@@ -46,6 +47,8 @@ public class JsonUtils {
                     .registerTypeAdapter(ItemStackListIngredient.class,new ItemStackListIngredient.Serializer())
                     //
                     .registerTypeHierarchyAdapter(IGuideBookSection.class,new TeaconGuideBookSectionSerializer())
+                    //
+                    .registerTypeHierarchyAdapter(IVidaPageComponent.class, new VidaPageComponentSerializer())
                     // 注册自定义类型的序列化/反序列化器（附带子类）
                     .registerTypeHierarchyAdapter(Item.class, new ItemSerializer());
                     //.registerTypeHierarchyAdapter(IElement.class, new IElementSerializer());

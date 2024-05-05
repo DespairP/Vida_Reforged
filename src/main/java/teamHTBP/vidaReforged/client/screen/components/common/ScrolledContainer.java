@@ -9,7 +9,7 @@ import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
-import teamHTBP.vidaReforged.helper.GuiHelper;
+import teamHTBP.vidaReforged.helper.VidaGuiHelper;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -140,7 +140,7 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
         poseStack.pushPose();
         RenderSystem.enableBlend();
         poseStack.pushPose();
-        GuiHelper.renderScissor(getX(),getY(), width, height);
+        VidaGuiHelper.renderScissor(getX(),getY(), width, height);
 
         this.contents.forEach(widget -> widget.render(graphics, mouseX, mouseY, partialTicks));
 
@@ -256,6 +256,16 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
                 && mouseY >= this.getY()
                 && mouseX < this.getX() + this.width + this.thumbWidth
                 && mouseY < this.getY() + this.height;
+    }
+
+    @Override
+    public void setHeight(int value) {
+        if(getHeight() == value){
+            return;
+        }
+        super.setHeight(value);
+        this.scrollY.set(0);
+        notifyComponentToFresh();
     }
 
     @Override

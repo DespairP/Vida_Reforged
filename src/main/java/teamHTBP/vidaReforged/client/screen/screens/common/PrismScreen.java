@@ -31,9 +31,9 @@ public class PrismScreen extends AbstractContainerScreen<PrismMenu> {
 
     PrismResultButton resultButton;
     ResourceLocation location = new ResourceLocation(MOD_ID, "textures/gui/prism_table_gui.png");
-    TextureSection mirrorSection = new TextureSection(location,48,0,48,48);
-    TextureSection inventorySection = new TextureSection(location,0,54,176,90);
-    TextureSection inventorySlotSection = new TextureSection(location,125,13,22,22);
+    TextureSection mirrorSection = new TextureSection(location,48,0,48,48, 256, 256);
+    TextureSection inventorySection = new TextureSection(location,0,54,176,90, 256, 256);
+    TextureSection inventorySlotSection = new TextureSection(location,125,13,22,22, 256, 256);
     Vector2i mirrorPos = new Vector2i(0, 0);
 
     ResourceLocation fireLocation = new ResourceLocation(MOD_ID, "textures/gui/prism_table_gui_fire.png");
@@ -42,7 +42,7 @@ public class PrismScreen extends AbstractContainerScreen<PrismMenu> {
 
     int maxIndex = 60;
 
-    TextureSection fireSection = new TextureSection(fireLocation,0,0,180 / 20, 71 / 3);
+    TextureSection fireSection = new TextureSection(fireLocation,0,0,180 / 20, 71 / 3, 256, 256);
 
     PrismBlockEntity entity;
 

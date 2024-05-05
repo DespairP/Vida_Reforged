@@ -6,10 +6,10 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teamHTBP.vidaReforged.server.packets.MagicGuidePacket;
-import teamHTBP.vidaReforged.server.packets.MagicSkillDatapackPacket;
+import teamHTBP.vidaReforged.server.packets.MagicDatapackPacket;
 import teamHTBP.vidaReforged.server.packets.MagicWordDatapackPacket;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
-import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
+import teamHTBP.vidaReforged.server.providers.VidaMagicManager;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 import teamHTBP.vidaReforged.server.providers.TeaconGuideBookManager;
 
@@ -20,9 +20,8 @@ public class VidaSyncDataPackHandler {
         Entity entity = event.getEntity();
         if(entity instanceof ServerPlayer player){
             VidaPacketManager.sendToEntity(new MagicWordDatapackPacket(MagicWordManager.getMagicWordIdMap()), player);
-            VidaPacketManager.sendToEntity(new MagicSkillDatapackPacket(MagicTemplateManager.getMagicIdMap()), player);
+            VidaPacketManager.sendToEntity(new MagicDatapackPacket(VidaMagicManager.getMagicIdMap()), player);
             VidaPacketManager.sendToEntity(new MagicGuidePacket(TeaconGuideBookManager.getPageIdMap()), player);
-
         }
     }
 }

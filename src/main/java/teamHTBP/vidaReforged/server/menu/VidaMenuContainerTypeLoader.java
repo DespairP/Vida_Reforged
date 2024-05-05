@@ -111,7 +111,8 @@ public class VidaMenuContainerTypeLoader {
                         return new VidaWandCraftingTableMenu(
                                 windowId,
                                 inv,
-                                data.readBlockPos()
+                                data.readBlockPos(),
+                                data.readInt()
                         );
                     }
             )

@@ -9,8 +9,8 @@ import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
 import teamHTBP.vidaReforged.server.advancement.VidaAdvancementTriggers;
 import teamHTBP.vidaReforged.server.blockEntities.VidaBlockEntityLoader;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
-import teamHTBP.vidaReforged.server.commands.VidaCommandManager;
-import teamHTBP.vidaReforged.server.entity.EntityDataSerializer;
+import teamHTBP.vidaReforged.server.blocks.VidaFluidsLoader;
+import teamHTBP.vidaReforged.server.entity.VidaEntityDataSerializer;
 import teamHTBP.vidaReforged.server.entity.VidaEntityLoader;
 import teamHTBP.vidaReforged.server.events.VidaItemGroupLoader;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
@@ -37,8 +37,11 @@ public class VidaReforged {
         //
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         VidaBlockLoader.BLOCKS.register(bus);
+        VidaFluidsLoader.FLUID_TYPE.register(bus);
+        VidaFluidsLoader.FLUIDS.register(bus);
         VidaBlockEntityLoader.BLOCK_ENTITIES.register(bus);
         VidaItemLoader.ITEMS.register(bus);
+        VidaEntityDataSerializer.DATA_SERIALIZER.register(bus);
         VidaEntityLoader.ENTITIES.register(bus);
         VidaMenuContainerTypeLoader.MENU_CONTAINER_TYPE.register(bus);
         VidaMobsLoader.ENTITY_TYPES.register(bus);
@@ -49,6 +52,5 @@ public class VidaReforged {
         //VidaCommandManager.ARGUMENT_TYPE.register(bus);
         VidaAdvancementTriggers.init();
         VidaPacketManager.register();
-        EntityDataSerializer.DATA_SERIALIZER.register(bus);
     }
 }

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Deprecated
 public class GuideBookBlockListModel extends GuideBookBlockModel{
     List<ResourceLocation> blockList;
     int index = 0;

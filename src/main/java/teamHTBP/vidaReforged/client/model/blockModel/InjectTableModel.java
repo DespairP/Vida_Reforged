@@ -11,9 +11,10 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
+import static teamHTBP.vidaReforged.client.events.registries.LayerRegistryHandler.registerLayer;
 
 public class InjectTableModel extends Model {
-    public static final ModelLayerLocation APPRENTICE_LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(MOD_ID, "inject_table"), "main");
+    public static final ModelLayerLocation APPRENTICE_LAYER_LOCATION = registerLayer(new ResourceLocation(MOD_ID, "inject_table"), "main");
 
     private final ModelPart all;
 

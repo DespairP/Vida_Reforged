@@ -14,7 +14,9 @@ import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 import teamHTBP.vidaReforged.server.items.VidaWand;
 
-import static teamHTBP.vidaReforged.helper.GuiHelper.renderHollowCircle;
+import static teamHTBP.vidaReforged.helper.VidaGuiHelper.renderHollowCircle;
+import static teamHTBP.vidaReforged.helper.VidaInventoryHelper.getHandInItemByClient;
+import static teamHTBP.vidaReforged.server.items.VidaWand.holdTime;
 
 /**
  * 法杖蓄力槽
@@ -22,22 +24,15 @@ import static teamHTBP.vidaReforged.helper.GuiHelper.renderHollowCircle;
 @OnlyIn(Dist.CLIENT)
 public class VidaWandStaminaScreen extends GuiGraphics implements IVidaScreen {
     float lastDegree = 0;
-    public static int holdTime = 0;
+
 
     public VidaWandStaminaScreen(Minecraft mc, MultiBufferSource.BufferSource bufferSource) {
         super(mc, bufferSource);
     }
 
 
-    public ItemStack getHandInItem(){
-        if(mc.player == null){
-            return ItemStack.EMPTY;
-        }
-        return mc.player.getItemInHand(InteractionHand.MAIN_HAND);
-    }
-
-    public void render(PoseStack poseStack, float partialTicks) {
-        ItemStack handInItem = getHandInItem();
+    public void render(GuiGraphics graphics, float partialTicks) {
+        ItemStack handInItem = getHandInItemByClient(InteractionHand.MAIN_HAND);
         if(handInItem == null || !handInItem.is(VidaItemLoader.VIDA_WAND.get())){
             return;
         }
@@ -48,6 +43,9 @@ public class VidaWandStaminaScreen extends GuiGraphics implements IVidaScreen {
         final float degrees = 360.0f * (holdTime * 1.0f / maxHoldTime);
 
         float lerpDegree = Mth.lerp(partialTicks, lastDegree, degrees);
+
+        //
+        PoseStack poseStack = graphics.pose();
 
         // 渲染圆环
         poseStack.pushPose();

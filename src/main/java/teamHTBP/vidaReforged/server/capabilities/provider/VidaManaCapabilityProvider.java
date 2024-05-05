@@ -13,20 +13,9 @@ import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 import teamHTBP.vidaReforged.server.capabilities.VidaManaCapability;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 
-public class VidaManaCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-    private IVidaManaCapability capability;
-
-
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        return cap == VidaCapabilityRegisterHandler.VIDA_MANA ?
-                LazyOptional.of(this::getOrCreateCapability).cast() :
-                LazyOptional.empty();
-    }
-
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
-        return ICapabilityProvider.super.getCapability(cap);
+public class VidaManaCapabilityProvider extends VidaBaseCapabilityProvider<IVidaManaCapability> {
+    public VidaManaCapabilityProvider() {
+        super(VidaCapabilityRegisterHandler.VIDA_MANA);
     }
 
     /**获取cap*/
@@ -35,15 +24,5 @@ public class VidaManaCapabilityProvider implements ICapabilityProvider, INBTSeri
             this.capability = new VidaManaCapability(5000);
         }
         return this.capability;
-    }
-
-    @Override
-    public CompoundTag serializeNBT() {
-        return getOrCreateCapability().serializeNBT();
-    }
-
-    @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        getOrCreateCapability().deserializeNBT(nbt);
     }
 }

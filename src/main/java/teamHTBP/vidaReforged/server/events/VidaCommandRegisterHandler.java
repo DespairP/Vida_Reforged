@@ -1,25 +1,24 @@
 package teamHTBP.vidaReforged.server.events;
 
-import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.ResourceLocationArgument;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.server.command.EnumArgument;
 import teamHTBP.vidaReforged.core.api.VidaElement;
-import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
+import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicAttribute;
 import teamHTBP.vidaReforged.server.commands.VidaCommandManager;
-import teamHTBP.vidaReforged.server.commands.arguments.MagicArgument;
-import teamHTBP.vidaReforged.server.providers.MagicTemplateManager;
+import teamHTBP.vidaReforged.server.providers.VidaMagicManager;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
-
-import java.util.stream.Stream;
 
 @Mod.EventBusSubscriber
 public class VidaCommandRegisterHandler {
@@ -42,35 +41,37 @@ public class VidaCommandRegisterHandler {
         LiteralArgumentBuilder<CommandSourceStack> list = Commands.literal("list")
                 .requires(source -> source.hasPermission(3))
                 .executes(VidaCommandManager.MAGIC_SOURCE);
+        //
+        LiteralArgumentBuilder<CommandSourceStack> setMagic = Commands.literal("setMagic")
+                .requires(source -> source.hasPermission(3))
+                .then(Commands.argument("slot", IntegerArgumentType.integer())
+                        .then(Commands.argument("magic", ResourceLocationArgument.id())
+                                .suggests((context, builder) -> SharedSuggestionProvider.suggest(VidaMagicManager.getMagicsKey().stream().map(ResourceLocation::toString), builder))
+                                .executes(VidaCommandManager.MAGIC_SET)
+                        )
+                );
+
 
         //组装Magic命令集
         LiteralArgumentBuilder<CommandSourceStack> magic = Commands.literal("magic")
                 .requires(source -> source.hasPermission(3))
                 .then(setMaxMana)
                 .then(setMana)
+                .then(setMagic)
                 .then(list);
 
         //MagicContainer子命令集
         // set
         LiteralArgumentBuilder<CommandSourceStack> setArgs = Commands
                 .literal("setArgs")
-                .then(Commands.argument("container_argument", EnumArgument.enumArgument(VidaMagicContainer.MagicContainerArgument.class))
+                .then(Commands.argument("container_argument", EnumArgument.enumArgument(VidaMagicAttribute.MagicContainerArgument.class))
                         .then(Commands.argument("container_value", StringArgumentType.string()).executes(VidaCommandManager.MAGIC_CONTAINER))
-                );
-
-        //add magic
-        LiteralArgumentBuilder<CommandSourceStack> addMagic = Commands
-                .literal("addMagic")
-                .then(Commands.argument("magic_id", StringArgumentType.greedyString())
-                        .suggests((context, builder) -> SharedSuggestionProvider.suggest(MagicTemplateManager.getMagicsKey(), builder))
-                        .executes(VidaCommandManager.MAGIC_CONTAINER_ADD_SOURCE)
                 );
 
         // 组装MagicContainer命令集
         LiteralArgumentBuilder<CommandSourceStack> magicContainer = Commands.literal("magicContainer")
                 .requires(source -> source.hasPermission(3))
-                .then(setArgs)
-                .then(addMagic);
+                .then(setArgs);
 
         //MagicWord子命令
         LiteralArgumentBuilder<CommandSourceStack> addWord = Commands
@@ -85,16 +86,17 @@ public class VidaCommandRegisterHandler {
                 .requires(source -> source.hasPermission(3))
                 .then(addWord);
 
-        //
-        LiteralArgumentBuilder<CommandSourceStack> dice = Commands.literal("magicDice")
-                        .executes(VidaCommandManager.WAND_DICE);
+        //Guidebook子命令
+        LiteralArgumentBuilder<CommandSourceStack> guidebook = Commands.literal("guidebook")
+                .requires(source -> source.hasPermission(3))
+                .executes(VidaCommandManager.OPEN_GUIDEBOOK_LIST);
 
         dispatcher.register(
                 Commands.literal("vida")
                         .then(magic)
                         .then(magicContainer)
                         .then(magicWord)
-                        .then(dice)
+                        .then(guidebook)
         );
     }
 }

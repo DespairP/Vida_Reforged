@@ -19,6 +19,7 @@ import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 import static teamHTBP.vidaReforged.server.events.BlockItemAutoRegisterHandler.REGISTRY_ITEMBLOCK_MAP;
 import static teamHTBP.vidaReforged.server.items.VidaItemLoader.VIDA_WAND;
+import static teamHTBP.vidaReforged.server.items.VidaItemLoader.VIVID_BUCKET;
 
 /**
  * 创造物品栏注册
@@ -82,7 +83,7 @@ public class VidaItemGroupLoader {
             event.accept(VidaItemLoader.HEART_OF_WOOD_CORE.get());
             event.accept(VidaItemLoader.HEART_OF_WOOD_CENTER.get());
             event.accept(VidaItemLoader.HEART_OF_WOOD_BOTTOM.get());
-
+            event.accept(VidaItemLoader.VIVID_BUCKET.get());
         }
     }
 

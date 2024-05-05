@@ -8,6 +8,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Guidebook旧模型组件接口，可能不再使用
+ */
+@Deprecated
 @OnlyIn(Dist.CLIENT)
 public interface IGuidebookComponent extends GuiEventListener{
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks);

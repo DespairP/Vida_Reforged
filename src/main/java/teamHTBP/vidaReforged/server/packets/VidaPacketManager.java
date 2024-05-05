@@ -1,6 +1,5 @@
 package teamHTBP.vidaReforged.server.packets;
 
-import net.minecraft.client.gui.screens.social.PlayerEntry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -85,10 +84,10 @@ public class VidaPacketManager {
                 MagicWordDatapackPacket::handler,
                 client);
         INSTANCE.registerMessage(id++,
-                MagicSkillDatapackPacket.class,
-                MagicSkillDatapackPacket::toBytes,
-                MagicSkillDatapackPacket::fromBytes,
-                MagicSkillDatapackPacket::handler,
+                MagicDatapackPacket.class,
+                MagicDatapackPacket::toBytes,
+                MagicDatapackPacket::fromBytes,
+                MagicDatapackPacket::handler,
                 client);
         INSTANCE.registerMessage(id++,
                 MagicGuidePacket.class,
@@ -96,5 +95,29 @@ public class VidaPacketManager {
                 MagicGuidePacket::fromBytes,
                 MagicGuidePacket::handler,
                 client);
+        INSTANCE.registerMessage(id++,
+                OpenGuidebookPacket.class,
+                OpenGuidebookPacket::toBytes,
+                OpenGuidebookPacket::fromBytes,
+                OpenGuidebookPacket::handler,
+                client);
+        INSTANCE.registerMessage(id++,
+                MagicSwitchPacket.class,
+                MagicSwitchPacket::toBytes,
+                MagicSwitchPacket::fromBytes,
+                MagicSwitchPacket::handler,
+                server);
+        INSTANCE.registerMessage(id++,
+                MultiBlockSchedulerPacket.class,
+                MultiBlockSchedulerPacket::toBytes,
+                MultiBlockSchedulerPacket::fromBytes,
+                MultiBlockSchedulerPacket::handler,
+                client);
+        INSTANCE.registerMessage(id++,
+                MagicSelectionPacket.class,
+                MagicSelectionPacket::toBytes,
+                MagicSelectionPacket::fromBytes,
+                MagicSelectionPacket::handler,
+                server);
     }
 }

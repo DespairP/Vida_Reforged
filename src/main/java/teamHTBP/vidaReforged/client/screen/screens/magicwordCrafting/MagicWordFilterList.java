@@ -48,7 +48,7 @@ public class MagicWordFilterList extends AbstractWidget implements IVidaNodes {
 
     }
 
-    public Collection<? extends GuiEventListener> getChildren(){
+    public Collection<? extends GuiEventListener> children(){
         return this.widgetMap.values();
     }
 }

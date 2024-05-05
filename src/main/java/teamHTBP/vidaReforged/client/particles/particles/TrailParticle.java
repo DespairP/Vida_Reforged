@@ -19,7 +19,8 @@ import java.util.function.Consumer;
 
 import static teamHTBP.vidaReforged.client.RenderTypeHandler.TRAIL_SHADER;
 
-public class TrailParticle extends TextureSheetParticle {
+/**四阶Bezier曲线*/
+public class TrailParticle extends VidaBaseParticle {
     public Minecraft mc = Minecraft.getInstance();
     private Bezier3Curve curve;
     protected ArrayList<Vector3d> tails = new ArrayList<>();
@@ -28,20 +29,26 @@ public class TrailParticle extends TextureSheetParticle {
     protected boolean cull = true;
     protected float width;
     protected Consumer<TrailParticle> onUpdate;
+    protected double speedX = 0;
 
-    public TrailParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, int a, int r, int g, int b, int size,int age) {
-        super(level, x, y ,z, 0, 0, 0);
-        maxTail = 40;
+    public TrailParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, VidaParticleAttributes attributes) {
+        super(level, x, y ,z, speedX, speedY, speedZ, attributes);
+        maxTail = 15;
         freq = 1;
-        width = 0.5f;
+        width = 1f;
         cull = false;
         this.curve = new Bezier3Curve(
                 new Vector3d(x, y, z),
-                new Vector3d(x, y + 10, z),
-                new Vector3d(x + 10, y + 10, z + 10),
-                new Vector3d(speedX, speedY, speedZ)
+                new Vector3d(x + 10, y , z + 10),
+                new Vector3d(x + 30, y, z + 30),
+                new Vector3d(x + 50, y , z + 50)
         );
-        this.lifetime = 200;
+        this.rCol = 1;
+        this.gCol = 1;
+        this.bCol = 1;
+        this.alpha = 1F;
+        this.lifetime = 50;
+        this.speedX = speedX;
     }
 
 
@@ -88,13 +95,13 @@ public class TrailParticle extends TextureSheetParticle {
             float v1 = getV1(i, partialTicks);
             int light = getLightColor(i, partialTicks);
 
-            pBuffer.vertex(currentD.x, currentD.y, currentD.z).uv(u1, v0).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(light).endVertex();
-            pBuffer.vertex(currentU.x, currentU.y, currentU.z).uv(u1, v1).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(light).endVertex();
-            pBuffer.vertex(nextD.x, nextD.y, nextD.z).uv(u0, v0).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(light).endVertex();
-
-            pBuffer.vertex(nextD.x, nextD.y, nextD.z).uv(u0, v0).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(light).endVertex();
+            pBuffer.vertex(currentD.x, currentD.y, currentD.z).uv(u1, v0).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(15728880).endVertex();
             pBuffer.vertex(currentU.x, currentU.y, currentU.z).uv(u1, v1).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(15728880).endVertex();
-            pBuffer.vertex(nextU.x, nextU.y, nextU.z).uv(u0, v1).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(light).endVertex();
+            pBuffer.vertex(nextD.x, nextD.y, nextD.z).uv(u0, v0).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(15728880).endVertex();
+
+            pBuffer.vertex(nextD.x, nextD.y, nextD.z).uv(u0, v0).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(15728880).endVertex();
+            pBuffer.vertex(currentU.x, currentU.y, currentU.z).uv(u1, v1).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(15728880).endVertex();
+            pBuffer.vertex(nextU.x, nextU.y, nextU.z).uv(u0, v1).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(15728880).endVertex();
         }
     }
 
@@ -115,13 +122,12 @@ public class TrailParticle extends TextureSheetParticle {
     }
     @Override
     public void tick() {
-        if (age % freq == 0) {
-            tails.add(getTail());
-            while (tails.size() > maxTail) {
-                tails.remove(0);
-            }
+        tails.add(getTail());
+        while (tails.size() > maxTail) {
+            tails.remove(0);
         }
 
+        this.age += 1;
 
         this.xo = this.x;
         this.yo = this.y;

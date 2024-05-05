@@ -19,9 +19,9 @@ public class PrismButton extends AbstractWidget {
 
     ResourceLocation location = new ResourceLocation(MOD_ID, "textures/gui/prism_table_gui.png");
 
-    TextureSection buttonSection$1 = new TextureSection(location,96,16,16,16);
+    TextureSection buttonSection$1 = new TextureSection(location,96,16,16,16, 256, 256);
 
-    TextureSection buttonSection$2 = new TextureSection(location,96,32,16,16);
+    TextureSection buttonSection$2 = new TextureSection(location,96,32,16,16, 256, 256);
 
     private int style = 0;
 

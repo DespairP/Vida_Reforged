@@ -7,35 +7,26 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import java.util.Random;
 
-public class CuboidParticle extends TextureSheetParticle {
-    private final float parAlpha = 0;
+public class CuboidParticle extends VidaBaseParticle {
     private float spinSpeed = 0;
     private float rotation = 0;
     private float extraYLength = 0;
 
-    public CuboidParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, int a, int r, int g, int b, int size, int age) {
-        super(level, x, y ,z, speedX, speedY, speedZ);
-        Random rand = new Random();
-        xd = speedX;
-        if (rand.nextFloat() > 0.95D) {
-            yd = speedY + rand.nextFloat() / 50.0f;
-        }else {
-            yd = speedY;
-        }
-        zd = speedZ;
-        this.rCol = r / 255.0f;
-        this.gCol = g / 255.0f;
-        this.bCol = b / 255.0f;
-        this.alpha = a / 255.0f;
-        this.lifetime = rand.nextInt(150) + 30;
-        this.spinSpeed = rand.nextInt(3);
-        this.quadSize = size;
+
+    public CuboidParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, VidaParticleAttributes attributes) {
+        super(level, x, y ,z, speedX, speedY, speedZ, attributes);
+        this.xd = speedX;
+        this.yd = speedY;
+        this.zd = speedZ;
+        this.spinSpeed = rand.nextInt(8);
+        this.lifetime = attributes.lifeTime() <= 0 ? rand.nextInt(150) + 30 : attributes.lifeTime();
         this.extraYLength = rand.nextInt(4) + 3;
     }
 
@@ -67,7 +58,7 @@ public class CuboidParticle extends TextureSheetParticle {
                 new Vector3f(-1.0F, -1.0F, 1.0F), new Vector3f(-1.0F, 1.0F + extraYLength, 1.0F), new Vector3f(1.0F, 1.0F + extraYLength, 1.0F), new Vector3f(1.0F, -1.0F, 1.0F)
 
         };
-        float f4 = 0.06F;
+        float f4 = 0.06F * this.getQuadSize(partialTicks);
 
         for (Vector3f vector3f : vec) {
             vector3f.rotate(quaternion);
@@ -124,7 +115,6 @@ public class CuboidParticle extends TextureSheetParticle {
 
     @Override
     public void tick() {
-
         this.xo = this.x;
         this.yo = this.y;
         this.zo = this.z;
@@ -134,7 +124,7 @@ public class CuboidParticle extends TextureSheetParticle {
             this.y += this.yd;
             this.x += this.xd;
             this.z += this.zd;
-            this.rotation += 0.02;
+            this.rotation += 0.01f * spinSpeed;
             this.rotation %= 360;
             if (this.lifetime - 20 < this.age) this.alpha = Math.max(this.alpha - 0.05f, 0);
         }

@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.joml.Vector2i;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 
 /**
@@ -26,6 +27,7 @@ public class AbstractVidaHUDScreen extends GuiGraphics {
     public int centerY(TextureSection section){
         return (guiHeight() - section.height()) / 2;
     }
+
 
     public void renderWithAlpha(){
 

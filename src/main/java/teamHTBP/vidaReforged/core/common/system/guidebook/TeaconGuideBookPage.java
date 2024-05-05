@@ -7,6 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import teamHTBP.vidaReforged.core.api.screen.IGuideBookSection;
 
+@Deprecated
 @Data
 @AllArgsConstructor
 @Accessors(fluent = true,chain = true)

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Deprecated
 public class GuideBookPagination extends AbstractWidget {
     public static final int WIDTH = 70;
     public static final int HEIGHT = 20;
@@ -38,7 +39,7 @@ public class GuideBookPagination extends AbstractWidget {
     }
 
     public void init(){
-        this.viewModel.page.observe(page -> {
+        this.viewModel.page.observeForever(page -> {
             this.leftButton.setEnabled(false);
             this.rightButton.setEnabled(false);
             if (page > 1){

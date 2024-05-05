@@ -175,7 +175,7 @@ public class MagicWordButton extends VidaWidget {
         poseStack.popPose();
 
         // 绘制图标
-        TextureSection section = new TextureSection(iconLocation,0,0,16,16);
+        TextureSection section = new TextureSection(iconLocation,0,0,16,16, ICON_SIZE, ICON_SIZE);
         final int iconX = getX() + 4;
         final int iconY = getY() + ((HEIGHT - ICON_SIZE) / 2) ;
 

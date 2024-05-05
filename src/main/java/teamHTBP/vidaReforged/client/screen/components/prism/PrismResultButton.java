@@ -13,8 +13,8 @@ import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 public class PrismResultButton extends AbstractWidget {
 
     ResourceLocation location = new ResourceLocation(MOD_ID, "textures/gui/prism_table_gui.png");
-    private TextureSection buttonSection$1 = new TextureSection(location, 0, 144, 16, 16);
-    private TextureSection buttonSection$2 = new TextureSection(location,17,144,16,16);
+    private TextureSection buttonSection$1 = new TextureSection(location, 0, 144, 16, 16, 256, 256);
+    private TextureSection buttonSection$2 = new TextureSection(location,17,144,16,16, 256, 256);
 
     private final Runnable clickEvent;
 

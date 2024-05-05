@@ -17,11 +17,10 @@ import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
-import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicContainer;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
-import teamHTBP.vidaReforged.helper.GuiHelper;
+import teamHTBP.vidaReforged.helper.VidaGuiHelper;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
@@ -47,13 +46,13 @@ public class VidaManaBarScreen extends GuiGraphics implements IVidaScreen {
     /**ui材质路径*/
     private final static ResourceLocation GUI_LOCATION = new ResourceLocation(VidaReforged.MOD_ID, "textures/gui/vida_wand_mana_bar.png");
     /**槽位区域的材质路径*/
-    private TextureSection barSec = new TextureSection(GUI_LOCATION, 0, 18, 182, 12);
+    private TextureSection barSection = new TextureSection(GUI_LOCATION, 0, 18, 182, 12, 256, 256);
     /**能量条的材质路径*/
-    private TextureSection progressSec = new TextureSection(GUI_LOCATION, 8, 6, 166, 4);
+    private TextureSection progressSection = new TextureSection(GUI_LOCATION, 8, 6, 166, 4, 256, 256);
     /**是否正在渲染*/
     private boolean isRendered = false;
     /**计数器*/
-    GuiHelper.TickHelper ticker = new GuiHelper.TickHelper();
+    VidaGuiHelper.TickHelper ticker = new VidaGuiHelper.TickHelper();
 
 
     public VidaManaBarScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource) {
@@ -68,13 +67,14 @@ public class VidaManaBarScreen extends GuiGraphics implements IVidaScreen {
     }
 
     @Override
-    public void render(PoseStack poseStack, float partialTicks) {
+    public void render(GuiGraphics graphics, float partialTicks) {
         ItemStack handInItem = getHandInItem();
         ticker.tick(partialTicks);
         // 获取手中的物品
         if(handInItem.isEmpty() || !handInItem.is(VidaItemLoader.VIDA_WAND.get())){
             this.isRendered = false;
             alpha.decrease(ticker.getTickPercent(0.05f));
+            progressMap.values().forEach(progress -> progress.set(0));
             return;
         }
         // 如果要显示alpha就增加反之就减少
@@ -85,14 +85,17 @@ public class VidaManaBarScreen extends GuiGraphics implements IVidaScreen {
         final Map<VidaElement, Integer> elementRenderWidth = new LinkedHashMap<>();
 
         manaCap.ifPresent(cap->{
-            cap.getCurrentMana().forEach((element, manaAmount) -> {
-                elementRenderWidth.put( element, cap.maxMana() <= 0 ? 0 : (int)(manaAmount * MAX_BAR_WIDTH / cap.maxMana()) );
+            cap.getAllElementsMana().forEach((element, manaAmount) -> {
+                elementRenderWidth.put( element, cap.getMaxMana() <= 0 ? 0 : (int)(manaAmount * MAX_BAR_WIDTH / cap.getMaxMana()) );
             });
         });
 
         // 渲染位置在玩家物品栏之上
         int renderX = (guiWidth() - 182) / 2;
         int renderY = guiHeight() - 32 - 3;
+
+        //
+        PoseStack poseStack = graphics.pose();
 
         // 压栈1.1
         poseStack.pushPose();
@@ -104,10 +107,10 @@ public class VidaManaBarScreen extends GuiGraphics implements IVidaScreen {
 
         // 绘制槽位
         blit(
-                barSec.location(),
+                barSection.location(),
                 renderX, renderY, 0,
-                barSec.minU(), barSec.minV(),
-                barSec.width(), barSec.height(),
+                barSection.minU(), barSection.minV(),
+                barSection.width(), barSection.height(),
                 256, 256
         );
 
@@ -134,11 +137,11 @@ public class VidaManaBarScreen extends GuiGraphics implements IVidaScreen {
             float renderWidth = rangeValue.change(maxRenderWidth > rangeValue.get(), 0.5f);
 
             blit(
-                    progressSec.location(),
+                    progressSection.location(),
                     renderX + offsetX, renderY + offsetY, 0,
-                    progressSec.minU() + offsetX - 8, progressSec.minV(),
-                    (int)renderWidth, progressSec.height(),
-                    256, 256
+                    progressSection.minU() + offsetX - 8, progressSection.minV(),
+                    (int)renderWidth, progressSection.height(),
+                    progressSection.texWidth(), progressSection.texHeight()
             );
 
             // 下一个元素x偏移度
@@ -155,31 +158,23 @@ public class VidaManaBarScreen extends GuiGraphics implements IVidaScreen {
         final LazyOptional<IVidaMagicContainerCapability> containerCap = handInItem.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER);
         AtomicBoolean isInCoolDown = new AtomicBoolean(false);
         AtomicInteger coolDownWidth = new AtomicInteger(0);
-        containerCap.ifPresent(cap->{
-            if(cap.getContainer() != null){
-                VidaMagicContainer container = cap.getContainer();
-                long current = System.currentTimeMillis();
-                float cooldown = Math.max(1, container.coolDown());
-                isInCoolDown.set(cap.isInCoolDown(current));
-                coolDownWidth.set(isInCoolDown.get() ? (int) ((current - container.lastInvokeMillSec()) * 166.0f / cooldown) : 0);
-            }
-        });
 
         if(isInCoolDown.get()){
             poseStack.pushPose();
 
             blit(
-                    progressSec.location(),
+                    progressSection.location(),
                     renderX + 8,  renderY + 4 + 3, 0,
-                    progressSec.minU(), progressSec.minV(),
-                    (int)166 - coolDownWidth.get(), progressSec.height() - 3,
-                    256, 256
+                    progressSection.minU(), progressSection.minV(),
+                    (int)166 - coolDownWidth.get(), progressSection.height() - 3,
+                    progressSection.texWidth(), progressSection.texHeight()
             );
 
             poseStack.popPose();
         }
 
-
+        RenderSystem.setShaderColor( 1, 1, 1, 1);
+        RenderSystem.disableBlend();
         this.isRendered = true;
     }
 

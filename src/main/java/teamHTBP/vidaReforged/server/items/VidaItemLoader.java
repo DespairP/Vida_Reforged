@@ -3,17 +3,19 @@ package teamHTBP.vidaReforged.server.items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegistryObject;
-import teamHTBP.vidaReforged.client.model.itemModel.VidaWandModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.item.Position;
+import teamHTBP.vidaReforged.server.blocks.VidaFluidsLoader;
 import teamHTBP.vidaReforged.server.items.armors.ItemArmorApprentice;
 import teamHTBP.vidaReforged.server.items.armors.ItemArmorBlackMetal;
 
+import static net.minecraft.world.item.Items.BUCKET;
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
 public class VidaItemLoader {
@@ -22,6 +24,9 @@ public class VidaItemLoader {
 
     /**vida法杖*/
     public final static RegistryObject<Item> VIDA_WAND = ITEMS.register("vida_wand", VidaWand::new);
+
+    /**生命之泉*/
+    public final static RegistryObject<Item> VIVID_BUCKET = ITEMS.register("vivid_bucket", () -> new BucketItem(VidaFluidsLoader.VIVID_FLUID_STILL.get(), (new Item.Properties()).craftRemainder(BUCKET).stacksTo(1)));
 
     @ObjectHolder(registryName = "vida_reforged:crism_crest", value = "vida_reforged:crism_crest")
     public final static RegistryObject<Item> CRISM_CREST = null;
@@ -75,7 +80,7 @@ public class VidaItemLoader {
                     .setElement(VidaElement.WOOD)   // 配件属性
                     .setManaBaseCost(100)           // 装配上去的基础魔力花费
                     .setPosition(Position.TOP)      // 能装在哪个槽位
-                    .setModelLocation(VidaWandModel.TEST_LAYER_LOCATION)    // 模型位置
+                    .setModelLocation(new ResourceLocation(MOD_ID, "vida_wand_model_test"))    // 模型位置
                     .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_2.png"))   // 贴图位置
                     .build()
     );
@@ -85,7 +90,7 @@ public class VidaItemLoader {
                     .setElement(VidaElement.FIRE)
                     .setManaBaseCost(100)
                     .setPosition(Position.CORE)
-                    .setModelLocation(VidaWandModel.TEST_CORE_LAYER_LOCATION)
+                    .setModelLocation(new ResourceLocation(MOD_ID, "vida_wand_model_core_test"))
                     .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_core.png"))   // 贴图位置
                     .build()
     );
@@ -95,7 +100,7 @@ public class VidaItemLoader {
                     .setElement(VidaElement.WOOD)
                     .setManaBaseCost(100)
                     .setPosition(Position.TOP)
-                    .setModelLocation(VidaWandModel.STYLE_001_TOP_LAYER_LOCATION)
+                    .setModelLocation(new ResourceLocation(MOD_ID, "wand_style_001_model_top"))
                     .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_2.png"))   // 贴图位置
                     .build()
     );
@@ -105,7 +110,7 @@ public class VidaItemLoader {
                     .setElement(VidaElement.WOOD)
                     .setManaBaseCost(100)
                     .setPosition(Position.CORE)
-                    .setModelLocation(VidaWandModel.STYLE_001_CORE_LAYER_LOCATION)
+                    .setModelLocation(new ResourceLocation(MOD_ID, "wand_style_001_model_core"))
                     .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_2.png"))   // 贴图位置
                     .build()
     );
@@ -114,7 +119,7 @@ public class VidaItemLoader {
                     .setElement(VidaElement.WOOD)
                     .setManaBaseCost(100)
                     .setPosition(Position.CENTER)
-                    .setModelLocation(VidaWandModel.STYLE_001_CENTER_LAYER_LOCATION)
+                    .setModelLocation(new ResourceLocation(MOD_ID, "wand_style_001_model_center"))
                     .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_2.png"))   // 贴图位置
                     .build()
     );
@@ -123,7 +128,7 @@ public class VidaItemLoader {
                     .setElement(VidaElement.WOOD)
                     .setManaBaseCost(100)
                     .setPosition(Position.BOTTOM)
-                    .setModelLocation(VidaWandModel.STYLE_001_BOTTOM_LAYER_LOCATION)
+                    .setModelLocation(new ResourceLocation(MOD_ID, "wand_style_001_model_bottom"))
                     .setTextureLocation(new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model_2.png"))   // 贴图位置
                     .build()
     );
