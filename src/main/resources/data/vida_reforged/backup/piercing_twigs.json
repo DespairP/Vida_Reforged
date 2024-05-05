@@ -1,0 +1,9 @@
+{
+  "name": "piercing_twigs",
+  "magicType": "ATTACK_SHOOTABLE",
+  "sprite": "vida_reforged:textures/icons/all_skills.png",
+  "iconIndex": 25,
+  "description": "vida_reforged.description.piercing_twigs",
+  "element": "WOOD",
+  "isPlayerUsable": true
+}

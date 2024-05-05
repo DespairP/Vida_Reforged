@@ -1,0 +1,11 @@
+{
+  "name": "summon_partyparrot_gold",
+  "magicType": "ATTACK_SHOOTABLE",
+  "sprite": "vida_reforged:textures/icons/summon_partyparrot.png",
+  "spriteSize": 32,
+  "iconIndex": 0,
+  "description": "vida_reforged.description.summon_partyparrot",
+  "element": "GOLD",
+  "isPlayerUsable": true,
+  "regex": "party_parrot"
+}

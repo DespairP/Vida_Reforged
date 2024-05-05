@@ -1,0 +1,9 @@
+{
+  "name": "summon_meteorite",
+  "magicType": "ATTACK_SHOOTABLE",
+  "sprite": "vida_reforged:textures/icons/summon_meteorite.png",
+  "iconIndex": 0,
+  "description": "vida_reforged.description.summon_meteorite",
+  "element": "FIRE",
+  "isPlayerUsable": true
+}

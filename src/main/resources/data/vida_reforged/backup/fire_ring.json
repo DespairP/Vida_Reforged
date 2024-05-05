@@ -1,0 +1,9 @@
+{
+  "name": "fire_ring",
+  "magicType": "ATTACK_SHOOTABLE",
+  "sprite": "vida_reforged:textures/icons/all_skills.png",
+  "iconIndex": 1,
+  "description": "vida_reforged.description.fire_ring",
+  "element": "FIRE",
+  "isPlayerUsable": true
+}

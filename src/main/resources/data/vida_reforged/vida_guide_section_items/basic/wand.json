@@ -1,0 +1,22 @@
+{
+    "parentIds" : ["vida_reforged:basic/basic"],
+    "priority": 3,
+    "list" : "vida_reforged:basic",
+    "description": {
+        "translate": "guidebook.list_item.vida_reforged:vida_wand"
+    },
+    "info": {
+        "itemIcon": {
+            "id": "vida_reforged:vida_wand",
+            "Count": 1
+        },
+        "x": 20,
+        "y": 20
+    },
+    "event": {
+        "data": {
+            "detail": "vida_reforged:details/basic/vida_wand"
+        },
+        "type": "open"
+    }
+}

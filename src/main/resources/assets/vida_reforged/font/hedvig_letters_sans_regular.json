@@ -1,0 +1,24 @@
+{
+    "providers": [
+        {
+            "type": "ttf",
+            "file": "vida_reforged:hedvig_letters_sans_regular.ttf",
+            "shift": [0.0, -1.0],
+            "size": 18.0,
+            "overSample": 0.0
+        },
+        {
+            "type": "ttf",
+            "file": "vida_reforged:hedvig_letters_sans_regular.ttf",
+            "shift": [0.0, 1],
+            "size": 13.0,
+            "overSample": 12.0
+        },
+        {
+            "type": "reference",
+            "shift": [0.0, 12.0],
+            "size": 12.0,
+            "id": "minecraft:include/unifont"
+        }
+    ]
+}

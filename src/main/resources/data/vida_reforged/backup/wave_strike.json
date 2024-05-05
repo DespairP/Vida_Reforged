@@ -1,0 +1,9 @@
+{
+  "name": "wave_strike",
+  "magicType": "ATTACK_SHOOTABLE",
+  "sprite": "vida_reforged:textures/icons/all_skills.png",
+  "iconIndex": 12,
+  "description": "vida_reforged.description.wave_strike",
+  "element": "AQUA",
+  "isPlayerUsable": true
+}

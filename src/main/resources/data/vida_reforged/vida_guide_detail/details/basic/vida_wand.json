@@ -1,0 +1,41 @@
+{
+    "title": {
+        "translate": "guidebook.title.vida_reforged:vida_wand"
+    },
+    "pages": [
+        {
+            "page": 1,
+            "components": [
+                {
+                    "type": "title",
+                    "title": {
+                        "translate": "guidebook.title.vida_reforged:vida_wand"
+                    },
+                    "align": "CENTER"
+                },
+                {
+                    "type": "displayItem",
+                    "itemstack": {
+                        "item": "vida_reforged:vida_wand",
+                        "amount": 1
+                    },
+                    "align": "CENTER"
+                },
+                {
+                    "type": "text",
+                    "height": 80 ,
+                    "key": "guidebook.text.vida_reforged.vida_wand_01",
+                    "align": "CENTER"
+                }
+            ]
+        }
+    ],
+    "detailComponents": [
+        {
+            "type": "back",
+            "align": "CENTER",
+            "x": -5,
+            "y": 0
+        }
+    ]
+}

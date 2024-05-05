@@ -1,0 +1,77 @@
+{
+    "title": {
+        "translate": "guidebook.title.vida_reforged:basic"
+    },
+    "pages": [
+        {
+            "page": 1,
+            "components": [
+                {
+                    "type": "title",
+                    "title": {
+                        "translate": "guidebook.title.vida_reforged:basic"
+                    },
+                    "align": "CENTER"
+                },
+                {
+                    "type": "displayItem",
+                    "itemstack": {
+                        "item": "vida_reforged:vida_plank_0",
+                        "amount": 1
+                    },
+                    "align": "CENTER"
+                },
+                {
+                    "type": "text",
+                    "height": 80 ,
+                    "key": "guidebook.text.vida_reforged.vida_01",
+                    "align": "CENTER"
+                }
+            ]
+        },
+        {
+            "page": 2,
+            "components": [
+                {
+                    "type": "recipe_simple",
+                    "result": {
+                        "item": "minecraft:glass_pane",
+                    "amount": 1
+                    }
+                },
+                {
+                    "type": "recipe_simple",
+                    "result": {
+                        "item": "minecraft:chest",
+                        "amount": 1
+                    }
+                }
+            ]
+        },
+        {
+            "page": 3,
+            "components": [
+                {
+                    "type": "text",
+                    "height": 80 ,
+                    "key": "3",
+                    "align": "CENTER"
+                }
+            ]
+        }
+    ],
+    "detailComponents": [
+        {
+            "type": "back",
+            "align": "CENTER",
+            "x": -5,
+            "y": 0
+        },
+        {
+            "type": "pagination",
+            "align": "CENTER",
+            "x": 0,
+            "y": 180
+        }
+    ]
+}
