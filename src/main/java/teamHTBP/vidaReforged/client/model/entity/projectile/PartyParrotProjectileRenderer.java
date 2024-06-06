@@ -66,8 +66,8 @@ public class PartyParrotProjectileRenderer extends EntityRenderer<PartyParrotPro
         TextureAtlasSprite textureAtlasSprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(locations.get(tile.getTypeOfParrot() % locations.size()));
 
         VertexConsumer builder = bufferSource.getBuffer(RenderType.cutoutMipped());
-        poseStack.translate(0.5f, 1.2F, 0.5f);
         poseStack.mulPose(this.context.getEntityRenderDispatcher().cameraOrientation());
+        poseStack.translate(0.5f, 1.2F, 0.5f);
         poseStack.scale(0.5f, 0.5f, 0.5f);
         poseStack.translate(-0.5f, -0.5, -0.5f);
 

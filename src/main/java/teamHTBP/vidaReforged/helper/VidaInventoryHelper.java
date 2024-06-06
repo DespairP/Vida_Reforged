@@ -9,7 +9,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class VidaInventoryHelper {
 
     @OnlyIn(Dist.CLIENT)
-    public static  ItemStack getHandInItemByClient(InteractionHand hand){
+    public static ItemStack getHandInItemByClient(InteractionHand hand){
         Minecraft mc = Minecraft.getInstance();
         if(mc.player == null){
             return ItemStack.EMPTY;

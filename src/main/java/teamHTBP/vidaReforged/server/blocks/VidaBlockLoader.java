@@ -281,17 +281,18 @@ public class VidaBlockLoader {
                     5,
                     ()-> Blocks.WHEAT,
                     ()-> Items.REDSTONE)
+
     );
     @RegisterItemBlock
-    public static RegistryObject<Block> HEART_OF_WAL = BLOCKS.register("heart_of_wal", () -> new ParticleCropBlock(VidaElement.WOOD, ()-> VidaItemLoader.HEART_OF_WAL_SEED_ITEM.get()));
+    public static RegistryObject<Block> HEART_OF_WAL = BLOCKS.register("heart_of_wal", () -> new ParticleCropBlock(VidaElement.WOOD, ()-> VidaItemLoader.HEART_OF_WAL_SEED_ITEM.get(), () -> VidaBlockLoader.HEART_OF_WAL_JUICE_PLACED.get()));
     @RegisterItemBlock
-    public static RegistryObject<Block> NITRITE_THORNS = BLOCKS.register("nitrite_thorns", () -> new ParticleCropBlock(VidaElement.GOLD, ()-> VidaItemLoader.NITRITE_THORNS_SEED_ITEM.get()));
+    public static RegistryObject<Block> NITRITE_THORNS = BLOCKS.register("nitrite_thorns", () -> new ParticleCropBlock(VidaElement.GOLD, ()-> VidaItemLoader.NITRITE_THORNS_SEED_ITEM.get(), () -> VidaBlockLoader.NITRITE_TEA_PLACED.get()));
     @RegisterItemBlock
-    public static RegistryObject<Block> PLAM_STEM = BLOCKS.register("plam_stem", () -> new ParticleCropBlock( VidaElement.AQUA, ()-> VidaItemLoader.PLAM_STEM_SEED_ITEM.get()));
+    public static RegistryObject<Block> PLAM_STEM = BLOCKS.register("plam_stem", () -> new ParticleCropBlock( VidaElement.AQUA, ()-> VidaItemLoader.PLAM_STEM_SEED_ITEM.get(), () -> VidaBlockLoader.PLAM_STEM_TEA_PLACED.get()));
     @RegisterItemBlock
-    public static RegistryObject<Block> SULLEN_HYDRANGEA = BLOCKS.register("sullen_hydrangea", () -> new ParticleCropBlock(VidaElement.AQUA, ()-> VidaItemLoader.SULLEN_HYDRANGEA_SEED_ITEM.get()));
+    public static RegistryObject<Block> SULLEN_HYDRANGEA = BLOCKS.register("sullen_hydrangea", () -> new ParticleCropBlock(VidaElement.AQUA, ()-> VidaItemLoader.SULLEN_HYDRANGEA_SEED_ITEM.get(), () -> VidaBlockLoader.SULLEN_HYDRANGEA_SOUP_PLACED.get()));
     @RegisterItemBlock
-    public static RegistryObject<Block> SWEET_CYAN_REED  = BLOCKS.register("sweet_cyan_reed", () -> new ParticleCropBlock(VidaElement.WOOD, ()-> VidaItemLoader.SWEET_CYAN_REED_SEED_ITEM.get()));
+    public static RegistryObject<Block> SWEET_CYAN_REED  = BLOCKS.register("sweet_cyan_reed", () -> new ParticleCropBlock(VidaElement.WOOD, ()-> VidaItemLoader.SWEET_CYAN_REED_SEED_ITEM.get(), () -> VidaBlockLoader.DRIED_SWEET_CYAN_REED_PLACED.get()));
 
     /**矿物*/
     @RegisterItemBlock

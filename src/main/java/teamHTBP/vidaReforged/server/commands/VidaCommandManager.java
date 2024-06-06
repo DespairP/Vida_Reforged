@@ -8,6 +8,7 @@ import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.registries.DeferredRegister;
@@ -25,6 +26,7 @@ import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
 import teamHTBP.vidaReforged.server.commands.arguments.MagicArgumentInfo;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
+import teamHTBP.vidaReforged.server.packets.OpenGuidebookPacket;
 import teamHTBP.vidaReforged.server.packets.UnlockMagicWordCraftingPacket;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
 import teamHTBP.vidaReforged.server.providers.VidaMagicManager;
@@ -148,7 +150,7 @@ public class VidaCommandManager {
         return 1;
     };
 
-    public final static Command<CommandSourceStack> WORD_ADD_SOURCE = context -> {
+    public final static Command<CommandSourceStack> WORD_GET_SOURCE = context -> {
         String wordId = context.getArgument("word_id", String.class);
         MagicWord word = MagicWordManager.getMagicWord(wordId);
         if(word == null){
@@ -156,13 +158,31 @@ public class VidaCommandManager {
             return 1;
         }
         try {
-            ItemStack handInItem = context.getSource().getPlayer().getItemInHand(InteractionHand.MAIN_HAND);
-
-            if(handInItem.is(VidaItemLoader.UNLOCK_MAGIC_WORD_PAPER.get())){
-                handInItem.getOrCreateTag().putString("wordId", wordId);
-                context.getSource().sendSuccess(()->Component.translatable("word %s is added", wordId), false);
+            ServerPlayer player = context.getSource().getPlayer();
+            if(player == null || player.getInventory().getFreeSlot() <= 0){
+                context.getSource().sendFailure(Component.translatable("message.vida_reforged.inventory_is_full"));
                 return 1;
             }
+            ItemStack magicWordPaper = new ItemStack(VidaItemLoader.UNLOCK_MAGIC_WORD_PAPER.get());
+            magicWordPaper.getOrCreateTag().putString("wordId", wordId);
+            player.getInventory().add(magicWordPaper);
+
+            context.getSource().sendSuccess(()->Component.translatable("word %s is added", wordId), false);
+            return 1;
+        }catch (Exception ex){
+            context.getSource().sendFailure(Component.literal("cannot execute the command"));
+        }
+        return 1;
+    };
+
+    public final static Command<CommandSourceStack> WORD_UNLOCK_SOURCE = context -> {
+        String wordId = context.getArgument("word_id", String.class);
+        MagicWord word = MagicWordManager.getMagicWord(wordId);
+        if(word == null){
+            context.getSource().sendFailure(Component.translatable("magic word %s not exists", wordId));
+            return 1;
+        }
+        try {
             LazyOptional<IVidaMagicWordCapability> wordCapability = context
                     .getSource()
                     .getPlayerOrException()
@@ -172,11 +192,11 @@ public class VidaCommandManager {
                 isAdded.set(cap.unlockMagicWord(wordId));
             });
             if(!isAdded.get()){
-                context.getSource().sendFailure(Component.translatable("magic word  %s is already added", wordId));
+                context.getSource().sendFailure(Component.translatable("magic word %s is already added", wordId));
                 return 1;
             }
             VidaPacketManager.sendToEntity(new UnlockMagicWordCraftingPacket(wordId), context.getSource().getEntity());
-            context.getSource().sendSuccess(()->Component.translatable("magic word  %s is added", wordId), false);
+            context.getSource().sendSuccess(()->Component.translatable("magic word %s is added", wordId), false);
             return 1;
         }catch (Exception ex){
             context.getSource().sendFailure(Component.literal("cannot execute the command"));
@@ -184,9 +204,36 @@ public class VidaCommandManager {
         return 1;
     };
 
+    public final static Command<CommandSourceStack> WORD_UNLOCK_ALL_SOURCE = context -> {
+        try {
+            Set<String> allMagicWords = MagicWordManager.getAllMagicWordIds();
+            LazyOptional<IVidaMagicWordCapability> wordCapability = context
+                    .getSource()
+                    .getPlayerOrException()
+                    .getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_WORD);
+            AtomicBoolean isAdded = new AtomicBoolean(true);
+            wordCapability.ifPresent(cap -> {
+                for (String magicWord : allMagicWords){
+                    isAdded.set(isAdded.get() && cap.unlockMagicWord(magicWord));
+                }
+            });
+            if(!isAdded.get()){
+                context.getSource().sendFailure(Component.translatable("failed with unlocked,please try this another time"));
+                return 1;
+            }
+            VidaPacketManager.sendToEntity(new UnlockMagicWordCraftingPacket(allMagicWords.stream().toList()), context.getSource().getEntity());
+            context.getSource().sendSuccess(()->Component.translatable("magic words are added"), false);
+            return 1;
+        }catch (Exception ex){
+            context.getSource().sendFailure(Component.literal("cannot execute the command"));
+        }
+        return 1;
+    };
+
+
     public final static Command<CommandSourceStack> OPEN_GUIDEBOOK_LIST = context -> {
         ServerPlayer player = context.getSource().getPlayer();
-
+        VidaPacketManager.sendToEntity(new OpenGuidebookPacket(), player);
         return 1;
     };
 

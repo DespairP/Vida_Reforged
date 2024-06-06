@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
+import teamHTBP.vidaReforged.client.events.ShadersHandler;
 import teamHTBP.vidaReforged.server.blockEntities.GlowingLightBlockEntity;
 
 import java.util.Locale;
@@ -33,8 +34,6 @@ public class GlowingLightBlockEntityRenderer implements BlockEntityRenderer<Glow
     @Override
     public void render(GlowingLightBlockEntity entity, float pPartialTick, PoseStack poseStack, MultiBufferSource bufferSource, int pPackedLight, int pPackedOverlay) {
         ResourceLocation location = new ResourceLocation(MOD_ID, String.format("block/crystal/%s_crystal_animate", entity.element.toString().toLowerCase(Locale.ROOT)));
-
-
         long time = System.currentTimeMillis();
         float angle = (time / 70) % 360;
         float floatWave = (float) (Math.sin(Math.toRadians(angle)) * 0.3F);

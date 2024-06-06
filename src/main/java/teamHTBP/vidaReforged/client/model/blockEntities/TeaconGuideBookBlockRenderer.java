@@ -1,5 +1,6 @@
 package teamHTBP.vidaReforged.client.model.blockEntities;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -14,6 +15,7 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.EnchantmentTableBlockEntity;
+import teamHTBP.vidaReforged.client.events.ShadersHandler;
 import teamHTBP.vidaReforged.core.utils.animation.Animator;
 import teamHTBP.vidaReforged.core.utils.animation.DestinationAnimator;
 import teamHTBP.vidaReforged.core.utils.animation.TimeInterpolator;

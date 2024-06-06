@@ -6,6 +6,7 @@ import net.minecraft.network.chat.Component;
 import org.joml.Vector3f;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaWandCraftingViewModel;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
+import teamHTBP.vidaReforged.core.common.ui.lifecycle.LifeCycle;
 import teamHTBP.vidaReforged.core.utils.anim.SecondOrderDynamics;
 
 import java.util.ArrayList;
@@ -67,6 +68,7 @@ public class VidaWandScreenEquippingSection extends VidaWandCraftSection{
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        registry.handleLifecycleEvent(LifeCycle.Event.ON_RESUME);
         graphics.pose().pushPose();
         Vector3f offset = this.offset.update(this.mc.getDeltaFrameTime() * 0.4f, new Vector3f(0), null);
         graphics.pose().translate(offset.x, 0, 0);

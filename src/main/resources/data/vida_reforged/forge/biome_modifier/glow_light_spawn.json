@@ -1,0 +1,13 @@
+{
+    "type": "forge:add_spawns",
+    "biomes": [
+        "vida_reforged:vida_forrest",
+        "minecraft:plains"
+    ],
+    "spawners": {
+        "type": "vida_reforged:glow_light",
+        "weight": 100,
+        "minCount": 10,
+        "maxCount": 30
+    }
+}

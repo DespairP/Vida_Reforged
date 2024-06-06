@@ -13,14 +13,23 @@ import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 import java.util.function.Supplier;
 
 public class MagicSwitchPacket {
-    public void MagicSwitchPacket(){}
+    boolean isSwitchMagic = false;
+
+    public MagicSwitchPacket(){
+        this(false);
+    }
+
+    public MagicSwitchPacket(boolean isSwitchMagic) {
+        this.isSwitchMagic = isSwitchMagic;
+    }
 
     public static MagicSwitchPacket fromBytes(FriendlyByteBuf buffer){
-        return new MagicSwitchPacket();
+        boolean isSwitchMagic = buffer.readBoolean();
+        return new MagicSwitchPacket(isSwitchMagic);
     }
 
     public void toBytes(FriendlyByteBuf buffer) {
-
+        buffer.writeBoolean(isSwitchMagic);
     }
 
     public void handler(Supplier<NetworkEvent.Context> ctx) {
@@ -32,12 +41,16 @@ public class MagicSwitchPacket {
             ItemStack vidaWand = player.getItemInHand(InteractionHand.MAIN_HAND);
             vidaWand.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER).ifPresent(
                     cap -> {
-                        int next = cap.getCurrentMagicIndex() + 1;
-                        if(next >= cap.getAvailableMagics().size()){
-                            next = -1;
+                        if(isSwitchMagic){
+                            int next = cap.getCurrentMagicIndex() + 1;
+                            if(next >= cap.getAvailableMagics().size()){
+                                next = -1;
+                            }
+                            cap.setCurrentMagicIndex(next);
+                            return;
                         }
-
-                        cap.setCurrentMagicIndex(next);
+                        // 切换元素
+                        cap.setCurrentElement(cap.getCurrentElement().next());
                     }
             );
 

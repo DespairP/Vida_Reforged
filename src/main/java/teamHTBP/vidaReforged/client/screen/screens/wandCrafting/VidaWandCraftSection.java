@@ -19,6 +19,20 @@ public abstract class VidaWandCraftSection extends VidaWidget implements ILifeCy
         this.registry.handleLifecycleEvent(LifeCycle.Event.ON_CREATE);
     }
 
+    public void pause(){
+        this.registry.handleLifecycleEvent(LifeCycle.Event.ON_PAUSE);
+    }
+
+    public void resume(){
+        this.registry.handleLifecycleEvent(LifeCycle.Event.ON_RESUME);
+        setVisible(true);
+    }
+
+    public void hide(){
+        this.registry.handleLifecycleEvent(LifeCycle.Event.ON_HIDE);
+        setVisible(false);
+    }
+
     @Override
     public LifeCycle getLifeCycle() {
         return registry;

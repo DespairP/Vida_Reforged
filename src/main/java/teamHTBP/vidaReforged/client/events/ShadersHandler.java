@@ -22,7 +22,6 @@ import java.io.IOException;
 public class ShadersHandler {
     public static ShaderInstance simplicity;
     public static ShaderInstance orb;
-
     public static ShaderInstance stars;
     @SubscribeEvent
     public static void onEvent(RegisterShadersEvent event) throws IOException {

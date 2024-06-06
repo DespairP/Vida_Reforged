@@ -20,6 +20,8 @@ import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class KeyPressedEventHandler {
 
+
+
     @SubscribeEvent
     public static void onKeyPress(InputEvent.Key event){
         if( KeyRegistryHandler.OPEN_MAGIC_WORD_KEY.isDown() ){
@@ -28,12 +30,24 @@ public class KeyPressedEventHandler {
                     VidaPacketManager.sendToServer(new OpenMagicWordScreenPacket());
                 }
             });
+            return;
         }
 
-        if( KeyRegistryHandler.VIDA_WAND_SWITCH_SKILLS.isDown() && VidaInventoryHelper.getHandInItemByClient(InteractionHand.MAIN_HAND).is(VidaItemLoader.VIDA_WAND.get())){
+        if(KeyRegistryHandler.VIDA_WAND_SWITCH_ELEMENT.isDown()  && VidaInventoryHelper.getHandInItemByClient(InteractionHand.MAIN_HAND).is(VidaItemLoader.VIDA_WAND.get())){
             DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-                VidaPacketManager.sendToServer(new MagicSwitchPacket());
+                VidaPacketManager.sendToServer(new MagicSwitchPacket(false));
             });
+            return;
         }
+
+
+        if(KeyRegistryHandler.VIDA_WAND_SWITCH_SKILLS.isDown() && VidaInventoryHelper.getHandInItemByClient(InteractionHand.MAIN_HAND).is(VidaItemLoader.VIDA_WAND.get())){
+            DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+                VidaPacketManager.sendToServer(new MagicSwitchPacket(true));
+            });
+            return;
+        }
+
+
     }
 }

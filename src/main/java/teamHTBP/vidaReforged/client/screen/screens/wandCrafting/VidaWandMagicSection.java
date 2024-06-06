@@ -7,8 +7,10 @@ import net.minecraft.client.gui.components.StringWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.layouts.FrameLayout;
 import net.minecraft.client.gui.layouts.GridLayout;
+import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.client.screen.components.common.IconButton;
 import teamHTBP.vidaReforged.client.screen.components.common.ScrolledContainer;
 import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
@@ -16,14 +18,18 @@ import teamHTBP.vidaReforged.client.screen.components.guidebooks.VidaGuidebookTe
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaWandCraftingViewModel;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
+import teamHTBP.vidaReforged.core.common.ui.lifecycle.LifeCycle;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
+import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.helper.VidaGuiHelper;
 import teamHTBP.vidaReforged.server.providers.VidaMagicManager;
 
 import javax.swing.*;
 import java.util.*;
 import java.util.function.Consumer;
+
+import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
 public class VidaWandMagicSection extends VidaWandCraftSection{
     VidaWandCraftingViewModel viewModel;
@@ -41,6 +47,7 @@ public class VidaWandMagicSection extends VidaWandCraftSection{
     public VidaWandMagicSection(int x, int y, int width, int height, Component component) {
         super(x, y, width, height, component);
         viewModel = new ViewModelProvider(requireParent()).get(VidaWandCraftingViewModel.class);
+        viewModel.magics.observe(this, this::onNewMagicSelected);
     }
 
     /** 每次屏幕调整大小时，调整滚动条高度，魔法选择栏目位置 */
@@ -93,7 +100,8 @@ public class VidaWandMagicSection extends VidaWandCraftSection{
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        registry.handleLifecycleEvent(LifeCycle.Event.ON_RESUME);
         adjustChildComponents();
         scrolledContainer.render(graphics, mouseX, mouseY, partialTicks);
         magicInfo.render(graphics, mouseX, mouseY, partialTicks);
@@ -126,9 +134,37 @@ public class VidaWandMagicSection extends VidaWandCraftSection{
                 .height(40)
                 .width(this.magicInfo.getWidth())
                 .isBackground(true)
-                .listener(() -> viewModel.setMagicWithIndex(0, currentFocusMagicId))
+                .listener(this::onSelectMagic)
                 .build(0,0)
         );
+    }
+
+    /***/
+    public void onSelectMagic(){
+        viewModel.setMagicWithIndex(0, currentFocusMagicId);
+    }
+
+    /***/
+    public void onNewMagicSelected(Map<Integer, ResourceLocation> selectedMagics){
+        Collection<ResourceLocation> selectedKeys = selectedMagics.values();
+        for(Map.Entry<ResourceLocation, VidaWandMagicButton> buttonItem : allMagicsButtons.entrySet()){
+            VidaWandMagicButton magicButton = buttonItem.getValue();
+            if(selectedKeys.contains(buttonItem.getKey())){
+                Integer index = getKeyByValue(selectedMagics, buttonItem.getKey());
+                magicButton.setSelectedIndex(index == null ? VidaWandMagicButton.UNSELECTED : index);
+                continue;
+            }
+            magicButton.setSelectedIndex(VidaWandMagicButton.UNSELECTED);
+        }
+    }
+
+    public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
+        for (Map.Entry<T, E> entry : map.entrySet()) {
+            if (Objects.equals(value, entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 
     public void adjustChildComponents(){
@@ -183,14 +219,28 @@ public class VidaWandMagicSection extends VidaWandCraftSection{
     }
 
     public static class VidaWandMagicButton extends VidaWidget {
+        /**对应的魔法*/
         private VidaMagic magic;
+        /**透明度*/
         private FloatRange hoverAlpha = new FloatRange(0,0.0f,0.2f);
         private FloatRange focusAlpha = new FloatRange(0, 0.0f, 0.3f);
+        /**点击监听器*/
         private Consumer<ResourceLocation> clickListener;
+        /**是否被focus*/
         private boolean isChosen;
+        /**魔法所处法杖的下标，如果该魔法并没有装备在法杖上，则下标为-1*/
+        private int selectedIndex = -1;
+        public final static int UNSELECTED = -1;
+        /***/
+        public final static TextureSection SELECTED_ICON = new TextureSection(new ResourceLocation(VidaReforged.MOD_ID, "textures/icons/skills_002.png"), 24, 0, 24, 24, 384, 384);
+        public final static ResourceLocation DINKFONT = new ResourceLocation(MOD_ID, "dinkie");
 
         public void setChosen(boolean chosen) {
             isChosen = chosen;
+        }
+
+        public void setSelectedIndex(int selectedIndex) {
+            this.selectedIndex = selectedIndex;
         }
 
         public VidaWandMagicButton(int x, int y, int width, int height, Component component, VidaMagic magic) {
@@ -224,6 +274,11 @@ public class VidaWandMagicSection extends VidaWandCraftSection{
             // 渲染背景
             ARGBColor color = ARGBColor.of(hoverAlpha.get() + focusAlpha.get(), 0.6f, 0.6f, 0.6f);
             graphics.fillGradient(getX(), getY(), getX() + width, getY() + height, color.argb(), color.argb());
+            // 渲染选中
+            if(selectedIndex >= 0){
+                VidaGuiHelper.blitWithTexture(graphics, getX(), getY(), 0, SELECTED_ICON);
+                VidaGuiHelper.drawStringWithFont(graphics, getX() + 22, getY() + 20, 1, Component.literal("1").withStyle(style -> style.withFont(DINKFONT)));
+            }
         }
 
         @Override

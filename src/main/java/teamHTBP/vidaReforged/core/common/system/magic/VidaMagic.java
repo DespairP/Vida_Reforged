@@ -61,7 +61,7 @@ public class VidaMagic {
     public static Codec<VidaMagic> codec = RecordCodecBuilder.create(ins -> ins.group(
             ResourceLocation.CODEC.fieldOf("magicId").orElse(MAGIC_UNKNOWN).forGetter(VidaMagic::magicId),
             Codec.STRING.fieldOf("id").orElse("undefined").forGetter(VidaMagic::id),
-            VidaMagicAttribute.codec.fieldOf("attribute").orElse(VidaMagicAttribute.empty(VidaMagicAttributeType.MAGIC)).forGetter(VidaMagic::attribute),
+            VidaMagicAttribute.CODEC.fieldOf("attribute").orElse(VidaMagicAttribute.empty(VidaMagicAttributeType.MAGIC)).forGetter(VidaMagic::attribute),
             Codec.STRING.fieldOf("type").orElse("").forGetter(VidaMagic::type),
             TextureSection.codec.fieldOf("icon").forGetter(VidaMagic::icon),
             ExtraCodecs.COMPONENT.fieldOf("description").orElse(Component.empty()).forGetter(VidaMagic::description),

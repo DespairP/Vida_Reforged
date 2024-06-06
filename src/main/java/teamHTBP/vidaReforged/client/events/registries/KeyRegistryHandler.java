@@ -28,6 +28,13 @@ public class KeyRegistryHandler {
             GLFW.GLFW_KEY_TAB,
             "key.category.vida");
 
+    public static final KeyMapping VIDA_WAND_SWITCH_ELEMENT = new KeyMapping("key.keyboard.vida_wand.switch_elements",
+            KeyConflictContext.IN_GAME,
+            KeyModifier.CONTROL,
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_TAB,
+            "key.category.vida");
+
     public static final Lazy<KeyMapping> OPEN_MAGIC_WORD_KEY_MAPPING = Lazy.of(() -> OPEN_MAGIC_WORD_KEY);
     public static final Lazy<KeyMapping> VIDA_WAND_SWITCH_SKILLS_KEY_MAPPING = Lazy.of(() -> VIDA_WAND_SWITCH_SKILLS);
 

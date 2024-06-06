@@ -93,7 +93,6 @@ public class VidaEntityDataSerializer {
             buf.writeInt(color.r());
             buf.writeInt(color.g());
             buf.writeInt(color.b());
-
         }
 
         @Override
@@ -134,6 +133,6 @@ public class VidaEntityDataSerializer {
 
     //public final static RegistryObject<net.minecraft.network.syncher.EntityDataSerializer<Bezier3Curve>> CURVE_SERIALIZER = DATA_SERIALIZER.register("curve", ()-> CURVE);
 
-    //public final static RegistryObject<net.minecraft.network.syncher.EntityDataSerializer<ARGBColor>> COLOR_SERIALIZER = DATA_SERIALIZER.register("color", ()-> COLOR);
+    public final static RegistryObject<net.minecraft.network.syncher.EntityDataSerializer<ARGBColor>> COLOR_SERIALIZER = DATA_SERIALIZER.register("color", ()-> COLOR);
 
 }

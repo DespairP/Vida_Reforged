@@ -7,10 +7,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
@@ -25,9 +22,7 @@ import org.apache.logging.log4j.Logger;
 import teamHTBP.vidaReforged.VidaConfig;
 import teamHTBP.vidaReforged.client.hud.*;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
-import teamHTBP.vidaReforged.server.blockEntities.BasePurificationCauldronBlockEntity;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
-import teamHTBP.vidaReforged.server.items.VidaWand;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -38,7 +33,7 @@ import java.util.List;
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class HudHandler {
     protected static VidaManaBarScreen screen;
-    protected static VidaUnlockScreen unlockScreen;
+    protected static VidaUnlockMagicWordScreen unlockScreen;
     protected static VidaWandStaminaScreen staminaScreen;
     protected static VidaWandMagicScreen magicScreen;
     protected static final float MAX_PLAYER_BAR_OFFSET = 12f;
@@ -114,7 +109,7 @@ public class HudHandler {
     public static void renderUnlockOverlay(RenderGuiOverlayEvent event){
         Player player = Minecraft.getInstance().player;
         Minecraft mc = Minecraft.getInstance();
-        VidaUnlockScreen unlockScreen = getOrUnlockVidaManaScreen(event.getGuiGraphics().bufferSource());
+        VidaUnlockMagicWordScreen unlockScreen = getOrUnlockVidaManaScreen(event.getGuiGraphics().bufferSource());
         if(player == null || event.getOverlay() != VanillaGuiOverlay.HOTBAR.type()){
             return;
         }
@@ -193,8 +188,8 @@ public class HudHandler {
         return screen;
     }
 
-    public static VidaUnlockScreen getOrUnlockVidaManaScreen(MultiBufferSource.BufferSource bufferSource){
-        return new VidaUnlockScreen(Minecraft.getInstance(), bufferSource);
+    public static VidaUnlockMagicWordScreen getOrUnlockVidaManaScreen(MultiBufferSource.BufferSource bufferSource){
+        return new VidaUnlockMagicWordScreen(Minecraft.getInstance(), bufferSource);
     }
 
     public static <T extends GuiGraphics> T getOrCreateScreen(T screen, MultiBufferSource.BufferSource bufferSource, Class<T> screenClazz){

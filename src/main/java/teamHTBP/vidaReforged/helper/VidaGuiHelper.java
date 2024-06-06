@@ -22,6 +22,8 @@ import teamHTBP.vidaReforged.client.events.ShadersHandler;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 
+import java.awt.*;
+
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
@@ -173,6 +175,12 @@ public class VidaGuiHelper {
                 section.w(), section.h(),
                 section.texWidth(), section.texHeight()
         );
+    }
+
+    public static void drawStringWithFont(GuiGraphics graphics, int x, int y, int z, net.minecraft.network.chat.Component component){
+        graphics.pose().pushPose();
+        graphics.drawString(Minecraft.getInstance().font, component, x, y, 0xFFFFFFFF);
+        graphics.pose().popPose();
     }
 
 

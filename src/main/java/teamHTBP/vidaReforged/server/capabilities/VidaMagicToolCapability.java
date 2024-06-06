@@ -11,14 +11,13 @@ import net.minecraftforge.common.util.INBTSerializable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.api.capability.Result;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicAttribute;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicAttributeType;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -42,20 +41,18 @@ public class VidaMagicToolCapability implements IVidaMagicContainerCapability, I
     private ResourceLocation currentMagic;
     /**现在选择的魔法的下标*/
     private int currentMagicIndex = 0;
+    /**现在选择的元素*/
+    private VidaElement currentElement = VidaElement.EMPTY;
     /**熟练度经验值*/
     private long exp;
     /**最大熟练等级*/
     private int maxLevel;
-    /***/
-    @Expose(deserialize = false, serialize = false)
-    public final static ResourceLocation UNCHOSEN_MAGIC = new ResourceLocation(VidaReforged.MOD_ID, "magic/null");
-
     @Expose(deserialize = false, serialize = false)
     public final static Logger LOGGER = LogManager.getLogger();
 
     @Expose(deserialize = false, serialize = false)
     public static Codec<VidaMagicToolCapability> codec = RecordCodecBuilder.create(ins -> ins.group(
-            VidaMagicAttribute.codec.fieldOf("attribute")
+            VidaMagicAttribute.CODEC.fieldOf("attribute")
                     .orElseGet((Consumer<String>)(error -> LOGGER.error("VidaMagicToolCapability cannot parse the attribute, will use default attribute: {}", error)), () -> VidaMagicAttribute.empty(VidaMagicAttributeType.TOOL))
                     .forGetter(VidaMagicToolCapability::getAttribute),
             ResourceLocation.CODEC.listOf().fieldOf("magicIds").orElseGet(() -> NonNullList.withSize(1, VidaMagic.MAGIC_UNKNOWN)).forGetter(VidaMagicToolCapability::getAvailableMagics),
@@ -64,8 +61,9 @@ public class VidaMagicToolCapability implements IVidaMagicContainerCapability, I
             Codec.LONG.fieldOf("count").orElse(0L).forGetter(VidaMagicToolCapability::getCountInfo),
             Codec.INT.fieldOf("currentCoolDownTime").orElse(0).forGetter(VidaMagicToolCapability::getCurrentCoolDownTime),
             Codec.LONG.fieldOf("lastInvokeTime").orElse(System.currentTimeMillis()).forGetter(VidaMagicToolCapability::getLastInvokeTime),
-            ResourceLocation.CODEC.fieldOf("currentMagic").orElse(VidaMagicToolCapability.UNCHOSEN_MAGIC).forGetter(VidaMagicToolCapability::getCurrentMagic),
+            ResourceLocation.CODEC.fieldOf("currentMagic").orElse(VidaMagic.MAGIC_UNKNOWN).forGetter(VidaMagicToolCapability::getCurrentMagic),
             Codec.INT.fieldOf("currentMagicIndex").orElse(0).forGetter(VidaMagicToolCapability::getCurrentMagicIndex),
+            VidaElement.CODEC.fieldOf("currentElement").orElse(VidaElement.EMPTY).forGetter(VidaMagicToolCapability::getCurrentElement),
             Codec.LONG.fieldOf("exp").orElse(0L).forGetter(VidaMagicToolCapability::getExp),
             Codec.INT.fieldOf("maxLevel").orElse(0).forGetter(VidaMagicToolCapability::getMaxLevel)
     ).apply(ins, VidaMagicToolCapability::new));
@@ -75,7 +73,7 @@ public class VidaMagicToolCapability implements IVidaMagicContainerCapability, I
 
     }
 
-    public VidaMagicToolCapability(VidaMagicAttribute attribute, List<ResourceLocation> magicIds, int maxMagicSize, CompoundTag equipments, long count, int currentCoolDownTime, long lastInvokeTime, ResourceLocation currentMagic, int currentMagicIndex, long exp, int maxLevel) {
+    public VidaMagicToolCapability(VidaMagicAttribute attribute, List<ResourceLocation> magicIds, int maxMagicSize, CompoundTag equipments, long count, int currentCoolDownTime, long lastInvokeTime, ResourceLocation currentMagic, int currentMagicIndex, VidaElement element, long exp, int maxLevel) {
         this.attribute = attribute;
         this.magicIds = NonNullList.withSize(maxMagicSize, VidaMagic.MAGIC_UNKNOWN);
         for(int index = 0; index < magicIds.size(); index++ ){
@@ -91,6 +89,7 @@ public class VidaMagicToolCapability implements IVidaMagicContainerCapability, I
         this.lastInvokeTime = lastInvokeTime;
         this.currentMagic = currentMagic;
         this.currentMagicIndex = currentMagicIndex;
+        this.currentElement = element;
         this.exp = exp;
         this.maxLevel = maxLevel;
     }
@@ -112,6 +111,7 @@ public class VidaMagicToolCapability implements IVidaMagicContainerCapability, I
         this.lastInvokeTime = oldCap.lastInvokeTime;
         this.currentMagic = oldCap.currentMagic;
         this.currentMagicIndex = oldCap.currentMagicIndex;
+        this.currentElement = oldCap.currentElement;
         this.exp = oldCap.exp;
         this.maxLevel = oldCap.maxLevel;
     }
@@ -125,24 +125,35 @@ public class VidaMagicToolCapability implements IVidaMagicContainerCapability, I
         return attribute;
     }
 
-
     /**获取现在可以切换的魔法*/
     public List<ResourceLocation> getAvailableMagics() {
-        return magicIds == null ? NonNullList.withSize(1, VidaMagicToolCapability.UNCHOSEN_MAGIC) : magicIds;
+        return magicIds == null ? NonNullList.withSize(1, VidaMagic.MAGIC_UNKNOWN) : magicIds;
     }
 
     /**获取当前魔法*/
     public ResourceLocation getCurrentMagic() {
-        return currentMagic == null ? UNCHOSEN_MAGIC : currentMagic;
+        return currentMagic == null ? VidaMagic.MAGIC_UNKNOWN : currentMagic;
     }
 
+    /**切换focus的魔法下标，用于Tab键切换*/
     public void setCurrentMagicIndex(int currentMagicIndex) {
         this.currentMagicIndex = currentMagicIndex;
     }
 
+    /**获取现在focus魔法的下标*/
     @Override
     public int getCurrentMagicIndex() {
         return currentMagicIndex;
+    }
+
+    /**获取当前元素*/
+    public VidaElement getCurrentElement() {
+        return currentElement;
+    }
+
+    /**设置当前元素*/
+    public void setCurrentElement(VidaElement currentElement) {
+        this.currentElement = currentElement;
     }
 
     /**设置切换的魔法*/
@@ -238,7 +249,7 @@ public class VidaMagicToolCapability implements IVidaMagicContainerCapability, I
     }
 
     @Override
-    public boolean setContainer(VidaMagicAttribute attribute) {
+    public boolean setAttribute(VidaMagicAttribute attribute) {
         this.attribute = attribute;
         return true;
     }

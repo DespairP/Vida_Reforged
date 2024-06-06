@@ -18,10 +18,10 @@ import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.helper.VidaGuiHelper;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
-import java.util.LinkedList;
+import java.util.*;
 
 @OnlyIn(Dist.CLIENT)
-public class VidaUnlockScreen extends GuiGraphics implements IVidaScreen {
+public class VidaUnlockMagicWordScreen extends GuiGraphics implements IVidaScreen {
     public static LinkedList<String> magicWords = new LinkedList<>();
     private static FloatRange alphaRange = new FloatRange(0,0,0.7f);
     private static FloatRange textRange = new FloatRange(0,0,0.7f);
@@ -31,8 +31,9 @@ public class VidaUnlockScreen extends GuiGraphics implements IVidaScreen {
     private static final int HEIGHT = 32;
     private static final int MAX_WIDTH = 100;
     private static final VidaGuiHelper.TickHelper tickHelper = new VidaGuiHelper.TickHelper();
+    private static final int MAX_LENGTH = 3;
 
-    public VidaUnlockScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource) {
+    public VidaUnlockMagicWordScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource) {
         super(minecraft, bufferSource);
     }
 
@@ -161,13 +162,24 @@ public class VidaUnlockScreen extends GuiGraphics implements IVidaScreen {
         poseStack.popPose();
 
         MutableComponent magicWordComponent = Component.empty();
-        for(String wordId : magicWords){
+        HashSet<String> magicWordUnique = new HashSet<>();
+        for (int i = 0; i < magicWords.size() ; i ++) {
+            String wordId = magicWords.get(i);
+            if(magicWordUnique.contains(wordId) || magicWordUnique.size() >= MAX_LENGTH){
+                magicWordUnique.add(wordId);
+                continue;
+            }
+            magicWordUnique.add(wordId);
             MagicWord word = MagicWordManager.getMagicWord(wordId);
             if(word != null){
                 magicWordComponent.append(
                         Component.translatable(String.format("%s.%s", word.namePrefix(), word.name()))
                 ).append(" ");
             }
+        }
+
+        if(magicWordUnique.size() > MAX_LENGTH){
+            magicWordComponent.append(Component.literal("+ more"));
         }
 
         poseStack.pushPose();

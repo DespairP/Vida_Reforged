@@ -37,7 +37,7 @@ public class VidaMagicAttribute {
     private VidaMagicAttributeType type;
 
     @Expose(serialize = false, deserialize = false)
-    public static Codec<VidaMagicAttribute> codec = RecordCodecBuilder.create(ins -> ins.group(
+    public final static Codec<VidaMagicAttribute> CODEC = RecordCodecBuilder.create(ins -> ins.group(
             Codec.DOUBLE.fieldOf("baseDamage").orElseGet(() -> 1.00).forGetter(VidaMagicAttribute::baseDamage),
             Codec.DOUBLE.fieldOf("baseCostMana").orElseGet(() -> 1.00).forGetter(VidaMagicAttribute::baseCostMana),
             Codec.INT.fieldOf("baseInvokeProjectileAmount").orElseGet(() -> 1).forGetter(VidaMagicAttribute::baseInvokeProjectileAmount),
@@ -47,7 +47,7 @@ public class VidaMagicAttribute {
             Codec.INT.fieldOf("invokeProjectileAmountFactor").orElseGet(() -> 1).forGetter(VidaMagicAttribute::invokeProjectileAmountFactor),
             Codec.DOUBLE.fieldOf("invokeProjectileSpeedFactor").orElseGet(() -> 1.00).forGetter(VidaMagicAttribute::invokeProjectileSpeedFactor),
             Codec.INT.fieldOf("level").orElseGet(() -> 0).forGetter(VidaMagicAttribute::level),
-            VidaMagicAttributeType.codec.fieldOf("type").orElseGet(() -> VidaMagicAttributeType.UNDEFINED).forGetter(VidaMagicAttribute::type)
+            VidaMagicAttributeType.CODEC.fieldOf("type").orElseGet(() -> VidaMagicAttributeType.UNDEFINED).forGetter(VidaMagicAttribute::type)
     ).apply(ins, VidaMagicAttribute::new));
 
 

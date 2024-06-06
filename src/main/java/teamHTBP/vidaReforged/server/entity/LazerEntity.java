@@ -22,7 +22,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,15 +30,10 @@ import org.joml.Vector3d;
 import org.joml.Vector3f;
 import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
 import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
-import teamHTBP.vidaReforged.core.api.capability.IVidaMultiBlockCapability;
-import teamHTBP.vidaReforged.core.common.system.multiblock.ScheduledMultiBlockJob;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
-import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
-import teamHTBP.vidaReforged.server.events.VidaMultiBlockHandler;
-import teamHTBP.vidaReforged.server.packets.MultiBlockSchedulerPacket;
-import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 激光光线
@@ -231,7 +225,7 @@ public abstract class LazerEntity extends Entity implements IEntityAdditionalSpa
         for (double j = 0; j < dist; j++) {
             double coeff = j / dist;
             level().addParticle(
-                    new BaseParticleType(VidaParticleTypeLoader.ORB_PARTICLE.get(), new ARGBColor(255, 190, 0, 255), new Vector3f(), 1, 100),
+                    new BaseParticleType(VidaParticleTypeLoader.CUBE_PARTICLE_TYPE.get(), new ARGBColor(255, 190, 0, 255), new Vector3f(), 1, 100),
                     (float) (xo + deltaX * coeff),
                     (float) (yo + deltaY * coeff) + 0.1, (float)
                             (zo + deltaZ * coeff),

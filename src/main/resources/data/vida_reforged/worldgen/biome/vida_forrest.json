@@ -21,6 +21,12 @@
         "weight": 6,
         "minCount": 8,
         "maxCount": 8
+      },
+      {
+        "type": "vida_reforged:glow_light",
+        "weight": 100,
+        "minCount": 4,
+        "maxCount": 20
       }
     ],
     "axolotls": [],
@@ -110,6 +116,7 @@
       "minecraft:monster_room_deep"
     ],
     [],
+    [],
     [
       "minecraft:ore_dirt",
       "minecraft:ore_gravel",
@@ -140,12 +147,13 @@
       "minecraft:disk_clay",
       "minecraft:disk_gravel"
     ],
+    [],
     [
       "minecraft:spring_water"
     ],
     [
       "minecraft:glow_lichen",
-      "minecraft:flower_forest_flowers"
+      "vida_reforged:vida_forrest_flower_base"
     ],
     [
       "minecraft:freeze_top_layer"

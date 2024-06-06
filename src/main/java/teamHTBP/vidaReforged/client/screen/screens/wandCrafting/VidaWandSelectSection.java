@@ -15,6 +15,7 @@ import teamHTBP.vidaReforged.client.screen.components.guidebooks.VidaGuidebookDi
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaScreenEventChannelViewModel;
 import teamHTBP.vidaReforged.core.common.system.guidebook.VidaScreenEvent;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
+import teamHTBP.vidaReforged.core.common.ui.lifecycle.LifeCycle;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
 import java.util.Collection;
@@ -97,6 +98,8 @@ public class VidaWandSelectSection extends VidaWandCraftSection {
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        registry.handleLifecycleEvent(LifeCycle.Event.ON_RESUME);
+
         this.gridLayout.arrangeElements();
         equipButton.render(graphics, mouseX, mouseY, partialTicks);
         statsButton.render(graphics, mouseX, mouseY, partialTicks);

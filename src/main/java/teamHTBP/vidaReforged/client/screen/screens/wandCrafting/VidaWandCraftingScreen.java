@@ -97,20 +97,20 @@ public class VidaWandCraftingScreen extends VidaContainerScreen<VidaWandCrafting
     public void handleChannelEvent(VidaScreenEvent event){
         if(event.getType().equals("open")){
             String place = event.getData().getAsJsonObject().get("place").getAsString();
-            this.selectMenuSection.setVisible(false);
+            this.selectMenuSection.hide();
             this.modelViewWandSection.resize(16 * 4, 16 * 8);
             this.iconButton.setVisible(true);
 
             // 打开配饰栏
             if(place.equals("equipment")){
                 this.inventoryOffset  = new SecondOrderDynamics(1, 1, 0, new Vector3f(0,16,0));
-                this.equippingSection.setVisible(true);
+                this.equippingSection.resume();
                 this.initSlots();
             }
 
             // 打开魔法栏
             if(place.equals("magic")){
-                this.magicSection.setVisible(true);
+                this.magicSection.resume();
             }
 
             //
@@ -120,9 +120,9 @@ public class VidaWandCraftingScreen extends VidaContainerScreen<VidaWandCrafting
 
         if(event.getType().equals("close")){
             this.modelViewWandSection.resize(16 * 6, 16 * 10);
-            this.selectMenuSection.setVisible(true);
-            this.equippingSection.setVisible(false);
-            this.magicSection.setVisible(false);
+            this.selectMenuSection.resume();
+            this.equippingSection.hide();
+            this.magicSection.hide();
             this.iconButton.setVisible(false);
             this.adjustComponentsPosition();
         }
@@ -175,6 +175,7 @@ public class VidaWandCraftingScreen extends VidaContainerScreen<VidaWandCrafting
     /**构筑选择栏*/
     protected void initSelectMenu(){
         if(this.selectMenuSection != null) {
+            this.selectMenuSection.pause();
             this.addRenderableOnly(selectMenuSection);
             this.selectMenuSection.setWidth(width - modelViewWandSection.getWidth());
             this.selectMenuSection.setHeight(height);
@@ -216,6 +217,7 @@ public class VidaWandCraftingScreen extends VidaContainerScreen<VidaWandCrafting
         final int equipmentSectionWidth = vw(80);
 
         if(this.equippingSection != null){
+            this.equippingSection.pause();
             this.equippingSection.setWidth(equipmentSectionWidth);
             this.equippingSection.setHeight(this.topPos - 32);
             this.addRenderableOnly(this.equippingSection);
@@ -236,6 +238,7 @@ public class VidaWandCraftingScreen extends VidaContainerScreen<VidaWandCrafting
         final int magicSectionWidth = vw(80);
 
         if(this.magicSection != null){
+            this.magicSection.pause();
             this.magicSection.setWidth(magicSectionWidth);
             this.magicSection.setHeight(this.height - 32);
             this.addRenderableOnly(this.magicSection);

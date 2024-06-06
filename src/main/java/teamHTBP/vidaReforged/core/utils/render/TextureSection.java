@@ -3,6 +3,7 @@ package teamHTBP.vidaReforged.core.utils.render;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
+import teamHTBP.vidaReforged.VidaReforged;
 
 
 /**
@@ -53,4 +54,8 @@ public record TextureSection(ResourceLocation location, int minU, int minV, int 
             Codec.INT.fieldOf("texWidth").orElse(16).forGetter(TextureSection::texWidth),
             Codec.INT.fieldOf("texHeight").orElse(16).forGetter(TextureSection::texHeight)
     ).apply(ins, TextureSection::new));
+
+    public static TextureSection empty(){
+        return new TextureSection(new ResourceLocation(VidaReforged.MOD_ID, "textures/icons/magic_word/question_mark.png"), 0, 0, 0, 0, 0,0);
+    }
 }

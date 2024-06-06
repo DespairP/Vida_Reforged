@@ -75,15 +75,28 @@ public class VidaCommandRegisterHandler {
 
         //MagicWord子命令
         LiteralArgumentBuilder<CommandSourceStack> addWord = Commands
-                .literal("add")
+                .literal("get")
                 .then(Commands.argument("word_id", StringArgumentType.greedyString())
                         .suggests((context, builder) -> SharedSuggestionProvider.suggest(MagicWordManager.getAllMagicWordIds(), builder))
-                        .executes(VidaCommandManager.WORD_ADD_SOURCE)
+                        .executes(VidaCommandManager.WORD_GET_SOURCE)
                 );
+
+        LiteralArgumentBuilder<CommandSourceStack> lockWord = Commands
+                .literal("unlock")
+                .then(Commands.argument("word_id", StringArgumentType.greedyString())
+                        .suggests((context, builder) -> SharedSuggestionProvider.suggest(MagicWordManager.getAllMagicWordIds(), builder))
+                        .executes(VidaCommandManager.WORD_UNLOCK_SOURCE)
+                );
+
+        LiteralArgumentBuilder<CommandSourceStack> achieve = Commands
+                .literal("achieveAll")
+                .executes(VidaCommandManager.WORD_UNLOCK_ALL_SOURCE);
 
         //组装MagicWord命令集
         LiteralArgumentBuilder<CommandSourceStack> magicWord = Commands.literal("magicWord")
                 .requires(source -> source.hasPermission(3))
+                .then(achieve)
+                .then(lockWord)
                 .then(addWord);
 
         //Guidebook子命令

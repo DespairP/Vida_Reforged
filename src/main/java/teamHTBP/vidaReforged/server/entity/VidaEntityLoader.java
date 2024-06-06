@@ -8,6 +8,7 @@ import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.server.entity.projectile.MagicParticleProjectile;
 import teamHTBP.vidaReforged.server.entity.projectile.PartyParrotProjecttile;
+import teamHTBP.vidaReforged.server.mobs.GlowLight;
 
 /**
  * @author TT432
