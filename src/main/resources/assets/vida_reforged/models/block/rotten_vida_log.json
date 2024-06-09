@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "vida_reforged:block/rotten_vida_log_top",
+    "side":  "vida_reforged:block/rotten_vida_log"
+  }
+
+}

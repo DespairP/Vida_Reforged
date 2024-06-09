@@ -208,6 +208,12 @@ public class VidaBlockLoader {
     /**生命原木*/
     @RegisterItemBlock
     public final static RegistryObject<Block> VIDA_LOG = registerDecoBlock("vida_log", WOOD, LOG);
+
+    @RegisterItemBlock
+    public final static RegistryObject<Block> WHITE_VIDA_LOG = registerDecoBlock("white_vida_log", WOOD, LOG);
+
+    @RegisterItemBlock
+    public final static RegistryObject<Block> ROTTEN_VIDA_LOG = registerDecoBlock("rotten_vida_log", WOOD, LOG);
     /**生命原木变种*/
     @RegisterItemBlock
     public final static RegistryObject<Block> VIDA_STRIPPED_LOG = registerDecoBlock("vida_stripped_log", WOOD, LOG);
