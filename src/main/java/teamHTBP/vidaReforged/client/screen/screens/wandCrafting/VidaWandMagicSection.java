@@ -1,5 +1,6 @@
 package teamHTBP.vidaReforged.client.screen.screens.wandCrafting;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -235,6 +236,8 @@ public class VidaWandMagicSection extends VidaWandCraftSection{
         public final static TextureSection SELECTED_ICON = new TextureSection(new ResourceLocation(VidaReforged.MOD_ID, "textures/icons/skills_002.png"), 24, 0, 24, 24, 384, 384);
         public final static ResourceLocation DINKFONT = new ResourceLocation(MOD_ID, "dinkie");
 
+        private final FloatRange alpha = new FloatRange(0.1F, 0.1F, 1);
+
         public void setChosen(boolean chosen) {
             isChosen = chosen;
         }
@@ -274,11 +277,15 @@ public class VidaWandMagicSection extends VidaWandCraftSection{
             // 渲染背景
             ARGBColor color = ARGBColor.of(hoverAlpha.get() + focusAlpha.get(), 0.6f, 0.6f, 0.6f);
             graphics.fillGradient(getX(), getY(), getX() + width, getY() + height, color.argb(), color.argb());
+            RenderSystem.enableBlend();
+            RenderSystem.setShaderColor(1, 1, 1, alpha.change(selectedIndex >= 0, mc.getDeltaFrameTime() * 0.2f));
             // 渲染选中
             if(selectedIndex >= 0){
                 VidaGuiHelper.blitWithTexture(graphics, getX(), getY(), 0, SELECTED_ICON);
                 VidaGuiHelper.drawStringWithFont(graphics, getX() + 22, getY() + 20, 1, Component.literal("1").withStyle(style -> style.withFont(DINKFONT)));
             }
+            RenderSystem.setShaderColor(1, 1, 1, 1);
+            RenderSystem.disableBlend();
         }
 
         @Override

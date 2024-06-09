@@ -17,8 +17,10 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.server.entity.VidaEntityDataSerializer;
@@ -110,7 +112,7 @@ public class GlowLight extends Mob {
             this.targetChangeCooldown -= (this.position().distanceToSqr(xo, yo, zo) < 0.0125) ? 10 : 1;
 
             if ((target.getX() == 0 && target.getY() == 0 && target.getZ() == 0) || this.position().distanceToSqr(target.getCenter()) < 9 || targetChangeCooldown <= 0) {
-                selectBlockTarget();
+                selectBlockTarget(level());
             }
 
             Vec3 targetVector = new Vec3(this.target.getX() - getX(), this.target.getY() - getY(), this.target.getZ() - getZ());
@@ -127,14 +129,24 @@ public class GlowLight extends Mob {
             if (!this.blockPosition().equals(this.target)) {
                 this.move(MoverType.SELF, this.getDeltaMovement());
             }
+            this.setSpeed((float) (random.nextFloat() * 0.95F));
         }
     }
 
 
-    private void selectBlockTarget() {
-        int xTarget = (int) (this.getX() + random.nextGaussian() * 10);
-        int yTarget = (int) (this.getY() + random.nextGaussian() * 60);
-        int zTarget = (int) (this.getZ() + random.nextGaussian() * 10);
+    private void selectBlockTarget(Level level) {
+        int groundLevel = getBlockY() - 20;
+        for (int i = 0; i < 20; i++) {
+            BlockPos posDelta = new BlockPos(getBlockX(), getBlockY() - i, getBlockZ());
+            if (!level.getBlockState(posDelta).isValidSpawn(level, posDelta, VidaMobsLoader.GLOW_LIGHT.get())) {
+                groundLevel = posDelta.getY();
+            }
+        }
+
+        //
+        int xTarget = (int) (this.getX() + random.nextGaussian() * 30);
+        int yTarget = (int) Math.min(Math.max((this.getY() + random.nextGaussian() * 10) , groundLevel + random.nextGaussian() * 5), groundLevel + random.nextGaussian() + 10);
+        int zTarget = (int) (this.getZ() + random.nextGaussian() * 30);
 
         target = new BlockPos(xTarget, yTarget, zTarget);
         targetChangeCooldown = random.nextInt() % 100;
@@ -162,15 +174,21 @@ public class GlowLight extends Mob {
     protected void checkFallDamage(double p_27419_, boolean p_27420_, BlockState p_27421_, BlockPos p_27422_) {
     }
 
+    @Override
+    public boolean isSuppressingBounce() {
+        return true;
+    }
+
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance diff, MobSpawnType spawnType, @Nullable SpawnGroupData group, @Nullable CompoundTag tag) {
         this.setMaxLifeTime(200 + random.nextInt(3000));
-        this.setSize((float) (0.3F + random.nextInt(20) * 0.02F ));
+        this.setSize((float) (0.1F + random.nextInt(20) * 0.02F ));
         VidaElement element = VidaElement.randomValue();
         this.setCol(element.baseColor.toARGB());
         this.setSilent(true);
         this.setNoGravity(true);
+
         return super.finalizeSpawn(level, diff, spawnType, group, tag);
     }
 
