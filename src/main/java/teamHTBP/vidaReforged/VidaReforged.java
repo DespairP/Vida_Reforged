@@ -14,6 +14,7 @@ import teamHTBP.vidaReforged.server.entity.VidaEntityDataSerializer;
 import teamHTBP.vidaReforged.server.entity.VidaEntityLoader;
 import teamHTBP.vidaReforged.server.events.VidaItemGroupLoader;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
+import teamHTBP.vidaReforged.server.levelgen.VidaLevelGenerationLoader;
 import teamHTBP.vidaReforged.server.menu.VidaMenuContainerTypeLoader;
 import teamHTBP.vidaReforged.server.mobs.VidaMobsLoader;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
@@ -50,6 +51,7 @@ public class VidaReforged {
         VidaRecipeSerializerLoader.SERIALIZER.register(bus);
         VidaParticleTypeLoader.PARTICLE_TYPE_REGISTER.register(bus);
         //VidaCommandManager.ARGUMENT_TYPE.register(bus);
+        VidaLevelGenerationLoader.STRUCTURE_TYPES.register(bus);
         VidaAdvancementTriggers.init();
         VidaPacketManager.register();
     }

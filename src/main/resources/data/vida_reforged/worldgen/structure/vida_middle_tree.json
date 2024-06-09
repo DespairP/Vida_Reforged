@@ -1,9 +1,9 @@
 {
-  "type": "minecraft:jigsaw",
+  "type": "vida_reforged:vida_tree_sp",
   "biomes": "vida_reforged:vida_forrest",
   "step": "surface_structures",
   "spawn_overrides": {},
-  "terrain_adaptation": "beard_thin",
+  "terrain_adaptation": "none",
   "start_pool": "vida_reforged:vida_middle_tree",
   "size": 1,
   "start_height": {
@@ -11,5 +11,6 @@
   },
   "project_start_to_heightmap": "WORLD_SURFACE_WG",
   "max_distance_from_center": 10,
-  "use_expansion_hack": false
+  "use_expansion_hack": false,
+  "liquid_settings": "ignore_waterlogging"
 }

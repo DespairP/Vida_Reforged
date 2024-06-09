@@ -1,6 +1,7 @@
 package teamHTBP.vidaReforged.client.model.entity;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.mobs.GlowLight;
 
