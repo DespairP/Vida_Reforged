@@ -50,6 +50,7 @@ public class VidaReforged {
         VidaRecipeLoader.TYPES.register(bus);
         VidaRecipeSerializerLoader.SERIALIZER.register(bus);
         VidaParticleTypeLoader.PARTICLE_TYPE_REGISTER.register(bus);
+        VidaLevelGenerationLoader.TRUNK_PLACER_TYPES.register(bus);
         //VidaCommandManager.ARGUMENT_TYPE.register(bus);
         VidaLevelGenerationLoader.STRUCTURE_TYPES.register(bus);
         VidaAdvancementTriggers.init();

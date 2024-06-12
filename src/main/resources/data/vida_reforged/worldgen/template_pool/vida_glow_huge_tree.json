@@ -1,0 +1,15 @@
+{
+    "name": "vida_reforged:vida_glow_huge_tree",
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "vida_reforged:vida_glow_huge_tree",
+                "projection": "rigid",
+                "processors": "minecraft:empty"
+            }
+        }
+    ]
+}
