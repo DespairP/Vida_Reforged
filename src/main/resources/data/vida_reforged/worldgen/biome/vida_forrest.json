@@ -153,8 +153,9 @@
     ],
     [
       "minecraft:glow_lichen",
-      "vida_reforged:vida_glow_001",
+      "vida_reforged:vida_normal_tree_001",
       "vida_reforged:vida_mid_tree_001",
+      "vida_reforged:vida_mid_tree_002",
       "vida_reforged:vida_forrest_flower_base"
     ],
     [

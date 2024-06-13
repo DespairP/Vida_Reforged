@@ -1,0 +1,62 @@
+{
+    "type": "minecraft:tree",
+    "config": {
+        "decorators": [],
+        "dirt_provider": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+                "Name": "minecraft:dirt"
+            }
+        },
+        "foliage_placer": {
+            "type": "minecraft:cherry_foliage_placer",
+            "foliage_height": 4,
+            "offset": 0,
+            "radius": 4,
+            "height": 4,
+            "corner_hole_chance": 0.4,
+            "hanging_leaves_extension_chance": 0.1,
+            "wide_bottom_layer_hole_chance": 0.2,
+            "hanging_leaves_chance": 0.1
+        },
+        "foliage_provider": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+                "Name": "vida_reforged:vida_leaves",
+                "Properties": {}
+            }
+        },
+        "force_dirt": false,
+        "ignore_vines": true,
+        "minimum_size": {
+            "type": "minecraft:two_layers_feature_size",
+            "limit": 0,
+            "lower_size": 0,
+            "min_clipped_height": 4,
+            "upper_size": 0
+        },
+        "trunk_placer": {
+            "type": "vida_reforged:vida_tree_glow_trunk_placer",
+            "base_height": 9,
+            "height_rand_a": 3,
+            "height_rand_b": 4,
+            "glow_provider": {
+                "type": "minecraft:simple_state_provider",
+                "state": {
+                    "Name": "vida_reforged:vida_shroomlight",
+                    "Properties": {}
+                }
+            },
+            "isGenerateGlowBlock": false
+        },
+        "trunk_provider": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+                "Name": "vida_reforged:vida_log",
+                "Properties": {
+                    "axis": "y"
+                }
+            }
+        }
+    }
+}

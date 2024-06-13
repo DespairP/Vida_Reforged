@@ -4,16 +4,20 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
+import net.minecraft.world.level.material.Fluids;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -44,18 +48,26 @@ public class VidaGlowTrunkPlacer extends TrunkPlacer {
     @Override
     public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader reader, BiConsumer<BlockPos, BlockState> replacer, RandomSource random, int height, BlockPos startPos, TreeConfiguration config) {
         setDirtAt(reader, replacer, random, startPos.below(), config);
-
+        int offset = 0;
         for(int i = 0; i < heightRandA; ++i) {
             this.placeLog(reader, replacer, random, startPos.above(i), config);
         }
 
-        placeGlowBlock(reader, replacer, random, startPos.above(heightRandA));
+        Direction direction = Direction.Plane.HORIZONTAL.getRandomDirection(random);
+        // 随机摆放树叶
+        tryPlaceLeaf(reader, replacer, random, config, startPos.above(heightRandA - 1).offset(direction.getStepX(), 0, direction.getStepZ()));
+        tryPlaceLeaf(reader, replacer, random, config, startPos.above(heightRandA + 1).offset(direction.getStepX(), 0, direction.getStepZ()));
 
-        for(int i = 0; i < heightRandB; ++i) {
-            this.placeLog(reader, replacer, random, startPos.above(heightRandA + 1).above(i), config);
+        if(isGenerateGlowBlock){
+            placeGlowBlock(reader, replacer, random, startPos.above(heightRandA));
+            offset = 1;
         }
 
-        return ImmutableList.of(new FoliagePlacer.FoliageAttachment(startPos.above(heightRandA + heightRandB + 1), 0, false));
+        for(int i = 0; i < heightRandB; ++i) {
+            this.placeLog(reader, replacer, random, startPos.above(heightRandA + offset).above(i), config);
+        }
+
+        return ImmutableList.of(new FoliagePlacer.FoliageAttachment(startPos.above(heightRandA + heightRandB + offset), 0, false));
     }
 
     protected boolean placeGlowBlock(LevelSimulatedReader p_226176_, BiConsumer<BlockPos, BlockState> placer, RandomSource randomSource, BlockPos pos) {
@@ -64,6 +76,22 @@ public class VidaGlowTrunkPlacer extends TrunkPlacer {
             return true;
         } else {
             return false;
+        }
+    }
+
+    private static boolean tryPlaceLeaf(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> replacer, RandomSource random, TreeConfiguration config, BlockPos pos) {
+        if (!TreeFeature.validTreePos(level, pos) || !random.nextBoolean()) {
+            return false;
+        } else {
+            BlockState blockstate = config.foliageProvider.getState(random, pos);
+            if (blockstate.hasProperty(BlockStateProperties.WATERLOGGED)) {
+                blockstate = blockstate.setValue(BlockStateProperties.WATERLOGGED, Boolean.valueOf(level.isFluidAtPosition(pos, (prop) -> {
+                    return prop.isSourceOfType(Fluids.WATER);
+                })));
+            }
+
+            replacer.accept(pos, blockstate);
+            return true;
         }
     }
 }

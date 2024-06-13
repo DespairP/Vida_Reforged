@@ -96,7 +96,8 @@ public class VidaMediumTrunkPlacer extends TrunkPlacer {
 
         // 生成叶子装饰
         List<Vector2i> midLeaves = new ArrayList<>();
-        midLeaves.addAll(OFFSETS.subList(1, 7));
+        midLeaves.addAll(OFFSETS.subList(1, Math.min(7, leavesMaxNumber.getMaxValue() - 1)));
+        Collections.shuffle(midLeaves);
         for(Vector2i mid : midLeaves){
             tryPlaceLeaf(reader, replacer, random, config, startPos.immutable().offset(mid.x, (int) Math.floor(heightRandA / 2.0f), mid.y));
         }
@@ -121,7 +122,7 @@ public class VidaMediumTrunkPlacer extends TrunkPlacer {
         this.placeLogIfFree(reader, replacer, random, pos, config);
     }
 
-    protected static boolean tryPlaceLeaf(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> replacer, RandomSource random, TreeConfiguration config, BlockPos pos) {
+    private static boolean tryPlaceLeaf(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> replacer, RandomSource random, TreeConfiguration config, BlockPos pos) {
         if (!TreeFeature.validTreePos(level, pos)) {
             return false;
         } else {
