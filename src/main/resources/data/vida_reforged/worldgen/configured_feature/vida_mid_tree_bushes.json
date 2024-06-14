@@ -10,14 +10,14 @@
         },
         "foliage_placer": {
             "type": "minecraft:cherry_foliage_placer",
-            "foliage_height": 4,
+            "foliage_height": 3,
             "offset": 0,
             "radius": 4,
             "height": 4,
             "corner_hole_chance": 0.4,
             "hanging_leaves_extension_chance": 0.1,
-            "wide_bottom_layer_hole_chance": 0.2,
-            "hanging_leaves_chance": 0.1
+            "wide_bottom_layer_hole_chance": 0.1,
+            "hanging_leaves_chance": 0.2
         },
         "foliage_provider": {
             "type": "minecraft:simple_state_provider",
@@ -36,18 +36,12 @@
             "upper_size": 0
         },
         "trunk_placer": {
-            "type": "vida_reforged:vida_tree_glow_trunk_placer",
-            "base_height": 9,
+            "type": "vida_reforged:vida_tree_medium_trunk_placer",
+            "base_height": 7,
             "height_rand_a": 3,
-            "height_rand_b": 4,
-            "glow_provider": {
-                "type": "minecraft:simple_state_provider",
-                "state": {
-                    "Name": "vida_reforged:vida_shroomlight",
-                    "Properties": {}
-                }
-            },
-            "isGenerateGlowBlock": true
+            "height_rand_b": 2,
+            "leavesMaxNumber": 2,
+            "rootMaxNumber": 2
         },
         "trunk_provider": {
             "type": "minecraft:simple_state_provider",
