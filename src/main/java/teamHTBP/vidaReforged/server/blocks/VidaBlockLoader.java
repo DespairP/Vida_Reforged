@@ -3,12 +3,14 @@ package teamHTBP.vidaReforged.server.blocks;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.block.DecoBlockFactory;
+import teamHTBP.vidaReforged.core.common.block.templates.DecoFlowerBlock;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterItemBlock;
 import teamHTBP.vidaReforged.server.blocks.crops.MutationCrop;
 import teamHTBP.vidaReforged.server.blocks.crops.ParticleCropBlock;
@@ -238,17 +240,20 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> BLUE_JELLY_MUSHROOM_BLOCK = registerDecoBlock("blue_jelly_mushroom_block", WOOD, NORMAL);
 
-    /**花*/
+    /*花*/
+    /**太阳花*/
     @RegisterItemBlock
     public final static RegistryObject<Block> SUN_FLOWER = registerDecoBlock("sun_flower", GRASS, FLOWER);
+    /**月光花*/
     @RegisterItemBlock
-    public final static RegistryObject<Block> LUNARIA_FLOWER = registerDecoBlock("lunaria_flower", GRASS, FLOWER);
+    public final static RegistryObject<Block> LUNARIA_FLOWER = BLOCKS.register("lunaria_flower", () -> new DecoFlowerBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).lightLevel((state) -> 2)));
     @RegisterItemBlock
     public final static RegistryObject<Block> GREEN_DEW_FLOWER = registerDecoBlock("green_dew_flower", GRASS, FLOWER);
     @RegisterItemBlock
     public final static RegistryObject<Block> VERMILLION_BOWL = registerDecoBlock("vermillion_bowl", GRASS, FLOWER);
+    /**灯草*/
     @RegisterItemBlock
-    public final static RegistryObject<Block> LIGHT_GRASS = registerDecoBlock("light_grass", GRASS, FLOWER);
+    public final static RegistryObject<Block> LIGHT_GRASS = BLOCKS.register("light_grass", () -> new DecoFlowerBlock(BlockBehaviour.Properties.copy(Blocks.GRASS).lightLevel((state) -> 7)));
     @RegisterItemBlock
     public final static RegistryObject<Block> BLUE_GRASS = registerDecoBlock("blue_grass", GRASS, FLOWER);
     @RegisterItemBlock
@@ -443,7 +448,7 @@ public class VidaBlockLoader {
      * @param block 方块provider
      * @return
      */
-    public static RegistryObject<Block> registerBlock(String name,Block block){
+    public static RegistryObject<Block> registerBlock(String name, Block block){
         return BLOCKS.register(name, () -> block);
     }
 
