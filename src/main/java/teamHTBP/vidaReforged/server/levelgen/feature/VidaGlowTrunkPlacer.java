@@ -18,6 +18,7 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProv
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraft.world.level.material.Fluids;
+import teamHTBP.vidaReforged.server.levelgen.VidaLevelGenerationLoader;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -42,7 +43,7 @@ public class VidaGlowTrunkPlacer extends TrunkPlacer {
 
     @Override
     protected TrunkPlacerType<?> type() {
-        return null;
+        return VidaLevelGenerationLoader.VIDA_TREE_GLOW_TRUNK_TYPE.get();
     }
 
     @Override

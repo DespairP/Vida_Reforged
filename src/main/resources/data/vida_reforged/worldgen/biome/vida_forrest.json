@@ -1,6 +1,6 @@
 {
-  "temperature": 0.7,
-  "downfall": 0.5,
+  "temperature": 0.3,
+  "downfall": 0.6,
   "has_precipitation": true,
   "effects": {
     "sky_color": 7972607,
@@ -153,9 +153,12 @@
     ],
     [
       "minecraft:glow_lichen",
+      "vida_reforged:vida_complex_tree",
       "vida_reforged:vida_normal_tree_001",
       "vida_reforged:vida_mid_tree_001",
       "vida_reforged:vida_mid_tree_002",
+      "vida_reforged:fallen_tree",
+      "vida_reforged:rotten_tree",
       "vida_reforged:vida_forrest_flower_base"
     ],
     [
