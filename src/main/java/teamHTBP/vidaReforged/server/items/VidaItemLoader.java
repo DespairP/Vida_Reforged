@@ -3,6 +3,7 @@ package teamHTBP.vidaReforged.server.items;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
@@ -11,6 +12,7 @@ import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.item.Position;
+import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
 import teamHTBP.vidaReforged.server.blocks.VidaFluidsLoader;
 import teamHTBP.vidaReforged.server.items.armors.ItemArmorApprentice;
 import teamHTBP.vidaReforged.server.items.armors.ItemArmorBlackMetal;
@@ -27,6 +29,8 @@ public class VidaItemLoader {
 
     /**生命之泉*/
     public final static RegistryObject<Item> VIVID_BUCKET = ITEMS.register("vivid_bucket", () -> new BucketItem(VidaFluidsLoader.VIVID_FLUID_STILL.get(), (new Item.Properties()).craftRemainder(BUCKET).stacksTo(1)));
+
+    public final static RegistryObject<Item> VIDA_LEAVES = ITEMS.register("vida_leaves", () -> new BlockItem(VidaBlockLoader.VIDA_LEAVES.get(),new Item.Properties()));
 
     @ObjectHolder(registryName = "vida_reforged:crism_crest", value = "vida_reforged:crism_crest")
     public final static RegistryObject<Item> CRISM_CREST = null;
@@ -51,7 +55,6 @@ public class VidaItemLoader {
 
 
     public final static RegistryObject<Item> UNLOCK_MAGIC_WORD_PAPER = ITEMS.register("unlock_magic_word_paper", UnlockMagicWordPaper::new);
-
     public final static RegistryObject<Item> BLACK_METAL_HELMET = ITEMS.register("black_metal_helmet", () -> new ItemArmorBlackMetal(ArmorItem.Type.HELMET));
     public final static RegistryObject<Item> BLACK_METAL_CHESTPLATE = ITEMS.register("black_metal_chestplate", () -> new ItemArmorBlackMetal(ArmorItem.Type.CHESTPLATE));
     public final static RegistryObject<Item> BLACK_METAL_BOOTS = ITEMS.register("black_metal_boots", () -> new ItemArmorBlackMetal(ArmorItem.Type.BOOTS));
