@@ -286,6 +286,10 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> SNOW_FLOWER = registerDecoBlock("snow_flower", GRASS, FLOWER);
     @RegisterItemBlock
     public final static RegistryObject<Block> MOONLIGHT_PURPLE_FLOWER = registerDecoBlock("moonlight_purple_flower", GRASS, FLOWER);
+    /**草*/
+    @RegisterItemBlock
+    public final static RegistryObject<Block> VIDA_GRASS = registerDecoBlock("vida_grass", GRASS, FLOWER);
+
 
     /**作物*/
     @RegisterItemBlock
