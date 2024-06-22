@@ -84,6 +84,8 @@ public class VidaItemGroupLoader {
             event.accept(VidaItemLoader.HEART_OF_WOOD_CENTER.get());
             event.accept(VidaItemLoader.HEART_OF_WOOD_BOTTOM.get());
             event.accept(VidaItemLoader.VIVID_BUCKET.get());
+            event.accept(VidaItemLoader.VIDA_LEAVES.get());
+            event.accept(VidaItemLoader.VIDA_BLUE_LEAVES.get());
         }
     }
 

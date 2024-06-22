@@ -23,7 +23,7 @@ public class VidaFoliageColorReloadListener extends SimplePreparableReloadListen
     @Override
     protected int[] prepare(ResourceManager manager, ProfilerFiller profiler) {
         try {
-            return LegacyStuffWrapper.getPixels(manager, LOCATION);
+            return LegacyStuffWrapper.getPixels(manager, getLocation());
         } catch (IOException ioexception) {
             throw new IllegalStateException("Failed to load foliage color texture", ioexception);
         }
@@ -32,5 +32,9 @@ public class VidaFoliageColorReloadListener extends SimplePreparableReloadListen
     @Override
     protected void apply(int[] origin, ResourceManager manager, ProfilerFiller profiler) {
         VidaLeavesColor.init(origin);
+    }
+
+    protected ResourceLocation getLocation(){
+        return LOCATION;
     }
 }

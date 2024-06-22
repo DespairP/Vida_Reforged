@@ -224,6 +224,7 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> VIDA_SHROOMLIGHT = registerDecoBlock("vida_shroomlight", WOOD, LOG);
     /**生命树叶*/
     public static RegistryObject<Block> VIDA_LEAVES = registerDecoBlock("vida_leaves", LEAVES, NORMAL, true);
+    public static RegistryObject<Block> VIDA_BLUE_LEAVES = registerDecoBlock("vida_blue_leaves", LEAVES, NORMAL, true);
 
     /**蘑菇**/
     @RegisterItemBlock

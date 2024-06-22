@@ -31,6 +31,7 @@ public class VidaItemLoader {
     public final static RegistryObject<Item> VIVID_BUCKET = ITEMS.register("vivid_bucket", () -> new BucketItem(VidaFluidsLoader.VIVID_FLUID_STILL.get(), (new Item.Properties()).craftRemainder(BUCKET).stacksTo(1)));
 
     public final static RegistryObject<Item> VIDA_LEAVES = ITEMS.register("vida_leaves", () -> new BlockItem(VidaBlockLoader.VIDA_LEAVES.get(),new Item.Properties()));
+    public final static RegistryObject<Item> VIDA_BLUE_LEAVES = ITEMS.register("vida_blue_leaves", () -> new BlockItem(VidaBlockLoader.VIDA_BLUE_LEAVES.get(),new Item.Properties()));
 
     @ObjectHolder(registryName = "vida_reforged:crism_crest", value = "vida_reforged:crism_crest")
     public final static RegistryObject<Item> CRISM_CREST = null;
