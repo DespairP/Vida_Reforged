@@ -2,6 +2,7 @@ package teamHTBP.vidaReforged.core.common;
 
 public interface VidaConstant {
     public String ANCIENT_BELIEVER_NAME = "ancient_believer";
+    public String LIGHT_SHEEP_NAME = "light_sheep";
     public String DATA_ELEMENT_POTENTIAL = "element_potential";
     public String DATA_VIDA_MAGIC = "vida_magic";
     public String DATA_MAGIC_WORD = "vida_magic_word";

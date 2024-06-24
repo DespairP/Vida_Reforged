@@ -21,6 +21,10 @@ public class VidaMobsLoader {
                     .sized(0.5F, 0.5F)
                     .build("glow_light"));
 
+    public static final RegistryObject<EntityType<LightSheep>> LIGHT_SHEEP =
+            ENTITY_TYPES.register(LIGHT_SHEEP_NAME, () -> EntityType.Builder.of(LightSheep::new, MobCategory.CREATURE)
+                    .sized(1.0F, 2.0F)
+                    .build(LIGHT_SHEEP_NAME));
 
     static <T extends Entity> RegistryObject<EntityType<T>> registerMisc(String name, EntityType.EntityFactory<T> factory) {
         return ENTITY_TYPES.register(name, () -> EntityType.Builder

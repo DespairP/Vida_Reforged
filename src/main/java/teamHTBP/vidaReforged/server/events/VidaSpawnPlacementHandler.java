@@ -2,6 +2,7 @@ package teamHTBP.vidaReforged.server.events;
 
 
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,5 +15,6 @@ public class VidaSpawnPlacementHandler {
     @SubscribeEvent
     public static void onRegisterSpawnPlacement(SpawnPlacementRegisterEvent event){
         event.register(VidaMobsLoader.GLOW_LIGHT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, GlowLight::checkGlowSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+        event.register(VidaMobsLoader.LIGHT_SHEEP.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
     }
 }

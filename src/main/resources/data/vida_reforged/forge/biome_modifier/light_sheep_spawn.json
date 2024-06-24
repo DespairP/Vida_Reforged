@@ -1,0 +1,12 @@
+{
+    "type": "forge:add_spawns",
+    "biomes": [
+        "vida_reforged:vida_forrest"
+    ],
+    "spawners": {
+        "type": "vida_reforged:light_sheep",
+        "weight": 100,
+        "minCount": 2,
+        "maxCount": 6
+    }
+}

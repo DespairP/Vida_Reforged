@@ -7,6 +7,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teamHTBP.vidaReforged.server.mobs.AncientBeliever;
 import teamHTBP.vidaReforged.server.mobs.GlowLight;
+import teamHTBP.vidaReforged.server.mobs.LightSheep;
 import teamHTBP.vidaReforged.server.mobs.VidaMobsLoader;
 
 /**
@@ -20,5 +21,6 @@ public class MobsAttributeHandler {
     public static void onEvent(EntityAttributeCreationEvent event) {
         event.put(VidaMobsLoader.ANCIENT_BELIEVER.get(), AncientBeliever.createAttributes().build());
         event.put(VidaMobsLoader.GLOW_LIGHT.get(), GlowLight.createAttributes().build());
+        event.put(VidaMobsLoader.LIGHT_SHEEP.get(), LightSheep.createAttributes().build());
     }
 }
