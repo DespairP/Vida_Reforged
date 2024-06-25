@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "age=0": { "model": "vida_reforged:block/crop/wrath_thorn/wrath_thorn_stage_0" },
+    "age=1": { "model": "vida_reforged:block/crop/wrath_thorn/wrath_thorn_stage_1" },
+    "age=2": { "model": "vida_reforged:block/crop/wrath_thorn/wrath_thorn_stage_2" },
+    "age=3": { "model": "vida_reforged:block/crop/wrath_thorn/wrath_thorn_stage_3" }
+  }
+}

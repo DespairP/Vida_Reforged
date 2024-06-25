@@ -293,6 +293,8 @@ public class VidaBlockLoader {
 
     /**作物*/
     @RegisterItemBlock
+    public static RegistryObject<Block> WRATH_THORN = BLOCKS.register("wrath_thorn",() -> new ParticleCropBlock(VidaElement.WOOD,() -> VidaItemLoader.WRATH_THORN_SEED_BAG.get(),() -> null));
+    @RegisterItemBlock
     public static RegistryObject<Block> CRIMSON_CREST = BLOCKS.register("crimson_crest", () ->
             new MutationCrop(
                     VidaElement.FIRE,
