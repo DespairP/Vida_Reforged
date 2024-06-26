@@ -5,6 +5,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teamHTBP.vidaReforged.client.model.mobs.LightSheepRenderer;
+import teamHTBP.vidaReforged.client.model.mobs.OrangeSpottedSparrowsRenderer;
 import teamHTBP.vidaReforged.server.mobs.VidaMobsLoader;
 import teamHTBP.vidaReforged.client.model.mobs.AncientBelieverRenderer;
 
@@ -14,5 +15,6 @@ public class MobsModelRegistryHandler {
     public static void onClientSetUpEvent(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(VidaMobsLoader.ANCIENT_BELIEVER.get(), AncientBelieverRenderer::new);
         event.registerEntityRenderer(VidaMobsLoader.LIGHT_SHEEP.get(), LightSheepRenderer::new);
+        event.registerEntityRenderer(VidaMobsLoader.ORANGE_SPOTTED_SPARROW.get(), OrangeSpottedSparrowsRenderer::new);
     }
 }

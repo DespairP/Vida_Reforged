@@ -26,6 +26,12 @@ public class VidaMobsLoader {
                     .sized(1.0F, 2.0F)
                     .build(LIGHT_SHEEP_NAME));
 
+    public static final RegistryObject<EntityType<OrangeSpottedSparrow>> ORANGE_SPOTTED_SPARROW =
+            ENTITY_TYPES.register(ORANGE_SPOTTED_SPARROW_NAME, () -> EntityType.Builder.of(OrangeSpottedSparrow::new, MobCategory.CREATURE)
+                    .sized(1.0F, 0.5F)
+                    .build(ORANGE_SPOTTED_SPARROW_NAME));
+
+
     static <T extends Entity> RegistryObject<EntityType<T>> registerMisc(String name, EntityType.EntityFactory<T> factory) {
         return ENTITY_TYPES.register(name, () -> EntityType.Builder
                 .of(factory, MobCategory.MISC)
