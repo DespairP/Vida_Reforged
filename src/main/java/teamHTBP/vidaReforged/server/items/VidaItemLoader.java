@@ -48,6 +48,7 @@ public class VidaItemLoader {
     public final static RegistryObject<Item> FIRE_GEM = ITEMS.register("fire_gem", ElementGem::new);
     public final static RegistryObject<Item> EARTH_GEM = ITEMS.register("earth_gem", ElementGem::new);
     public final static RegistryObject<Item> WRATH_THORN_SEED_BAG = ITEMS.register("wrath_thorn_seed_bag", SeedItem::new);
+    public final static RegistryObject<Item> FIERY_STUMP_SEED_BAG = ITEMS.register("fiery_stump_seed_bag", SeedItem::new);
     public final static RegistryObject<Item> CRIMSON_CREST_SEED_ITEM = ITEMS.register("crimson_crest_seed_item", SeedItem::new);
     public final static RegistryObject<Item> PLAM_STEM_SEED_ITEM = ITEMS.register("plam_stem_seed_item", SeedItem::new);
     public final static RegistryObject<Item> HEART_OF_WAL_SEED_ITEM = ITEMS.register("heart_of_wal_seed_item", SeedItem::new);

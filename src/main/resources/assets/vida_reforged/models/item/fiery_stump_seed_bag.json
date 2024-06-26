@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "vida_reforged:item/crop/seed_bag/fiery_stump_seed_bag"
+	}
+}
