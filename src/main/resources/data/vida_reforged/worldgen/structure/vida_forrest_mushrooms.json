@@ -14,16 +14,6 @@
   "use_expansion_hack": false,
   "setups": [
     {
-      "air_pocket_probability": 1.0,
-      "can_be_cold": true,
-      "mossiness": 0.2,
-      "overgrown": false,
-      "placement": "in_mountain",
-      "replace_with_blackstone": false,
-      "vines": false,
-      "weight": 0.5
-    },
-    {
       "air_pocket_probability": 0.5,
       "can_be_cold": true,
       "mossiness": 0.2,
@@ -31,7 +21,7 @@
       "placement": "on_land_surface",
       "replace_with_blackstone": false,
       "vines": false,
-      "weight": 0.5
+      "weight": 0.7
     }
   ]
 }
