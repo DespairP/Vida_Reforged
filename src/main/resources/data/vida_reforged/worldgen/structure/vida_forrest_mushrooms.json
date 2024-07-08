@@ -1,0 +1,37 @@
+{
+  "type": "vida_reforged:vida_tree_sp",
+  "biomes": "vida_reforged:vida_forrest",
+  "step": "surface_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "none",
+  "start_pool": "vida_reforged:vida_forrest_mushrooms",
+  "size": 1,
+  "start_height": {
+    "absolute": 0
+  },
+  "project_start_to_heightmap": "WORLD_SURFACE_WG",
+  "max_distance_from_center": 20,
+  "use_expansion_hack": false,
+  "setups": [
+    {
+      "air_pocket_probability": 1.0,
+      "can_be_cold": true,
+      "mossiness": 0.2,
+      "overgrown": false,
+      "placement": "in_mountain",
+      "replace_with_blackstone": false,
+      "vines": false,
+      "weight": 0.5
+    },
+    {
+      "air_pocket_probability": 0.5,
+      "can_be_cold": true,
+      "mossiness": 0.2,
+      "overgrown": false,
+      "placement": "on_land_surface",
+      "replace_with_blackstone": false,
+      "vines": false,
+      "weight": 0.5
+    }
+  ]
+}

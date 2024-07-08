@@ -35,7 +35,8 @@ import java.util.concurrent.atomic.AtomicReference;
  * Vida法杖，
  * 提供魔力储存和魔法储存的
  * */
-public class VidaWand extends Item implements IVidaManaConsumable {
+public class
+VidaWand extends Item implements IVidaManaConsumable {
     public static int holdTime = 0;
 
     public VidaWand() {
