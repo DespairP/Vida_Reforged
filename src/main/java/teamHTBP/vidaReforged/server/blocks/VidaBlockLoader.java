@@ -292,8 +292,8 @@ public class VidaBlockLoader {
 
 
     /**作物*/
-    public static RegistryObject<Block> WRATH_THORN = BLOCKS.register("wrath_thorn",() -> new VidaParticleCropBlock(VidaElement.WOOD,() -> VidaItemLoader.WRATH_THORN_SEED_BAG.get(),() -> null));
-    public static RegistryObject<Block> FIERY_STUMP = BLOCKS.register("fiery_stump",() -> new VidaParticleCropBlock(VidaElement.FIRE,() -> VidaItemLoader.FIERY_STUMP_SEED_BAG.get(),() -> null));
+    public static RegistryObject<Block> WRATH_THORN = BLOCKS.register("wrath_thorn",() -> new VidaParticleCropBlock(VidaElement.WOOD,() -> VidaItemLoader.WRATH_THORN_SEED_BAG.get()));
+    public static RegistryObject<Block> FIERY_STUMP = BLOCKS.register("fiery_stump",() -> new VidaParticleCropBlock(VidaElement.FIRE,() -> VidaItemLoader.FIERY_STUMP_SEED_BAG.get()));
     public static RegistryObject<Block> CRIMSON_CREST = BLOCKS.register("crimson_crest", () -> new VidaParticleCropBlock(VidaElement.FIRE, () -> VidaItemLoader.CRIMSON_CREST_SEED_ITEM.get(), ()-> Blocks.WHEAT.defaultBlockState()));
     public static RegistryObject<Block> HEART_OF_WAL = BLOCKS.register("heart_of_wal", () -> new VidaParticleCropBlock(VidaElement.WOOD, ()-> VidaItemLoader.HEART_OF_WAL_SEED_ITEM.get()));
     public static RegistryObject<Block> NITRITE_THORNS = BLOCKS.register("nitrite_thorns", () -> new VidaParticleCropBlock(VidaElement.GOLD, ()-> VidaItemLoader.NITRITE_THORNS_SEED_ITEM.get()));
