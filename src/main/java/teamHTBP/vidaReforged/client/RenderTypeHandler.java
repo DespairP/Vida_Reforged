@@ -20,6 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.client.events.ShadersHandler;
 import teamHTBP.vidaReforged.plugin.ModsInfo;
 
 import javax.annotation.Nonnull;
@@ -111,6 +112,7 @@ public class RenderTypeHandler extends RenderStateShard{
         @Override
         public void begin(BufferBuilder bufferBuilder, TextureManager textureManager) {
             RenderSystem.enableBlend();
+            int j = RenderSystem.getShaderTexture(0);
             RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_PARTICLES);
             RenderSystem.defaultBlendFunc();
             RenderSystem.depthMask(false);

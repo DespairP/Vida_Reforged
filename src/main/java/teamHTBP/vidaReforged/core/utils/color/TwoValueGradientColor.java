@@ -5,10 +5,19 @@ public class TwoValueGradientColor {
     private final ARGBColor fromColor;
     private final ARGBColor toColor;
 
+    public TwoValueGradientColor(VidaColor fromColor, VidaColor toColor) {
+        this.fromColor = fromColor.toARGB();
+        this.toColor = toColor.toARGB();
+    }
 
     public TwoValueGradientColor(ARGBColor fromColor, ARGBColor toColor) {
         this.fromColor = fromColor;
         this.toColor = toColor;
+    }
+
+    public TwoValueGradientColor(int fromColorHex, int toColorHex){
+        this.fromColor = ARGBColor.argb(fromColorHex);
+        this.toColor = ARGBColor.argb(toColorHex);
     }
 
     public ARGBColor getColor(float progress){

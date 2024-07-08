@@ -20,6 +20,9 @@ public class VidaParticleTypeLoader {
     @RegisterParticleType(CuboidParticle.class)
     public final static RegistryObject<ParticleType<BaseParticleType>> CUBOID_PARTICLE_TYPE = PARTICLE_TYPE_REGISTER.register("cuboid_particle", ()->new BaseParticleType(VidaParticleTypeLoader.CUBOID_PARTICLE_TYPE));
 
+    @RegisterParticleType(Cube2DParticle.class)
+    public final static RegistryObject<ParticleType<BaseParticleType>> CUBE_2D_PARTICLE_TYPE = PARTICLE_TYPE_REGISTER.register("cube_2d_particle", ()->new BaseParticleType(VidaParticleTypeLoader.CUBE_2D_PARTICLE_TYPE));
+
     @RegisterParticleType(SparkParticle.class)
     public final static RegistryObject<ParticleType<BaseParticleType>> SPARK_PARTICLE_TYPE = PARTICLE_TYPE_REGISTER.register("spark_particle", ()->new BaseParticleType(VidaParticleTypeLoader.SPARK_PARTICLE_TYPE));
 

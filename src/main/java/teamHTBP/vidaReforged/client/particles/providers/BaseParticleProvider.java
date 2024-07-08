@@ -67,6 +67,7 @@ public class BaseParticleProvider implements ParticleProvider<BaseParticleType> 
                                         pType.getColorGreen(),
                                         pType.getColorBlue()
                                     ),
+                                    pType.getToColor(),
                                     pType.getToPos()
                             )
                     );

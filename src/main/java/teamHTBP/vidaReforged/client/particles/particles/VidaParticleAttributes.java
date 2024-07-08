@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 
 /**
  * */
-public record VidaParticleAttributes(int lifeTime, float scale, ARGBColor color,Vector3f toPos) {
+public record VidaParticleAttributes(int lifeTime, float scale, ARGBColor color, ARGBColor toColor, Vector3f toPos) {
     @Override
     public int lifeTime() {
         return lifeTime;

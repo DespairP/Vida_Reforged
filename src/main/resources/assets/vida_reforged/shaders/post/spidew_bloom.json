@@ -1,0 +1,92 @@
+{
+    "targets": [
+        "water",
+        "translucent",
+        "itemEntity",
+        "particles",
+        "clouds",
+        "weather",
+        "final",
+        "swapA",
+        "swapB"
+    ],
+    "passes": [
+        {
+            "name": "transparency",
+            "intarget": "minecraft:main",
+            "outtarget": "final",
+            "auxtargets": [
+                {
+                    "name": "DiffuseDepthSampler",
+                    "id": "minecraft:main:depth"
+                },
+                {
+                    "name": "TranslucentSampler",
+                    "id": "translucent"
+                },
+                {
+                    "name": "TranslucentDepthSampler",
+                    "id": "translucent:depth"
+                },
+                {
+                    "name": "ItemEntitySampler",
+                    "id": "itemEntity"
+                },
+                {
+                    "name": "ItemEntityDepthSampler",
+                    "id": "itemEntity:depth"
+                },
+                {
+                    "name": "ParticlesSampler",
+                    "id": "particles"
+                },
+                {
+                    "name": "ParticlesDepthSampler",
+                    "id": "particles:depth"
+                },
+                {
+                    "name": "CloudsSampler",
+                    "id": "clouds"
+                },
+                {
+                    "name": "CloudsDepthSampler",
+                    "id": "clouds:depth"
+                },
+                {
+                    "name": "WeatherSampler",
+                    "id": "weather"
+                },
+                {
+                    "name": "WeatherDepthSampler",
+                    "id": "weather:depth"
+                }
+            ]
+        },
+        {
+            "name": "vida_reforged:bright_extraction",
+            "intarget": "final",
+            "outtarget": "swapA"
+        },
+        {
+            "name": "vida_reforged:spidew_blur_h",
+            "intarget": "swapA",
+            "outtarget": "swapB"
+        },
+        {
+            "name": "vida_reforged:spidew_blur_v",
+            "intarget": "swapB",
+            "outtarget": "swapA"
+        },
+        {
+            "name": "vida_reforged:apply_bloom",
+            "intarget": "final",
+            "outtarget": "minecraft:main",
+            "auxtargets": [
+                {
+                    "name": "BloomSampler",
+                    "id": "swapA"
+                }
+            ]
+        }
+    ]
+}

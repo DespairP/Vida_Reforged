@@ -4,19 +4,23 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import teamHTBP.vidaReforged.VidaReforged;
-import teamHTBP.vidaReforged.core.utils.reg.RegisterItemBlock;
+import teamHTBP.vidaReforged.core.utils.reg.RegisterGroup;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
+import java.lang.reflect.Field;
+
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
+import static teamHTBP.vidaReforged.server.events.BlockItemAutoRegisterHandler.LOGGER;
 import static teamHTBP.vidaReforged.server.events.BlockItemAutoRegisterHandler.REGISTRY_ITEMBLOCK_MAP;
 import static teamHTBP.vidaReforged.server.items.VidaItemLoader.VIDA_WAND;
 import static teamHTBP.vidaReforged.server.items.VidaItemLoader.VIVID_BUCKET;
@@ -37,6 +41,8 @@ public class VidaItemGroupLoader {
             // Add default items to tab
             .build()
     );
+    /**LOGGER*/
+    public static final Logger LOGGER = LogManager.getLogger();
 
 
     @SubscribeEvent
@@ -86,10 +92,25 @@ public class VidaItemGroupLoader {
             event.accept(VidaItemLoader.VIVID_BUCKET.get());
             event.accept(VidaItemLoader.VIDA_LEAVES.get());
             event.accept(VidaItemLoader.VIDA_BLUE_LEAVES.get());
+            init(event);
         }
     }
 
 
-
+    /**
+     * 获取所有可以被注册的字段
+     */
+    private static void init(final BuildCreativeModeTabContentsEvent event) {
+        try {
+            for (Field decoratedBlock : VidaItemLoader.class.getDeclaredFields()) {
+                if (decoratedBlock.getType() == RegistryObject.class && decoratedBlock.isAnnotationPresent(RegisterGroup.class)) {
+                    decoratedBlock.setAccessible(true);
+                    event.accept(((RegistryObject<Item>)decoratedBlock.get(null)).get());
+                }
+            }
+        }catch (IllegalArgumentException | IllegalAccessException exception){
+            LOGGER.error(exception);
+        }
+    }
 
 }

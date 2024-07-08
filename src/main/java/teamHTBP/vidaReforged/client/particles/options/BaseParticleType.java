@@ -14,6 +14,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import teamHTBP.vidaReforged.client.events.registries.VidaParticleProviderAutoRegistryHandler;
+import teamHTBP.vidaReforged.client.particles.particles.VidaParticleAttributes;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 
 import java.util.*;
@@ -26,6 +27,8 @@ import java.util.function.Supplier;
 public class BaseParticleType extends ParticleType<BaseParticleType> implements ParticleOptions {
     /**粒子颜色*/
     public ARGBColor color;
+    /**粒子第二颜色*/
+    public ARGBColor toColor;
     /**粒子年龄*/
     public int lifeTime = 1000;
     /**大小*/
@@ -101,6 +104,7 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
     };
 
     /**通用构造方法*/
+    @Deprecated
     public BaseParticleType(ParticleType<BaseParticleType> type, int a, int r, int g, int b, Vector3f toPos, float scale, int age) {
         super(true, DESERIALIZER);
         this.type = () -> type;
@@ -110,7 +114,18 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
         this.lifeTime = age;
     }
 
+    public BaseParticleType(RegistryObject<ParticleType<BaseParticleType>> type, VidaParticleAttributes attributes) {
+        super(true, DESERIALIZER);
+        this.type = type::get;
+        this.color = attributes.color();
+        this.toPos = attributes.toPos();
+        this.scale = attributes.scale();
+        this.lifeTime = attributes.lifeTime();
+        this.toColor = attributes.toColor();
+    }
+
     /**通用构造方法，颜色用argb wrapper传入*/
+    @Deprecated
     public BaseParticleType(ParticleType<BaseParticleType> type, ARGBColor color, Vector3f toPos, float scale, int age) {
         this(type, color.a(), color.r(), color.g(), color.b(), toPos, scale, age);
         this.type = () -> type;
@@ -179,6 +194,10 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
 
     public int getAlpha(){
         return color.getA();
+    }
+
+    public ARGBColor getToColor() {
+        return toColor;
     }
 
     public int getLifeTime() {

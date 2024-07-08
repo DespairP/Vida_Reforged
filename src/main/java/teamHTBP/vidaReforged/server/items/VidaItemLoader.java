@@ -2,16 +2,15 @@ package teamHTBP.vidaReforged.server.items;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.item.Position;
+import teamHTBP.vidaReforged.core.utils.reg.RegisterGroup;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
 import teamHTBP.vidaReforged.server.blocks.VidaFluidsLoader;
 import teamHTBP.vidaReforged.server.items.armors.ItemArmorApprentice;
@@ -33,9 +32,6 @@ public class VidaItemLoader {
     public final static RegistryObject<Item> VIDA_LEAVES = ITEMS.register("vida_leaves", () -> new BlockItem(VidaBlockLoader.VIDA_LEAVES.get(),new Item.Properties()));
     public final static RegistryObject<Item> VIDA_BLUE_LEAVES = ITEMS.register("vida_blue_leaves", () -> new BlockItem(VidaBlockLoader.VIDA_BLUE_LEAVES.get(),new Item.Properties()));
 
-    @ObjectHolder(registryName = "vida_reforged:crism_crest", value = "vida_reforged:crism_crest")
-    public final static RegistryObject<Item> CRISM_CREST = null;
-
     public final static RegistryObject<Item> BREATH_CATCHER = ITEMS.register("breath_catcher", BreathCatcher::new);
     public final static RegistryObject<Item> GOLD_GEM = ITEMS.register("gold_gem", ElementGem::new);
     public final static RegistryObject<Item> GOLD_ELEMENT_CORE = ITEMS.register("gold_element_core", ElementGem::new);
@@ -47,15 +43,31 @@ public class VidaItemLoader {
     public final static RegistryObject<Item> AQUA_GEM = ITEMS.register("aqua_gem", ElementGem::new);
     public final static RegistryObject<Item> FIRE_GEM = ITEMS.register("fire_gem", ElementGem::new);
     public final static RegistryObject<Item> EARTH_GEM = ITEMS.register("earth_gem", ElementGem::new);
-    public final static RegistryObject<Item> WRATH_THORN_SEED_BAG = ITEMS.register("wrath_thorn_seed_bag", SeedItem::new);
-    public final static RegistryObject<Item> FIERY_STUMP_SEED_BAG = ITEMS.register("fiery_stump_seed_bag", SeedItem::new);
-    public final static RegistryObject<Item> CRIMSON_CREST_SEED_ITEM = ITEMS.register("crimson_crest_seed_item", SeedItem::new);
-    public final static RegistryObject<Item> PLAM_STEM_SEED_ITEM = ITEMS.register("plam_stem_seed_item", SeedItem::new);
-    public final static RegistryObject<Item> HEART_OF_WAL_SEED_ITEM = ITEMS.register("heart_of_wal_seed_item", SeedItem::new);
-    public final static RegistryObject<Item> NITRITE_THORNS_SEED_ITEM = ITEMS.register("nitrite_thorns_seed_item", SeedItem::new);
-    public final static RegistryObject<Item> SULLEN_HYDRANGEA_SEED_ITEM = ITEMS.register("sullen_hydrangea_seed_item", SeedItem::new);
-    public final static RegistryObject<Item> SWEET_CYAN_REED_SEED_ITEM = ITEMS.register("sweet_cyan_reed_seed_item", SeedItem::new);
+    public final static RegistryObject<Item> WRATH_THORN_SEED_BAG = ITEMS.register("wrath_thorn_seed_bag", () -> new ItemNameBlockItem(VidaBlockLoader.WRATH_THORN.get(), new Item.Properties()));
+    public final static RegistryObject<Item> FIERY_STUMP_SEED_BAG = ITEMS.register("fiery_stump_seed_bag", () -> new ItemNameBlockItem(VidaBlockLoader.FIERY_STUMP.get(), new Item.Properties()));
+    public final static RegistryObject<Item> CRIMSON_CREST_SEED_ITEM = ITEMS.register("crimson_crest_seed_item", () -> new ItemNameBlockItem(VidaBlockLoader.CRIMSON_CREST.get(), new Item.Properties()));
+    public final static RegistryObject<Item> PLAM_STEM_SEED_ITEM = ITEMS.register("plam_stem_seed_item", () -> new ItemNameBlockItem(VidaBlockLoader.PLAM_STEM.get(), new Item.Properties()));
+    public final static RegistryObject<Item> HEART_OF_WAL_SEED_ITEM = ITEMS.register("heart_of_wal_seed_item", () -> new ItemNameBlockItem(VidaBlockLoader.HEART_OF_WAL.get(), new Item.Properties()));
+    public final static RegistryObject<Item> NITRITE_THORNS_SEED_ITEM = ITEMS.register("nitrite_thorns_seed_item", () -> new ItemNameBlockItem(VidaBlockLoader.NITRITE_THORNS.get(), new Item.Properties()));
+    public final static RegistryObject<Item> SULLEN_HYDRANGEA_SEED_ITEM = ITEMS.register("sullen_hydrangea_seed_item", () -> new ItemNameBlockItem(VidaBlockLoader.SULLEN_HYDRANGEA.get(), new Item.Properties()));
+    public final static RegistryObject<Item> SWEET_CYAN_REED_SEED_ITEM = ITEMS.register("sweet_cyan_reed_seed_item", () -> new ItemNameBlockItem(VidaBlockLoader.SWEET_CYAN_REED.get(), new Item.Properties()));
 
+    @RegisterGroup
+    public final static RegistryObject<Item> WRATH_THORN = ITEMS.register("wrath_thorn", () -> new Item(new Item.Properties()));
+    @RegisterGroup
+    public final static RegistryObject<Item> FIERY_STUMP = ITEMS.register("fiery_stump", () -> new Item(new Item.Properties()));
+    @RegisterGroup
+    public final static RegistryObject<Item> CRIMSON_CREST = ITEMS.register("crimson_crest", () -> new Item(new Item.Properties()));
+    @RegisterGroup
+    public final static RegistryObject<Item> PLAM_STEM = ITEMS.register("plam_stem", () -> new Item(new Item.Properties()));
+    @RegisterGroup
+    public final static RegistryObject<Item> HEART_OF_WAL = ITEMS.register("heart_of_wal", () -> new Item(new Item.Properties()));
+    @RegisterGroup
+    public final static RegistryObject<Item> NITRITE_THORNS = ITEMS.register("nitrite_thorns", () -> new Item(new Item.Properties()));
+    @RegisterGroup
+    public final static RegistryObject<Item> SULLEN_HYDRANGEA = ITEMS.register("sullen_hydrangea", () -> new Item(new Item.Properties()));
+    @RegisterGroup
+    public final static RegistryObject<Item> SWEET_CYAN_REED= ITEMS.register("sweet_cyan_reed", () -> new Item(new Item.Properties()));
 
     public final static RegistryObject<Item> UNLOCK_MAGIC_WORD_PAPER = ITEMS.register("unlock_magic_word_paper", UnlockMagicWordPaper::new);
     public final static RegistryObject<Item> BLACK_METAL_HELMET = ITEMS.register("black_metal_helmet", () -> new ItemArmorBlackMetal(ArmorItem.Type.HELMET));

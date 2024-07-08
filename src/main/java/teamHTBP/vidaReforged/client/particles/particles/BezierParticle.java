@@ -21,7 +21,7 @@ public class BezierParticle extends TrailParticle {
     public List<Vector3d> tails = new ArrayList<>();
 
     public BezierParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, int a, int r, int g, int b, int size, int age, List<Vector3d> tails) {
-        super(level, x, y ,z, speedX, speedY, speedZ, new VidaParticleAttributes(age, size, new ARGBColor(a, r, g, b), new Vector3f()));
+        super(level, x, y ,z, speedX, speedY, speedZ, new VidaParticleAttributes(age, size, new ARGBColor(a, r, g, b), null , new Vector3f()));
         this.tails = tails;
         this.lifetime = age;
         this.rCol = r / 255.0F;

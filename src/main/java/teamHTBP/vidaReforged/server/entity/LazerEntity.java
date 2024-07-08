@@ -225,7 +225,7 @@ public abstract class LazerEntity extends Entity implements IEntityAdditionalSpa
         for (double j = 0; j < dist; j++) {
             double coeff = j / dist;
             level().addParticle(
-                    new BaseParticleType(VidaParticleTypeLoader.CUBE_PARTICLE_TYPE.get(), new ARGBColor(255, 190, 0, 255), new Vector3f(), 1, 100),
+                    new BaseParticleType(VidaParticleTypeLoader.ORB_PARTICLE.get(), new ARGBColor(255, 190, 0, 255), new Vector3f(), 1, 100),
                     (float) (xo + deltaX * coeff),
                     (float) (yo + deltaY * coeff) + 0.1, (float)
                             (zo + deltaZ * coeff),
