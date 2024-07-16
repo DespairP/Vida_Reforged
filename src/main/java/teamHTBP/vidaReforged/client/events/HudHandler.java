@@ -22,6 +22,7 @@ import org.apache.logging.log4j.Logger;
 import teamHTBP.vidaReforged.VidaConfig;
 import teamHTBP.vidaReforged.client.hud.*;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
+import teamHTBP.vidaReforged.server.blockEntities.FloatingCrystalBlockEntity;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
 
 import java.lang.reflect.Constructor;
@@ -148,11 +149,14 @@ public class HudHandler {
         GuiGraphics graphics = event.getGuiGraphics();
         MultiBufferSource.BufferSource bufferSource = event.getGuiGraphics().bufferSource();
         if(entity != null && entity.getBlockState().is(VidaBlockLoader.PURIFICATION_CAULDRON.get())){
-            new VidaCauldronScreen(mc, bufferSource).render(graphics, entity, globalHudAlpha.increase(0.02f));
+            new VidaCauldronScreen(mc, bufferSource, entity).render(graphics, event.getPartialTick());
             return;
         }
+        if(entity instanceof FloatingCrystalBlockEntity){
+            new VidaCrystalManaScreen(mc,bufferSource, entity).render(graphics, event.getPartialTick());
+        }
         if(entity != null && entity.getBlockState().is(VidaBlockLoader.COLLECTOR.get())){
-            new VidaCollectorScreen(mc, bufferSource).render(graphics.pose(), entity, globalHudAlpha.increase(0.02f));
+            new VidaCollectorScreen(mc, bufferSource, entity).render(graphics, event.getPartialTick());
             return;
         }
         globalHudAlpha.decrease(0.02f);
@@ -213,7 +217,7 @@ public class HudHandler {
 
     @OnlyIn(Dist.CLIENT)
     public static BlockEntity getBlockEntityPlayerLookAt(Player player){
-        HitResult block =  player.pick(20.0D, 0.0F, false);
+        HitResult block =  player.pick(7.0D, 0.0F, false);
         if(block.getType() == HitResult.Type.BLOCK) {
             BlockPos blockpos = ((BlockHitResult)block).getBlockPos();
             return player.getCommandSenderWorld().getBlockEntity(blockpos);

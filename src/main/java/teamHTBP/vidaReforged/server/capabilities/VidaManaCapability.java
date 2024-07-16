@@ -1,14 +1,9 @@
 package teamHTBP.vidaReforged.server.capabilities;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.entity.animal.Cod;
-import net.minecraftforge.common.IExtensibleEnum;
 import net.minecraftforge.common.util.INBTSerializable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,11 +11,9 @@ import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 import teamHTBP.vidaReforged.core.api.capability.Result;
 import teamHTBP.vidaReforged.core.api.capability.VidaCapabilityResult;
+import teamHTBP.vidaReforged.helper.VidaElementHelper;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -38,7 +31,8 @@ public class VidaManaCapability implements IVidaManaCapability, INBTSerializable
     /**元素数量是否被限制*/
     private boolean isLimited = false;
     private int limitAmount = 1;
-
+    /**限制可以加入的元素*/
+    private List<VidaElement> strictElements;
     private static final Logger LOGGER = LogManager.getLogger();
 
     /** Codec*/
@@ -46,24 +40,28 @@ public class VidaManaCapability implements IVidaManaCapability, INBTSerializable
             Codec.DOUBLE.fieldOf("maxMana").orElse(1.0).forGetter(VidaManaCapability::getMaxMana),
             Codec.BOOL.fieldOf("isLimited").orElse(false).forGetter(VidaManaCapability::isEnableLimitedElement),
             Codec.unboundedMap(VidaElement.CODEC, Codec.DOUBLE).orElseGet(() -> {HashMap<VidaElement, Double> map =new HashMap<>(); map.putAll(Arrays.stream(VidaElement.values()).collect(Collectors.toMap(key -> key, key -> 0.0))); return map;}).fieldOf("mana").forGetter(VidaManaCapability::getAllElementsMana),
-            Codec.INT.fieldOf("limitAmount").orElse(1).forGetter(VidaManaCapability::getLimitElementAmount)
+            Codec.INT.fieldOf("limitAmount").orElse(1).forGetter(VidaManaCapability::getLimitElementAmount),
+            VidaElement.CODEC.listOf().fieldOf("strictElements").orElse(VidaElementHelper.getNormalElements()).forGetter(VidaManaCapability::getStrictElements)
     ).apply(ins, VidaManaCapability::new));
 
 
-    public VidaManaCapability(double maxMana, boolean isLimited, Map<VidaElement, Double> mana, int limitAmount) {
+    public VidaManaCapability(double maxMana, boolean isLimited, Map<VidaElement, Double> mana, int limitAmount, List<VidaElement> strictElements) {
         this();
         this.maxMana = maxMana;
         this.mana.putAll(mana);
         this.isLimited = isLimited;
         this.limitAmount = limitAmount;
+        this.strictElements = strictElements;
     }
 
     public VidaManaCapability(){
         this.mana.putAll(Arrays.stream(VidaElement.values()).collect(Collectors.toMap(key -> key, key -> 0.0)));
     }
 
-    public VidaManaCapability(double maxMana) {
+    public VidaManaCapability(double maxMana, boolean isLimited, List<VidaElement> strictedElements) {
         this.maxMana = maxMana;
+        this.isLimited = isLimited;
+        this.strictElements = strictedElements;
     }
 
     @Override
@@ -165,9 +163,14 @@ public class VidaManaCapability implements IVidaManaCapability, INBTSerializable
     @Override
     public VidaCapabilityResult<Double> setMana(VidaElement element, double energy) {
         final int usedElementCount = getElementsCountCurrentInUse();
-        final boolean isNewElement = Math.floor(mana.get(element)) <= 0.0;
+        final boolean isNewElement = Math.floor(mana.getOrDefault(element, 0.0)) <= 0.0;
         final double remainSumManaAmount = this.maxMana - getSumElementMana();
         final double currentElementManaAmount = getManaByElement(element);
+
+        // 如果不在可以接受的元素中，则不在存储
+        if(!getStrictElements().contains(element)){
+            return new VidaCapabilityResult<>(FAILED, 0.0);
+        }
 
         // 如果已经超过了可以存储的元素个数，则不再存储
         if(isEnableLimitedElement() && (isNewElement && usedElementCount + 1 > getLimitElementAmount())) {
@@ -211,6 +214,15 @@ public class VidaManaCapability implements IVidaManaCapability, INBTSerializable
     }
 
     @Override
+    public void setStrictElements(List<VidaElement> elements) {
+        this.strictElements = new ArrayList<>(elements);
+    }
+
+    public List<VidaElement> getStrictElements() {
+        return strictElements;
+    }
+
+    @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
 
@@ -232,6 +244,7 @@ public class VidaManaCapability implements IVidaManaCapability, INBTSerializable
             this.isLimited = cap.isLimited;
             this.limitAmount = cap.limitAmount;
             this.efficiency = cap.efficiency;
+            this.strictElements = cap.strictElements;
         } catch (Exception ex){
             LOGGER.error(ex);
         }

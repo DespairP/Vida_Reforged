@@ -11,6 +11,14 @@
     {
       "item": "vida_reforged:sun_flower",
       "energy": 100
+    },
+    {
+      "item": "minecraft:torchflower_seeds",
+      "energy": 40
+    },
+    {
+      "item": "vida_reforged:crimson_crest_seed_item",
+      "energy": 100
     }
   ],
   "WOOD": [
@@ -33,6 +41,10 @@
     {
       "item": "vida_reforged:emerald_mushroom",
       "energy": 100
+    },
+    {
+      "item": "vida_reforged:sweet_cyan_reed_seed_item",
+      "energy": 30
     }
   ],
   "AQUA": [
@@ -55,11 +67,19 @@
     {
       "item": "vida_reforged:blue_jelly_mushroom",
       "energy": 100
+    },
+    {
+      "item": "vida_reforged:plam_stem_seed_item",
+      "energy": 30
     }
   ],
   "GOLD": [
     {
       "item": "vida_reforged:nitrite_thorns",
+      "energy": 100
+    },
+    {
+      "item": "vida_reforged:nitrite_thorns_seed_item",
       "energy": 100
     }
   ],
@@ -75,6 +95,22 @@
     {
       "item": "vida_reforged:pink_jelly_flower",
       "energy": 100
+    },
+    {
+      "item": "minecraft:wheat_seeds",
+      "energy": 30
+    },
+    {
+      "item": "minecraft:beetroot_seeds",
+      "energy": 40
+    },
+    {
+      "item": "minecraft:pumpkin_seeds",
+      "energy": 40
+    },
+    {
+      "item": "minecraft:melon_seeds",
+      "energy": 40
     }
   ]
 }

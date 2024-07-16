@@ -73,7 +73,7 @@ public class ElementPotentialManager extends AbstractVidaManager {
     }
 
     /**根据Item获取Potential*/
-    public ElementPotential getPotential(Item item){
+    public static ElementPotential getPotential(Item item){
         return itemPotentialMap.get(item.toString());
     }
 

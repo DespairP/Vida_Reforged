@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Vector2i;
+import teamHTBP.vidaReforged.core.api.hud.IVidaEntityScreen;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.helper.VidaGuiHelper;
@@ -24,8 +25,7 @@ import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
  * @see teamHTBP.vidaReforged.client.events.HudHandler
  * */
 @OnlyIn(Dist.CLIENT)
-public class VidaCauldronScreen extends GuiGraphics implements IVidaScreen {
-
+public class VidaCauldronScreen extends GuiGraphics implements IVidaEntityScreen {
     ResourceLocation location = new ResourceLocation(MOD_ID, "textures/gui/cauldron_hud.png");
     /**托盘材质路径*/
     TextureSection plateSection = new TextureSection(location, 2, 23, 22, 7, 64, 64);
@@ -37,14 +37,46 @@ public class VidaCauldronScreen extends GuiGraphics implements IVidaScreen {
     TextureSection barSection = new TextureSection(location, 30, 14, 6, 22, 64, 64);
     /**进度条材质路径*/
     TextureSection barFillSection = new TextureSection(location, 40, 32, 2, 1, 64, 64);
+    /**BlockEntity*/
+    BlockEntity blockEntity;
 
-    public VidaCauldronScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource) {
+
+    public VidaCauldronScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource, BlockEntity blockEntity) {
         super(minecraft, bufferSource);
+        this.blockEntity = blockEntity;
     }
 
-    public void render(GuiGraphics graphics, BlockEntity entity, float alpha) {
+
+    public void renderItem(BasePurificationCauldronBlockEntity blockEntity, Vector2i plate) {
+        if (!blockEntity.isInProgress) {
+            return;
+        }
+        super.renderItem(blockEntity.purificationItems.get(0), plate.x + 4, plate.y - 20);
+
+        Font font = Minecraft.getInstance().font;
+        super.drawCenteredString( font, ""+ blockEntity.purificationItems.get(0).getCount(), plate.x + 20, plate.y - 6, 0xFFFFFF);
+
+
+        if (blockEntity.getMaxSubTaskProgress() <= 0){
+            return;
+        }
+
+        float degree = 360.0f * blockEntity.progress / blockEntity.getMaxSubTaskProgress();
+
+        VidaGuiHelper.renderCircle(
+                this,
+                this.pose(),
+                plate.x + 12,
+                plate.y - 12,
+                10,
+                degree,
+                new ARGBColor(100,255,255, 255));
+    }
+
+    @Override
+    public void render(GuiGraphics graphics, float partialTicks) {
         BasePurificationCauldronBlockEntity cauldronBlockEntity = null;
-        if (entity instanceof BasePurificationCauldronBlockEntity blockEntity) {
+        if (blockEntity instanceof BasePurificationCauldronBlockEntity blockEntity) {
             cauldronBlockEntity = blockEntity;
         }
         if (cauldronBlockEntity == null) {
@@ -116,34 +148,8 @@ public class VidaCauldronScreen extends GuiGraphics implements IVidaScreen {
         poseStack.popPose();
     }
 
-    public void renderItem(BasePurificationCauldronBlockEntity blockEntity, Vector2i plate) {
-        if (!blockEntity.isInProgress) {
-            return;
-        }
-        super.renderItem(blockEntity.purificationItems.get(0), plate.x + 4, plate.y - 20);
-
-        Font font = Minecraft.getInstance().font;
-        super.drawCenteredString( font, ""+ blockEntity.purificationItems.get(0).getCount(), plate.x + 20, plate.y - 6, 0xFFFFFF);
-
-
-        if (blockEntity.getMaxSubTaskProgress() <= 0){
-            return;
-        }
-
-        float degree = 360.0f * blockEntity.progress / blockEntity.getMaxSubTaskProgress();
-
-        VidaGuiHelper.renderCircle(
-                this,
-                this.pose(),
-                plate.x + 12,
-                plate.y - 12,
-                10,
-                degree,
-                new ARGBColor(100,255,255, 255));
-    }
-
     @Override
-    public void render(GuiGraphics graphics, float partialTicks) {
-
+    public void setBlockEntity(BlockEntity blockEntity) {
+        this.blockEntity = blockEntity;
     }
 }

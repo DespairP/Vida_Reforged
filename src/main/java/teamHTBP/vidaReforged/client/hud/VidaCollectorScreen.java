@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import teamHTBP.vidaReforged.core.api.hud.IVidaEntityScreen;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.blockEntities.BasePurificationCauldronBlockEntity;
@@ -16,27 +17,26 @@ import teamHTBP.vidaReforged.server.blockEntities.CollectorBlockEntity;
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
 @OnlyIn(Dist.CLIENT)
-public class VidaCollectorScreen extends AbstractVidaHUDScreen implements IVidaScreen {
-
+public class VidaCollectorScreen extends AbstractVidaHUDScreen implements IVidaEntityScreen {
     public final ResourceLocation LOCATION = new ResourceLocation(MOD_ID, "textures/gui/collector_hud.png");
     /**收集器*/
     public final TextureSection BLOCK = new TextureSection(LOCATION, 1, 35,13,13, 48, 48);
-
     public final TextureSection ITEM_SLOT = new TextureSection(LOCATION, 1, 1,24,24, 48, 48);
-
     public final TextureSection BAR = new TextureSection(LOCATION, 19, 29,22,6, 48, 48);
-
     public final TextureSection PROGRESS = new TextureSection(LOCATION, 22, 38,16,2, 48, 48);
+    private BlockEntity blockEntity;
 
-
-    public VidaCollectorScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource) {
+    public VidaCollectorScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource, BlockEntity blockEntity) {
         super(minecraft, bufferSource);
+        this.blockEntity = blockEntity;
     }
 
-    public void render(PoseStack poseStack, BlockEntity entity, float alpha) {
+    @Override
+    public void render(GuiGraphics graphics, float partialTicks) {
+        PoseStack poseStack = graphics.pose();
         CollectorBlockEntity collectorBlockEntity = null;
-        if (entity instanceof CollectorBlockEntity blockEntity) {
-            collectorBlockEntity = blockEntity;
+        if (blockEntity instanceof CollectorBlockEntity entity) {
+            collectorBlockEntity = entity;
         }
         if (collectorBlockEntity == null) {
             return;
@@ -94,13 +94,10 @@ public class VidaCollectorScreen extends AbstractVidaHUDScreen implements IVidaS
         }
 
         poseStack.popPose();
-
     }
 
-
-
     @Override
-    public void render(GuiGraphics graphics, float partialTicks) {
+    public void setBlockEntity(BlockEntity blockEntity) {
 
     }
 }

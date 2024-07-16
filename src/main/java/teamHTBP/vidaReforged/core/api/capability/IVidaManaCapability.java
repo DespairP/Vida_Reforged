@@ -4,6 +4,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,4 +56,6 @@ public interface IVidaManaCapability extends INBTSerializable<CompoundTag> {
 
     /**如果有限制，则获取限制元素的数量*/
     public int getLimitElementAmount();
+
+    public void setStrictElements(List<VidaElement> elements);
 }
