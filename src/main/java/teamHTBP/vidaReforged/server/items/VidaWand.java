@@ -1,5 +1,7 @@
 package teamHTBP.vidaReforged.server.items;
 
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -13,10 +15,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.example.client.renderer.item.JackInTheBoxRenderer;
 import teamHTBP.vidaReforged.client.hud.VidaWandStaminaScreen;
+import teamHTBP.vidaReforged.client.model.itemstackModel.VidaWandItemModel;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 import teamHTBP.vidaReforged.core.api.items.IVidaManaConsumable;
@@ -30,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 /**
  * Vida法杖，
@@ -79,7 +85,9 @@ VidaWand extends Item implements IVidaManaConsumable {
     @NotNull
     public InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
         ItemStack handInItem = player.getItemInHand(hand);
-
+        if(hand == InteractionHand.OFF_HAND){
+            return InteractionResultHolder.pass(handInItem);
+        }
         if( !level.isClientSide ) {
             LazerEntity _entity1 = VidaEntityLoader.TRAIL.get().create(level);
             _entity1.init(player);
@@ -240,5 +248,23 @@ VidaWand extends Item implements IVidaManaConsumable {
         return UseAnim.BOW;
     }
 
+    @Override
+    public boolean isFoil(ItemStack stack) {
+        return false;
+    }
 
+    @Override
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        IClientItemExtensions extensions = new IClientItemExtensions() {
+            VidaWandItemModel model;
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                if(model == null){
+                    model = new VidaWandItemModel();
+                }
+                return model;
+            }
+        };
+        consumer.accept(extensions);
+    }
 }

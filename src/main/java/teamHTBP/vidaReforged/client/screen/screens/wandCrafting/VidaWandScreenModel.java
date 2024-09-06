@@ -12,6 +12,8 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Vector3f;
 import teamHTBP.vidaReforged.client.RenderTypeHandler;
 import teamHTBP.vidaReforged.client.events.registries.LayerRegistryHandler;
@@ -31,6 +33,7 @@ import java.util.Map;
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
 /**显示法杖模型*/
+@OnlyIn(Dist.CLIENT)
 public class VidaWandScreenModel extends VidaWidget {
     private static final ResourceLocation VIDA_WAND_MODEL = new ResourceLocation(MOD_ID, "textures/armor/vida_wand_model.png");
     /**旋转角度*/

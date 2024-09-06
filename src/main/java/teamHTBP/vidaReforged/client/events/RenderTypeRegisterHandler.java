@@ -2,15 +2,20 @@ package teamHTBP.vidaReforged.client.events;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import teamHTBP.vidaReforged.client.model.itemstackModel.VidaWandBakedModel;
 import teamHTBP.vidaReforged.server.blocks.VidaFluidsLoader;
 
 import java.util.LinkedHashMap;
@@ -39,6 +44,12 @@ public class RenderTypeRegisterHandler {
     public static void onFluidRender(FMLClientSetupEvent event){
         ItemBlockRenderTypes.setRenderLayer(VidaFluidsLoader.VIVID_FLUID_STILL.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(VidaFluidsLoader.VIVID_FLUID_FLOW.get(), RenderType.translucent());
+    }
+
+    @SubscribeEvent
+    public static void onBakeModel(ModelEvent.ModifyBakingResult event){
+        //ModelResourceLocation vidaWandLocation = new ModelResourceLocation(new ResourceLocation("vida_reforged","vida_wand"), "inventory");
+        //event.getModels().computeIfPresent(vidaWandLocation, (location, bakedModel) -> new VidaWandBakedModel(bakedModel));
     }
 
     /**渲染类型*/

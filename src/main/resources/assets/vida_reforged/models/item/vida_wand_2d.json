@@ -1,0 +1,7 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "vida_reforged:item/vida_wand"
+    },
+    "gui_light": "front"
+}

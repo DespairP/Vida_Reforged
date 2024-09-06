@@ -2,6 +2,8 @@ package teamHTBP.vidaReforged.client.screen.viewModels;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import teamHTBP.vidaReforged.core.common.item.Position;
 import teamHTBP.vidaReforged.core.common.ui.component.LiveData;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModel;
@@ -13,6 +15,7 @@ import teamHTBP.vidaReforged.server.providers.VidaMagicManager;
 import java.util.HashMap;
 import java.util.Map;
 
+@OnlyIn(Dist.CLIENT)
 public class VidaWandCraftingViewModel extends ViewModel {
     public LiveData<ItemStack> itemVidaWand = new LiveData<>(ItemStack.EMPTY);
 
