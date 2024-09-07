@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "vida_reforged:ruined_cabin",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "frequency": 0.4,
+    "spacing": 16,
+    "separation": 8,
+    "salt": 269118283
+  }
+}

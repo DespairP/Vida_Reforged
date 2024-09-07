@@ -1,0 +1,15 @@
+{
+    "name": "vida_reforged:ruined_cabin",
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "location": "vida_reforged:ruined_cabin",
+                "projection": "rigid",
+                "processors": "minecraft:empty"
+            }
+        }
+    ]
+}
