@@ -83,19 +83,13 @@ public class RenderTypeHandler extends RenderStateShard{
         @Override
         public void begin(BufferBuilder bufferBuilder, TextureManager textureManager) {
             setShader();
-            RenderSystem.setShaderTexture(0, TAIL);
-            RenderSystem.disableDepthTest();
-            RenderSystem.setShaderColor(
-                    1,
-                    1,
-                    1,
-                    1
-            );
             RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-            RenderSystem.depthMask(true);
-            RenderSystem.enableDepthTest();
             RenderSystem.enableCull();
+            RenderSystem.enableDepthTest();
+            RenderSystem.depthMask(true);
+            RenderSystem.setShaderTexture(0, TAIL);
+            RenderSystem.setShaderColor(1, 1, 1, 1);
+            RenderSystem.defaultBlendFunc();
         }
 
         void setShader() {
@@ -122,6 +116,8 @@ public class RenderTypeHandler extends RenderStateShard{
         @Override
         public void end(@Nonnull Tesselator tesselator) {
             tesselator.end();
+            RenderSystem.defaultBlendFunc();
+            RenderSystem.depthMask(true);
         }
 
         @Override
