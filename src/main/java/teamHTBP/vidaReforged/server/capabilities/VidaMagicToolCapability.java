@@ -10,7 +10,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.api.capability.Result;
@@ -61,9 +60,9 @@ public class VidaMagicToolCapability implements IVidaMagicContainerCapability, I
             Codec.LONG.fieldOf("count").orElse(0L).forGetter(VidaMagicToolCapability::getCountInfo),
             Codec.INT.fieldOf("currentCoolDownTime").orElse(0).forGetter(VidaMagicToolCapability::getCurrentCoolDownTime),
             Codec.LONG.fieldOf("lastInvokeTime").orElse(System.currentTimeMillis()).forGetter(VidaMagicToolCapability::getLastInvokeTime),
-            ResourceLocation.CODEC.fieldOf("currentMagic").orElse(VidaMagic.MAGIC_UNKNOWN).forGetter(VidaMagicToolCapability::getCurrentMagic),
+            ResourceLocation.CODEC.fieldOf("currentMagic").orElse(VidaMagic.MAGIC_UNKNOWN).forGetter(VidaMagicToolCapability::getCurrentMagicId),
             Codec.INT.fieldOf("currentMagicIndex").orElse(0).forGetter(VidaMagicToolCapability::getCurrentMagicIndex),
-            VidaElement.CODEC.fieldOf("currentElement").orElse(VidaElement.EMPTY).forGetter(VidaMagicToolCapability::getCurrentElement),
+            VidaElement.CODEC.fieldOf("currentElement").orElse(VidaElement.EMPTY).forGetter(VidaMagicToolCapability::getCurrentElementOverride),
             Codec.LONG.fieldOf("exp").orElse(0L).forGetter(VidaMagicToolCapability::getExp),
             Codec.INT.fieldOf("maxLevel").orElse(0).forGetter(VidaMagicToolCapability::getMaxLevel)
     ).apply(ins, VidaMagicToolCapability::new));
@@ -131,8 +130,8 @@ public class VidaMagicToolCapability implements IVidaMagicContainerCapability, I
     }
 
     /**获取当前魔法*/
-    public ResourceLocation getCurrentMagic() {
-        return currentMagic == null ? VidaMagic.MAGIC_UNKNOWN : currentMagic;
+    public ResourceLocation getCurrentMagicId() {
+        return getCurrentMagicIndex() == -1 ? VidaMagic.MAGIC_UNKNOWN : getAvailableMagics().get(getCurrentMagicIndex());
     }
 
     /**切换focus的魔法下标，用于Tab键切换*/
@@ -147,12 +146,12 @@ public class VidaMagicToolCapability implements IVidaMagicContainerCapability, I
     }
 
     /**获取当前元素*/
-    public VidaElement getCurrentElement() {
+    public VidaElement getCurrentElementOverride() {
         return currentElement;
     }
 
     /**设置当前元素*/
-    public void setCurrentElement(VidaElement currentElement) {
+    public void setCurrentElementOverride(VidaElement currentElement) {
         this.currentElement = currentElement;
     }
 

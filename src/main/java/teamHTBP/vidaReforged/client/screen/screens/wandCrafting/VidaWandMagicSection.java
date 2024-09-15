@@ -8,9 +8,9 @@ import net.minecraft.client.gui.components.StringWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.layouts.FrameLayout;
 import net.minecraft.client.gui.layouts.GridLayout;
-import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import org.joml.Vector3f;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.client.screen.components.common.IconButton;
 import teamHTBP.vidaReforged.client.screen.components.common.ScrolledContainer;
@@ -18,21 +18,21 @@ import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.components.guidebooks.VidaGuidebookText;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaWandCraftingViewModel;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
+import teamHTBP.vidaReforged.core.common.ui.VidaLifecycleSection;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
-import teamHTBP.vidaReforged.core.common.ui.lifecycle.LifeCycle;
+import teamHTBP.vidaReforged.core.utils.anim.SecondOrderDynamics;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.helper.VidaGuiHelper;
 import teamHTBP.vidaReforged.server.providers.VidaMagicManager;
 
-import javax.swing.*;
 import java.util.*;
 import java.util.function.Consumer;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
-public class VidaWandMagicSection extends VidaWandCraftSection{
+public class VidaWandMagicSection extends VidaLifecycleSection {
     VidaWandCraftingViewModel viewModel;
     ScrolledContainer<VidaWandMagicButton> scrolledContainer;
     public final static ResourceLocation NON_SELECTED = VidaMagic.MAGIC_UNKNOWN;
@@ -40,10 +40,16 @@ public class VidaWandMagicSection extends VidaWandCraftSection{
     public Map<ResourceLocation, VidaWandMagicButton> allMagicsButtons = new HashMap<>();
     public List<VidaWandMagicButton> currentShownButtons = new ArrayList<>();
     public String filter = "all";
-    public GridLayout skillGridLayout;
-    public GridLayout layout;
+    /** 整个区域布局 */
+    public GridLayout sectionLayout;
+    /** 技能区域布局 */
+    private GridLayout skillGridLayout;
     public VidaMagicInfoArea magicInfo;
+
     public Optional<IconButton> button = Optional.empty();
+    /** 技能区域宽度 */
+    private SecondOrderDynamics skillGridWidth = new SecondOrderDynamics(1, 0.5f, 0, new Vector3f());
+    private Vector3f targetSkillGridWidth = new Vector3f();
 
     public VidaWandMagicSection(int x, int y, int width, int height, Component component) {
         super(x, y, width, height, component);
@@ -53,12 +59,19 @@ public class VidaWandMagicSection extends VidaWandCraftSection{
 
     /** 每次屏幕调整大小时，调整滚动条高度，魔法选择栏目位置 */
     @Override
-    public void init() {
-        super.init();
-        // 调整滚动条
+    public void onInit() {
+        // 技能调整滚动条
         this.scrolledContainer = new ScrolledContainer<>(getX(), getY(), getWidth() / 2, getHeight());
         this.scrolledContainer.setCacheable(false);
         this.scrolledContainer.thumbWidth = 2;
+
+        // 技能文字信息
+        this.magicInfo = new VidaMagicInfoArea(0 , 0, getWidth() * 3 / 7, getHeight() * 2 / 3, Component.empty());
+        this.magicInfo.setMagicId(this.currentFocusMagicId);
+
+        // 动画
+        this.skillGridWidth = new SecondOrderDynamics(1, 1, 0, new Vector3f(this.scrolledContainer.getWidth(),0,0));
+        this.targetSkillGridWidth = new Vector3f(this.scrolledContainer.getWidth(), 0, 0);
 
         // 初始化魔法选择栏，如果没有被初始化，重新生成，且只能生成一次
         for(ResourceLocation magicId : VidaMagicManager.getMagicsKey()){
@@ -75,7 +88,6 @@ public class VidaWandMagicSection extends VidaWandCraftSection{
             currentShownButtons.addAll(allMagicsButtons.values());
         }
 
-        //
         allMagicsButtons.forEach((id, button) -> {
             if(currentShownButtons.contains(button)){
                 button.setVisible(true);
@@ -86,10 +98,7 @@ public class VidaWandMagicSection extends VidaWandCraftSection{
             button.setVisible(false);
         });
 
-        this.magicInfo = new VidaMagicInfoArea(0 , 0, getWidth() * 3 / 7, getHeight() * 2 / 3, Component.empty());
-        this.magicInfo.setMagicId(this.currentFocusMagicId);
-        this.layout = null;
-        this.setVisible(visible);
+        this.sectionLayout = null;
     }
 
     @Override
@@ -102,21 +111,11 @@ public class VidaWandMagicSection extends VidaWandCraftSection{
 
     @Override
     public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        registry.handleLifecycleEvent(LifeCycle.Event.ON_RESUME);
+        scrolledContainer.setWidth((int) skillGridWidth.update(partialTicks * 0.2f, targetSkillGridWidth, null).x);
         adjustChildComponents();
         scrolledContainer.render(graphics, mouseX, mouseY, partialTicks);
         magicInfo.render(graphics, mouseX, mouseY, partialTicks);
         button.ifPresent(button -> button.render(graphics, mouseX, mouseY, partialTicks));
-    }
-
-    @Override
-    public void setX(int x) {
-        super.setX(x);
-    }
-
-    @Override
-    public void setY(int y) {
-        super.setY(y);
     }
 
     public void onClickMagic(ResourceLocation id){
@@ -138,9 +137,10 @@ public class VidaWandMagicSection extends VidaWandCraftSection{
                 .listener(this::onSelectMagic)
                 .build(0,0)
         );
+        this.targetSkillGridWidth = new Vector3f(32, 0, 0);
     }
 
-    /***/
+    /**当点击按钮时*/
     public void onSelectMagic(){
         viewModel.setMagicWithIndex(0, currentFocusMagicId);
     }
@@ -157,6 +157,7 @@ public class VidaWandMagicSection extends VidaWandCraftSection{
             }
             magicButton.setSelectedIndex(VidaWandMagicButton.UNSELECTED);
         }
+        this.targetSkillGridWidth = new Vector3f(getWidth() / 2 , 0, 0);
     }
 
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
@@ -169,16 +170,16 @@ public class VidaWandMagicSection extends VidaWandCraftSection{
     }
 
     public void adjustChildComponents(){
-        if(this.layout == null){
-            this.layout = new GridLayout(getX(), getY());
-            this.layout.addChild(scrolledContainer, 0, 0);
-            this.layout.addChild(magicInfo, 0, 1);
+        if(this.sectionLayout == null){
+            this.sectionLayout = new GridLayout(getX(), getY());
+            this.sectionLayout.addChild(scrolledContainer, 0, 0);
+            this.sectionLayout.addChild(magicInfo, 0, 1);
         }
-        this.layout.setX(getX());
-        this.layout.setY(getY());
-        this.layout.spacing(24);
+        this.sectionLayout.setX(getX());
+        this.sectionLayout.setY(getY());
+        this.sectionLayout.spacing(24);
 
-        this.layout.arrangeElements();
+        this.sectionLayout.arrangeElements();
 
         this.skillGridLayout = new GridLayout(scrolledContainer.getX() + 8, scrolledContainer.getY() + 8);
         this.skillGridLayout.spacing(6);
@@ -258,8 +259,8 @@ public class VidaWandMagicSection extends VidaWandCraftSection{
 
         @Override
         public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-            this.hoverAlpha.change(isHovered, Minecraft.getInstance().getDeltaFrameTime() * 0.2f);
-            this.focusAlpha.change(isChosen, Minecraft.getInstance().getDeltaFrameTime() * 0.2f);
+            this.hoverAlpha.change(isHovered, Minecraft.getInstance().getDeltaFrameTime() * 0.05f);
+            this.focusAlpha.change(isChosen, Minecraft.getInstance().getDeltaFrameTime() * 0.05f);
             renderWidgetBackground(graphics);
             renderHoverBackground(graphics);
         }

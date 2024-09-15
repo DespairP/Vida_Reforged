@@ -1,26 +1,77 @@
 package teamHTBP.vidaReforged.server.entity;
 
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.util.LazyOptional;
+import org.joml.Vector3f;
+import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
+import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
+import teamHTBP.vidaReforged.client.particles.particles.VidaParticleAttributes;
+import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMultiBlockCapability;
+import teamHTBP.vidaReforged.core.utils.color.ColorTheme;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.events.VidaMultiBlockHandler;
 import teamHTBP.vidaReforged.server.packets.MultiBlockSchedulerPacket;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
 
 public class MultiblockLazerEntity extends LazerEntity{
+    VidaElement element;
+    private static final EntityDataAccessor<VidaElement> ELEMENT = SynchedEntityData.defineId(MultiblockLazerEntity.class, VidaEntityDataSerializer.ELEMENT);
+
     public MultiblockLazerEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
     }
 
+    public void init(Player player, VidaElement element) {
+        init(player);
+        this.entityData.set(ELEMENT, element);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(ELEMENT, VidaElement.EMPTY);
+    }
+
+    @Override
+    protected void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.entityData.set(ELEMENT, VidaElement.valueOf(tag.getString("element")), true);
+    }
+
+    @Override
+    protected void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putString("element", this.entityData.get(ELEMENT).name());
+    }
+
+    @Override
+    public ParticleOptions getParticle() {
+        return new BaseParticleType(VidaParticleTypeLoader.ORB_PARTICLE.get(), ColorTheme.getColorThemeByElement(getElement()).baseColor().toARGB(), new Vector3f(), 1, 100);
+    }
+
+    @Override
+    protected void onHit(HitResult result) {
+        super.onHit(result);
+    }
+
+    public VidaElement getElement(){
+        return this.entityData.get(ELEMENT);
+    }
+
     @Override
     protected void onHitEntity(EntityHitResult entityHitResult) {
-
     }
 
     @Override
@@ -36,5 +87,9 @@ public class MultiblockLazerEntity extends LazerEntity{
                 VidaPacketManager.sendToPlayer(new MultiBlockSchedulerPacket(cap.getJobs(), level().dimension()), player);
             }
         });
+
+        if (!this.level().isClientSide) {
+            discard();
+        }
     }
 }

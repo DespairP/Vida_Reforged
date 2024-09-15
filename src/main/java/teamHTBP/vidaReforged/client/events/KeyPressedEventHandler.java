@@ -33,7 +33,11 @@ public class KeyPressedEventHandler {
             return;
         }
 
-        if(KeyRegistryHandler.VIDA_WAND_SWITCH_ELEMENT.isDown()  && VidaInventoryHelper.getHandInItemByClient(InteractionHand.MAIN_HAND).is(VidaItemLoader.VIDA_WAND.get())){
+        // 防止使用时发送切换包
+        if(Minecraft.getInstance().player != null && Minecraft.getInstance().player.isUsingItem()){
+            return;
+        }
+        if(KeyRegistryHandler.VIDA_WAND_SWITCH_ELEMENT.isDown() && VidaInventoryHelper.getHandInItemByClient(InteractionHand.MAIN_HAND).is(VidaItemLoader.VIDA_WAND.get())){
             DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
                 VidaPacketManager.sendToServer(new MagicSwitchPacket(false));
             });

@@ -1,12 +1,10 @@
 package teamHTBP.vidaReforged.server.packets;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
-import teamHTBP.vidaReforged.client.screen.screens.guidebook.VidaGuidebookListScreen;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
@@ -38,6 +36,9 @@ public class MagicSwitchPacket {
             if(player == null || !player.getItemInHand(InteractionHand.MAIN_HAND).is(VidaItemLoader.VIDA_WAND.get())){
                 return;
             }
+            if(player.isUsingItem()){
+                return;
+            }
             ItemStack vidaWand = player.getItemInHand(InteractionHand.MAIN_HAND);
             vidaWand.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER).ifPresent(
                     cap -> {
@@ -50,7 +51,7 @@ public class MagicSwitchPacket {
                             return;
                         }
                         // 切换元素
-                        cap.setCurrentElement(cap.getCurrentElement().next());
+                        cap.setCurrentElementOverride(cap.getCurrentElementOverride().next());
                     }
             );
 

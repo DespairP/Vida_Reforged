@@ -11,19 +11,17 @@ import net.minecraft.world.item.Items;
 import teamHTBP.vidaReforged.client.screen.components.common.DisplayBlock;
 import teamHTBP.vidaReforged.client.screen.components.common.IconButton;
 import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
-import teamHTBP.vidaReforged.client.screen.components.guidebooks.VidaGuidebookDisplaySection;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaScreenEventChannelViewModel;
 import teamHTBP.vidaReforged.core.common.system.guidebook.VidaScreenEvent;
+import teamHTBP.vidaReforged.core.common.ui.VidaLifecycleSection;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
-import teamHTBP.vidaReforged.core.common.ui.lifecycle.LifeCycle;
-import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class VidaWandSelectSection extends VidaWandCraftSection {
+public class VidaWandSelectSection extends VidaLifecycleSection {
     IconButton equipButton;
     IconButton statsButton;
     IconButton magicButton;
@@ -98,8 +96,6 @@ public class VidaWandSelectSection extends VidaWandCraftSection {
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        registry.handleLifecycleEvent(LifeCycle.Event.ON_RESUME);
-
         this.gridLayout.arrangeElements();
         equipButton.render(graphics, mouseX, mouseY, partialTicks);
         statsButton.render(graphics, mouseX, mouseY, partialTicks);

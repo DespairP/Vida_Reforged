@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.Util;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -18,6 +19,7 @@ import org.joml.Vector3d;
 import org.joml.Vector3f;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.client.particles.options.BaseBezierParticleType;
+import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.Bezier3Curve;
 
@@ -85,6 +87,8 @@ public class VidaEntityDataSerializer {
         }
     };
 
+    public static final EntityDataSerializer<VidaElement> ELEMENT = EntityDataSerializer.simpleEnum(VidaElement.class);
+
     public static final net.minecraft.network.syncher.EntityDataSerializer<ARGBColor> COLOR = new net.minecraft.network.syncher.EntityDataSerializer.ForValueType<ARGBColor>() {
 
         @Override
@@ -134,5 +138,8 @@ public class VidaEntityDataSerializer {
     //public final static RegistryObject<net.minecraft.network.syncher.EntityDataSerializer<Bezier3Curve>> CURVE_SERIALIZER = DATA_SERIALIZER.register("curve", ()-> CURVE);
 
     public final static RegistryObject<net.minecraft.network.syncher.EntityDataSerializer<ARGBColor>> COLOR_SERIALIZER = DATA_SERIALIZER.register("color", ()-> COLOR);
+
+    public final static RegistryObject<net.minecraft.network.syncher.EntityDataSerializer<VidaElement>> ELEMENT_SERIALIZER = DATA_SERIALIZER.register("element", ()-> ELEMENT);
+
 
 }

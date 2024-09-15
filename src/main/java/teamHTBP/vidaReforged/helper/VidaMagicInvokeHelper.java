@@ -14,19 +14,19 @@ import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicInvokableManager;
  * */
 public class VidaMagicInvokeHelper {
     /**触发魔法*/
-    public static void invokeMagic(IVidaMagicContainerCapability magicContainer, IVidaManaCapability manaContainer, Level level, Player player, VidaMagic currentMagic, ItemStack handInItem){
-        LazyOptional<VidaMagic.IInvokable> optInvokable = LazyOptional.empty();
+    public static void invokeMagic(ItemStack handInItem, VidaMagic currentMagic, Level level, Player player){
+        if(level.isClientSide){
+            return;
+        }
 
         if(currentMagic == null){
             return;
         }
 
-        optInvokable = VidaMagicInvokableManager.getMagicInvokable(currentMagic);
+        VidaMagic.IInvokable invokable = VidaMagicInvokableManager.getMagicInvokable(currentMagic);
 
 
-        optInvokable.ifPresent((invokable) -> {
-            invokable.invokeMagic(handInItem, currentMagic, magicContainer.getAttribute(), manaContainer, level, player);
-        });
+        invokable.invokeMagic(handInItem, currentMagic, level, player);
 
     }
 }

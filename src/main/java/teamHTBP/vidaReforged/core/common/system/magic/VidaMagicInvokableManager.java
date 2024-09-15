@@ -2,25 +2,38 @@ package teamHTBP.vidaReforged.core.common.system.magic;
 
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.RegistryBuilder;
+import net.minecraftforge.registries.RegistryObject;
 import org.joml.Vector3d;
+import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.common.system.magic.particle.MagicParticle;
 import teamHTBP.vidaReforged.core.common.system.magic.particle.MagicParticleAttribute;
 import teamHTBP.vidaReforged.core.common.system.magic.particle.MagicParticleType;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.Bezier3Curve;
+import teamHTBP.vidaReforged.server.entity.MultiblockLazerEntity;
 import teamHTBP.vidaReforged.server.entity.SparkEntity;
 import teamHTBP.vidaReforged.server.entity.LazerEntity;
 import teamHTBP.vidaReforged.server.entity.VidaEntityLoader;
 import teamHTBP.vidaReforged.server.entity.projectile.PartyParrotProjecttile;
+import teamHTBP.vidaReforged.server.events.VidaMagicRegisterLoader;
+import teamHTBP.vidaReforged.server.items.VidaWand;
+import teamHTBP.vidaReforged.server.providers.VidaMagicManager;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class VidaMagicInvokableManager {
-    public static final VidaMagic.IInvokable PARTY_PARROT = (stack, invokeMagic, container, mana, level, player) -> {
+    public static final VidaMagic.IInvokable PARTY_PARROT = (stack, invokeMagic, level, player) -> {
         Entity entity = VidaEntityLoader.PARTY_PARROT.get().create(level);
         //TODO
         MagicParticle particle = new MagicParticle(
@@ -39,7 +52,7 @@ public class VidaMagicInvokableManager {
         }
     };
 
-    public static final VidaMagic.IInvokable TRAILS = (stack, invokeMagic, container, mana, level, player) -> {
+    public static final VidaMagic.IInvokable TRAILS = (stack, invokeMagic, level, player) -> {
         Vec3 lookAngle = player.getLookAngle();
         Direction direction = player.getDirection();
         Vec3 lookAt = player.getEyePosition().add(lookAngle.scale(2));
@@ -70,7 +83,17 @@ public class VidaMagicInvokableManager {
 //        level.addFreshEntity(_entity2);
     };
 
-    public static final VidaMagic.IInvokable SPARK = (stack, invokeMagic, container, mana, level, player) -> {
+    public static final VidaMagic.IInvokable PURIFY = ((stack, invokeMagic, level, player) -> {
+        IVidaMagicContainerCapability magicContainer = VidaWand.getContainerCapability(stack).orElseThrow(NullPointerException::new);
+        VidaElement element = magicContainer.getCurrentElementOverride() == VidaElement.EMPTY ? invokeMagic.element() : magicContainer.getCurrentElementOverride();
+        MultiblockLazerEntity entity = VidaEntityLoader.TRAIL.get().create(level);
+        if(entity != null){
+            entity.init(player, element);
+            level.addFreshEntity(entity);
+        }
+    });
+
+    public static final VidaMagic.IInvokable SPARK = (stack, invokeMagic, level, player) -> {
         Entity entity = VidaEntityLoader.SPARK.get().create(level);
         if (entity instanceof SparkEntity mpp) {
             mpp.initEntity(player, 10, ARGBColor.of(76, 255, 0));
@@ -78,31 +101,18 @@ public class VidaMagicInvokableManager {
         }
     };
 
-    public static final Map<String,VidaMagic.IInvokable> NAME_TO_MAGIC_MAP = ImmutableMap.of(
-            "party_parrot", PARTY_PARROT,
-            "spark", SPARK
+    public static final DeferredRegister<VidaMagic.IInvokable> VIDA_MAGIC = DeferredRegister.create(new ResourceLocation(VidaReforged.MOD_ID, "vida_magic"), VidaReforged.MOD_ID);
+    public static final RegistryObject<VidaMagic.IInvokable> VIDA_PURIFY = VIDA_MAGIC.register("purification", () -> VidaMagicInvokableManager.PURIFY);
 
-    );
-
-
-    public static LazyOptional<VidaMagic.IInvokable> getMagicInvokable(String magicId){
-        return LazyOptional.of(() -> NAME_TO_MAGIC_MAP.get(magicId));
+    public static VidaMagic.IInvokable getMagicInvokable(ResourceLocation magicId){
+        return VidaMagicRegisterLoader.MAGIC_SUPPLIER.get().getValue(magicId);
     }
 
-    public static LazyOptional<VidaMagic.IInvokable> getMagicInvokable(VidaMagic magic){
-        if(magic.id() != null){
-            return VidaMagicInvokableManager.getMagicInvokable(magic.id());
+    public static VidaMagic.IInvokable getMagicInvokable(VidaMagic magic){
+        VidaMagic.IInvokable invokable = VidaMagicInvokableManager.getMagicInvokable(magic.magicId());
+        if(magic.magicId() != null || invokable == null){
+            return invokable;
         }
-        return LazyOptional.empty();
-    }
-
-
-    public static LazyOptional<VidaMagic.IInvokable> getMagicInvokableRegex(String magicRegex){
-        for(String key : NAME_TO_MAGIC_MAP.keySet()){
-            if(key.matches(magicRegex)){
-                return LazyOptional.of(() -> NAME_TO_MAGIC_MAP.get(key));
-            }
-        }
-        return LazyOptional.empty();
+        return ($var1,$var2,$var3,$var4) -> {};
     }
 }

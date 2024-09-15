@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
+import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicInvokableManager;
 import teamHTBP.vidaReforged.server.advancement.VidaAdvancementTriggers;
 import teamHTBP.vidaReforged.server.blockEntities.VidaBlockEntityLoader;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
@@ -55,6 +56,7 @@ public class VidaReforged {
         //VidaCommandManager.ARGUMENT_TYPE.register(bus);
         VidaLevelGenerationLoader.STRUCTURE_TYPES.register(bus);
         VidaAdvancementTriggers.init();
+        VidaMagicInvokableManager.VIDA_MAGIC.register(bus);
         VidaPacketManager.register();
     }
 }

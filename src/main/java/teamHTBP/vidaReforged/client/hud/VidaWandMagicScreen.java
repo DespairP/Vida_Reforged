@@ -5,7 +5,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.ImageWidget;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -118,7 +117,7 @@ public class VidaWandMagicScreen extends AbstractVidaHUDScreen implements IVidaS
         currentRenderedItem.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER).ifPresent(
                 cap -> {
                     this.currentMagicIndex = cap.getCurrentMagicIndex();
-                    this.currentElement = cap.getCurrentElement();
+                    this.currentElement = cap.getCurrentElementOverride();
                 }
         );
 }

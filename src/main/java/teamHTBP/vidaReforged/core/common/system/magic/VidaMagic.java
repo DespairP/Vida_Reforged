@@ -19,8 +19,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
+import teamHTBP.vidaReforged.server.items.VidaWand;
+
+import javax.lang.model.element.Element;
 
 /**
  * 魔法模板，
@@ -56,6 +60,8 @@ public class VidaMagic {
     private VidaElement element;
     /** 玩家是否可用,主动可以释放 */
     private boolean isManuallyUsable = true;
+    /**是否需要蓄力*/
+    private boolean isChargeable = false;
 
 
     public static Codec<VidaMagic> codec = RecordCodecBuilder.create(ins -> ins.group(
@@ -66,7 +72,8 @@ public class VidaMagic {
             TextureSection.codec.fieldOf("icon").forGetter(VidaMagic::icon),
             ExtraCodecs.COMPONENT.fieldOf("description").orElse(Component.empty()).forGetter(VidaMagic::description),
             VidaElement.CODEC.fieldOf("element").orElse(VidaElement.EMPTY).forGetter(VidaMagic::element),
-            Codec.BOOL.fieldOf("isManuallyUsable").orElse(true).forGetter(VidaMagic::isManuallyUsable)
+            Codec.BOOL.fieldOf("isManuallyUsable").orElse(true).forGetter(VidaMagic::isManuallyUsable),
+            Codec.BOOL.fieldOf("isChargeable").orElse(false).forGetter(VidaMagic::isChargeable)
     ).apply(ins,VidaMagic::new));
 
 
@@ -95,6 +102,11 @@ public class VidaMagic {
 
     /**执行魔法*/
     public interface IInvokable {
-        public void invokeMagic(ItemStack stack, VidaMagic invokeMagic, VidaMagicAttribute container, IVidaManaCapability mana, Level level, Player player);
+        public void invokeMagic(ItemStack stack, VidaMagic invokeMagic, Level level, Player player);
+
+        public default VidaElement getElement(ItemStack stack, VidaMagic invokeMagic){
+            IVidaMagicContainerCapability magicContainer = VidaWand.getContainerCapability(stack).orElseThrow(NullPointerException::new);
+            return magicContainer.getCurrentElementOverride() == VidaElement.EMPTY ? invokeMagic.element() : magicContainer.getCurrentElementOverride();
+        }
     }
 }

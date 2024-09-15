@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.network.chat.Component;
@@ -15,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Vector3f;
+import org.lwjgl.opengl.GL11;
 import teamHTBP.vidaReforged.client.RenderTypeHandler;
 import teamHTBP.vidaReforged.client.events.registries.LayerRegistryHandler;
 import teamHTBP.vidaReforged.client.model.itemModel.VidaWandModel;
@@ -100,7 +102,7 @@ public class VidaWandScreenModel extends VidaWidget {
         // 渲染模型
         VidaWandModel model = LayerRegistryHandler.getModelSupplier(VidaWandModel.LAYER_LOCATION, VidaWandModel.class).get();
         this.equipmentSlots.forEach(((position, slot) -> {
-            int packedLight = 3 << 4 | 7 << 20;
+            int packedLight = 14 << 4 | 14 << 20;
 
             ItemStack slotItem = slot.getItem();
             if(!slotItem.isEmpty() && slotItem.getItem() instanceof VidaWandEquipment equipment){

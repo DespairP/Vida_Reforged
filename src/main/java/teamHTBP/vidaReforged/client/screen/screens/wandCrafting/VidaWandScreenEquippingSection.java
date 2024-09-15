@@ -5,15 +5,15 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.network.chat.Component;
 import org.joml.Vector3f;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaWandCraftingViewModel;
+import teamHTBP.vidaReforged.core.common.ui.VidaLifecycleSection;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
-import teamHTBP.vidaReforged.core.common.ui.lifecycle.LifeCycle;
 import teamHTBP.vidaReforged.core.utils.anim.SecondOrderDynamics;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 /**饰品装配区域*/
-public class VidaWandScreenEquippingSection extends VidaWandCraftSection{
+public class VidaWandScreenEquippingSection extends VidaLifecycleSection {
     /***/
     protected VidaWandEquipInfos infoSlots;
     protected VidaWandCraftingViewModel viewModel;
@@ -26,8 +26,7 @@ public class VidaWandScreenEquippingSection extends VidaWandCraftSection{
     }
 
     @Override
-    public void init() {
-        super.init();
+    public void onInit() {
         this.infoSlots.setVisible(visible);
     }
 
@@ -68,7 +67,6 @@ public class VidaWandScreenEquippingSection extends VidaWandCraftSection{
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        registry.handleLifecycleEvent(LifeCycle.Event.ON_RESUME);
         graphics.pose().pushPose();
         Vector3f offset = this.offset.update(this.mc.getDeltaFrameTime() * 0.4f, new Vector3f(0), null);
         graphics.pose().translate(offset.x, 0, 0);

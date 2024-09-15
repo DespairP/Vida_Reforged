@@ -10,6 +10,9 @@
         "texWidth":384,
         "texHeight":384
     },
+    "attribute": {
+        "baseCostMana": 0
+    },
     "description":{
         "translate":"vida_reforged.description.purification"
     },

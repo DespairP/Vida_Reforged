@@ -6,6 +6,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicAttribute;
+import teamHTBP.vidaReforged.server.providers.VidaMagicManager;
 
 import java.util.List;
 import java.util.Map;
@@ -30,15 +31,19 @@ public interface IVidaMagicContainerCapability extends INBTSerializable<Compound
     public Result setSingleMagic(int index, ResourceLocation availableMagic);
 
     /**获取当前法术Id*/
-    default ResourceLocation getCurrentMagic(){
+    default ResourceLocation getCurrentMagicId(){
         return getCurrentMagicIndex() < 0 ? VidaMagic.MAGIC_UNKNOWN : getAvailableMagics().get(getCurrentMagicIndex());
     }
 
-    /**获取当前法杖元素*/
-    public VidaElement getCurrentElement();
+    default VidaMagic getCurrentMagic(){
+        return VidaMagicManager.getMagicByMagicId(getCurrentMagicId());
+    }
 
-    /**设置法杖元素*/
-    public void setCurrentElement(VidaElement currentElement);
+    /**获取当前法杖元素复写*/
+    public VidaElement getCurrentElementOverride();
+
+    /**设置法杖元素复写*/
+    public void setCurrentElementOverride(VidaElement currentElement);
 
     /**获取当前法术下标*/
     public int getCurrentMagicIndex();
