@@ -16,6 +16,6 @@ public enum ParticleOptionType {
     DUST_RGB,
     /**进阶类型，遵循 {<rgba> <scale> <pos> <delta> <speed> <count> [force|normal] [<viewers>]},{@link}*/
     ADVANCED_RGBA,
-    /**收拢颜色类型，遵循 {<rgba> <to_pos> <scale> <life_time>  <pos> <delta> <speed> <count> [force|normal] [<viewers>]},{@link SimpleParticleType}*/
+    /**收拢颜色类型，遵循 { [rgba] [to_pos] [scale] [life_time]  [pos] [delta] [speed] [count] [force|normal] [viewers]},{@link SimpleParticleType}*/
     ADVANCED_RGBA_DEST
 }

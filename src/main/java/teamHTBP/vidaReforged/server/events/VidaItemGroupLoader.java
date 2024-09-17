@@ -92,6 +92,7 @@ public class VidaItemGroupLoader {
             event.accept(VidaItemLoader.VIVID_BUCKET.get());
             event.accept(VidaItemLoader.VIDA_LEAVES.get());
             event.accept(VidaItemLoader.VIDA_BLUE_LEAVES.get());
+            event.accept(VidaItemLoader.VIDA_GRASS);
             init(event);
         }
     }

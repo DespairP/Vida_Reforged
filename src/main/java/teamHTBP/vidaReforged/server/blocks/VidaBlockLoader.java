@@ -3,6 +3,7 @@ package teamHTBP.vidaReforged.server.blocks;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -288,7 +289,7 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> MOONLIGHT_PURPLE_FLOWER = registerDecoBlock("moonlight_purple_flower", GRASS, FLOWER);
     /**草*/
     @RegisterItemBlock
-    public final static RegistryObject<Block> VIDA_GRASS = registerDecoBlock("vida_grass", GRASS, FLOWER);
+    public final static RegistryObject<Block> VIDA_GRASS = BLOCKS.register("vida_grass", () -> new DecoFlowerBlock(BlockBehaviour.Properties.of().noCollission().instabreak().sound(SoundType.GRASS).lightLevel((properties) -> 3)));
 
 
     /**作物*/
