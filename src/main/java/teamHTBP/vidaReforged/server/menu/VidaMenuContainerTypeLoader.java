@@ -9,6 +9,7 @@ import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import teamHTBP.vidaReforged.client.screen.screens.common.SherdResearchScreen;
 import teamHTBP.vidaReforged.server.capabilities.VidaMagicWordCapability;
 
 
@@ -117,4 +118,20 @@ public class VidaMenuContainerTypeLoader {
                     }
             )
     );
+
+    public final static RegistryObject<MenuType<SherdResearchTableMenu>> SHERD_RESEARCH_TABLE = MENU_CONTAINER_TYPE.register(
+            SherdResearchTableMenu.MENU_NAME,
+            () -> IForgeMenuType.create(
+                    (windowId, inv, data) -> {
+                        final BlockPos pos = data.readBlockPos();
+                        final Level level = inv.player.getCommandSenderWorld();
+                        return new SherdResearchTableMenu(
+                                windowId,
+                                ContainerLevelAccess.create(level, pos),
+                                inv
+                        );
+                    }
+            )
+    );
+
 }

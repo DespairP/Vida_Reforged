@@ -5,19 +5,13 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
-import teamHTBP.vidaReforged.core.api.VidaElement;
-import teamHTBP.vidaReforged.helper.VidaElementHelper;
-import teamHTBP.vidaReforged.server.blockEntities.MagicWordCraftingTableBlockEntity;
 import teamHTBP.vidaReforged.server.blockEntities.PrismBlockEntity;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
-import teamHTBP.vidaReforged.server.menu.slots.ElementGemSlot;
+import teamHTBP.vidaReforged.server.items.ElementGem;
+import teamHTBP.vidaReforged.server.menu.slots.ItemPredicateSlot;
 import teamHTBP.vidaReforged.server.menu.slots.FobiddenSlot;
-
-import java.util.List;
 
 public class PrismMenu extends AbstractContainerMenu {
     private static final int INVENTORY_ROW_AMOUNT = 3;
@@ -50,7 +44,7 @@ public class PrismMenu extends AbstractContainerMenu {
         this.access.execute((level, pPos) -> {
             PrismBlockEntity entity = (PrismBlockEntity)level.getBlockEntity(pPos);
 
-            this.addSlot(new ElementGemSlot(entity.getInputAndResult(),0,50,-30));
+            this.addSlot(new ItemPredicateSlot(entity.getInputAndResult(),0,50,-30, stack -> stack.is(itemHolder -> itemHolder.get() instanceof ElementGem)));
             this.addSlot(new FobiddenSlot(entity.getInputAndResult(),1,110,-30));
         });
     }

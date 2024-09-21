@@ -1,5 +1,6 @@
 package teamHTBP.vidaReforged.core.common.system.magic;
 
+import com.mojang.serialization.Codec;
 import lombok.Data;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
@@ -31,4 +32,7 @@ public class VidaMagicEquipmentAttribute {
     private int shootBaseCount = 1;
     /**饰品位置*/
     private Position position;
+
+
+
 }

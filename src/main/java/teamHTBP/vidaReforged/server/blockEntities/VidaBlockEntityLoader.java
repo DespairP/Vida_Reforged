@@ -1,6 +1,7 @@
 package teamHTBP.vidaReforged.server.blockEntities;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.SculkCatalystBlockEntity;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -98,5 +99,9 @@ public class VidaBlockEntityLoader {
 
     public static final RegistryObject<BlockEntityType<VidaWandCraftingTableBlockEntity>> VIDA_WAND_CRAFTING_TABLE = BLOCK_ENTITIES.register(
             "vida_wand_crafting_table", () -> BlockEntityType.Builder.of(VidaWandCraftingTableBlockEntity::new, VidaBlockLoader.VIDA_WAND_CRATING_TABLE.get()).build(null)
+    );
+
+    public static final RegistryObject<BlockEntityType<SherdResearchTableBlockEntity>> SHERD_RESEARCH_TABLE = BLOCK_ENTITIES.register(
+            "sherd_research_table", () -> BlockEntityType.Builder.of(SherdResearchTableBlockEntity::new, VidaBlockLoader.SHERD_RESEARCH_TABLE.get()).build(null)
     );
 }

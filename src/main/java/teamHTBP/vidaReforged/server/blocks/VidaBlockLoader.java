@@ -291,7 +291,6 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> VIDA_GRASS = BLOCKS.register("vida_grass", () -> new DecoFlowerBlock(BlockBehaviour.Properties.of().noCollission().instabreak().sound(SoundType.GRASS).lightLevel((properties) -> 3)));
 
-
     /**作物*/
     public static RegistryObject<Block> WRATH_THORN = BLOCKS.register("wrath_thorn",() -> new VidaParticleCropBlock(VidaElement.WOOD,() -> VidaItemLoader.WRATH_THORN_SEED_BAG.get()));
     public static RegistryObject<Block> FIERY_STUMP = BLOCKS.register("fiery_stump",() -> new VidaParticleCropBlock(VidaElement.FIRE,() -> VidaItemLoader.FIERY_STUMP_SEED_BAG.get()));
@@ -419,6 +418,8 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> INJECT_TABLE = BLOCKS.register("inject_table", InjectTable::new);
     @RegisterItemBlock
     public final static RegistryObject<Block> VIDA_WAND_CRATING_TABLE = BLOCKS.register("vida_wand_crating_table", VidaWandCraftingTable::new);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SHERD_RESEARCH_TABLE = BLOCKS.register("sherd_research_table",  SherdResearchTable::new);
 
     @RegisterItemBlock
     public final static RegistryObject<Block> MAGIC_MANA_PROVIDER_GOLD = BLOCKS.register("magic_mana_provider_gold", ()->new MagicManaProvider(VidaElement.GOLD));
