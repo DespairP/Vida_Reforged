@@ -104,4 +104,14 @@ public class VidaBlockEntityLoader {
     public static final RegistryObject<BlockEntityType<SherdResearchTableBlockEntity>> SHERD_RESEARCH_TABLE = BLOCK_ENTITIES.register(
             "sherd_research_table", () -> BlockEntityType.Builder.of(SherdResearchTableBlockEntity::new, VidaBlockLoader.SHERD_RESEARCH_TABLE.get()).build(null)
     );
+
+    public static final RegistryObject<BlockEntityType<ElementHarmonizeTableBlockEntity>> ELEMENT_HARMONIZE_TABLE = BLOCK_ENTITIES.register(
+            "element_harmonize_table", () -> BlockEntityType.Builder.of(ElementHarmonizeTableBlockEntity::new,
+                    VidaBlockLoader.ELEMENT_HARMONIZE_GOLD_TABLE.get(),
+                    VidaBlockLoader.ELEMENT_HARMONIZE_WOOD_TABLE.get(),
+                    VidaBlockLoader.ELEMENT_HARMONIZE_AQUA_TABLE.get(),
+                    VidaBlockLoader.ELEMENT_HARMONIZE_FIRE_TABLE.get(),
+                    VidaBlockLoader.ELEMENT_HARMONIZE_EARTH_TABLE.get()
+            ).build(null)
+    );
 }

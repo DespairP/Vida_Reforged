@@ -20,7 +20,7 @@ public class OrbParticle extends VidaBaseParticle{
             this.bCol = attributes.color().b() * 1.0f / 255.0f;
             this.initAlpha = attributes.color().a() * 1.0f / 255.0f;
         }
-        this.lifetime = (int) ((float) lifetime * 0.5f);
+        this.lifetime = (int) ((float) attributes.lifeTime() * 0.5f);
         this.quadSize = 0;
         this.initScale = attributes.scale();
         this.xd = speedX * 2.0f;

@@ -100,7 +100,7 @@ VidaWand extends Item implements IVidaManaConsumable {
         }
         VidaMagic currentMagic = getCurrentMagic(handInItem);
         if (currentMagic != null && !currentMagic.isChargeable()) {
-            return doMagic(handInItem, level, player) ? InteractionResultHolder.success(handInItem) : InteractionResultHolder.fail(handInItem);
+            return doMagic(handInItem, level, player) ? InteractionResultHolder.sidedSuccess(handInItem, level.isClientSide) : InteractionResultHolder.fail(handInItem);
         }
         player.startUsingItem(hand);
         return InteractionResultHolder.pass(handInItem);

@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "half=lower": {"model": "vida_reforged:block/element_harmonize_fire_table"},
+        "half=upper": { "model": "minecraft:block/air" }
+    }
+}

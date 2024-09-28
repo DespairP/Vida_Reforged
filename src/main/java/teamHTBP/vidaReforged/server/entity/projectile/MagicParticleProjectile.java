@@ -139,16 +139,19 @@ public class MagicParticleProjectile extends Projectile {
         }
     }
 
+    @Override
+    public void baseTick() {
+        super.baseTick();
+        this.updateInWaterStateAndDoFluidPushing();
+    }
+
     protected void onHitEntity(EntityHitResult p_36757_) {
         super.onHitEntity(p_36757_);
         Entity entity = p_36757_.getEntity();
 
-        // TODO 定制伤害来源，或是干脆 magic
         DamageSource damagesource = damageSources().magic();
 
         if (entity.hurt(damagesource, Mth.ceil(Mth.clamp(particle.damage().value(), 0.0D, Integer.MAX_VALUE)))) {
-            // TODO 火元素或许应该可以在这里点燃？
-            // TODO this.playSound(this.soundEvent, 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
         }
 
         this.discard();

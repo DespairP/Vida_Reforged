@@ -1,6 +1,7 @@
 package teamHTBP.vidaReforged.core.api;
 
 import com.mojang.serialization.Codec;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
@@ -13,13 +14,13 @@ import teamHTBP.vidaReforged.helper.VidaElementHelper;
 import java.util.Random;
 
 public enum VidaElement implements IVidaElement{
-    EMPTY("empty", ARGBColor.BLACK, TextureSection.empty()),
-    VOID("void", ARGBColor.BLACK, TextureSection.empty()),
-    GOLD("gold", ARGBColor.rgba(0xFFDA47FF), new TextureSection(new ResourceLocation(VidaReforged.MOD_ID, "textures/icons/goldlogo.png"), 0, 0, 32, 32, 32, 32) ),
-    WOOD("wood",ARGBColor.rgba(0x6BC73AFF), new TextureSection(new ResourceLocation(VidaReforged.MOD_ID, "textures/icons/woodlogo.png"), 0, 0, 32, 32, 32, 32)),
-    AQUA("aqua",ARGBColor.rgba(0x00D5FFFF), new TextureSection(new ResourceLocation(VidaReforged.MOD_ID, "textures/icons/aqualogo.png"), 0, 0, 32, 32, 32, 32)),
-    FIRE("fire",ARGBColor.DARK_RED, new TextureSection(new ResourceLocation(VidaReforged.MOD_ID, "textures/icons/firelogo.png"), 0, 0, 32, 32, 32, 32)),
-    EARTH("earth",ARGBColor.LIGHT_BROWN, new TextureSection(new ResourceLocation(VidaReforged.MOD_ID, "textures/icons/earthlogo.png"), 0, 0, 32, 32, 32, 32));
+    EMPTY("empty", ARGBColor.BLACK, TextureSection.empty(), null),
+    VOID("void", ARGBColor.BLACK, TextureSection.empty(), null),
+    GOLD("gold", ARGBColor.rgba(0xFFDA47FF), new TextureSection(new ResourceLocation(VidaReforged.MOD_ID, "textures/icons/goldlogo.png"), 0, 0, 32, 32, 32, 32), Direction.WEST),
+    WOOD("wood",ARGBColor.rgba(0x6BC73AFF), new TextureSection(new ResourceLocation(VidaReforged.MOD_ID, "textures/icons/woodlogo.png"), 0, 0, 32, 32, 32, 32), Direction.EAST),
+    AQUA("aqua",ARGBColor.rgba(0x00D5FFFF), new TextureSection(new ResourceLocation(VidaReforged.MOD_ID, "textures/icons/aqualogo.png"), 0, 0, 32, 32, 32, 32), Direction.NORTH),
+    FIRE("fire",ARGBColor.DARK_RED, new TextureSection(new ResourceLocation(VidaReforged.MOD_ID, "textures/icons/firelogo.png"), 0, 0, 32, 32, 32, 32), Direction.SOUTH),
+    EARTH("earth",ARGBColor.LIGHT_BROWN, new TextureSection(new ResourceLocation(VidaReforged.MOD_ID, "textures/icons/earthlogo.png"), 0, 0, 32, 32, 32, 32), null);
 
     public static final Codec<VidaElement> CODEC = new EnumCodec<>(VidaElement.class);
 
@@ -30,10 +31,13 @@ public enum VidaElement implements IVidaElement{
     /***/
     TextureSection icon;
 
-    VidaElement(String name, VidaColor baseColor, TextureSection icon) {
+    Direction direction;
+
+    VidaElement(String name, VidaColor baseColor, TextureSection icon, Direction direction) {
         this.name = name;
         this.baseColor = baseColor;
         this.icon = icon;
+        this.direction = direction;
     }
 
     @Override

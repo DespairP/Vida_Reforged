@@ -6,7 +6,7 @@ import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.mobs.GlowLight;
 
 public class GlowLightEntityRenderer extends SimpleTextureEntityRender<GlowLight>{
-    protected GlowLightEntityRenderer(EntityRendererProvider.Context context, TextureSection texture) {
+    public GlowLightEntityRenderer(EntityRendererProvider.Context context, TextureSection texture) {
         super(context, texture);
     }
 

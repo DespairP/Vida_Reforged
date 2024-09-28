@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "half=lower": {"model": "vida_reforged:block/element_harmonize_earth_table"},
+        "half=upper": { "model": "minecraft:block/air" }
+    }
+}

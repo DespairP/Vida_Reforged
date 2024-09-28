@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import org.joml.Vector3f;
 import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
 import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
+import teamHTBP.vidaReforged.core.common.system.multiblock.ScheduledBlock;
 import teamHTBP.vidaReforged.core.common.system.multiblock.ScheduledMultiBlockJob;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.color.TwoValueGradientColor;
@@ -45,6 +46,9 @@ public class VidaMultiBlockClientHandler {
                 continue;
             }
 
+            for(ScheduledBlock block : job.getMutiBlockPos()){
+                generateParticleFromJob(level, block.getTargetPos(), RandomSource.createNewThreadLocalInstance());
+            }
             generateParticleFromJob(level, job.getStartPos(), RandomSource.createNewThreadLocalInstance());
         }
     }

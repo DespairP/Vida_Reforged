@@ -196,4 +196,8 @@ public class GlowLight extends Mob {
     public boolean isNoGravity() {
         return true;
     }
+
+    public boolean isAttackable() {
+        return false;
+    }
 }

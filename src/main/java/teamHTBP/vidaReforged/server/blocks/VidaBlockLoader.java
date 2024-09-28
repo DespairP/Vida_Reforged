@@ -1,6 +1,5 @@
 package teamHTBP.vidaReforged.server.blocks;
 
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -13,7 +12,6 @@ import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.block.DecoBlockFactory;
 import teamHTBP.vidaReforged.core.common.block.templates.DecoFlowerBlock;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterItemBlock;
-import teamHTBP.vidaReforged.server.blocks.crops.MutationCrop;
 import teamHTBP.vidaReforged.server.blocks.crops.VidaParticleCropBlock;
 import teamHTBP.vidaReforged.server.blocks.liquid.VividLiquidBlock;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
@@ -420,7 +418,16 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> VIDA_WAND_CRATING_TABLE = BLOCKS.register("vida_wand_crating_table", VidaWandCraftingTable::new);
     @RegisterItemBlock
     public final static RegistryObject<Block> SHERD_RESEARCH_TABLE = BLOCKS.register("sherd_research_table",  SherdResearchTable::new);
-
+    @RegisterItemBlock
+    public final static RegistryObject<Block> ELEMENT_HARMONIZE_GOLD_TABLE = BLOCKS.register("element_harmonize_gold_table", () -> new ElementHarmonizeTable(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE), VidaElement.GOLD));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> ELEMENT_HARMONIZE_WOOD_TABLE = BLOCKS.register("element_harmonize_wood_table", () -> new ElementHarmonizeTable(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE), VidaElement.WOOD));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> ELEMENT_HARMONIZE_AQUA_TABLE = BLOCKS.register("element_harmonize_aqua_table", () -> new ElementHarmonizeTable(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE), VidaElement.AQUA));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> ELEMENT_HARMONIZE_FIRE_TABLE = BLOCKS.register("element_harmonize_fire_table", () -> new ElementHarmonizeTable(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE), VidaElement.FIRE));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> ELEMENT_HARMONIZE_EARTH_TABLE = BLOCKS.register("element_harmonize_earth_table", () -> new ElementHarmonizeTable(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE), VidaElement.EARTH));
     @RegisterItemBlock
     public final static RegistryObject<Block> MAGIC_MANA_PROVIDER_GOLD = BLOCKS.register("magic_mana_provider_gold", ()->new MagicManaProvider(VidaElement.GOLD));
     @RegisterItemBlock

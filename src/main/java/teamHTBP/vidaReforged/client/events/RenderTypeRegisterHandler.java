@@ -40,6 +40,7 @@ public class RenderTypeRegisterHandler {
      */
     public static final Logger LOGGER = LogManager.getLogger();
 
+
     @SubscribeEvent
     public static void onFluidRender(FMLClientSetupEvent event){
         ItemBlockRenderTypes.setRenderLayer(VidaFluidsLoader.VIVID_FLUID_STILL.get(), RenderType.translucent());

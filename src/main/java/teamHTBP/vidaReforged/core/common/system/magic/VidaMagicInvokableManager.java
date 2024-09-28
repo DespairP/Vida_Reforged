@@ -1,16 +1,11 @@
 package teamHTBP.vidaReforged.core.common.system.magic;
 
-import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
-import org.joml.Vector3d;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
@@ -18,19 +13,14 @@ import teamHTBP.vidaReforged.core.common.system.magic.particle.MagicParticle;
 import teamHTBP.vidaReforged.core.common.system.magic.particle.MagicParticleAttribute;
 import teamHTBP.vidaReforged.core.common.system.magic.particle.MagicParticleType;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
-import teamHTBP.vidaReforged.core.utils.math.Bezier3Curve;
-import teamHTBP.vidaReforged.server.entity.MultiblockLazerEntity;
+import teamHTBP.vidaReforged.server.entity.MultiblockSparkEntity;
 import teamHTBP.vidaReforged.server.entity.SparkEntity;
-import teamHTBP.vidaReforged.server.entity.LazerEntity;
 import teamHTBP.vidaReforged.server.entity.VidaEntityLoader;
 import teamHTBP.vidaReforged.server.entity.projectile.PartyParrotProjecttile;
 import teamHTBP.vidaReforged.server.events.VidaMagicRegisterLoader;
 import teamHTBP.vidaReforged.server.items.VidaWand;
-import teamHTBP.vidaReforged.server.providers.VidaMagicManager;
 
-import java.util.Map;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 public class VidaMagicInvokableManager {
     public static final VidaMagic.IInvokable PARTY_PARROT = (stack, invokeMagic, level, player) -> {
@@ -86,7 +76,7 @@ public class VidaMagicInvokableManager {
     public static final VidaMagic.IInvokable PURIFY = ((stack, invokeMagic, level, player) -> {
         IVidaMagicContainerCapability magicContainer = VidaWand.getContainerCapability(stack).orElseThrow(NullPointerException::new);
         VidaElement element = magicContainer.getCurrentElementOverride() == VidaElement.EMPTY ? invokeMagic.element() : magicContainer.getCurrentElementOverride();
-        MultiblockLazerEntity entity = VidaEntityLoader.TRAIL.get().create(level);
+        MultiblockSparkEntity entity = VidaEntityLoader.TRAIL.get().create(level);
         if(entity != null){
             entity.init(player, element);
             level.addFreshEntity(entity);

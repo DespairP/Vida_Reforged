@@ -81,7 +81,6 @@ public abstract class LazerEntity extends Entity implements IEntityAdditionalSpa
         this.entityData.define(MAX_LIFE_TIME, maxLifeTime);
         this.entityData.define(CURRENT_LIFE_TIME, 0);
         this.entityData.define(TRAILS, new ArrayList<>());
-
     }
 
     @Override
@@ -237,7 +236,7 @@ public abstract class LazerEntity extends Entity implements IEntityAdditionalSpa
     }
 
     public ParticleOptions getParticle(){
-        return new BaseParticleType(VidaParticleTypeLoader.ORB_PARTICLE.get(), new ARGBColor(255, 190, 0, 255), new Vector3f(), 1, 100);
+        return new BaseParticleType(VidaParticleTypeLoader.ORB_PARTICLE.get(), new ARGBColor(255, 190, 0, 255), new Vector3f(),  1f, 20);
     }
 
 

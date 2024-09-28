@@ -5,7 +5,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.server.recipe.records.ElementHarmonizeRecipe;
 import teamHTBP.vidaReforged.server.recipe.records.VidaMagicWordRecipe;
+import teamHTBP.vidaReforged.server.recipe.serializers.BaseCodecSerializer;
 import teamHTBP.vidaReforged.server.recipe.serializers.BaseSerializer;
 
 public class VidaRecipeSerializerLoader {
@@ -15,4 +17,6 @@ public class VidaRecipeSerializerLoader {
     public static final RegistryObject<RecipeSerializer<?>> MAGIC_WORD_RECIPE_SERIALIZER =
             SERIALIZER.register("magic_word", () -> new BaseSerializer<>(VidaMagicWordRecipe.class));
 
+    public static final RegistryObject<RecipeSerializer<?>> ELEMENT_HARMONIZE_RECIPE_SERIALIZER =
+            SERIALIZER.register("element_harmonize", () -> new BaseCodecSerializer<>(ElementHarmonizeRecipe.CODEC));
 }

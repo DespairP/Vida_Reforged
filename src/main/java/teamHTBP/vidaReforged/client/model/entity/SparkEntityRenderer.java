@@ -9,7 +9,7 @@ import teamHTBP.vidaReforged.server.entity.SparkEntity;
 import teamHTBP.vidaReforged.server.entity.projectile.MagicParticleProjectile;
 
 public class SparkEntityRenderer extends EntityRenderer<SparkEntity> {
-    protected SparkEntityRenderer(EntityRendererProvider.Context context) {
+    public SparkEntityRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 

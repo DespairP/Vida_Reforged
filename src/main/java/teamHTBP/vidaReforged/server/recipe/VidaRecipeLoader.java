@@ -9,12 +9,15 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.server.recipe.records.AbstractVidaRecipe;
+import teamHTBP.vidaReforged.server.recipe.records.ElementHarmonizeRecipe;
 import teamHTBP.vidaReforged.server.recipe.records.VidaMagicWordRecipe;
 
 public class VidaRecipeLoader {
     public static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, VidaReforged.MOD_ID);
 
     public static final RegistryObject<RecipeType<VidaMagicWordRecipe>> MAGIC_WORD_RECIPE = register("magic_word");
+
+    public static final RegistryObject<RecipeType<ElementHarmonizeRecipe>> ELEMENT_HARMONIZE_RECIPE = register("element_harmonize");
 
     private static <C extends Container, TYPE extends AbstractVidaRecipe<C>> RegistryObject<RecipeType<TYPE>> register(String name) {
         return TYPES.register(name, () -> new RecipeType<>() {

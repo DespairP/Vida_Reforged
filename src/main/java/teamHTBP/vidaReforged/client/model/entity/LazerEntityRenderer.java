@@ -27,12 +27,13 @@ import java.util.List;
 
 import static teamHTBP.vidaReforged.client.RenderTypeHandler.TRAIL_SHADER;
 
+/**激光*/
 public class LazerEntityRenderer extends EntityRenderer<LazerEntity> {
 
     protected List<Vector3d> tails = new ArrayList<>();
 
 
-    protected LazerEntityRenderer(EntityRendererProvider.Context context) {
+    public LazerEntityRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 

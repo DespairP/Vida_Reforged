@@ -1,0 +1,23 @@
+{
+    "type": "vida_reforged:element_harmonize",
+    "goldItem": [{
+        "item": "vida_reforged:gold_element_core"
+    }],
+    "woodItem": [{
+        "item": "vida_reforged:wood_element_core"
+    }],
+    "aquaItem": [{
+        "item": "vida_reforged:aqua_element_core"
+    }],
+    "fireItem": [{
+        "item": "vida_reforged:fire_element_core"
+    }],
+    "earthItem": [{
+        "item": "vida_reforged:earth_element_core"
+    }],
+    "resultItem": {
+        "id": "vida_reforged:unlock_magic_word_paper",
+        "Count": 1
+    },
+    "useTicks": 1000
+}
