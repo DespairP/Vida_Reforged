@@ -114,4 +114,9 @@ public class VidaBlockEntityLoader {
                     VidaBlockLoader.ELEMENT_HARMONIZE_EARTH_TABLE.get()
             ).build(null)
     );
+
+
+    public static final RegistryObject<BlockEntityType<VaseBlockEntity>> VASE = BLOCK_ENTITIES.register(
+            "vase", () -> BlockEntityType.Builder.of(VaseBlockEntity::new, VidaBlockLoader.VASE.get()).build(null)
+    );
 }

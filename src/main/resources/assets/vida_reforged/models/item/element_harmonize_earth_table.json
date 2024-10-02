@@ -1,3 +1,10 @@
 {
-    "parent": "vida_reforged:block/element_harmonize_earth_table"
+    "parent": "vida_reforged:block/element_harmonize_earth_table",
+    "display": {
+        "gui": {
+            "rotation": [ 30, 225, 0 ],
+            "translation": [ 0, 0, 2 ],
+            "scale": [ 0.6, 0.6, 0.6 ]
+        }
+    }
 }

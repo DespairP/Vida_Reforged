@@ -419,6 +419,8 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> SHERD_RESEARCH_TABLE = BLOCKS.register("sherd_research_table",  SherdResearchTable::new);
     @RegisterItemBlock
+    public final static RegistryObject<Block> VASE = BLOCKS.register("vase", () -> new VaseBlock(BlockBehaviour.Properties.copy(Blocks.DECORATED_POT)));
+    @RegisterItemBlock
     public final static RegistryObject<Block> ELEMENT_HARMONIZE_GOLD_TABLE = BLOCKS.register("element_harmonize_gold_table", () -> new ElementHarmonizeTable(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE), VidaElement.GOLD));
     @RegisterItemBlock
     public final static RegistryObject<Block> ELEMENT_HARMONIZE_WOOD_TABLE = BLOCKS.register("element_harmonize_wood_table", () -> new ElementHarmonizeTable(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE), VidaElement.WOOD));
