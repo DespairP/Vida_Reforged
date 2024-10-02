@@ -1,20 +1,34 @@
 package teamHTBP.vidaReforged.client.events;
 
 import com.google.gson.JsonSyntaxException;
+import com.mojang.blaze3d.pipeline.RenderTarget;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.shaders.Uniform;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.ShaderInstance;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterShadersEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
@@ -23,6 +37,9 @@ import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.client.events.registries.MobsModelRegistryHandler;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author DustW
@@ -56,10 +73,12 @@ public class ShadersHandler {
                 s -> stars = s);
     }
 
+    /**加载帧缓冲*/
     @SubscribeEvent
     public static void onEffectEvent(RegisterShadersEvent event){
         if(glowShadow != null){
             glowShadow.close();
+            glowShadow = null;
         }
 
         try {
@@ -72,8 +91,8 @@ public class ShadersHandler {
             LOGGER.error(e);
             glowShadow = null;
         }
-
     }
+
 
     public static final record Point2f(float x, float y) {}
 
@@ -95,4 +114,6 @@ public class ShadersHandler {
     public static void setUniforms(ShaderInstance shader, Object sampler) {
         shader.setSampler("sampler0",  sampler);
     }
+
+
 }

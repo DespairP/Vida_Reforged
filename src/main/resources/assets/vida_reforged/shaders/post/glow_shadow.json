@@ -4,20 +4,24 @@
         "vida_reforged:final"
     ],
     "passes": [{
-        "name": "minecraft:blur",
+        "name": "minecraft:entity_outline",
         "intarget": "vida_reforged:final",
-        "outtarget": "vida_reforged:swap",
+        "outtarget": "vida_reforged:swap"
+    }, {
+        "name": "minecraft:blur",
+        "intarget": "vida_reforged:swap",
+        "outtarget": "vida_reforged:final",
         "uniforms": [{
             "name": "BlurDir",
-            "values": [1.0, 3.0]
+            "values": [1.0, 0.0]
         }, {
             "name": "Radius",
             "values": [2.0]
         }]
     }, {
         "name": "minecraft:blur",
-        "intarget": "vida_reforged:swap",
-        "outtarget": "vida_reforged:final",
+        "intarget": "vida_reforged:final",
+        "outtarget": "vida_reforged:swap",
         "uniforms": [{
             "name": "BlurDir",
             "values": [0.0, 1.0]
@@ -27,7 +31,7 @@
         }]
     }, {
         "name": "minecraft:blit",
-        "intarget": "vida_reforged:final",
-        "outtarget": "vida_reforged:swap"
+        "intarget": "vida_reforged:swap",
+        "outtarget": "vida_reforged:final"
     }]
 }

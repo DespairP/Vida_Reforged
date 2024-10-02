@@ -18,7 +18,7 @@ public class BreathCatcher extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if(!level.isClientSide){
-            FloatingItemEntity entity = new FloatingItemEntity(level, player.getEyePosition().add(player.getLookAngle().scale(3)), player.position(), new Vector3d(0.1F, 0.5f, 0.1f));
+            FloatingItemEntity entity = new FloatingItemEntity(level, player.getEyePosition().add(player.getLookAngle().scale(3)), new Vector3d(0.1F, 0.5f, 0.1f));
             entity.setItem(new ItemStack(VidaItemLoader.EARTH_GEM.get(), 1));
             entity.setToPos(player.position());
             level.addFreshEntity(entity);

@@ -3,12 +3,15 @@ package teamHTBP.vidaReforged.server.entity;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.FloatTag;
+import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
@@ -16,50 +19,55 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.joml.Vector3d;
 import org.joml.Vector3f;
-import org.joml.Vector3i;
 import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
 import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 
-import java.util.List;
-
 /** 带有光晕的物品 */
 public class FloatingItemEntity extends Entity{
     private static final EntityDataAccessor<ItemStack> DATA_ITEM = SynchedEntityData.defineId(FloatingItemEntity.class, EntityDataSerializers.ITEM_STACK);
-    private static final EntityDataAccessor<Vector3f> DATA_VEC = SynchedEntityData.defineId(FloatingItemEntity.class, EntityDataSerializers.VECTOR3);
-
-    private int age;
+    private static final EntityDataAccessor<Vector3f> DATA_VEC_TO_POS = SynchedEntityData.defineId(FloatingItemEntity.class, EntityDataSerializers.VECTOR3);
+    private static final EntityDataAccessor<ARGBColor> DATA_OVERRIDE_COLOR = SynchedEntityData.defineId(FloatingItemEntity.class, VidaEntityDataSerializer.COLOR);
     private static final int MAX_AGE = 3600;
-    private Vec3 toPos;
+    private int age;
+    private int pickupDelay;
     public final float bobOffs;
 
     protected FloatingItemEntity(EntityType<FloatingItemEntity> entityType, Level level){
         super(entityType, level);
         this.age = 0;
-        this.toPos = new Vec3(position().x, position().y, position().z);
         this.bobOffs = 0;
     }
 
-    public FloatingItemEntity(Level level, @NonNull Vec3 fromPos, Vec3 toPos, @NonNull Vector3d deltaPos) {
+    public FloatingItemEntity(Level level, @NonNull Vec3 fromPos, @NonNull Vector3d deltaPos) {
         this(VidaEntityLoader.FLOATING_ITEM_ENTITY.get(), level);
         setPos(fromPos.x, fromPos.y, fromPos.z);
         setDeltaMovement(deltaPos.x, deltaPos.y, deltaPos.z);
-        this.toPos = toPos == null ? new Vec3(fromPos.x, fromPos.y, fromPos.z) : new Vec3(toPos.x, toPos.y, toPos.z);
+        setDefaultPickUpDelay();
     }
+
+    public FloatingItemEntity init(ItemStack itemStack, Vec3 toPos, ARGBColor particleColor) {
+        setToPos(toPos);
+        setItem(itemStack);
+        if(particleColor != null){
+            setParticleColor(particleColor);
+        }
+        return this;
+    }
+
 
     @Override
     protected void defineSynchedData() {
         this.getEntityData().define(DATA_ITEM, ItemStack.EMPTY);
-        this.getEntityData().define(DATA_VEC, new Vector3f());
+        this.getEntityData().define(DATA_VEC_TO_POS, new Vector3f());
+        this.getEntityData().define(DATA_OVERRIDE_COLOR, new ARGBColor(255, 190, 0, 255));
     }
 
     @Override
@@ -67,11 +75,16 @@ public class FloatingItemEntity extends Entity{
         this.age = tag.getShort("Age");
         CompoundTag compoundtag = tag.getCompound("Item");
         this.setItem(ItemStack.of(compoundtag));
+        if (tag.contains("PickupDelay")) {
+            this.pickupDelay = tag.getShort("PickupDelay");
+        }
         if (this.getItem().isEmpty()) {
             this.discard();
         }
-        ListTag listtag = tag.getList("ToPos", 6);
-        this.toPos = new Vec3(listtag.getDouble(0), listtag.getDouble(1), listtag.getDouble(2));
+        ListTag vecListtag = tag.getList("ToPos", 6);
+        setToPos(new Vec3(vecListtag.getDouble(0), vecListtag.getDouble(1), vecListtag.getDouble(2)));
+        ListTag colorListtag = (ListTag) tag.get("Color");
+        setParticleColor(new ARGBColor(colorListtag.getInt(0), colorListtag.getInt(1), colorListtag.getInt(2), colorListtag.getInt(3)));
     }
 
     @Override
@@ -80,7 +93,11 @@ public class FloatingItemEntity extends Entity{
         if (!this.getItem().isEmpty()) {
             tag.put("Item", this.getItem().save(new CompoundTag()));
         }
+        Vec3 toPos = getToPos();
         tag.put("ToPos", this.newDoubleList(toPos.x, toPos.y, toPos.z));
+        tag.putShort("PickupDelay", (short)this.pickupDelay);
+        ARGBColor color = getParticleColor();
+        tag.put("Color", this.newIntList(color.a(), color.r(), color.g(), color.b()));
     }
 
     public void onSyncedDataUpdated(EntityDataAccessor<?> accessor) {
@@ -93,7 +110,10 @@ public class FloatingItemEntity extends Entity{
     @Override
     public void tick() {
         if(this.age < MAX_AGE){
-            if(toPos != null){
+            if (this.pickupDelay > 0 && this.pickupDelay != 32767) {
+                --this.pickupDelay;
+            }
+            if(getToPos() != null){
                 float velocity = 0.1f;
                 Vec3 desiredMotion = getToPos().subtract(position()).normalize().multiply(velocity, velocity, velocity);
                 float easing = 0.1f;
@@ -101,7 +121,11 @@ public class FloatingItemEntity extends Entity{
                 float yMotion = (float) Mth.lerp(easing, getDeltaMovement().y, desiredMotion.y);
                 float zMotion = (float) Mth.lerp(easing, getDeltaMovement().z, desiredMotion.z);
                 Vec3 resultingMotion = new Vec3(xMotion, yMotion, zMotion);
-                setDeltaMovement(resultingMotion);
+                if(resultingMotion.length() <= 0.03f){
+                    setDeltaMovement(0, 0, 0);
+                }else{
+                    setDeltaMovement(resultingMotion);
+                }
             }
             ++ this.age;
         }
@@ -149,6 +173,16 @@ public class FloatingItemEntity extends Entity{
         double deltaY = getY() - yo;
         double deltaZ = getZ() - zo;
         double dist = Math.ceil(Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) * 3);
+        if(dist <= 0){
+            level().addParticle(
+                    getParticle(),
+                    xo ,
+                    yo ,
+                    zo ,
+                    0.05f * (random.nextFloat() - 0.5f),
+                    0.05f * (random.nextFloat() - 0.5f),
+                    0.05f * (random.nextFloat() - 0.5f));
+        }
         for (double spawnPoint = 0; spawnPoint < dist; spawnPoint++) {
             double distFactor = spawnPoint / dist;
             level().addParticle(
@@ -163,11 +197,12 @@ public class FloatingItemEntity extends Entity{
     }
 
     public ParticleOptions getParticle(){
-        return new BaseParticleType(VidaParticleTypeLoader.ORB_PARTICLE.get(), new ARGBColor(255, 190, 0, 255), new Vector3f(), 0.5F, 50);
+        return new BaseParticleType(VidaParticleTypeLoader.ORB_PARTICLE.get(), getParticleColor(), new Vector3f(), 0.4F, 50);
     }
 
     public void playerTouch(Player player) {
         if (!this.level().isClientSide) {
+            if (this.pickupDelay > 0) return;
             ItemStack itemstack = this.getItem();
             Item item = itemstack.getItem();
             ItemStack copy = itemstack.copy();
@@ -180,11 +215,12 @@ public class FloatingItemEntity extends Entity{
                     this.discard();
                     itemstack.setCount(remainCount);
                 }
-
                 player.awardStat(Stats.ITEM_PICKED_UP.get(item), remainCount);
                 if (player instanceof ServerPlayer) {
                     CriteriaTriggers.THROWN_ITEM_PICKED_UP_BY_ENTITY.trigger((ServerPlayer)player, getItem(), this);
                 }
+                Level level = player.level();
+                level.playSound(null, player.getX(), player.getY() + 0.5, player.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, ((level.random.nextFloat() - level.random.nextFloat()) * 0.7F + 1.0F) * 2.0F);
             }
         }
     }
@@ -219,17 +255,42 @@ public class FloatingItemEntity extends Entity{
         return ((float)this.getAge() + p_32009_) / 20.0F + this.bobOffs;
     }
 
+    public void setDefaultPickUpDelay() {
+        this.pickupDelay = 10;
+    }
+    public void setNoPickUpDelay() {
+        this.pickupDelay = 0;
+    }
+
 
     public int getAge() {
         return age;
     }
 
     public Vec3 getToPos() {
-        Vector3f vector3f = this.entityData.get(DATA_VEC);
+        Vector3f vector3f = this.entityData.get(DATA_VEC_TO_POS);
         return new Vec3(vector3f);
     }
 
     public void setToPos(Vec3 vec3){
-        this.entityData.set(DATA_VEC, vec3.toVector3f());
+        this.entityData.set(DATA_VEC_TO_POS, vec3.toVector3f());
+    }
+
+    public ARGBColor getParticleColor() {
+        return this.entityData.get(DATA_OVERRIDE_COLOR);
+    }
+
+    public void setParticleColor(ARGBColor color){
+        this.entityData.set(DATA_OVERRIDE_COLOR, color);
+    }
+
+    protected ListTag newIntList(int... p_20066_) {
+        ListTag listtag = new ListTag();
+
+        for(int f : p_20066_) {
+            listtag.add(IntTag.valueOf(f));
+        }
+
+        return listtag;
     }
 }

@@ -7,6 +7,8 @@ package teamHTBP.vidaReforged.core.utils.color;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.joml.Vector4f;
+
 /**
  * float: 0~1, int: 0~255
  *
@@ -29,11 +31,17 @@ public class ARGBColor extends VidaColor {
     private int g;
     private int b;
 
+    private static final Vector4f MAX_COLOR = new Vector4f(255);
+
     public ARGBColor(int a, int r, int g, int b) {
         this.a = a;
         this.r = r;
         this.g = g;
         this.b = b;
+    }
+
+    public Vector4f toFloat(){
+        return new Vector4f(a, r, g, b).div(MAX_COLOR);
     }
 
     public static ARGBColor of(float a, float r, float g, float b) {

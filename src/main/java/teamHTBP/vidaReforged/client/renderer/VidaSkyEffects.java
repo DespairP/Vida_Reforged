@@ -11,33 +11,43 @@ import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.ShaderInstance;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
-import teamHTBP.vidaReforged.VidaReforged;
+import org.joml.Vector4f;
+import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 
 import static teamHTBP.vidaReforged.helper.VidaRenderHelper.*;
 
-
+/**
+ * 渲染天空
+ * 代码部分来自于StellarView
+ *
+ * TODO: 星座，荧光
+ * */
 public class VidaSkyEffects extends DimensionSpecialEffects {
     Minecraft minecraft;
-    private VertexBuffer skyBuffer;
-    private VertexBuffer darkBuffer;
-    private VertexBuffer starBuffer;
-    private VertexBuffer starGoldBuffer;
-    private VertexBuffer starWoodBuffer;
-    private VertexBuffer starAquaBuffer;
-    private VertexBuffer starFireBuffer;
-    private VertexBuffer starEarthBuffer;
+    private final VertexBuffer skyBuffer;
+    private final VertexBuffer darkBuffer;
+    private final VertexBuffer starBuffer;
+    private final VertexBuffer starGoldBuffer;
+    private final VertexBuffer starWoodBuffer;
+    private final VertexBuffer starAquaBuffer;
+    private final VertexBuffer starFireBuffer;
+    private final VertexBuffer starEarthBuffer;
+    private final Vector4f[] starColors = new Vector4f[]{
+            ARGBColor.of(255, 178, 127).toFloat(),
+            ARGBColor.of(218, 255, 127).toFloat(),
+            ARGBColor.of(178, 255, 236).toFloat(),
+            ARGBColor.of(255, 128, 128).toFloat(),
+            ARGBColor.of(255, 178, 128).toFloat()
+    };
 
     private static final ResourceLocation SUN_LOCATION = new ResourceLocation("textures/environment/sun.png");
     private static final ResourceLocation MOON_LOCATION = new ResourceLocation("textures/environment/moon_phases.png");
@@ -266,23 +276,23 @@ public class VidaSkyEffects extends DimensionSpecialEffects {
         stack.popPose();
         RenderSystem.setShaderColor(1,1,1,1);
 
-        RenderSystem.setShaderColor(1f, 0.7f, 0f, rainAlpha);
+        RenderSystem.setShaderColor(starColors[0].x, starColors[0].y, starColors[0].z, rainAlpha);
         renderStarWithBuffer(level, partialTicks, stack, projectionMatrix, shaderInstance, starGoldBuffer);
         RenderSystem.setShaderColor(1f, 1f, 1f, 1F);
 
-        RenderSystem.setShaderColor(1f, 0.97f, 0.1f, rainAlpha);
+        RenderSystem.setShaderColor(starColors[1].x, starColors[1].y, starColors[1].z, rainAlpha);
         renderStarWithBuffer(level, partialTicks, stack, projectionMatrix, shaderInstance, starWoodBuffer);
         RenderSystem.setShaderColor(1f, 1f, 1f, 1F);
 
-        RenderSystem.setShaderColor(1f, 0.65f, 1.0f, rainAlpha);
+        RenderSystem.setShaderColor(starColors[2].x, starColors[2].y, starColors[2].z, rainAlpha);
         renderStarWithBuffer(level, partialTicks, stack, projectionMatrix, shaderInstance, starAquaBuffer);
         RenderSystem.setShaderColor(1f, 1f, 1f, 1F);
 
-        RenderSystem.setShaderColor(1f, 0.78f, 0.78f, rainAlpha);
+        RenderSystem.setShaderColor(starColors[3].x, starColors[3].y, starColors[3].z, rainAlpha);
         renderStarWithBuffer(level, partialTicks, stack, projectionMatrix, shaderInstance, starFireBuffer);
         RenderSystem.setShaderColor(1f, 1f, 1f, 1F);
 
-        RenderSystem.setShaderColor(0.8f, 0.68f, 0.68f, rainAlpha);
+        RenderSystem.setShaderColor(starColors[4].x, starColors[4].y, starColors[4].z, rainAlpha);
         renderStarWithBuffer(level, partialTicks, stack, projectionMatrix, shaderInstance, starEarthBuffer);
         RenderSystem.setShaderColor(1f, 1f, 1f, 1F);
     }
