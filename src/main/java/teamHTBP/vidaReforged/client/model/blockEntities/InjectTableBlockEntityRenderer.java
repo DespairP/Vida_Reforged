@@ -70,7 +70,7 @@ public class InjectTableBlockEntityRenderer implements BlockEntityRenderer<Injec
         // 渲染物品
         BakedModel ibakedmodel = itemRenderer.getModel(stack, level, null, 0);
 
-        RenderTarget rendertarget = ShadersHandler.glowShadow.getTempTarget("vida_reforged:final");
+/*        RenderTarget rendertarget = ShadersHandler.glowShadow.getTempTarget("vida_reforged:final");
         ShadersHandler.glowShadow.resize(Minecraft.getInstance().getMainRenderTarget().width, Minecraft.getInstance().getMainRenderTarget().height);
         // Main
         RenderTarget mainRenderTarget = Minecraft.getInstance().getMainRenderTarget();
@@ -96,21 +96,21 @@ public class InjectTableBlockEntityRenderer implements BlockEntityRenderer<Injec
 
         RenderSystem.setShaderColor(1, 1, 1,1);
         RenderSystem.resetTextureMatrix();
-        RenderSystem.depthMask(/*flag*/true);
+        RenderSystem.depthMask(*//*flag*//*true);*/
 
 
-        //poseStack.pushPose();
-        //double floatingYOffset = 0.12F * Math.sin(sinWave(time));
-        //poseStack.translate(0.5F, 1.8F + floatingYOffset, 0.5F);
-        //// 武器展示角度
-        //if(stack.is(itemHolder -> itemHolder.get() instanceof SwordItem)){
-        //    poseStack.mulPose(Axis.XN.rotationDegrees(180));
-        //} else {
-        //    poseStack.mulPose(Axis.XN.rotationDegrees(0));
-        //}
-        //poseStack.mulPose(Axis.ZN.rotationDegrees(45));
-        //itemRenderer.render(stack, ItemDisplayContext.FIXED, true, poseStack, bufferSource, 240, packetOverlayIn, ibakedmodel);
-        //poseStack.popPose();
+        poseStack.pushPose();
+        double floatingYOffset = 0.12F * Math.sin(sinWave(time));
+        poseStack.translate(0.5F, 1.8F + floatingYOffset, 0.5F);
+        // 武器展示角度
+        if(stack.is(itemHolder -> itemHolder.get() instanceof SwordItem)){
+            poseStack.mulPose(Axis.XN.rotationDegrees(180));
+        } else {
+            poseStack.mulPose(Axis.XN.rotationDegrees(0));
+        }
+        poseStack.mulPose(Axis.ZN.rotationDegrees(45));
+        itemRenderer.render(stack, ItemDisplayContext.FIXED, true, poseStack, bufferSource, 240, packetOverlayIn, ibakedmodel);
+        poseStack.popPose();
     }
 
 
