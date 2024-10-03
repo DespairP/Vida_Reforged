@@ -1,5 +1,8 @@
 package teamHTBP.vidaReforged.client.model.blockEntities;
 
+import com.mojang.blaze3d.pipeline.RenderTarget;
+import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
@@ -13,19 +16,24 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.level.Level;
+import org.lwjgl.opengl.GL11;
+import software.bernie.shadowed.eliotlash.mclib.math.functions.limit.Min;
 import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.client.events.ShadersHandler;
 import teamHTBP.vidaReforged.client.events.registries.LayerRegistryHandler;
 import teamHTBP.vidaReforged.client.model.blockModel.InjectTableModel;
+import teamHTBP.vidaReforged.helper.VidaRenderHelper;
 import teamHTBP.vidaReforged.server.blockEntities.InjectTableBlockEntity;
 
 public class InjectTableBlockEntityRenderer implements BlockEntityRenderer<InjectTableBlockEntity> {
-    InjectTableModel model;
-    private BlockEntityRendererProvider.Context context;
+    private InjectTableModel model;
     public static final ResourceLocation TEXTURE = new ResourceLocation(VidaReforged.MOD_ID, "textures/block/blockmodel/inject_table_block.png");
-
+    private ItemRenderer itemRenderer;
+    private final BufferBuilder bufferBuilder = new BufferBuilder(256);
 
     public InjectTableBlockEntityRenderer(BlockEntityRendererProvider.Context context){
-        this.context = context;
+        itemRenderer = context.getItemRenderer();
     }
 
     public InjectTableModel getOrCreateModel(){
@@ -34,45 +42,79 @@ public class InjectTableBlockEntityRenderer implements BlockEntityRenderer<Injec
         }
         return model;
     }
-
     @Override
     public void render(InjectTableBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int lightOverlayIn, int packetOverlayIn) {
-        InjectTableModel cubeModel = getOrCreateModel();
         long time = System.currentTimeMillis();
-        float angle = (time / 30) % 360;
-        if(cubeModel != null){
-            poseStack.pushPose();
-            poseStack.translate(0.5f,-0.2f, 0.5f);
-            poseStack.mulPose(Axis.YP.rotationDegrees(angle));
-            cubeModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityTranslucent(TEXTURE)), lightOverlayIn, packetOverlayIn,1, 1, 1, 1);
-            poseStack.popPose();
-        }
-
+        renderCube(poseStack, bufferSource, lightOverlayIn, packetOverlayIn, time);
         if(!blockEntity.hasItem()){
             return;
         }
-        poseStack.pushPose();
-        double floating = 0.12 * Math.sin(sinWave(blockEntity.time));
-        poseStack.translate(0.5f, 1.8f + floating, 0.5f);
-        ItemStack stack = blockEntity.getItemForDisplay();
+        renderItem(poseStack, blockEntity.getItem(), blockEntity.getLevel(), bufferSource, lightOverlayIn, packetOverlayIn, time);
+    }
 
-        //选择角度
-        if(stack.is(itemHolder -> itemHolder.get() instanceof SwordItem)){
-            poseStack.mulPose(Axis.XN.rotationDegrees(180));
-        }else {
-            poseStack.mulPose(Axis.XN.rotationDegrees(0));
+    public void renderCube(PoseStack poseStack, MultiBufferSource bufferSource, int lightOverlayIn, int packetOverlayIn, long time){
+        InjectTableModel cubeModel = getOrCreateModel();
+        if(cubeModel == null) {
+            return;
         }
-
-        poseStack.mulPose(Axis.ZN.rotationDegrees(45));
-        ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-        BakedModel ibakedmodel = itemRenderer.getModel(stack, blockEntity.getLevel(), null, 0);
-        itemRenderer.render(blockEntity.getItemForDisplay(), ItemDisplayContext.FIXED, true, poseStack, bufferSource, 240, packetOverlayIn, ibakedmodel);
+        float angle = (time / 30) % 360;
+        poseStack.pushPose();
+        poseStack.translate(0.5f,-0.2f, 0.5f);
+        poseStack.mulPose(Axis.YP.rotationDegrees(angle));
+        cubeModel.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityTranslucent(TEXTURE)), lightOverlayIn, packetOverlayIn,1, 1, 1, 1);
         poseStack.popPose();
+
+    }
+
+    public void renderItem(PoseStack poseStack, ItemStack stack, Level level, MultiBufferSource bufferSource, int lightOverlayIn, int packetOverlayIn, long time){
+        // 渲染物品
+        BakedModel ibakedmodel = itemRenderer.getModel(stack, level, null, 0);
+
+        RenderTarget rendertarget = ShadersHandler.glowShadow.getTempTarget("vida_reforged:final");
+        ShadersHandler.glowShadow.resize(Minecraft.getInstance().getMainRenderTarget().width, Minecraft.getInstance().getMainRenderTarget().height);
+        // Main
+        RenderTarget mainRenderTarget = Minecraft.getInstance().getMainRenderTarget();
+        mainRenderTarget.unbindWrite();
+        rendertarget.bindWrite(false);
+        RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT, Minecraft.ON_OSX);
+
+        rendertarget.unbindWrite();
+        VidaRenderHelper.swapBuffer(mainRenderTarget, rendertarget);
+
+        bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
+        itemRenderer.render(stack, ItemDisplayContext.FIXED, true, poseStack, bufferSource, 240, packetOverlayIn, ibakedmodel);
+        BufferUploader.draw(bufferBuilder.end());
+
+        VidaRenderHelper.swapBuffer(mainRenderTarget, rendertarget);
+        mainRenderTarget.bindWrite(false);
+
+        Window window = Minecraft.getInstance().getWindow();
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        rendertarget.blitToScreen(window.getWidth(), window.getHeight(), false);
+        RenderSystem.disableBlend();
+
+        RenderSystem.setShaderColor(1, 1, 1,1);
+        RenderSystem.resetTextureMatrix();
+        RenderSystem.depthMask(/*flag*/true);
+
+
+        //poseStack.pushPose();
+        //double floatingYOffset = 0.12F * Math.sin(sinWave(time));
+        //poseStack.translate(0.5F, 1.8F + floatingYOffset, 0.5F);
+        //// 武器展示角度
+        //if(stack.is(itemHolder -> itemHolder.get() instanceof SwordItem)){
+        //    poseStack.mulPose(Axis.XN.rotationDegrees(180));
+        //} else {
+        //    poseStack.mulPose(Axis.XN.rotationDegrees(0));
+        //}
+        //poseStack.mulPose(Axis.ZN.rotationDegrees(45));
+        //itemRenderer.render(stack, ItemDisplayContext.FIXED, true, poseStack, bufferSource, 240, packetOverlayIn, ibakedmodel);
+        //poseStack.popPose();
     }
 
 
-
-    double sinWave(float ticks) {
+    private static double sinWave(float ticks) {
         return (ticks * 0.1) % (Math.PI * 2);
     }
 }

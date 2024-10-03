@@ -1,5 +1,6 @@
 package teamHTBP.vidaReforged.helper;
 
+import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
@@ -8,10 +9,17 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.VarHandle;
 
 @OnlyIn(Dist.CLIENT)
 public class VidaRenderHelper {
     private final static Minecraft minecraft = Minecraft.getInstance();
+    private final static Logger LOGGER = LogManager.getLogger();
 
     public static VertexBuffer createLightSky() {
         VertexBuffer skyBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
@@ -110,7 +118,46 @@ public class VidaRenderHelper {
         }
 
         return bufferBuilder.end();
+
     }
 
+    public static VarHandle colorTextureIdHandle;
+    public static VarHandle depthBufferIdHandle;
 
+    static {
+        try{
+            MethodHandles.Lookup lookup = MethodHandles.privateLookupIn(RenderTarget.class, MethodHandles.lookup());
+            colorTextureIdHandle = lookup.findVarHandle(RenderTarget.class, "colorTextureId", int.class);
+            depthBufferIdHandle = lookup.findVarHandle(RenderTarget.class, "depthBufferId", int.class);
+        } catch (Exception exception){
+            LOGGER.error(exception);
+        }
+    }
+
+    public static void swapBuffer(RenderTarget targetA, RenderTarget targetB){
+        int height = targetA.height;
+        int width = targetA.width;
+        int viewHeight = targetA.viewHeight;
+        int viewWidth = targetA.viewWidth;
+        int frameBufferId = targetA.frameBufferId;
+        int colorTextureId = targetA.getColorTextureId();
+        int depthBufferId = targetA.getDepthTextureId();
+
+        targetA.height = targetB.height;
+        targetA.width = targetB.width;
+        targetA.viewHeight = targetB.viewHeight;
+        targetA.viewWidth = targetB.viewWidth;
+        targetA.frameBufferId = targetB.frameBufferId;
+        colorTextureIdHandle.set(targetA, targetB.getColorTextureId());
+        colorTextureIdHandle.set(targetA, targetB.getDepthTextureId());
+
+
+        targetB.height = height;
+        targetB.width = width;
+        targetB.viewHeight = viewHeight;
+        targetB.viewWidth = viewWidth;
+        targetB.frameBufferId = frameBufferId;
+        colorTextureIdHandle.set(targetB, colorTextureId);
+        colorTextureIdHandle.set(targetB, depthBufferId);
+    }
 }
