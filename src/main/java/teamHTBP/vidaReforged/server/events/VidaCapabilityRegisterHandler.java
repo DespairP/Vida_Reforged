@@ -19,6 +19,7 @@ public class VidaCapabilityRegisterHandler {
     public static Capability<IVidaMultiBlockCapability> VIDA_MULTI_BLOCK = CapabilityManager.get(new CapabilityToken<>(){});
     public static Capability<IVidaPlayerMagicCapability> VIDA_PLAYER_MAGIC = CapabilityManager.get(new CapabilityToken<>(){});
     public static Capability<IVidaChunkCrystalCapability> VIDA_CHUNK_CRYSTAL = CapabilityManager.get(new CapabilityToken<>(){});
+    public static Capability<IVidaPlayerRPGSkillCapability> VIDA_RPG_SKILL = CapabilityManager.get(new CapabilityToken<>(){});
 
 
     /**注册Capability*/
@@ -30,5 +31,6 @@ public class VidaCapabilityRegisterHandler {
         event.register(IVidaMultiBlockCapability.class);
         event.register(IVidaPlayerMagicCapability.class);
         event.register(IVidaChunkCrystalCapability.class);
+        event.register(IVidaPlayerRPGSkillCapability.class);
     }
 }

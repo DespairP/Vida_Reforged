@@ -230,5 +230,6 @@
  "message.command.vida_reforged.add_magic.failed": "Set Vida Wand Magic: %s is failed.",
  "message.command.vida_reforged.list_magic": "[Vida] current available magics are: %s",
  "message.command.vida_reforged.illegal_id_magic": "No magic named : %s !",
- "message.vida_reforged.inventory_is_full": "Inventory is full, please empty the inventory."
+ "message.vida_reforged.inventory_is_full": "Inventory is full, please empty the inventory.",
+ "gui.vida_reforged.vase_complete": "Use        to complete the flower arrangement"
 }

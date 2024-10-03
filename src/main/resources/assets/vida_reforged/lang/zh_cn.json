@@ -359,6 +359,7 @@
  "message.command.vida_reforged.add_magic.success": "设置魔法: %s 成功。",
  "message.command.vida_reforged.add_magic.failed": "设置魔法: %s 失败。似乎物品有槽位限制...",
  "message.command.vida_reforged.list_magic": "[生命]现在拥有的魔法有: %s",
- "message.command.vida_reforged.illegal_id_magic": "没有这个魔法: %s !"
+ "message.command.vida_reforged.illegal_id_magic": "没有这个魔法: %s !",
+ "gui.vida_reforged.vase_complete": "使用    来完成插花"
 
 }

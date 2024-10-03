@@ -1,9 +1,11 @@
 package teamHTBP.vidaReforged.server.blockEntities;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -74,12 +76,41 @@ public class VaseBlockEntity extends VidaBlockEntity implements IVidaTickableBlo
         return false;
     }
 
+    public boolean setCompleted(){
+        if(flowers.isEmpty() || isCompleted){
+            return false;
+        }
+        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 1 | 2);
+        if(level instanceof ServerLevel serverLevel){
+            serverLevel.sendParticles(ParticleTypes.GLOW, getBlockPos().getX(), getBlockPos().getY() + 0.5, getBlockPos().getZ(), 5, 0.5, 0.2, 0.5, 0.01);
+        }
+        this.isCompleted = true;
+        return true;
+    }
+
+    public ItemStack getFlower(){
+        if(isCompleted){
+            return ItemStack.EMPTY;
+        }
+        for (int i = 2; i >= 0; i--) {
+            ItemStack container = flowers.getItem(i);
+            if(!container.isEmpty()){
+                return container;
+            }
+        }
+        return ItemStack.EMPTY;
+    }
+
     public SimpleContainer getFlowers(){
         return this.flowers;
     }
 
     public List<Integer> getPlaceRandom(){
         return this.placeRandom.subList(0, 3);
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
     }
 
     @Override

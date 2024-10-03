@@ -23,6 +23,7 @@ import teamHTBP.vidaReforged.VidaConfig;
 import teamHTBP.vidaReforged.client.hud.*;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.server.blockEntities.FloatingCrystalBlockEntity;
+import teamHTBP.vidaReforged.server.blockEntities.VaseBlockEntity;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
 
 import java.lang.reflect.Constructor;
@@ -34,9 +35,11 @@ import java.util.List;
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class HudHandler {
     protected static VidaManaBarScreen screen;
+    /**/
     protected static VidaUnlockMagicWordScreen unlockScreen;
     protected static VidaWandStaminaScreen staminaScreen;
     protected static VidaWandMagicScreen magicScreen;
+    protected static VaseScreen vaseScreen;
     protected static final float MAX_PLAYER_BAR_OFFSET = 12f;
     protected static FloatRange playerBarOffset = new FloatRange(0,0,MAX_PLAYER_BAR_OFFSET);
     protected static FloatRange globalHudAlpha = new FloatRange(0,0, 1);
@@ -148,17 +151,27 @@ public class HudHandler {
         BlockEntity entity = getBlockEntityPlayerLookAt(player);
         GuiGraphics graphics = event.getGuiGraphics();
         MultiBufferSource.BufferSource bufferSource = event.getGuiGraphics().bufferSource();
-        if(entity != null && entity.getBlockState().is(VidaBlockLoader.PURIFICATION_CAULDRON.get())){
+        if(entity == null){
+            return;
+        }
+        if(entity.getBlockState().is(VidaBlockLoader.PURIFICATION_CAULDRON.get())){
             new VidaCauldronScreen(mc, bufferSource, entity).render(graphics, event.getPartialTick());
             return;
         }
         if(entity instanceof FloatingCrystalBlockEntity){
-            new VidaCrystalManaScreen(mc,bufferSource, entity).render(graphics, event.getPartialTick());
+            new VidaCrystalManaScreen(mc, bufferSource, entity).render(graphics, event.getPartialTick());
+            return;
         }
-        if(entity != null && entity.getBlockState().is(VidaBlockLoader.COLLECTOR.get())){
+        if(entity.getBlockState().is(VidaBlockLoader.COLLECTOR.get())){
             new VidaCollectorScreen(mc, bufferSource, entity).render(graphics, event.getPartialTick());
             return;
         }
+        if(entity instanceof VaseBlockEntity vaseBlockEntity){
+            VaseScreen screen = getOrCreateScreen(vaseScreen,bufferSource, VaseScreen.class);
+            screen.setNewEntity(vaseBlockEntity);
+            screen.render(graphics, event.getPartialTick());
+        }
+
         globalHudAlpha.decrease(0.02f);
     }
 

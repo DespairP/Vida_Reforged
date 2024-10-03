@@ -7,6 +7,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -48,13 +49,28 @@ public class VaseBlock extends VidaBaseEntityBlock<VaseBlockEntity> {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand interactionHand, BlockHitResult hitResult) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         ItemStack handInItem = player.getItemInHand(InteractionHand.MAIN_HAND);
-        if(!level.isClientSide && blockEntity instanceof VaseBlockEntity vaseBlockEntity && handInItem.is(ItemTags.FLOWERS)){
-            if(vaseBlockEntity.putFlower(handInItem) && !player.getAbilities().instabuild){
-                handInItem.shrink(1);
-                return InteractionResult.SUCCESS;
+        if(!level.isClientSide && blockEntity instanceof VaseBlockEntity vaseBlockEntity ){
+            if(!player.isShiftKeyDown() && handInItem.is(ItemTags.FLOWERS) && vaseBlockEntity.putFlower(handInItem)){
+                if(!player.getAbilities().instabuild){
+                    handInItem.shrink(1);
+                }
+                return InteractionResult.CONSUME;
+            }
+            if(!player.isShiftKeyDown() && handInItem.is(Items.CLAY_BALL) && vaseBlockEntity.setCompleted()){
+                if(!player.getAbilities().instabuild){
+                    handInItem.shrink(1);
+                }
+                return InteractionResult.CONSUME;
+            }
+            if(player.isShiftKeyDown()){
+                if(player.addItem(vaseBlockEntity.getFlower())){
+                    level.sendBlockUpdated(pos, state, state, 1 | 2);
+                    return InteractionResult.SUCCESS;
+                }
             }
             return InteractionResult.PASS;
         }
-        return super.use(state, level, pos, player, interactionHand, hitResult);
+
+        return InteractionResult.CONSUME;
     }
 }

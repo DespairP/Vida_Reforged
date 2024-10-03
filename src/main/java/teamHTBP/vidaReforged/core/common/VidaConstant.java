@@ -16,8 +16,8 @@ public interface VidaConstant {
     public String CAP_VIDA_MAGIC_CONTAINER = "vida_wand_magic_container";
     public String CAP_VIDA_MULTI_BLOCK = "vida_multi_block";
     public String CAP_VIDA_PLAYER_MAGIC = "vida_player_magics";
+    public String CAP_VIDA_PLAYER_RPG_SKILL = "vida_player_skill_rpg";
     public String CAP_VIDA_CHUNK_CRYSTAL = "vida_chunk_crystal";
-
     public String TAG_HOLD_TIME = "holdTime";
     public String EVENT_NEXT_PAGE = "nextPage";
     public String EVENT_PREV_PAGE = "prevPage";
