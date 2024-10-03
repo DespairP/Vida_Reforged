@@ -24,7 +24,6 @@ public class InjectTableBlockEntity extends VidaBlockEntity implements IVidaTick
 
     public ItemStack getItem(){
         ItemStack stack = itemStack.copy();
-        this.itemStack = ItemStack.EMPTY;
         return stack;
     }
 
@@ -44,7 +43,6 @@ public class InjectTableBlockEntity extends VidaBlockEntity implements IVidaTick
     @Override
     public void load(CompoundTag tag) {
         this.itemStack = ItemStack.of(tag.getCompound("showItem"));
-
         super.load(tag);
     }
 

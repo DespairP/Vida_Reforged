@@ -1,6 +1,7 @@
 package teamHTBP.vidaReforged.client.model.blockEntities;
 
 import com.mojang.blaze3d.pipeline.RenderTarget;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -46,9 +47,6 @@ public class InjectTableBlockEntityRenderer implements BlockEntityRenderer<Injec
     public void render(InjectTableBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int lightOverlayIn, int packetOverlayIn) {
         long time = System.currentTimeMillis();
         renderCube(poseStack, bufferSource, lightOverlayIn, packetOverlayIn, time);
-        if(!blockEntity.hasItem()){
-            return;
-        }
         renderItem(poseStack, blockEntity.getItem(), blockEntity.getLevel(), bufferSource, lightOverlayIn, packetOverlayIn, time);
     }
 
@@ -67,38 +65,13 @@ public class InjectTableBlockEntityRenderer implements BlockEntityRenderer<Injec
     }
 
     public void renderItem(PoseStack poseStack, ItemStack stack, Level level, MultiBufferSource bufferSource, int lightOverlayIn, int packetOverlayIn, long time){
+        if (stack.isEmpty()){
+            return;
+        }
         // 渲染物品
         BakedModel ibakedmodel = itemRenderer.getModel(stack, level, null, 0);
 
-/*        RenderTarget rendertarget = ShadersHandler.glowShadow.getTempTarget("vida_reforged:final");
-        ShadersHandler.glowShadow.resize(Minecraft.getInstance().getMainRenderTarget().width, Minecraft.getInstance().getMainRenderTarget().height);
-        // Main
-        RenderTarget mainRenderTarget = Minecraft.getInstance().getMainRenderTarget();
-        mainRenderTarget.unbindWrite();
-        rendertarget.bindWrite(false);
-        RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT, Minecraft.ON_OSX);
-
-        rendertarget.unbindWrite();
-        VidaRenderHelper.swapBuffer(mainRenderTarget, rendertarget);
-
-        bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
-        itemRenderer.render(stack, ItemDisplayContext.FIXED, true, poseStack, bufferSource, 240, packetOverlayIn, ibakedmodel);
-        BufferUploader.draw(bufferBuilder.end());
-
-        VidaRenderHelper.swapBuffer(mainRenderTarget, rendertarget);
-        mainRenderTarget.bindWrite(false);
-
-        Window window = Minecraft.getInstance().getWindow();
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        rendertarget.blitToScreen(window.getWidth(), window.getHeight(), false);
-        RenderSystem.disableBlend();
-
-        RenderSystem.setShaderColor(1, 1, 1,1);
-        RenderSystem.resetTextureMatrix();
-        RenderSystem.depthMask(*//*flag*//*true);*/
-
-
+        ShadersHandler.spidew_bloom.resize(Minecraft.getInstance().getMainRenderTarget().width, Minecraft.getInstance().getMainRenderTarget().height);
         poseStack.pushPose();
         double floatingYOffset = 0.12F * Math.sin(sinWave(time));
         poseStack.translate(0.5F, 1.8F + floatingYOffset, 0.5F);
@@ -109,8 +82,38 @@ public class InjectTableBlockEntityRenderer implements BlockEntityRenderer<Injec
             poseStack.mulPose(Axis.XN.rotationDegrees(0));
         }
         poseStack.mulPose(Axis.ZN.rotationDegrees(45));
-        itemRenderer.render(stack, ItemDisplayContext.FIXED, true, poseStack, bufferSource, 240, packetOverlayIn, ibakedmodel);
+        itemRenderer.render(stack, ItemDisplayContext.FIXED, true, poseStack, MultiBufferSource.immediate(bufferBuilder), 240, packetOverlayIn, ibakedmodel);
         poseStack.popPose();
+
+        RenderTarget rendertarget = ShadersHandler.spidew_bloom.getTempTarget("final");
+        rendertarget.clear(Minecraft.ON_OSX);
+        rendertarget.bindWrite(false);
+
+        RenderSystem.disableBlend();
+        RenderSystem.depthMask(/*flag*/false);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        BufferUploader.draw(this.bufferBuilder.end());
+
+        Window window = Minecraft.getInstance().getWindow();
+
+        // Main
+        RenderTarget mainRenderTarget = Minecraft.getInstance().getMainRenderTarget();
+        mainRenderTarget.bindWrite(false);
+        ShadersHandler.spidew_bloom.process(Minecraft.getInstance().getPartialTick());
+        rendertarget.blitToScreen(window.getWidth(), window.getHeight(), false);
+
+        //VidaRenderHelper.swapBuffer(mainRenderTarget, rendertarget);
+
+
+        //VidaRenderHelper.swapBuffer(mainRenderTarget, rendertarget);
+
+
+        RenderSystem.setShaderColor(1, 1, 1,1);
+        RenderSystem.resetTextureMatrix();
+        RenderSystem.depthMask(true);
+
+
+
     }
 
 
