@@ -3,6 +3,7 @@ package teamHTBP.vidaReforged.server.blockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -23,7 +24,7 @@ public class InjectTableBlockEntity extends VidaBlockEntity implements IVidaTick
     }
 
     public ItemStack getItem(){
-        ItemStack stack = itemStack.copy();
+        ItemStack stack = new ItemStack(Items.NETHERITE_SWORD, 1);
         return stack;
     }
 
