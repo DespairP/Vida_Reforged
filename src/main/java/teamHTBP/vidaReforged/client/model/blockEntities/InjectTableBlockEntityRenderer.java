@@ -68,11 +68,11 @@ public class InjectTableBlockEntityRenderer implements BlockEntityRenderer<Injec
         if (stack.isEmpty()){
             return;
         }
+        Window window = Minecraft.getInstance().getWindow();
+        ShadersHandler.spidew_bloom.resize(Minecraft.getInstance().getMainRenderTarget().width, Minecraft.getInstance().getMainRenderTarget().height);
+
         // 渲染物品
         BakedModel ibakedmodel = itemRenderer.getModel(stack, level, null, 0);
-
-        ShadersHandler.spidew_bloom.resize(Minecraft.getInstance().getMainRenderTarget().width, Minecraft.getInstance().getMainRenderTarget().height);
-        poseStack.pushPose();
         double floatingYOffset = 0.12F * Math.sin(sinWave(time));
         poseStack.translate(0.5F, 1.8F + floatingYOffset, 0.5F);
         // 武器展示角度
@@ -83,39 +83,39 @@ public class InjectTableBlockEntityRenderer implements BlockEntityRenderer<Injec
         }
         poseStack.mulPose(Axis.ZN.rotationDegrees(45));
         itemRenderer.render(stack, ItemDisplayContext.FIXED, true, poseStack, MultiBufferSource.immediate(bufferBuilder), 240, packetOverlayIn, ibakedmodel);
-        poseStack.popPose();
 
         RenderTarget rendertarget = ShadersHandler.spidew_bloom.getTempTarget("final");
         rendertarget.clear(Minecraft.ON_OSX);
         rendertarget.bindWrite(false);
 
         RenderSystem.disableBlend();
-        RenderSystem.depthMask(/*flag*/false);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        BufferUploader.draw(this.bufferBuilder.end());
+        BufferUploader.drawWithShader(this.bufferBuilder.end());
+        ShadersHandler.spidew_bloom.process(Minecraft.getInstance().getPartialTick());
 
-        Window window = Minecraft.getInstance().getWindow();
 
         // Main
         RenderTarget mainRenderTarget = Minecraft.getInstance().getMainRenderTarget();
         mainRenderTarget.bindWrite(false);
-        ShadersHandler.spidew_bloom.process(Minecraft.getInstance().getPartialTick());
+        RenderSystem.enableBlend();
+        RenderSystem.blendFuncSeparate(
+                GlStateManager.SourceFactor.SRC_ALPHA,
+                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
+                GlStateManager.SourceFactor.ZERO,
+                GlStateManager.DestFactor.ONE
+        );
         rendertarget.blitToScreen(window.getWidth(), window.getHeight(), false);
-
-        //VidaRenderHelper.swapBuffer(mainRenderTarget, rendertarget);
-
-
-        //VidaRenderHelper.swapBuffer(mainRenderTarget, rendertarget);
-
-
+        RenderSystem.disableBlend();
         RenderSystem.setShaderColor(1, 1, 1,1);
         RenderSystem.resetTextureMatrix();
         RenderSystem.depthMask(true);
 
-
-
     }
 
+    @Override
+    public boolean shouldRenderOffScreen(InjectTableBlockEntity p_112306_) {
+        return true;
+    }
 
     private static double sinWave(float ticks) {
         return (ticks * 0.1) % (Math.PI * 2);
