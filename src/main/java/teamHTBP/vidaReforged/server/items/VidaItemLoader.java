@@ -71,7 +71,10 @@ public class VidaItemLoader {
 
     @ObjectHolder(registryName = "minecraft:item", value = "vida_reforged:vida_grass")
     public static Item VIDA_GRASS  = null;
-
+    @ObjectHolder(registryName = "minecraft:item", value = "vida_reforged:vivid_stone")
+    public static Item VIVID_STONE = null;
+    @ObjectHolder(registryName = "minecraft:item", value = "vida_reforged:vivid_log")
+    public static Item VIVID_LOG = null;
     public final static RegistryObject<Item> UNLOCK_MAGIC_WORD_PAPER = ITEMS.register("unlock_magic_word_paper", UnlockMagicWordPaper::new);
     public final static RegistryObject<Item> BLACK_METAL_HELMET = ITEMS.register("black_metal_helmet", () -> new ItemArmorBlackMetal(ArmorItem.Type.HELMET));
     public final static RegistryObject<Item> BLACK_METAL_CHESTPLATE = ITEMS.register("black_metal_chestplate", () -> new ItemArmorBlackMetal(ArmorItem.Type.CHESTPLATE));

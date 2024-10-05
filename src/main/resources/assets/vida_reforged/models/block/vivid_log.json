@@ -1,0 +1,7 @@
+{
+	"parent": "minecraft:block/cube_column",
+	"textures": {
+		"end": "vida_reforged:block/vivid_log_top",
+		"side": "vida_reforged:block/vivid_log"
+	}
+}

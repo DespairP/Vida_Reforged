@@ -6,25 +6,21 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.*;
-import net.minecraftforge.common.Tags;
 import org.joml.Vector3d;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.helper.VidaRecipeHelper;
 import teamHTBP.vidaReforged.server.blocks.VidaFluidsLoader;
 import teamHTBP.vidaReforged.server.entity.FloatingItemEntity;
-import teamHTBP.vidaReforged.server.entity.VidaEntityLoader;
-import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
 import java.util.function.Supplier;
 
-import static teamHTBP.vidaReforged.helper.VidaRecipeHelper.VIVID_LIQUID_RECIPE;
+import static teamHTBP.vidaReforged.helper.VidaRecipeHelper.VIVID_LIQUID_RECIPE_BLOCK;
 
 
 public class VividLiquidBlock extends LiquidBlock {
@@ -39,13 +35,16 @@ public class VividLiquidBlock extends LiquidBlock {
         // 延时检测
         if(!level.isClientSide && gameTime % 120 == 0 && state.getValue(LEVEL).equals(0) && level.isLoaded(pos) && entity.getType() == EntityType.ITEM){
             ItemEntity itemEntity = (ItemEntity) entity;
-            if(VIVID_LIQUID_RECIPE.containsKey(itemEntity.getItem().getItem())){
-                Supplier<Item> resultItem = VIVID_LIQUID_RECIPE.get(itemEntity.getItem().getItem());
+            // 方块匹配
+            Supplier<Item> resultItem = VidaRecipeHelper.getResultItem(itemEntity.getItem());
+            if(resultItem != null){
                 FloatingItemEntity floatingItemEntity = new FloatingItemEntity(level, pos.getCenter(), new Vector3d(0, 0.05f, 0));
                 floatingItemEntity.init(new ItemStack(resultItem.get(), itemEntity.getItem().getCount()), pos.above().getCenter(), new ARGBColor(255, 182, 255, 2));
                 level.addFreshEntity(floatingItemEntity);
                 itemEntity.discard();
+                return;
             }
+
         }
         super.entityInside(state, level, pos, entity);
     }

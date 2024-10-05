@@ -1,0 +1,16 @@
+{
+	"variants": {
+		"axis=x": {
+			"model": "vida_reforged:block/vivid_log",
+			"x": 90,
+			"y": 90
+		},
+		"axis=y": {
+			"model": "vida_reforged:block/vivid_log"
+		},
+		"axis=z": {
+			"model": "vida_reforged:block/vivid_log",
+			"x": 90
+		}
+	}
+}

@@ -239,6 +239,13 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> BLUE_JELLY_MUSHROOM_BLOCK = registerDecoBlock("blue_jelly_mushroom_block", WOOD, NORMAL);
 
+    /**活化原木，活化木板*/
+    @RegisterItemBlock
+    public final static RegistryObject<Block> VIVID_STONE = registerDecoBlock("vivid_stone", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> VIVID_LOG = registerDecoBlock("vivid_log", WOOD, LOG);
+
+
     /*花*/
     /**太阳花*/
     @RegisterItemBlock
