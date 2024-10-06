@@ -25,6 +25,7 @@ public class VidaScreenRegistryHandler {
             MenuScreens.register(VidaMenuContainerTypeLoader.MAGIC_WORD_VIEWING.get(), MagicWordScreen::new);
             MenuScreens.register(VidaMenuContainerTypeLoader.VIDA_WAND_CRAFTING_TABLE.get(), VidaWandCraftingScreen::new);
             MenuScreens.register(VidaMenuContainerTypeLoader.SHERD_RESEARCH_TABLE.get(), SherdResearchScreen::new);
+            MenuScreens.register(VidaMenuContainerTypeLoader.VIVID_CHEST_MENU.get(), VividChestScreen::new);
         });
     }
 }

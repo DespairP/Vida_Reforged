@@ -6,6 +6,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teamHTBP.vidaReforged.client.model.blockEntities.*;
+import teamHTBP.vidaReforged.server.blockEntities.VidaBlockEntity;
 import teamHTBP.vidaReforged.server.blockEntities.VidaBlockEntityLoader;
 
 /**
@@ -28,5 +29,6 @@ public class BlockEntityRendererRegistryHandler {
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.SHERD_RESEARCH_TABLE.get(), SherdResearchEntityRenderer::new);
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.ELEMENT_HARMONIZE_TABLE.get(), ElementHarmonizeTableBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(VidaBlockEntityLoader.VASE.get(), VaseBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(VidaBlockEntityLoader.VIVID_CHEST.get(), VividBlockChestEntityRenderer::new);
     }
 }

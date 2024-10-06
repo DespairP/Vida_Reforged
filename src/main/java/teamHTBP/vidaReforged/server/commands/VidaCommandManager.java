@@ -8,7 +8,6 @@ import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.registries.DeferredRegister;
@@ -27,7 +26,7 @@ import teamHTBP.vidaReforged.server.commands.arguments.MagicArgumentInfo;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 import teamHTBP.vidaReforged.server.packets.OpenGuidebookPacket;
-import teamHTBP.vidaReforged.server.packets.UnlockMagicWordCraftingPacket;
+import teamHTBP.vidaReforged.server.packets.MagicWordUnlockClientboundPacket;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
 import teamHTBP.vidaReforged.server.providers.VidaMagicManager;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
@@ -195,7 +194,7 @@ public class VidaCommandManager {
                 context.getSource().sendFailure(Component.translatable("magic word %s is already added", wordId));
                 return 1;
             }
-            VidaPacketManager.sendToEntity(new UnlockMagicWordCraftingPacket(wordId), context.getSource().getEntity());
+            VidaPacketManager.sendToEntity(new MagicWordUnlockClientboundPacket(wordId), context.getSource().getEntity());
             context.getSource().sendSuccess(()->Component.translatable("magic word %s is added", wordId), false);
             return 1;
         }catch (Exception ex){
@@ -221,7 +220,7 @@ public class VidaCommandManager {
                 context.getSource().sendFailure(Component.translatable("failed with unlocked,please try this another time"));
                 return 1;
             }
-            VidaPacketManager.sendToEntity(new UnlockMagicWordCraftingPacket(allMagicWords.stream().toList()), context.getSource().getEntity());
+            VidaPacketManager.sendToEntity(new MagicWordUnlockClientboundPacket(allMagicWords.stream().toList()), context.getSource().getEntity());
             context.getSource().sendSuccess(()->Component.translatable("magic words are added"), false);
             return 1;
         }catch (Exception ex){

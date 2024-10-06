@@ -16,7 +16,7 @@ import teamHTBP.vidaReforged.core.api.capability.IVidaMagicWordCapability;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
 import teamHTBP.vidaReforged.server.advancement.VidaAdvancementTriggers;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
-import teamHTBP.vidaReforged.server.packets.UnlockMagicWordCraftingPacket;
+import teamHTBP.vidaReforged.server.packets.MagicWordUnlockClientboundPacket;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
@@ -48,7 +48,7 @@ public class UnlockMagicWordPaper extends Item {
         if(!isAdded.get()){
             return InteractionResultHolder.fail(stack);
         }
-        VidaPacketManager.sendToPlayer(new UnlockMagicWordCraftingPacket(wordId), player);
+        VidaPacketManager.sendToPlayer(new MagicWordUnlockClientboundPacket(wordId), player);
         VidaAdvancementTriggers.MAGIC_WORD_TRIGGER.trigger((ServerPlayer) player);
         stack.shrink(1);
         return InteractionResultHolder.success(stack);

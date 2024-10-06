@@ -2,9 +2,12 @@ package teamHTBP.vidaReforged.server.menu;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -134,4 +137,20 @@ public class VidaMenuContainerTypeLoader {
             )
     );
 
+
+    public final static RegistryObject<MenuType<VividChestBlockMenu>> VIVID_CHEST_MENU = MENU_CONTAINER_TYPE.register(
+            VividChestBlockMenu.MENU_NAME,
+            () -> IForgeMenuType.create(
+                    (windowId, inv, data) -> {
+                        final BlockPos pos = data.readBlockPos();
+                        final Level level = inv.player.getCommandSenderWorld();
+                        final BlockEntity blockEntity = level.getBlockEntity(pos);
+                        return new VividChestBlockMenu(
+                                windowId,
+                                inv,
+                                (blockEntity instanceof Container container) ? container : new SimpleContainer(27)
+                        );
+                    }
+            )
+    );
 }

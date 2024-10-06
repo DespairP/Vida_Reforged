@@ -67,7 +67,7 @@ public class VidaItemLoader {
     @RegisterGroup
     public final static RegistryObject<Item> SULLEN_HYDRANGEA = ITEMS.register("sullen_hydrangea", () -> new Item(new Item.Properties()));
     @RegisterGroup
-    public final static RegistryObject<Item> SWEET_CYAN_REED= ITEMS.register("sweet_cyan_reed", () -> new Item(new Item.Properties()));
+    public final static RegistryObject<Item> SWEET_CYAN_REED = ITEMS.register("sweet_cyan_reed", () -> new Item(new Item.Properties()));
 
     @ObjectHolder(registryName = "minecraft:item", value = "vida_reforged:vida_grass")
     public static Item VIDA_GRASS  = null;
@@ -98,6 +98,8 @@ public class VidaItemLoader {
     public final static RegistryObject<Item> SULLEN_HYDRANGEA_SOUP = ITEMS.register("sullen_hydrangea_soup", () -> new VidaFood(BALANCE_FOOD));
     public final static RegistryObject<Item> NITRITE_TEA = ITEMS.register("nitrite_tea", () -> new VidaFood(BALANCE_FOOD));
     public final static RegistryObject<Item> DRIED_SWEET_CYAN_REED = ITEMS.register("dried_sweet_cyan_reed", () -> new VidaFood(BALANCE_FOOD));
+    @RegisterGroup
+    public final static RegistryObject<Item> VIVID_CHEST_BLOCK = ITEMS.register("vivid_chest",  () -> new VividChestBlockItem(VidaBlockLoader.VIVID_CHEST_BLOCK.get(), new Item.Properties()));
 
     public final static RegistryObject<Item> TEST_EQUIPMENT = ITEMS.register("test_wand_equipment", () ->
             new VidaWandEquipment.Builder()

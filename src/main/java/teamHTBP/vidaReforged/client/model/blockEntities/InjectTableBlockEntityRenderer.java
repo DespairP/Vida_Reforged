@@ -68,6 +68,27 @@ public class InjectTableBlockEntityRenderer implements BlockEntityRenderer<Injec
         if (stack.isEmpty()){
             return;
         }
+
+        // 渲染物品
+        poseStack.pushPose();
+        BakedModel ibakedmodel = itemRenderer.getModel(stack, level, null, 0);
+        double floatingYOffset = 0.12F * Math.sin(sinWave(time));
+        poseStack.translate(0.5F, 1.8F + floatingYOffset, 0.5F);
+        // 武器展示角度
+        if(stack.is(itemHolder -> itemHolder.get() instanceof SwordItem)){
+            poseStack.mulPose(Axis.XN.rotationDegrees(180));
+        } else {
+            poseStack.mulPose(Axis.XN.rotationDegrees(0));
+        }
+        poseStack.mulPose(Axis.ZN.rotationDegrees(45));
+        itemRenderer.render(stack, ItemDisplayContext.FIXED, true, poseStack, bufferSource, 240, packetOverlayIn, ibakedmodel);
+        poseStack.popPose();
+    }
+
+    public void renderItemShader(PoseStack poseStack, ItemStack stack, Level level, MultiBufferSource bufferSource, int lightOverlayIn, int packetOverlayIn, long time){
+        if (stack.isEmpty()){
+            return;
+        }
         Window window = Minecraft.getInstance().getWindow();
         ShadersHandler.spidew_bloom.resize(Minecraft.getInstance().getMainRenderTarget().width, Minecraft.getInstance().getMainRenderTarget().height);
 

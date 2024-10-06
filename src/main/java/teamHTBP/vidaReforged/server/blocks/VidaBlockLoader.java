@@ -239,13 +239,6 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> BLUE_JELLY_MUSHROOM_BLOCK = registerDecoBlock("blue_jelly_mushroom_block", WOOD, NORMAL);
 
-    /**活化原木，活化木板*/
-    @RegisterItemBlock
-    public final static RegistryObject<Block> VIVID_STONE = registerDecoBlock("vivid_stone", STONE, NORMAL);
-    @RegisterItemBlock
-    public final static RegistryObject<Block> VIVID_LOG = registerDecoBlock("vivid_log", WOOD, LOG);
-
-
     /*花*/
     /**太阳花*/
     @RegisterItemBlock
@@ -452,7 +445,12 @@ public class VidaBlockLoader {
 
     /**液体*/
     public final static RegistryObject<Block> VIVID_LIQUID = BLOCKS.register("vivid_liquid",  VividLiquidBlock::new);
-
+    /**活化原木，活化木板*/
+    @RegisterItemBlock
+    public final static RegistryObject<Block> VIVID_STONE = registerDecoBlock("vivid_stone", STONE, NORMAL);
+    @RegisterItemBlock
+    public final static RegistryObject<Block> VIVID_LOG = registerDecoBlock("vivid_log", WOOD, LOG);
+    public final static RegistryObject<Block> VIVID_CHEST_BLOCK = BLOCKS.register("vivid_chest", () -> new VividBlockChest(BlockBehaviour.Properties.copy(Blocks.CHEST)));
 
     /**
      * @param name 注册名称

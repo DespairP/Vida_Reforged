@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.ui.component.LiveData;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModel;
-import teamHTBP.vidaReforged.server.packets.MagicWordPacket;
+import teamHTBP.vidaReforged.server.packets.MagicWordSelectPacket;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
 
 import java.util.ArrayList;
@@ -35,12 +35,12 @@ public class VidaMagicWordViewModel extends ViewModel {
             }
             map.replace(element,replacedMagicWordId);
             selectedMagicWord.setValue(map);
-            VidaPacketManager.sendToServer(new MagicWordPacket(blockPos.getValue(), selectedMagicWord.getValue()));
+            VidaPacketManager.sendToServer(new MagicWordSelectPacket(blockPos.getValue(), selectedMagicWord.getValue()));
             return;
         }
         // 如果没有就添加
         map.put(element, replacedMagicWordId);
-        VidaPacketManager.sendToServer(new MagicWordPacket(blockPos.getValue(), selectedMagicWord.getValue()));
+        VidaPacketManager.sendToServer(new MagicWordSelectPacket(blockPos.getValue(), selectedMagicWord.getValue()));
         selectedMagicWord.setValue(map);
     }
 

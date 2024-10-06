@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+/**词条合成台合成通知*/
 public class MagicWordCraftingPacket {
     BlockPos pos = BlockPos.ZERO;
     /*Logger*/

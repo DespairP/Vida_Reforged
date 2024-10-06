@@ -48,10 +48,10 @@ public class VidaPacketManager {
         Optional<NetworkDirection> server = Optional.of(NetworkDirection.PLAY_TO_SERVER);
 
         INSTANCE.registerMessage(id++,
-                MagicWordPacket.class,
-                MagicWordPacket::toBytes,
-                MagicWordPacket::fromBytes,
-                MagicWordPacket::handler,
+                MagicWordSelectPacket.class,
+                MagicWordSelectPacket::toBytes,
+                MagicWordSelectPacket::fromBytes,
+                MagicWordSelectPacket::handler,
                 server);
         INSTANCE.registerMessage(id++,
                 MagicWordCraftingPacket.class,
@@ -66,10 +66,10 @@ public class VidaPacketManager {
                 PrismPacket::handler,
                 server);
         INSTANCE.registerMessage(id++,
-                UnlockMagicWordCraftingPacket.class,
-                UnlockMagicWordCraftingPacket::toBytes,
-                UnlockMagicWordCraftingPacket::fromBytes,
-                UnlockMagicWordCraftingPacket::handler,
+                MagicWordUnlockClientboundPacket.class,
+                MagicWordUnlockClientboundPacket::toBytes,
+                MagicWordUnlockClientboundPacket::fromBytes,
+                MagicWordUnlockClientboundPacket::handler,
                 client);
         INSTANCE.registerMessage(id++,
                 OpenMagicWordScreenPacket.class,
@@ -78,10 +78,10 @@ public class VidaPacketManager {
                 OpenMagicWordScreenPacket::handler,
                 server);
         INSTANCE.registerMessage(id++,
-                MagicWordDatapackPacket.class,
-                MagicWordDatapackPacket::toBytes,
-                MagicWordDatapackPacket::fromBytes,
-                MagicWordDatapackPacket::handler,
+                MagicWordDatapackSyncClientPacket.class,
+                MagicWordDatapackSyncClientPacket::toBytes,
+                MagicWordDatapackSyncClientPacket::fromBytes,
+                MagicWordDatapackSyncClientPacket::handler,
                 client);
         INSTANCE.registerMessage(id++,
                 MagicDatapackPacket.class,

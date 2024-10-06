@@ -8,14 +8,17 @@ import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
@@ -24,6 +27,7 @@ import teamHTBP.vidaReforged.client.events.ShadersHandler;
 import teamHTBP.vidaReforged.plugin.ModsInfo;
 
 import javax.annotation.Nonnull;
+import java.util.SortedMap;
 import java.util.function.Function;
 
 
@@ -146,4 +150,31 @@ public class RenderTypeHandler extends RenderStateShard{
         RenderType.CompositeState compositeRenderType = RenderType.CompositeState.builder().setShaderState(RenderStateShard.POSITION_COLOR_TEX_SHADER).setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST).setTextureState(new TextureStateShard(resourceLocation, false, false)).setWriteMaskState(COLOR_DEPTH_WRITE).createCompositeState(true);
         return RenderType.create("vida_reforged:world_altases", DefaultVertexFormat.POSITION_COLOR_TEX, VertexFormat.Mode.QUADS, 1024, false, false, compositeRenderType);
     });
+
+
+    public static final SortedMap<RenderType, BufferBuilder> FIXED_BUFFERS = Util.make(new Object2ObjectLinkedOpenHashMap<>(), (p_269658_) -> {
+        put(p_269658_, Sheets.shieldSheet());
+        put(p_269658_, Sheets.bedSheet());
+        put(p_269658_, Sheets.shulkerBoxSheet());
+        put(p_269658_, Sheets.signSheet());
+        put(p_269658_, Sheets.hangingSignSheet());
+        put(p_269658_, Sheets.chestSheet());
+        put(p_269658_, RenderType.translucentNoCrumbling());
+        put(p_269658_, RenderType.armorGlint());
+        put(p_269658_, RenderType.armorEntityGlint());
+        put(p_269658_, RenderType.glint());
+        put(p_269658_, RenderType.glintDirect());
+        put(p_269658_, RenderType.glintTranslucent());
+        put(p_269658_, RenderType.entityGlint());
+        put(p_269658_, RenderType.entityGlintDirect());
+        put(p_269658_, RenderType.waterMask());
+        put(p_269658_, RenderType.cutout());
+        ModelBakery.DESTROY_TYPES.forEach((p_173062_) -> {
+            put(p_269658_, p_173062_);
+        });
+    });
+
+    private static void put(Object2ObjectLinkedOpenHashMap<RenderType, BufferBuilder> p_110102_, RenderType p_110103_) {
+        p_110102_.put(p_110103_, new BufferBuilder(p_110103_.bufferSize()));
+    }
 }

@@ -5,7 +5,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joml.Vector3d;
 import teamHTBP.vidaReforged.client.hud.VidaUnlockMagicWordScreen;
 import teamHTBP.vidaReforged.core.utils.json.JsonUtils;
 
@@ -15,26 +14,27 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class UnlockMagicWordCraftingPacket {
+/**玩家词条解锁时会发送消息给client端*/
+public class MagicWordUnlockClientboundPacket {
     List<String> wordIdList = new ArrayList<>();
     /*Logger*/
     public static final Logger LOGGER = LogManager.getLogger();
 
-    public UnlockMagicWordCraftingPacket() {
+    public MagicWordUnlockClientboundPacket() {
     }
 
-    public UnlockMagicWordCraftingPacket(String ...wordId) {
+    public MagicWordUnlockClientboundPacket(String ...wordId) {
         this.wordIdList.addAll(Arrays.stream(wordId).toList());
     }
 
-    public UnlockMagicWordCraftingPacket(List<String> wordIdList) {
+    public MagicWordUnlockClientboundPacket(List<String> wordIdList) {
         this.wordIdList.addAll(wordIdList);
     }
 
-    public static UnlockMagicWordCraftingPacket fromBytes(FriendlyByteBuf buffer){
+    public static MagicWordUnlockClientboundPacket fromBytes(FriendlyByteBuf buffer){
         Type stringType = new TypeToken<List<String>>() {}.getType();
         List<String> wordIdList = JsonUtils.getGson(JsonUtils.JsonUtilType.NORMAL).fromJson(buffer.readUtf(), stringType);
-        return new UnlockMagicWordCraftingPacket(wordIdList);
+        return new MagicWordUnlockClientboundPacket(wordIdList);
     }
 
     public void toBytes(FriendlyByteBuf buffer) {
@@ -43,7 +43,6 @@ public class UnlockMagicWordCraftingPacket {
 
     public void handler(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            //if (ctx.get().getSender() == null) return;
             VidaUnlockMagicWordScreen.magicWords.addAll(this.wordIdList);
         });
         ctx.get().setPacketHandled(true);

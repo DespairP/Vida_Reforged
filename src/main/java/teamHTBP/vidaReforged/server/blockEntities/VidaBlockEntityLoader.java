@@ -119,4 +119,8 @@ public class VidaBlockEntityLoader {
     public static final RegistryObject<BlockEntityType<VaseBlockEntity>> VASE = BLOCK_ENTITIES.register(
             "vase", () -> BlockEntityType.Builder.of(VaseBlockEntity::new, VidaBlockLoader.VASE.get()).build(null)
     );
+
+    public static final RegistryObject<BlockEntityType<VividBlockChestEntity>> VIVID_CHEST = BLOCK_ENTITIES.register(
+            "vivid_chest", () -> BlockEntityType.Builder.of(VividBlockChestEntity::new, VidaBlockLoader.VIVID_CHEST_BLOCK.get()).build(null)
+    );
 }
