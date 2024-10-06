@@ -107,7 +107,8 @@
   "features": [
     [],
     [
-      "minecraft:lake_lava_underground"
+      "minecraft:lake_lava_underground",
+      "vida_reforged:lake_vivid_liquid_surface"
     ],
     [
       "minecraft:amethyst_geode"
