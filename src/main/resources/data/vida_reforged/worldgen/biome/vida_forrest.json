@@ -115,8 +115,11 @@
     [
       "minecraft:monster_room_deep"
     ],
-    [],
-    [],
+    [
+    ],
+    [
+      "vida_reforged:lake_vivid_liquid_surface"
+    ],
     [
       "minecraft:ore_dirt",
       "minecraft:ore_gravel",
