@@ -1,0 +1,73 @@
+{
+    "type": "minecraft:simple_random_selector",
+    "config": {
+        "features": [
+            {
+                "feature": {
+                    "type": "minecraft:random_patch",
+                    "config": {
+                        "tries": 10,
+                        "xz_spread": 3,
+                        "y_spread": 1,
+                        "feature": {
+                            "feature": {
+                                "type": "minecraft:simple_block",
+                                "config": {
+                                    "to_place": {
+                                        "type": "minecraft:simple_state_provider",
+                                        "state": {
+                                            "Name": "vida_reforged:vida_fallen_leaves"
+                                        }
+                                    }
+                                }
+                            },
+                            "placement": [
+                                {
+                                    "type": "minecraft:block_predicate_filter",
+                                    "predicate": {
+                                        "type": "minecraft:matching_blocks",
+                                        "blocks": "minecraft:air"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                "placement": []
+            },
+            {
+                "feature": {
+                    "type": "minecraft:random_patch",
+                    "config": {
+                        "tries": 10,
+                        "xz_spread": 3,
+                        "y_spread": 1,
+                        "feature": {
+                            "feature": {
+                                "type": "minecraft:simple_block",
+                                "config": {
+                                    "to_place": {
+                                        "type": "minecraft:simple_state_provider",
+                                        "state": {
+                                            "Name": "vida_reforged:vida_blue_fallen_leaves"
+                                        }
+                                    }
+                                }
+                            },
+                            "placement": [
+                                {
+                                    "type": "minecraft:block_predicate_filter",
+                                    "predicate": {
+                                        "type": "minecraft:matching_blocks",
+                                        "blocks": "minecraft:air"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                "placement": []
+            }
+        ]
+    }
+}

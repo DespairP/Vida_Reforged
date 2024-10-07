@@ -1,0 +1,6 @@
+{
+	"parent": "vida_reforged:block/fallen_leaves",
+	"textures": {
+		"leaves": "vida_reforged:block/vida_leaves"
+	}
+}

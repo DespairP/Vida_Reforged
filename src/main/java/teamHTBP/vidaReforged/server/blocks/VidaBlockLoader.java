@@ -2,6 +2,7 @@ package teamHTBP.vidaReforged.server.blocks;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.registries.DeferredRegister;
@@ -224,6 +225,10 @@ public class VidaBlockLoader {
     /**生命树叶*/
     public static RegistryObject<Block> VIDA_LEAVES = registerDecoBlock("vida_leaves", LEAVES, NORMAL, true);
     public static RegistryObject<Block> VIDA_BLUE_LEAVES = registerDecoBlock("vida_blue_leaves", LEAVES, NORMAL, true);
+    @RegisterItemBlock
+    public static RegistryObject<Block> VIDA_FALLEN_LEAVES = BLOCKS.register("vida_fallen_leaves", () -> new FallenLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion()));
+    @RegisterItemBlock
+    public static RegistryObject<Block> VIDA_BLUE_FALLEN_LEAVES = BLOCKS.register("vida_blue_fallen_leaves", () -> new FallenLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion()));
 
     /**蘑菇**/
     @RegisterItemBlock

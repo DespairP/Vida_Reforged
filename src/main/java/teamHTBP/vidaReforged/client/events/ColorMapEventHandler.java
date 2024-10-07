@@ -53,8 +53,14 @@ public class ColorMapEventHandler {
             return getter != null && pos != null ? VidaLeavesColor.get(VidaMathHelper.getCyclicalityNumber(pos.getY(), 15), 1.0F) : VidaLeavesColor.get(0F,1F);
         }) , VidaBlockLoader.VIDA_LEAVES.get());
         event.register(((BlockState state, @Nullable BlockAndTintGetter getter, @Nullable BlockPos pos, int param) -> {
+            return getter != null && pos != null ? VidaLeavesColor.get(VidaMathHelper.getCyclicalityNumber(pos.getY(), 15), 1.0F) : VidaLeavesColor.get(0F,1F);
+        }) , VidaBlockLoader.VIDA_FALLEN_LEAVES.get());
+        event.register(((BlockState state, @Nullable BlockAndTintGetter getter, @Nullable BlockPos pos, int param) -> {
             return getter != null && pos != null ? VidaBlueLeavesColor.get(VidaMathHelper.getCyclicalityNumber(pos.getY(), 20),1F) : VidaBlueLeavesColor.get(0F,1F);
         }) , VidaBlockLoader.VIDA_BLUE_LEAVES.get());
+        event.register(((BlockState state, @Nullable BlockAndTintGetter getter, @Nullable BlockPos pos, int param) -> {
+            return getter != null && pos != null ? VidaBlueLeavesColor.get(VidaMathHelper.getCyclicalityNumber(pos.getY(), 20),1F) : VidaBlueLeavesColor.get(0F,1F);
+        }) , VidaBlockLoader.VIDA_BLUE_FALLEN_LEAVES.get());
     }
 
     @SubscribeEvent
