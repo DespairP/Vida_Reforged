@@ -9,6 +9,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.server.recipe.VidaRecipeLoader;
 import teamHTBP.vidaReforged.server.recipe.VidaRecipeSerializerLoader;
 import teamHTBP.vidaReforged.server.recipe.ingredient.VidaRecipeCodecs;
@@ -97,5 +98,25 @@ public class ElementHarmonizeRecipe extends AbstractVidaRecipe<Container> {
         return resultItem;
     }
 
+    public Ingredient getIngredientFromElement(VidaElement element){
+        switch (element){
+            case GOLD -> {
+                return this.goldItem;
+            }
+            case WOOD -> {
+                return this.woodItem;
+            }
+            case AQUA -> {
+                return this.aquaItem;
+            }
+            case FIRE -> {
+                return this.fireItem;
+            }
+            case EARTH -> {
+                return this.earthItem;
+            }
+        }
+        return Ingredient.EMPTY;
+    }
 
 }

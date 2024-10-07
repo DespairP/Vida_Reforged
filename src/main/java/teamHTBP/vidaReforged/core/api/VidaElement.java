@@ -77,6 +77,10 @@ public enum VidaElement implements IVidaElement{
         };
     }
 
+    public Direction getDirection() {
+        return direction;
+    }
+
     public static VidaElement randomValue() {
         return VidaElementHelper.getNormalElements().get(new Random().nextInt(VidaElementHelper.getNormalElements().size()));
     }
