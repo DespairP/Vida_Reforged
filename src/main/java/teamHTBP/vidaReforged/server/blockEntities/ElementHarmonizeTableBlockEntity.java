@@ -46,6 +46,7 @@ public class ElementHarmonizeTableBlockEntity extends VidaBlockEntity implements
     private boolean isProcessing = false;
     /**合成时刻*/
     private int processTick = 0;
+    private static final int maxProcessTick = 5000;
     private Map<VidaElement, ElementHarmonizeTableBlockEntity> otherTables = new HashMap<>();
     /**需要检查的方位*/
     static final VidaElement[] positionElements = new VidaElement[]{VidaElement.GOLD, VidaElement.WOOD, VidaElement.AQUA, VidaElement.FIRE};
@@ -86,7 +87,7 @@ public class ElementHarmonizeTableBlockEntity extends VidaBlockEntity implements
             if(element == VidaElement.EARTH && isStructureComplete){
                 // 如果还未在仪式
                 if(!isProcessing) { setVirtualDisplayItem(); }
-
+                if(isProcessing) { continueCrafting(); }
             }
             // 如果结构不完整，停止任何逻辑
             if(element == VidaElement.EARTH && !isStructureComplete){
@@ -144,14 +145,26 @@ public class ElementHarmonizeTableBlockEntity extends VidaBlockEntity implements
         setActiveRecipe(recipe);
     }
 
+    private void continueCrafting(){
+        this.processTick += 1;
+        if(processTick >= maxProcessTick){
+            complete();
+        }
+    }
+
+    private void complete(){
+
+    }
+
     private void abort(){
-        // 重置
+        // 重置所有设置
         if(this.isProcessing){
             this.setProcessing(false);
             this.processTick = 0;
         }
+        // 重置合成
+        this.boardcastRecipe(null);
     }
-
 
 
     private boolean shouldSpawnParticle(){
