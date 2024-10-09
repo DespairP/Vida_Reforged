@@ -40,7 +40,7 @@ public class FloatingItemEntity extends Entity{
     private int pickupDelay;
     public final float bobOffs;
 
-    protected FloatingItemEntity(EntityType<FloatingItemEntity> entityType, Level level){
+    protected FloatingItemEntity(EntityType<? extends FloatingItemEntity> entityType, Level level){
         super(entityType, level);
         this.age = 0;
         this.bobOffs = 0;
@@ -48,6 +48,13 @@ public class FloatingItemEntity extends Entity{
 
     public FloatingItemEntity(Level level, @NonNull Vec3 fromPos, @NonNull Vector3d deltaPos) {
         this(VidaEntityLoader.FLOATING_ITEM_ENTITY.get(), level);
+        setPos(fromPos.x, fromPos.y, fromPos.z);
+        setDeltaMovement(deltaPos.x, deltaPos.y, deltaPos.z);
+        setDefaultPickUpDelay();
+    }
+
+    protected FloatingItemEntity(EntityType<? extends FloatingItemEntity> entityType, Level level, @NonNull Vec3 fromPos, @NonNull Vector3d deltaPos) {
+        this(entityType, level);
         setPos(fromPos.x, fromPos.y, fromPos.z);
         setDeltaMovement(deltaPos.x, deltaPos.y, deltaPos.z);
         setDefaultPickUpDelay();
@@ -121,7 +128,7 @@ public class FloatingItemEntity extends Entity{
                 float yMotion = (float) Mth.lerp(easing, getDeltaMovement().y, desiredMotion.y);
                 float zMotion = (float) Mth.lerp(easing, getDeltaMovement().z, desiredMotion.z);
                 Vec3 resultingMotion = new Vec3(xMotion, yMotion, zMotion);
-                if(resultingMotion.length() <= 0.03f){
+                if(getToPos().distanceToSqr(position()) <= 0.001f){
                     setDeltaMovement(0, 0, 0);
                 }else{
                     setDeltaMovement(resultingMotion);

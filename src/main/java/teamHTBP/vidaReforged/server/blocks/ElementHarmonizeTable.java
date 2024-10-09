@@ -22,6 +22,7 @@ import teamHTBP.vidaReforged.core.api.blockentity.IVidaTickableBlockEntity;
 import teamHTBP.vidaReforged.core.common.block.MutiDoubleBlock;
 import teamHTBP.vidaReforged.server.blockEntities.ElementHarmonizeTableBlockEntity;
 import teamHTBP.vidaReforged.server.blockEntities.VidaBlockEntityLoader;
+import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -57,9 +58,13 @@ public class ElementHarmonizeTable extends MutiDoubleBlock implements EntityBloc
                 }
                 ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
                 ElementHarmonizeTableBlockEntity blockEntity = blockEntityOptional.get();
-                if (!player.isShiftKeyDown() && blockEntity.setItem(stack.copyWithCount(1))) {
+                if (!player.isShiftKeyDown() && !stack.is(VidaItemLoader.VIDA_WAND.get()) && blockEntity.setItem(stack.copyWithCount(1))) {
                     stack.shrink(1);
                     blockEntity.setUpdated();
+                    return InteractionResult.sidedSuccess(true);
+                }
+                if (!player.isShiftKeyDown() && stack.is(VidaItemLoader.VIDA_WAND.get())) {
+                    blockEntity.tryStart();
                     return InteractionResult.sidedSuccess(true);
                 }
                 if (player.isShiftKeyDown() && player.addItem(blockEntity.getItem())){
@@ -70,7 +75,7 @@ public class ElementHarmonizeTable extends MutiDoubleBlock implements EntityBloc
         } catch (Exception exception){
             LOGGER.error(exception);
         }
-        return super.use(state, level, pos, player, interactionHand, result);
+        return InteractionResult.SUCCESS;
     }
 
     @Nullable

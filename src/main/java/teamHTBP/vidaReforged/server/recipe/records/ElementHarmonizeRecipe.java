@@ -10,9 +10,12 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.helper.VidaElementHelper;
 import teamHTBP.vidaReforged.server.recipe.VidaRecipeLoader;
 import teamHTBP.vidaReforged.server.recipe.VidaRecipeSerializerLoader;
 import teamHTBP.vidaReforged.server.recipe.ingredient.VidaRecipeCodecs;
+
+import java.util.Map;
 
 public class ElementHarmonizeRecipe extends AbstractVidaRecipe<Container> {
     public static final Codec<ElementHarmonizeRecipe> CODEC = RecordCodecBuilder.create(inst ->
@@ -45,10 +48,24 @@ public class ElementHarmonizeRecipe extends AbstractVidaRecipe<Container> {
         this.useTicks = useTick;
     }
 
+    /***/
     @Override
     public boolean matches(Container container, Level level) {
         return earthItem.test(container.getItem(0));
     }
+
+    /***/
+    public boolean matches(Map<VidaElement, ItemStack> container, Level level) {
+        for(VidaElement element : VidaElementHelper.getNormalElements()){
+            Ingredient ingredient = getIngredientFromElement(element);
+            ItemStack stack = container.get(element);
+            if(!ingredient.test(stack)){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     @Override
     public NonNullList<Ingredient> getIngredients() {

@@ -29,5 +29,6 @@ public class VidaEntityRendererLoader {
         event.registerEntityRenderer(VidaEntityLoader.TRAIL.get(), LazerEntityRenderer::new);
         event.registerEntityRenderer(VidaMobsLoader.GLOW_LIGHT.get(), (dispatch) -> new GlowLightEntityRenderer(dispatch, new TextureSection(new ResourceLocation(VidaReforged.MOD_ID, "textures/particle/tinkle.png"), 0, 0, 256, 256, 256, 256)));;
         event.registerEntityRenderer(VidaEntityLoader.FLOATING_ITEM_ENTITY.get(), FloatingItemEntityRenderer::new);
+        event.registerEntityRenderer(VidaEntityLoader.FAKE_HARMONIZE_TABLE_ITEM_ENTITY.get(), FloatingItemEntityRenderer::new);
     }
 }

@@ -28,7 +28,7 @@ public class Cube3DParticle extends VidaBaseParticle {
 
     public Cube3DParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, VidaParticleAttributes attributes) {
         super(level, x, y ,z, speedX, speedY, speedZ, attributes);
-        this.quadSize = 0.1f;
+        this.quadSize = attributes.scale();
         this.type = rand.nextInt(10);
         this.hasPhysics = true;
         this.spinSpeed = rand.nextInt(8) * 0.01f;
@@ -138,6 +138,7 @@ public class Cube3DParticle extends VidaBaseParticle {
     public void tick() {
         super.tick();
         this.quadSize -= 0.0001f;
+        if (this.lifetime - 20 < this.age) this.alpha = Math.max(this.alpha - 0.05f, 0);
         if (!this.onGround){
             switch (type) {
                 case 1 -> {

@@ -64,4 +64,13 @@ public class VidaEntityLoader {
                     .updateInterval(20)
                     .build("floating_item")
             );
+
+    public static final RegistryObject<EntityType<FakeHarmonizeTableItemEntity>> FAKE_HARMONIZE_TABLE_ITEM_ENTITY = ENTITIES
+            .register("fake_harmonize_table_item", () -> EntityType.Builder
+                    .of((EntityType<FakeHarmonizeTableItemEntity>entityType,Level level) -> new FakeHarmonizeTableItemEntity(entityType, level), MobCategory.MISC)
+                    .sized(0.25F, 0.25F)
+                    .clientTrackingRange(6)
+                    .updateInterval(10)
+                    .build("fake_harmonize_table_item")
+            );
 }
