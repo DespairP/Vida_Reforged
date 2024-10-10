@@ -68,7 +68,8 @@ public class BaseParticleProvider implements ParticleProvider<BaseParticleType> 
                                         pType.getColorBlue()
                                     ),
                                     pType.getToColor(),
-                                    pType.getToPos()
+                                    pType.getToPos(),
+                                    pType.getBezPos()
                             )
                     );
                     particle.pickSprite(spriteSet);

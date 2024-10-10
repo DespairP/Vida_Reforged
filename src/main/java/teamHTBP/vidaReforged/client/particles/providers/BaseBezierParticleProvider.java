@@ -6,8 +6,7 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.client.particles.options.BaseBezierParticleType;
-import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
-import teamHTBP.vidaReforged.client.particles.particles.BezierParticle;
+import teamHTBP.vidaReforged.client.particles.particles.BezierLazerParticle;
 
 public class BaseBezierParticleProvider  implements ParticleProvider<BaseBezierParticleType> {
     private SpriteSet spriteSet;
@@ -20,6 +19,6 @@ public class BaseBezierParticleProvider  implements ParticleProvider<BaseBezierP
     @Nullable
     @Override
     public Particle createParticle(BaseBezierParticleType pType, ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
-        return new BezierParticle(pLevel,pX,pY,pZ,pXSpeed,pYSpeed,pZSpeed, pType.getAlpha(), pType.getColorRed(), pType.getColorGreen(), pType.getColorBlue(), pType.age, (int) pType.size, pType.getTails());
+        return new BezierLazerParticle(pLevel,pX,pY,pZ,pXSpeed,pYSpeed,pZSpeed, pType.getAlpha(), pType.getColorRed(), pType.getColorGreen(), pType.getColorBlue(), pType.age, (int) pType.size, pType.getTails());
     }
 }

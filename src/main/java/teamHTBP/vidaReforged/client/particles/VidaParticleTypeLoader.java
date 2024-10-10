@@ -35,6 +35,8 @@ public class VidaParticleTypeLoader {
     @RegisterParticleType(TinkleParticle.class)
     public final static RegistryObject<ParticleType<BaseParticleType>> TICKLE_PARTICLE = PARTICLE_TYPE_REGISTER.register("tinkle_particle", ()->new BaseParticleType(VidaParticleTypeLoader.TICKLE_PARTICLE));
 
+    @RegisterParticleType(BezierParticle.class)
+    public final static RegistryObject<ParticleType<BaseParticleType>> BEZ_PARTICLE = PARTICLE_TYPE_REGISTER.register("bez_element_particle", ()->new BaseParticleType(VidaParticleTypeLoader.BEZ_PARTICLE));
 
     public final static RegistryObject<ParticleType<BaseBezierParticleType>> BEZIER_PARTICLE = PARTICLE_TYPE_REGISTER.register("bezier_particle", BaseBezierParticleType::new);
 

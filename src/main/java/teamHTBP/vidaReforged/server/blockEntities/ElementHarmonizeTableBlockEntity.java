@@ -1,5 +1,6 @@
 package teamHTBP.vidaReforged.server.blockEntities;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleOptions;
@@ -18,6 +19,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Vector3d;
 import org.joml.Vector3f;
+import teamHTBP.vidaReforged.client.events.ClientTickHandler;
 import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
 import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
 import teamHTBP.vidaReforged.client.particles.particles.VidaParticleAttributes;
@@ -206,7 +208,7 @@ public class ElementHarmonizeTableBlockEntity extends VidaBlockEntity implements
 
     private void continueCrafting() {
         this.processTick += 1;
-        if (processTick >= 200) {
+        if (processTick >= 800) {
             complete();
         } else {
             BlockPos pos = getBlockPos();
@@ -226,6 +228,32 @@ public class ElementHarmonizeTableBlockEntity extends VidaBlockEntity implements
                         0F
                 );
             }
+            if(ClientTickHandler.ticks % 2 == 0){
+                for (Map.Entry<VidaElement, ElementHarmonizeTableBlockEntity> blockEntry: otherTables.entrySet()) {
+                    ((ServerLevel)level).sendParticles(
+                            new BaseParticleType(
+                                    VidaParticleTypeLoader.BEZ_PARTICLE,
+                                    new VidaParticleAttributes(
+                                            120,
+                                            0.3f,
+                                            new ARGBColor(155, 155, 155, 155),
+                                            new ARGBColor(155, 155, 155, 155),
+                                            getBlockPos().getCenter().add(0,2, 0).toVector3f(),
+                                            getBlockPos().getCenter().add(0,2, 0).toVector3f()
+                                    )
+                            ),
+                            blockEntry.getValue().getBlockPos().getCenter().add(0,1.5, 0).x(),
+                            blockEntry.getValue().getBlockPos().getCenter().add(0,1.5, 0).y(),
+                            blockEntry.getValue().getBlockPos().getCenter().add(0,1.5, 0).z(),
+                            1,
+                            0,
+                            0,
+                            0,
+                            0F
+                    );
+                }
+
+            }
             broadcastProcessTick(processTick);
         }
     }
@@ -234,9 +262,11 @@ public class ElementHarmonizeTableBlockEntity extends VidaBlockEntity implements
         // 最后再检验合成是否成功
         if (!checkRecipeIsComplete()) {
             abort();
+            return;
         }
         if(activeRecipe == null){
             abort();
+            return;
         }
         // 设置结果
         broadcastItemStack(ItemStack.EMPTY);
