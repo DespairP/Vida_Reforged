@@ -71,7 +71,7 @@ public class VidaManaBarScreen extends GuiGraphics implements IVidaScreen {
         ItemStack handInItem = getHandInItem();
         ticker.tick(partialTicks);
         // 获取手中的物品
-        if(handInItem.isEmpty() || !handInItem.is(VidaItemLoader.VIDA_WAND.get())){
+        if(handInItem.isEmpty() || !handInItem.is(VidaItemLoader.VIDA_WAND.get()) && !handInItem.is(VidaItemLoader.VIDA_ENCHANTED_BRANCH.get())){
             this.isRendered = false;
             alpha.decrease(ticker.getTickPercent(0.05f));
             progressMap.values().forEach(progress -> progress.set(0));

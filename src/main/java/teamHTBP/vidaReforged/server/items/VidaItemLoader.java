@@ -24,7 +24,8 @@ public class VidaItemLoader {
     public final static DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
 
     /**vida法杖*/
-    public final static RegistryObject<Item> VIDA_WAND = ITEMS.register("vida_wand", VidaWand::new);
+    public final static RegistryObject<Item> VIDA_WAND = ITEMS.register("vida_wand", () -> new VidaWand(new Item.Properties().stacksTo(1)));
+    public final static RegistryObject<Item> VIDA_ENCHANTED_BRANCH = ITEMS.register("vida_enchanted_branch", () -> new VidaEnchantedBranch(new Item.Properties().stacksTo(1)));
 
     /**生命之泉*/
     public final static RegistryObject<Item> VIVID_BUCKET = ITEMS.register("vivid_bucket", () -> new BucketItem(VidaFluidsLoader.VIVID_FLUID_STILL.get(), (new Item.Properties()).craftRemainder(BUCKET).stacksTo(1)));

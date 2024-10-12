@@ -44,12 +44,11 @@ import java.util.function.Consumer;
  * Vida法杖，
  * 提供魔力储存和魔法储存的
  */
-public class
-VidaWand extends Item implements IVidaManaConsumable {
+public class VidaWand extends Item implements IVidaManaConsumable {
     public static int holdTime = 0;
 
-    public VidaWand() {
-        super(new Item.Properties().stacksTo(1));
+    public VidaWand(Item.Properties properties) {
+        super(properties);
     }
 
     /**
@@ -110,9 +109,6 @@ VidaWand extends Item implements IVidaManaConsumable {
      * 是否能释放技能
      */
     public static boolean canReleaseMagic(ItemStack itemStack) {
-        if (!itemStack.is(VidaItemLoader.VIDA_WAND.get())) {
-            return false;
-        }
         try {
             IVidaMagicContainerCapability magicContainer = getContainerCapability(itemStack).orElseThrow(NullPointerException::new);
             VidaMagic magic = magicContainer.getCurrentMagic();

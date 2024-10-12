@@ -22,8 +22,7 @@ import java.lang.reflect.Field;
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 import static teamHTBP.vidaReforged.server.events.BlockItemAutoRegisterHandler.LOGGER;
 import static teamHTBP.vidaReforged.server.events.BlockItemAutoRegisterHandler.REGISTRY_ITEMBLOCK_MAP;
-import static teamHTBP.vidaReforged.server.items.VidaItemLoader.VIDA_WAND;
-import static teamHTBP.vidaReforged.server.items.VidaItemLoader.VIVID_BUCKET;
+import static teamHTBP.vidaReforged.server.items.VidaItemLoader.*;
 
 /**
  * 创造物品栏注册
@@ -51,7 +50,8 @@ public class VidaItemGroupLoader {
             REGISTRY_ITEMBLOCK_MAP.forEach((key,blockItem) ->{
                 event.accept(blockItem);
             });
-            event.accept(VIDA_WAND.get());
+            event.accept(VidaItemLoader.VIDA_WAND.get());
+            event.accept(VidaItemLoader.VIDA_ENCHANTED_BRANCH.get());
             event.accept(VidaItemLoader.BREATH_CATCHER.get());
             event.accept(VidaItemLoader.GOLD_ELEMENT_CORE.get());
             event.accept(VidaItemLoader.WOOD_ELEMENT_CORE.get());

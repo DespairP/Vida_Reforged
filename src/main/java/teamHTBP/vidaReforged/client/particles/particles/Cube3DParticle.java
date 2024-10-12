@@ -25,11 +25,13 @@ public class Cube3DParticle extends VidaBaseParticle {
     private int type = 0;
     private float spinSpeed = 0;
     private float alterSpinSpeed = 0;
+    private boolean hasFadeIn = false;
 
     public Cube3DParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, VidaParticleAttributes attributes) {
         super(level, x, y ,z, speedX, speedY, speedZ, attributes);
         this.quadSize = attributes.scale();
         this.type = rand.nextInt(10);
+        this.hasFadeIn = attributes.color() != null && attributes.color().a() == 0;
         this.hasPhysics = true;
         this.spinSpeed = rand.nextInt(8) * 0.01f;
         this.alterSpinSpeed = rand.nextInt(8) * 0.01f;
@@ -139,6 +141,7 @@ public class Cube3DParticle extends VidaBaseParticle {
         super.tick();
         this.quadSize -= 0.0001f;
         if (this.lifetime - 20 < this.age) this.alpha = Math.max(this.alpha - 0.05f, 0);
+        if (hasFadeIn && this.age < 20) this.alpha = Math.max(this.alpha + 0.05f, 0);
         if (!this.onGround){
             switch (type) {
                 case 1 -> {

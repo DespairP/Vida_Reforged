@@ -39,7 +39,7 @@ public class MagicManaProvider extends Block {
         }
         if(entity instanceof Player player){
             ItemStack handInItem = player.getItemInHand(InteractionHand.MAIN_HAND);
-            if(!handInItem.is(VidaItemLoader.VIDA_WAND.get())){
+            if(!handInItem.is(VidaItemLoader.VIDA_WAND.get()) && !handInItem.is(VidaItemLoader.VIDA_ENCHANTED_BRANCH.get())){
                 return;
             }
 

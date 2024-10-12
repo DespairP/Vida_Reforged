@@ -31,6 +31,10 @@ public class VidaCapabilityAttachHandler {
             event.addCapability(new ResourceLocation(VidaReforged.MOD_ID, VidaConstant.CAP_VIDA_MANA), new VidaManaCapabilityProvider(5000, false, VidaElementHelper.getNormalElements()));
             event.addCapability(new ResourceLocation(VidaReforged.MOD_ID, VidaConstant.CAP_VIDA_MAGIC_CONTAINER), new VidaMagicContainerCapabilityProvider());
         }
+        if(event.getObject().is(VidaItemLoader.VIDA_ENCHANTED_BRANCH.get())){
+            event.addCapability(new ResourceLocation(VidaReforged.MOD_ID, VidaConstant.CAP_VIDA_MANA), new VidaManaCapabilityProvider(30, true, VidaElementHelper.getNormalElements()));
+            event.addCapability(new ResourceLocation(VidaReforged.MOD_ID, VidaConstant.CAP_VIDA_MAGIC_CONTAINER), new VidaMagicContainerCapabilityProvider());
+        }
     }
 
     @SubscribeEvent

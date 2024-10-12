@@ -211,50 +211,57 @@ public class ElementHarmonizeTableBlockEntity extends VidaBlockEntity implements
         if (processTick >= 800) {
             complete();
         } else {
-            BlockPos pos = getBlockPos();
-            if(random.nextFloat() > 0.2f){
+            doParticleProgress();
+            broadcastProcessTick(processTick);
+        }
+    }
+
+    protected void doParticleProgress(){
+        if(level == null || level.isClientSide){
+            return;
+        }
+        BlockPos pos = getBlockPos();
+        if(random.nextFloat() > 0.2f){
+            ((ServerLevel)level).sendParticles(
+                    new BaseParticleType(
+                            VidaParticleTypeLoader.CUBE_PARTICLE_TYPE,
+                            new VidaParticleAttributes(120, 0.025f, new ARGBColor(0, 255, 255, 255), new ARGBColor(255, 255, 255, 255), BlockPos.ZERO.getCenter().toVector3f())
+                    ),
+                    pos.getX(),
+                    pos.getY(),
+                    pos.getZ(),
+                    6,
+                    1.2f,
+                    2,
+                    1.2f,
+                    0F
+            );
+        }
+        if(ClientTickHandler.ticks % 2 == 0){
+            for (Map.Entry<VidaElement, ElementHarmonizeTableBlockEntity> blockEntry: otherTables.entrySet()) {
                 ((ServerLevel)level).sendParticles(
                         new BaseParticleType(
-                                VidaParticleTypeLoader.CUBE_PARTICLE_TYPE,
-                                new VidaParticleAttributes(120, 0.025f, new ARGBColor(255, 255, 255, 255), new ARGBColor(255, 255, 255, 255), BlockPos.ZERO.getCenter().toVector3f())
+                                VidaParticleTypeLoader.BEZ_PARTICLE,
+                                new VidaParticleAttributes(
+                                        120,
+                                        0.3f,
+                                        new ARGBColor(255, 255, 255, 255),
+                                        new ARGBColor(255, 255, 255, 255),
+                                        getBlockPos().getCenter().add(0,2, 0).toVector3f(),
+                                        getBlockPos().getCenter().add(0,2, 0).toVector3f()
+                                )
                         ),
-                        pos.getX(),
-                        pos.getY(),
-                        pos.getZ(),
-                        6,
-                        1.2f,
-                        2,
-                        1.2f,
+                        blockEntry.getValue().getBlockPos().getCenter().add(0,1.5, 0).x(),
+                        blockEntry.getValue().getBlockPos().getCenter().add(0,1.5, 0).y(),
+                        blockEntry.getValue().getBlockPos().getCenter().add(0,1.5, 0).z(),
+                        1,
+                        0,
+                        0,
+                        0,
                         0F
                 );
             }
-            if(ClientTickHandler.ticks % 2 == 0){
-                for (Map.Entry<VidaElement, ElementHarmonizeTableBlockEntity> blockEntry: otherTables.entrySet()) {
-                    ((ServerLevel)level).sendParticles(
-                            new BaseParticleType(
-                                    VidaParticleTypeLoader.BEZ_PARTICLE,
-                                    new VidaParticleAttributes(
-                                            120,
-                                            0.3f,
-                                            new ARGBColor(155, 155, 155, 155),
-                                            new ARGBColor(155, 155, 155, 155),
-                                            getBlockPos().getCenter().add(0,2, 0).toVector3f(),
-                                            getBlockPos().getCenter().add(0,2, 0).toVector3f()
-                                    )
-                            ),
-                            blockEntry.getValue().getBlockPos().getCenter().add(0,1.5, 0).x(),
-                            blockEntry.getValue().getBlockPos().getCenter().add(0,1.5, 0).y(),
-                            blockEntry.getValue().getBlockPos().getCenter().add(0,1.5, 0).z(),
-                            1,
-                            0,
-                            0,
-                            0,
-                            0F
-                    );
-                }
 
-            }
-            broadcastProcessTick(processTick);
         }
     }
 
