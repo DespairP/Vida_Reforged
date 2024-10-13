@@ -33,6 +33,7 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
     public int lifeTime = 1000;
     /**大小*/
     public float scale = 1f;
+    public boolean fullBright = true;
     /**去往的坐标*/
     public Vector3f toPos = new Vector3f(0);
     public Vector3f bezPos = new Vector3f(0);
@@ -85,7 +86,7 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
             pReader.skipWhitespace();
             int lifeTime = pReader.readInt();
 
-            return new BaseParticleType(VidaParticleProviderAutoRegistryHandler.registerParticleType.get(particleName).getKey().get(), a, r, g, b, new Vector3f(), new Vector3f(), scale, lifeTime);
+            return new BaseParticleType(VidaParticleProviderAutoRegistryHandler.registerParticleType.get(particleName).getKey().get(), a, r, g, b, new Vector3f(), new Vector3f(), scale, lifeTime, true);
         }
 
         /**从数据包获取数据*/
@@ -100,14 +101,15 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
                     BaseParticleType.readVector3f(pBuffer),
                     BaseParticleType.readVector3f(pBuffer),
                     pBuffer.getFloat(4),
-                    pBuffer.getInt(5)
+                    pBuffer.getInt(5),
+                    pBuffer.getBoolean(6)
             );
         }
     };
 
     /**通用构造方法*/
     @Deprecated
-    public BaseParticleType(ParticleType<BaseParticleType> type, int a, int r, int g, int b, Vector3f toPos, Vector3f bezPos, float scale, int age) {
+    public BaseParticleType(ParticleType<BaseParticleType> type, int a, int r, int g, int b, Vector3f toPos, Vector3f bezPos, float scale, int age, boolean fullBright) {
         super(true, DESERIALIZER);
         this.type = () -> type;
         this.color = new ARGBColor(a, r, g, b);
@@ -122,16 +124,17 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
         this.type = type::get;
         this.color = attributes.color();
         this.toPos = attributes.toPos();
-        this.bezPos = attributes.bezPos();
+        this.bezPos = attributes.extraPos();
         this.scale = attributes.scale();
+        this.fullBright = attributes.fullBright();
         this.lifeTime = attributes.lifeTime();
         this.toColor = attributes.toColor();
     }
 
     /**通用构造方法，颜色用argb wrapper传入*/
     @Deprecated
-    public BaseParticleType(ParticleType<BaseParticleType> type, ARGBColor color, Vector3f toPos, float scale, int age) {
-        this(type, color.a(), color.r(), color.g(), color.b(), toPos, new Vector3f(), scale, age);
+    public BaseParticleType(ParticleType<BaseParticleType> type, ARGBColor color, Vector3f toPos, float scale, int age, boolean fullBright) {
+        this(type, color.a(), color.r(), color.g(), color.b(), toPos, new Vector3f(), scale, age, fullBright);
         this.type = () -> type;
     }
 
@@ -172,6 +175,7 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
         pBuffer.writeVector3f(bezPos);
         pBuffer.writeFloat(this.scale);
         pBuffer.writeInt(this.lifeTime);
+        pBuffer.writeBoolean(this.fullBright);
     }
 
     /**debug*/
@@ -231,6 +235,10 @@ public class BaseParticleType extends ParticleType<BaseParticleType> implements 
 
     public void setColor(int r, int g, int b){
         this.color = new ARGBColor(255,r,g,b);
+    }
+
+    public boolean isFullBright() {
+        return fullBright;
     }
 
     public static Vector3f readVector3f(FriendlyByteBuf p_254279_) {

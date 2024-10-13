@@ -25,6 +25,7 @@ import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
 import teamHTBP.vidaReforged.server.commands.arguments.MagicArgumentInfo;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
+import teamHTBP.vidaReforged.server.items.VidaWand;
 import teamHTBP.vidaReforged.server.packets.OpenGuidebookPacket;
 import teamHTBP.vidaReforged.server.packets.MagicWordUnlockClientboundPacket;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
@@ -46,7 +47,7 @@ public class VidaCommandManager {
             double maxMana = context.getArgument("max_mana", Double.class);
             ServerPlayer player = context.getSource().getPlayerOrException();
             ItemStack handInItem = player.getItemInHand(InteractionHand.MAIN_HAND);
-            if(!handInItem.is(VidaItemLoader.VIDA_WAND.get())){
+            if(!handInItem.is((itemstack) -> itemstack.get() instanceof VidaWand)){
                 context.getSource().sendFailure(Component.literal("only vida wand can set max mana"));
                 return 1;
             }
@@ -67,7 +68,7 @@ public class VidaCommandManager {
             VidaElement element = context.getArgument("element", VidaElement.class);
             ServerPlayer player = context.getSource().getPlayerOrException();
             ItemStack handInItem = player.getItemInHand(InteractionHand.MAIN_HAND);
-            if(!handInItem.is(VidaItemLoader.VIDA_WAND.get())){
+            if(!handInItem.is((itemstack) -> itemstack.get() instanceof VidaWand)){
                 context.getSource().sendFailure(Component.literal("only vida wand can set max mana"));
                 return 1;
             }
@@ -96,7 +97,7 @@ public class VidaCommandManager {
         String value = context.getArgument("container_value", String.class);
         ServerPlayer player = context.getSource().getPlayerOrException();
         ItemStack handInItem = player.getItemInHand(InteractionHand.MAIN_HAND);
-        if(!handInItem.is(VidaItemLoader.VIDA_WAND.get())){
+        if(!handInItem.is((itemstack) -> itemstack.get() instanceof VidaWand)){
             context.getSource().sendFailure(Component.literal("only vida wand can set max mana"));
             return 1;
         }
@@ -123,7 +124,7 @@ public class VidaCommandManager {
         }
 
         // 检查物品是否正确
-        if(!handInItem.is(VidaItemLoader.VIDA_WAND.get())){
+        if(!handInItem.is((itemstack) -> itemstack.get() instanceof VidaWand)){
             context.getSource().sendFailure(Component.translatable("message.command.vida_reforged.add_magic.illegal_item"));
             return 1;
         }

@@ -61,6 +61,7 @@ public class BaseParticleProvider implements ParticleProvider<BaseParticleType> 
                             new VidaParticleAttributes(
                                     pType.getLifeTime(),
                                     pType.getScale(),
+                                    pType.isFullBright(),
                                     new ARGBColor(
                                         pType.getAlpha(),
                                         pType.getColorRed(),

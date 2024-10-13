@@ -6,9 +6,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,39 +28,41 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
-import org.joml.Vector3f;
-import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
-import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
-import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 激光光线
- * */
-public abstract class LazerEntity extends Entity implements IEntityAdditionalSpawnData, TraceableEntity {
-    private static final EntityDataAccessor<Integer> MAX_LIFE_TIME = SynchedEntityData.defineId(LazerEntity.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> CURRENT_LIFE_TIME = SynchedEntityData.defineId(LazerEntity.class, EntityDataSerializers.INT);
-    public static final EntityDataAccessor<List<Vector3d>> TRAILS = SynchedEntityData.defineId(LazerEntity.class, VidaEntityDataSerializer.VEC3D_SERIALIZER.get());
-    private int maxLifeTime = 100;
+public abstract class ShootableEntity extends Entity implements IEntityAdditionalSpawnData, TraceableEntity {
+    /**时长*/
+    protected int age = 0;
+    /**最大时长*/
+    protected int maxAge = 100;
+    /**发射者*/
+    protected LivingEntity owner;
+    /**轨迹记录*/
+    public static final EntityDataAccessor<List<Vector3d>> TRAILS = SynchedEntityData.defineId(ShootableEntity.class, VidaEntityDataSerializer.VEC3D_SERIALIZER.get());
     private static final Logger LOGGER = LogManager.getLogger();
-    @javax.annotation.Nullable
-    private Entity cachedOwner;
+    protected RandomSource rand;
 
 
-    public LazerEntity(EntityType<?> entityType, Level level) {
+    public ShootableEntity(EntityType<?> entityType, Level level, int maxAge) {
         super(entityType, level);
+        this.rand = RandomSource.create();
+        this.age = 0;
+        this.maxAge = maxAge;
     }
 
     public void setOwner(LivingEntity entity){
         if(entity != null){
-            this.cachedOwner = entity;
+            this.owner = entity;
         }
     }
 
-    public void init(Player player){
-        double x = player.getX(), y = player.getEyeY() - 0.5F, z = player.getZ();
+    protected void init(LivingEntity player){
+        double x = player.getX();
+        double y = player.getEyeY() - 0.5F;
+        double z = player.getZ();
+
         setPos(x, y, z);
         setOwner(player);
 
@@ -70,16 +72,10 @@ public abstract class LazerEntity extends Entity implements IEntityAdditionalSpa
         float delZ = Mth.cos((float) (theta * ((float)Math.PI / 180F))) * Mth.cos((float) (alpha * ((float)Math.PI / 180F)));
 
         this.setDeltaMovement(delX, delY, delZ);
-
-        this.entityData.set(MAX_LIFE_TIME, maxLifeTime);
-        this.entityData.set(CURRENT_LIFE_TIME, 0);
-        this.entityData.set(TRAILS, new ArrayList<>());
     }
 
     @Override
     protected void defineSynchedData() {
-        this.entityData.define(MAX_LIFE_TIME, maxLifeTime);
-        this.entityData.define(CURRENT_LIFE_TIME, 0);
         this.entityData.define(TRAILS, new ArrayList<>());
     }
 
@@ -87,15 +83,11 @@ public abstract class LazerEntity extends Entity implements IEntityAdditionalSpa
     protected void readAdditionalSaveData(CompoundTag tag) {
         CompoundTag vecTags = tag.getCompound("trail");
         List<Vector3d> trails = VidaEntityDataSerializer.VEC_CODEC.parse(NbtOps.INSTANCE, vecTags).get().left().orElse(new ArrayList<>());
-        this.entityData.set(MAX_LIFE_TIME, tag.getInt("maxLifeTime"));
-        this.entityData.set(CURRENT_LIFE_TIME, tag.getInt("lifeTime"));
         this.entityData.set(TRAILS, trails, true);
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag tag) {
-        tag.putInt("maxLifeTime", this.entityData.get(MAX_LIFE_TIME));
-        tag.putInt("lifeTime", this.entityData.get(CURRENT_LIFE_TIME));
         tag.put("trails", VidaEntityDataSerializer.VEC_CODEC.encodeStart(NbtOps.INSTANCE, this.entityData.get(TRAILS)).getOrThrow(true, LOGGER::error));
     }
 
@@ -121,27 +113,26 @@ public abstract class LazerEntity extends Entity implements IEntityAdditionalSpa
             tails.remove(0);
         }
 
-        int age = this.getLifetime() + 1;
-        setLifetime(age);
-
+        age += 1;
         this.xo = this.getX();
         this.yo = this.getY();
         this.zo = this.getZ();
         Vec3 pos = this.position();
         Vec3 posDelta = pos.add(getDeltaMovement());
-        
-        if (age >= getMaxLifeTime() && getMaxLifeTime() > 0 || getMaxLifeTime() == 0) {
+
+        if (age >= maxAge && age > 0 || maxAge == 0) {
             this.discard();
         } else {
             update();
         }
 
         if(level().isClientSide){
-            playParticles();
+            doSpawnParticles();
             return;
         }
 
         HitResult hitresult = this.level().clip(new ClipContext(pos, posDelta, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+
         EntityHitResult entityhitresult = this.findHitEntity(pos, posDelta);
         if (entityhitresult != null) {
             hitresult = entityhitresult;
@@ -154,6 +145,7 @@ public abstract class LazerEntity extends Entity implements IEntityAdditionalSpa
                 entityhitresult = null;
             }
         }
+
         if(hitresult != null){
             onHit(hitresult);
         }
@@ -172,27 +164,15 @@ public abstract class LazerEntity extends Entity implements IEntityAdditionalSpa
         }
     }
     protected abstract void onHitEntity(EntityHitResult entityHitResult);
-    
+
     protected abstract void onHitBlock(BlockHitResult blockHitResult);
 
     protected EntityHitResult findHitEntity(Vec3 pos, Vec3 posInDelta) {
         return ProjectileUtil.getEntityHitResult(this.level(), this, pos, posInDelta, this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0D), entity -> true);
     }
-    
+
     protected Vector3d getTail() {
         return new Vector3d(this.xo, this.yo, this.zo);
-    }
-
-    public void setLifetime(int lifeTime){
-        this.entityData.set(CURRENT_LIFE_TIME, lifeTime, true);
-    }
-
-    public int getLifetime(){
-        return this.entityData.get(CURRENT_LIFE_TIME);
-    }
-
-    public int getMaxLifeTime(){
-        return this.entityData.get(MAX_LIFE_TIME);
     }
 
     public void removeTrail(int index){
@@ -202,14 +182,18 @@ public abstract class LazerEntity extends Entity implements IEntityAdditionalSpa
     }
 
     public void update() {
-        if (getLifetime() > 0) {
+        if (age > 0) {
             Vec3 point = getPosition(0).add(getDeltaMovement());
             setPos(point.x, point.y, point.z);
         }
     }
 
 
-    public void playParticles() {
+    public void doSpawnParticles() {
+        ParticleOptions options = getParticle();
+        if(options == null){
+            return;
+        }
         double deltaX = getX() - xo;
         double deltaY = getY() - yo;
         double deltaZ = getZ() - zo;
@@ -227,17 +211,12 @@ public abstract class LazerEntity extends Entity implements IEntityAdditionalSpa
         }
     }
 
-    public ParticleOptions getParticle(){
-        return new BaseParticleType(VidaParticleTypeLoader.ORB_PARTICLE.get(), new ARGBColor(255, 190, 0, 255), new Vector3f(),  1f, 20, true);
-    }
-
-
+    public abstract ParticleOptions getParticle();
 
     @Nullable
     @Override
     public Entity getOwner() {
-        return cachedOwner;
+        return owner;
     }
-    
-    
+
 }

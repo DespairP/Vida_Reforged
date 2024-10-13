@@ -9,18 +9,25 @@ import net.minecraftforge.registries.RegistryObject;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
+import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 import teamHTBP.vidaReforged.core.common.system.magic.particle.MagicParticle;
 import teamHTBP.vidaReforged.core.common.system.magic.particle.MagicParticleAttribute;
 import teamHTBP.vidaReforged.core.common.system.magic.particle.MagicParticleType;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.server.entity.MultiblockSparkEntity;
 import teamHTBP.vidaReforged.server.entity.SparkEntity;
+import teamHTBP.vidaReforged.server.entity.StarGlintEntity;
 import teamHTBP.vidaReforged.server.entity.VidaEntityLoader;
 import teamHTBP.vidaReforged.server.entity.projectile.PartyParrotProjecttile;
 import teamHTBP.vidaReforged.server.events.VidaMagicRegisterLoader;
+import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 import teamHTBP.vidaReforged.server.items.VidaWand;
 
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class VidaMagicInvokableManager {
     public static final VidaMagic.IInvokable PARTY_PARROT = (stack, invokeMagic, level, player) -> {
@@ -73,14 +80,33 @@ public class VidaMagicInvokableManager {
 //        level.addFreshEntity(_entity2);
     };
 
+    /**活化*/
     public static final VidaMagic.IInvokable PURIFY = ((stack, invokeMagic, level, player) -> {
-        IVidaMagicContainerCapability magicContainer = VidaWand.getContainerCapability(stack).orElseThrow(NullPointerException::new);
+        IVidaMagicContainerCapability magicContainer = VidaWand.getMagicContainerCapability(stack).orElseThrow(NullPointerException::new);
         VidaElement element = magicContainer.getCurrentElementOverride() == VidaElement.EMPTY ? invokeMagic.element() : magicContainer.getCurrentElementOverride();
-        MultiblockSparkEntity entity = VidaEntityLoader.TRAIL.get().create(level);
+        MultiblockSparkEntity entity = VidaEntityLoader.MULTIBLOCK_TRAIL.get().create(level);
         if(entity != null){
             entity.init(player, element);
             level.addFreshEntity(entity);
         }
+    });
+
+    public static final VidaMagic.IInvokable STAR_GLINT = ((stack, invokeMagic, level, player) -> {
+        IVidaMagicContainerCapability magicContainer = VidaWand.getMagicContainerCapability(stack).orElseThrow(NullPointerException::new);
+        IVidaManaCapability manaContainer = VidaWand.getManaCapability(stack).orElseThrow(NullPointerException::new);
+        VidaElement element = magicContainer.getCurrentElementOverride() == VidaElement.EMPTY ? invokeMagic.element() : magicContainer.getCurrentElementOverride();
+        // 如果是附魔树枝，选择最大的一个元素进行消耗
+        if(stack.is(VidaItemLoader.VIDA_ENCHANTED_BRANCH.get())){
+            Map<VidaElement, Double> allManas = manaContainer.getAllElementsMana();
+            Optional<Map.Entry<VidaElement, Double>> result = allManas.entrySet().stream().filter(entry -> entry.getValue() > 0).findFirst();
+            element = result.isPresent() ? result.get().getKey() : element;
+        }
+        StarGlintEntity entity = VidaEntityLoader.STAR_GLINT.get().create(level);
+        if(entity != null){
+            entity.init(player, 60, element);
+            level.addFreshEntity(entity);
+        }
+        manaContainer.consumeMana(element, 10);
     });
 
     public static final VidaMagic.IInvokable SPARK = (stack, invokeMagic, level, player) -> {
@@ -93,6 +119,7 @@ public class VidaMagicInvokableManager {
 
     public static final DeferredRegister<VidaMagic.IInvokable> VIDA_MAGIC = DeferredRegister.create(new ResourceLocation(VidaReforged.MOD_ID, "vida_magic"), VidaReforged.MOD_ID);
     public static final RegistryObject<VidaMagic.IInvokable> VIDA_PURIFY = VIDA_MAGIC.register("purification", () -> VidaMagicInvokableManager.PURIFY);
+    public static final RegistryObject<VidaMagic.IInvokable> VIDA_STAR_GLINT = VIDA_MAGIC.register("star_glint", () -> VidaMagicInvokableManager.STAR_GLINT);
 
     public static VidaMagic.IInvokable getMagicInvokable(ResourceLocation magicId){
         return VidaMagicRegisterLoader.MAGIC_SUPPLIER.get().getValue(magicId);

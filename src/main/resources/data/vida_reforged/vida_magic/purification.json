@@ -1,21 +1,21 @@
 {
-    "id":"purification",
-    "type":"ATTACK_SHOOTABLE",
-    "icon":{
-        "location":"vida_reforged:textures/icons/skills_002.png",
-        "minU":48,
-        "minV":144,
-        "width":24,
-        "height":24,
-        "texWidth":384,
-        "texHeight":384
+    "id": "purification",
+    "type": "ATTACK_SHOOTABLE",
+    "icon": {
+        "location": "vida_reforged:textures/icons/skills_002.png",
+        "minU": 48,
+        "minV": 144,
+        "width": 24,
+        "height": 24,
+        "texWidth": 384,
+        "texHeight": 384
     },
     "attribute": {
         "baseCostMana": 0
     },
-    "description":{
-        "translate":"vida_reforged.description.purification"
+    "description": {
+        "translate": "vida_reforged.description.purification"
     },
-    "element":"EARTH",
-    "isManuallyUsable":true
+    "element": "EARTH",
+    "isManuallyUsable": true
 }

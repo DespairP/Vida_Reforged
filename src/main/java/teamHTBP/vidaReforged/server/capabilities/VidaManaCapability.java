@@ -111,7 +111,7 @@ public class VidaManaCapability implements IVidaManaCapability, INBTSerializable
     public Result consumeMana(VidaElement element, double energy) {
         final double currentElementManaAmount = getManaByElement(element);
         // 如果消耗值小于0，或者不足够消费时，返回FAILED
-        if(energy < 0 || testConsume(element, energy)){
+        if(energy < 0 || !testConsume(element, energy)){
             return FAILED;
         }
         // 如果足够，消耗返回SUCCESS

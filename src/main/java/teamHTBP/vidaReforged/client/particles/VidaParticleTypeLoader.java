@@ -29,7 +29,7 @@ public class VidaParticleTypeLoader {
     @RegisterParticleType(TrailParticle.class)
     public final static RegistryObject<ParticleType<BaseParticleType>> TRAIL_PARTICLE = PARTICLE_TYPE_REGISTER.register("trail_particle", ()->new BaseParticleType(VidaParticleTypeLoader.TRAIL_PARTICLE));
 
-    @RegisterParticleType(OrbParticle.class)
+    @RegisterParticleType(SpinParticle.class)
     public final static RegistryObject<ParticleType<BaseParticleType>> ORB_PARTICLE = PARTICLE_TYPE_REGISTER.register("orb_type_particle", ()->new BaseParticleType(VidaParticleTypeLoader.ORB_PARTICLE));
 
     @RegisterParticleType(TinkleParticle.class)
@@ -37,6 +37,10 @@ public class VidaParticleTypeLoader {
 
     @RegisterParticleType(BezierParticle.class)
     public final static RegistryObject<ParticleType<BaseParticleType>> BEZ_PARTICLE = PARTICLE_TYPE_REGISTER.register("bez_element_particle", ()->new BaseParticleType(VidaParticleTypeLoader.BEZ_PARTICLE));
+
+    @RegisterParticleType(SpinParticle.class)
+    public final static RegistryObject<ParticleType<BaseParticleType>> STAR_PARTICLE = PARTICLE_TYPE_REGISTER.register("star_particle", ()->new BaseParticleType(VidaParticleTypeLoader.ORB_PARTICLE));
+
 
     public final static RegistryObject<ParticleType<BaseBezierParticleType>> BEZIER_PARTICLE = PARTICLE_TYPE_REGISTER.register("bezier_particle", BaseBezierParticleType::new);
 

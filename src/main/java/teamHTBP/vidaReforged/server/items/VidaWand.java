@@ -1,6 +1,5 @@
 package teamHTBP.vidaReforged.server.items;
 
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -19,8 +18,6 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.example.client.renderer.item.JackInTheBoxRenderer;
-import teamHTBP.vidaReforged.client.hud.VidaWandStaminaScreen;
 import teamHTBP.vidaReforged.client.model.itemstackModel.VidaWandItemModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
@@ -30,8 +27,6 @@ import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicAttribute;
 import teamHTBP.vidaReforged.helper.VidaMagicInvokeHelper;
 import teamHTBP.vidaReforged.server.components.VidaWandTooltipComponent;
-import teamHTBP.vidaReforged.server.entity.LazerEntity;
-import teamHTBP.vidaReforged.server.entity.VidaEntityLoader;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 
 import java.util.HashMap;
@@ -108,9 +103,9 @@ public class VidaWand extends Item implements IVidaManaConsumable {
     /**
      * 是否能释放技能
      */
-    public static boolean canReleaseMagic(ItemStack itemStack) {
+    public boolean canReleaseMagic(ItemStack itemStack) {
         try {
-            IVidaMagicContainerCapability magicContainer = getContainerCapability(itemStack).orElseThrow(NullPointerException::new);
+            IVidaMagicContainerCapability magicContainer = getMagicContainerCapability(itemStack).orElseThrow(NullPointerException::new);
             VidaMagic magic = magicContainer.getCurrentMagic();
             VidaMagicAttribute containerAttribute = magicContainer.getAttribute();
             // 当前魔法为空则不释放
@@ -130,7 +125,7 @@ public class VidaWand extends Item implements IVidaManaConsumable {
     }
 
     public static VidaMagic getCurrentMagic(ItemStack itemStack) {
-        IVidaMagicContainerCapability magicContainer = getContainerCapability(itemStack).orElseThrow(NullPointerException::new);
+        IVidaMagicContainerCapability magicContainer = getMagicContainerCapability(itemStack).orElseThrow(NullPointerException::new);
         return magicContainer.getCurrentMagic();
     }
 
@@ -147,7 +142,7 @@ public class VidaWand extends Item implements IVidaManaConsumable {
     public Optional<TooltipComponent> getTooltipImage(ItemStack itemStack) {
         AtomicReference<VidaWandTooltipComponent> componentReference = new AtomicReference<>(new VidaWandTooltipComponent());
         // 获取container中所存的魔法
-        getContainerCapability(itemStack).ifPresent((containerCap) -> {
+        getMagicContainerCapability(itemStack).ifPresent((containerCap) -> {
 
         });
 
@@ -208,7 +203,7 @@ public class VidaWand extends Item implements IVidaManaConsumable {
         return itemStack.getCapability(VidaCapabilityRegisterHandler.VIDA_MANA);
     }
 
-    public static LazyOptional<IVidaMagicContainerCapability> getContainerCapability(ItemStack itemStack) {
+    public static LazyOptional<IVidaMagicContainerCapability> getMagicContainerCapability(ItemStack itemStack) {
         return itemStack.getCapability(VidaCapabilityRegisterHandler.VIDA_MAGIC_CONTAINER);
     }
 
@@ -219,21 +214,26 @@ public class VidaWand extends Item implements IVidaManaConsumable {
         return magicContainer.get();
     }
 
+    /**设置冷却*/
+    public void setCoolDown(ItemStack stack, Player player){
+        player.getCooldowns().addCooldown(stack.getItem(), 10);
+
+    }
     /**
      * 魔法释放处理逻辑
      */
     public boolean doMagic(ItemStack stack, Level level, Player player) {
-        player.getCooldowns().addCooldown(stack.getItem(), 10);
+        setCoolDown(stack, player);
         // 获取基本信息
         final IVidaManaCapability manaContainer = getManaCapability(stack).orElseThrow(NullPointerException::new);
-        final IVidaMagicContainerCapability magicContainer = getContainerCapability(stack).orElseThrow(NullPointerException::new);
+        final IVidaMagicContainerCapability magicContainer = getMagicContainerCapability(stack).orElseThrow(NullPointerException::new);
         // 获取当前魔法
         VidaMagic currentMagic = magicContainer.getCurrentMagic();
         if (currentMagic == null || currentMagic.attribute() == null) {
             return false;
         }
         // 检查是否能消耗魔法
-        if (!manaContainer.testConsume(currentMagic.element(), currentMagic.attribute().baseCostMana())) {
+        if (!canReleaseMagic(stack)) {
             return false;
         }
         manaContainer.consumeMana(currentMagic.element(), currentMagic.attribute().baseCostMana());

@@ -1,0 +1,21 @@
+{
+    "id": "star_glint",
+    "type": "ATTACK_SHOOTABLE",
+    "icon": {
+        "location": "vida_reforged:textures/icons/skills_001.png",
+        "minU": 0,
+        "minV": 120,
+        "width": 24,
+        "height": 24,
+        "texWidth": 192,
+        "texHeight": 192
+    },
+    "attribute": {
+        "baseCostMana": 10
+    },
+    "description": {
+        "translate": "vida_reforged.description.star_glint"
+    },
+    "element": "GOLD",
+    "isManuallyUsable": true
+}

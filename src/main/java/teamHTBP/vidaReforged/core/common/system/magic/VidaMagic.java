@@ -20,11 +20,8 @@ import net.minecraft.world.level.Level;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
-import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.items.VidaWand;
-
-import javax.lang.model.element.Element;
 
 /**
  * 魔法模板，
@@ -105,7 +102,7 @@ public class VidaMagic {
         public void invokeMagic(ItemStack stack, VidaMagic invokeMagic, Level level, Player player);
 
         public default VidaElement getElement(ItemStack stack, VidaMagic invokeMagic){
-            IVidaMagicContainerCapability magicContainer = VidaWand.getContainerCapability(stack).orElseThrow(NullPointerException::new);
+            IVidaMagicContainerCapability magicContainer = VidaWand.getMagicContainerCapability(stack).orElseThrow(NullPointerException::new);
             return magicContainer.getCurrentElementOverride() == VidaElement.EMPTY ? invokeMagic.element() : magicContainer.getCurrentElementOverride();
         }
     }

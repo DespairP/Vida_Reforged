@@ -413,7 +413,7 @@ public class ElementHarmonizeTableBlockEntity extends VidaBlockEntity implements
     }
 
     public ParticleOptions getParticle() {
-        return new BaseParticleType(VidaParticleTypeLoader.ORB_PARTICLE.get(), ColorTheme.getColorThemeByElement(element).baseColor().toARGB(), new Vector3f(), 0.2F, 30);
+        return new BaseParticleType(VidaParticleTypeLoader.ORB_PARTICLE.get(), ColorTheme.getColorThemeByElement(element).baseColor().toARGB(), new Vector3f(), 0.2F, 30, true);
     }
 
     public ItemStack getVirtualItem() {

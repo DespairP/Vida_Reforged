@@ -69,7 +69,7 @@ public class VidaMagicToolCapability implements IVidaMagicContainerCapability, I
 
 
     public VidaMagicToolCapability(){
-
+        this.magicIds = NonNullList.withSize(maxMagicSize, VidaMagic.MAGIC_UNKNOWN);
     }
 
     public VidaMagicToolCapability(VidaMagicAttribute attribute, List<ResourceLocation> magicIds, int maxMagicSize, CompoundTag equipments, long count, int currentCoolDownTime, long lastInvokeTime, ResourceLocation currentMagic, int currentMagicIndex, VidaElement element, long exp, int maxLevel) {

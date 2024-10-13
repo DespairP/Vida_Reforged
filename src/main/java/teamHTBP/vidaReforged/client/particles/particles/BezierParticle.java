@@ -3,7 +3,6 @@ package teamHTBP.vidaReforged.client.particles.particles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
-import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3d;
 import org.joml.Vector3f;
@@ -18,7 +17,7 @@ public class BezierParticle extends VidaBaseParticle{
 
     public BezierParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, VidaParticleAttributes attributes) {
         super(level, x, y, z, speedX, speedY, speedZ, attributes);
-        this.bezier3Curve = new Bezier3Curve(new Vector3d(x, y, z), new Vector3d(x, y, z), new Vector3d(attributes.bezPos()), new Vector3d(attributes.toPos()));
+        this.bezier3Curve = new Bezier3Curve(new Vector3d(x, y, z), new Vector3d(x, y, z), new Vector3d(attributes.extraPos()), new Vector3d(attributes.toPos()));
         this.timer = new SecondOrderDynamics(1f, 1f, 0.5f, new Vector3f());
         this.hasPhysics = false;
         this.destinationLife = new Vector3f(lifetime);

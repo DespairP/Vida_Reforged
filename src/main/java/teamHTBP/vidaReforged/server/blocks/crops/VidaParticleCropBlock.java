@@ -128,7 +128,8 @@ public class VidaParticleCropBlock extends BaseElementCropBlock{
             worldIn.addParticle(
                     new BaseParticleType(
                             VidaParticleTypeLoader.CUBE_2D_PARTICLE_TYPE,
-                            new VidaParticleAttributes(120, rand.nextFloat() * 0.08f, gradientColor.getFromColor(), gradientColor.getToColor(), BlockPos.ZERO.getCenter().toVector3f())),
+                            new VidaParticleAttributes(120, rand.nextFloat() * 0.08f, gradientColor.getFromColor(), gradientColor.getToColor(), BlockPos.ZERO.getCenter().toVector3f())
+                    ),
                     x + offsetX,
                     y + 0.4f,
                     z + offsetZ,

@@ -1,19 +1,18 @@
 package teamHTBP.vidaReforged.client.particles.particles;
 
-import net.minecraft.core.particles.ParticleType;
 import org.joml.Vector3f;
-import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
-import teamHTBP.vidaReforged.client.particles.options.ParticleOptionType;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 
-import java.util.function.Supplier;
 
-/**
- * */
-public record VidaParticleAttributes(int lifeTime, float scale, ARGBColor color, ARGBColor toColor, Vector3f toPos, Vector3f bezPos) {
+public record VidaParticleAttributes(int lifeTime, float scale, boolean fullBright, ARGBColor color, ARGBColor toColor, Vector3f toPos, Vector3f extraPos) {
     public VidaParticleAttributes(int lifeTime, float scale, ARGBColor color, ARGBColor toColor, Vector3f toPos){
-        this(lifeTime, scale, color, toColor, toPos, null);
+        this(lifeTime, scale, true, color, toColor, toPos, null);
     }
+
+    public VidaParticleAttributes(int lifeTime, float scale, ARGBColor color, ARGBColor toColor, Vector3f toPos, Vector3f extraPos){
+        this(lifeTime, scale, true, color, toColor, toPos, extraPos);
+    }
+
 
     @Override
     public int lifeTime() {

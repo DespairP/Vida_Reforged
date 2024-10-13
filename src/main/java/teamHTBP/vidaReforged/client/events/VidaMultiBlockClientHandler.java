@@ -67,7 +67,8 @@ public class VidaMultiBlockClientHandler {
                 color,
                 new Vector3f(),
                 0.06f,
-                40
+                40,
+                true
         ), randomPos.x + pos.getX(), randomPos.y + pos.getY(), randomPos.z + pos.getZ(), 0, 0, 0);
 
     }

@@ -119,5 +119,11 @@ public class VidaPacketManager {
                 MagicSelectionPacket::fromBytes,
                 MagicSelectionPacket::handler,
                 server);
+        INSTANCE.registerMessage(id++,
+                ItemLeftClickClientboundPacket.class,
+                ItemLeftClickClientboundPacket::toBytes,
+                ItemLeftClickClientboundPacket::fromBytes,
+                ItemLeftClickClientboundPacket::handler,
+                server);
     }
 }

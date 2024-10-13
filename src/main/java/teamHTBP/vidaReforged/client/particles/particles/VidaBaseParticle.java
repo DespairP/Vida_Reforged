@@ -2,15 +2,15 @@ package teamHTBP.vidaReforged.client.particles.particles;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 
 public abstract class VidaBaseParticle extends TextureSheetParticle {
     protected VidaParticleAttributes attributes;
     protected RandomSource rand;
-
     protected float yaw;
     protected float oYaw;
-
     protected float pitch;
     protected float oPitch;
 
@@ -39,5 +39,12 @@ public abstract class VidaBaseParticle extends TextureSheetParticle {
         this.quadSize = attributes.scale();
     }
 
+    protected int getLightColor(float p_107249_) {
+        if(attributes.fullBright()){
+            return 14 << 4 | 14 << 20;
+        }
+        BlockPos blockpos = BlockPos.containing(this.x, this.y, this.z);
+        return this.level.hasChunkAt(blockpos) ? LevelRenderer.getLightColor(this.level, blockpos) : 0;
+    }
 
 }

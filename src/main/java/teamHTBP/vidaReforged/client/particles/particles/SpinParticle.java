@@ -4,15 +4,16 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import teamHTBP.vidaReforged.client.RenderTypeHandler;
 
-public class OrbParticle extends VidaBaseParticle{
+public class SpinParticle extends VidaBaseParticle{
     private float initScale;
     private float initAlpha;
+    private float spinSpeed;
 
-    public OrbParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, VidaParticleAttributes attributes) {
+    public SpinParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, VidaParticleAttributes attributes) {
         super(level, x, y, z, 0, 0, 0);
         this.hasPhysics = false;
         this.attributes = attributes;
-
+        this.spinSpeed = attributes.extraPos() == null ? 0.1f : Math.max(0.1f, attributes.extraPos().x);
         if (attributes.color() != null) {
             this.alpha = attributes.color().a() * 1.0f / 255.0f;
             this.rCol = attributes.color().r() * 1.0f / 255.0f;
@@ -40,13 +41,14 @@ public class OrbParticle extends VidaBaseParticle{
         this.alpha = initAlpha * (1.0f - lifePercent);
 
         this.oRoll = roll;
-        roll += 1.0f;
+        roll += this.spinSpeed;
     }
 
     @Override
     public boolean isAlive() {
         return this.age < this.lifetime;
     }
+
 
 
     @Override

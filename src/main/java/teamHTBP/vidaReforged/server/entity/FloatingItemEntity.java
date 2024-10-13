@@ -204,7 +204,7 @@ public class FloatingItemEntity extends Entity{
     }
 
     public ParticleOptions getParticle(){
-        return new BaseParticleType(VidaParticleTypeLoader.ORB_PARTICLE.get(), getParticleColor(), new Vector3f(), 0.4F, 50);
+        return new BaseParticleType(VidaParticleTypeLoader.ORB_PARTICLE.get(), getParticleColor(), new Vector3f(), 0.4F, 50, true);
     }
 
     public void playerTouch(Player player) {

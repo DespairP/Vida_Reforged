@@ -67,7 +67,8 @@ public class MagicManaProvider extends Block {
                     color,
                     new Vector3f(),
                     0.5f + source.nextFloat(),
-                    source.nextInt(150) + 30
+                    source.nextInt(150) + 30,
+                        true
                 ),
                 pos.getX() + d1,
                 pos.getY() + 1.2f,

@@ -19,6 +19,7 @@ import teamHTBP.vidaReforged.core.common.VidaConstant;
 import teamHTBP.vidaReforged.helper.VidaElementHelper;
 import teamHTBP.vidaReforged.server.capabilities.VidaPlayerMagicCapability;
 import teamHTBP.vidaReforged.server.capabilities.provider.*;
+import teamHTBP.vidaReforged.server.items.VidaEnchantedBranch;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
 
@@ -33,7 +34,7 @@ public class VidaCapabilityAttachHandler {
         }
         if(event.getObject().is(VidaItemLoader.VIDA_ENCHANTED_BRANCH.get())){
             event.addCapability(new ResourceLocation(VidaReforged.MOD_ID, VidaConstant.CAP_VIDA_MANA), new VidaManaCapabilityProvider(30, true, VidaElementHelper.getNormalElements()));
-            event.addCapability(new ResourceLocation(VidaReforged.MOD_ID, VidaConstant.CAP_VIDA_MAGIC_CONTAINER), new VidaMagicContainerCapabilityProvider());
+            event.addCapability(new ResourceLocation(VidaReforged.MOD_ID, VidaConstant.CAP_VIDA_MAGIC_CONTAINER), new VidaMagicContainerCapabilityProvider(VidaEnchantedBranch::onInitEnhancementBranch));
         }
     }
 

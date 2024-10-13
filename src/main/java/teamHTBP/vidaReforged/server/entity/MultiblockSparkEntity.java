@@ -15,6 +15,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.joml.Vector3f;
 import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
 import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
+import teamHTBP.vidaReforged.client.particles.particles.VidaParticleAttributes;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMultiBlockCapability;
 import teamHTBP.vidaReforged.core.common.system.multiblock.ScheduledMultiBlockJob;
@@ -24,8 +25,7 @@ import teamHTBP.vidaReforged.server.events.VidaMultiBlockHandler;
 import teamHTBP.vidaReforged.server.packets.MultiBlockSchedulerPacket;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
 
-public class MultiblockSparkEntity extends LazerEntity{
-    VidaElement element;
+public class MultiblockSparkEntity extends LazerEntity {
     private static final EntityDataAccessor<VidaElement> ELEMENT = SynchedEntityData.defineId(MultiblockSparkEntity.class, VidaEntityDataSerializer.ELEMENT);
 
     public MultiblockSparkEntity(EntityType<?> entityType, Level level) {
@@ -57,7 +57,10 @@ public class MultiblockSparkEntity extends LazerEntity{
 
     @Override
     public ParticleOptions getParticle() {
-        return new BaseParticleType(VidaParticleTypeLoader.ORB_PARTICLE.get(), ColorTheme.getColorThemeByElement(getElement()).baseColor().toARGB(), new Vector3f(), 0.8F, 30);
+        return new BaseParticleType(
+                VidaParticleTypeLoader.ORB_PARTICLE,
+                new VidaParticleAttributes(20, 0.6F, true, ColorTheme.getColorThemeByElement(getElement()).baseColor().toARGB(), null, new Vector3f(), new Vector3f(1))
+        );
     }
 
     @Override
@@ -65,7 +68,7 @@ public class MultiblockSparkEntity extends LazerEntity{
         super.onHit(result);
     }
 
-    public VidaElement getElement(){
+    public VidaElement getElement() {
         return this.entityData.get(ELEMENT);
     }
 
@@ -81,12 +84,12 @@ public class MultiblockSparkEntity extends LazerEntity{
 
         capability.ifPresent(cap -> {
             ScheduledMultiBlockJob job = VidaMultiBlockHandler.validateAndAddJob(level(), blockHitResult.getBlockPos(), level().getBlockState(blockHitResult.getBlockPos()));
-            if(job.getResult() == null || job.getResult().size() == 0){
+            if (job.getResult() == null || job.getResult().size() == 0) {
                 return;
             }
             cap.addJob(job);
             Player player = level().getNearestPlayer(blockHitResult.getBlockPos().getX(), blockHitResult.getBlockPos().getY(), blockHitResult.getBlockPos().getZ(), 100.0D, false);
-            if (player != null){
+            if (player != null) {
                 VidaPacketManager.sendToPlayer(new MultiBlockSchedulerPacket(cap.getJobs(), level().dimension()), player);
             }
         });

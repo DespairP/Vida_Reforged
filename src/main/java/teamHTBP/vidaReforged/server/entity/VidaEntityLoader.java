@@ -47,10 +47,19 @@ public class VidaEntityLoader {
             );
 
     //
-    public static final RegistryObject<EntityType<MultiblockSparkEntity>> TRAIL = ENTITIES
+    public static final RegistryObject<EntityType<MultiblockSparkEntity>> MULTIBLOCK_TRAIL = ENTITIES
             .register("multiblock_trail", () -> EntityType.Builder
                     .of(MultiblockSparkEntity::new, MobCategory.MISC)
                     .sized(1F, 1F)
+                    .clientTrackingRange(4)
+                    .updateInterval(2)
+                    .build("trail_entity")
+            );
+
+    public static final RegistryObject<EntityType<StarGlintEntity>> STAR_GLINT = ENTITIES
+            .register("star_glint", () -> EntityType.Builder
+                    .of(StarGlintEntity::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
                     .clientTrackingRange(4)
                     .updateInterval(2)
                     .build("trail_entity")
