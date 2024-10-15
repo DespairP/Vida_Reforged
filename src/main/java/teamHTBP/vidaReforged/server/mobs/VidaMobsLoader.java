@@ -31,6 +31,11 @@ public class VidaMobsLoader {
                     .sized(1.0F, 0.5F)
                     .build(ORANGE_SPOTTED_SPARROW_NAME));
 
+    public static final RegistryObject<EntityType<VidaElementSpider>> ELEMENTAL_SPIDER =
+            ENTITY_TYPES.register("element_spider", () -> EntityType.Builder.of(VidaElementSpider::new, MobCategory.MONSTER)
+                    .sized(1.4F, 0.9F)
+                    .clientTrackingRange(8)
+                    .build("element_spider"));
 
     static <T extends Entity> RegistryObject<EntityType<T>> registerMisc(String name, EntityType.EntityFactory<T> factory) {
         return ENTITY_TYPES.register(name, () -> EntityType.Builder
