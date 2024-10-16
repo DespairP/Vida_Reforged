@@ -13,6 +13,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicWordCapability;
+import teamHTBP.vidaReforged.core.api.items.IVidaItemWithToolTip;
+import teamHTBP.vidaReforged.core.common.item.VidaBaseItem;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
 import teamHTBP.vidaReforged.server.advancement.VidaAdvancementTriggers;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
@@ -23,7 +25,7 @@ import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class UnlockMagicWordPaper extends Item {
+public class UnlockMagicWordPaper extends VidaBaseItem implements IVidaItemWithToolTip {
     public UnlockMagicWordPaper() {
         super(new Properties().stacksTo(1));
     }

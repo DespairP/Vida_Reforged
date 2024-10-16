@@ -2,8 +2,9 @@ package teamHTBP.vidaReforged.server.items;
 
 import net.minecraft.world.item.*;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.api.items.IVidaItemWithToolTip;
 
-public class ElementPickaxe extends PickaxeItem {
+public class ElementPickaxe extends PickaxeItem implements IVidaItemWithToolTip {
     VidaElement element = VidaElement.EMPTY;
 
     public ElementPickaxe(VidaElement element) {

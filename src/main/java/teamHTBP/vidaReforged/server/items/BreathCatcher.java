@@ -7,10 +7,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.joml.Vector3d;
+import teamHTBP.vidaReforged.core.api.items.IVidaItemWithToolTip;
+import teamHTBP.vidaReforged.core.common.item.VidaBaseItem;
 import teamHTBP.vidaReforged.server.entity.FloatingItemEntity;
 
 /**气息核心*/
-public class BreathCatcher extends Item {
+public class BreathCatcher extends VidaBaseItem implements IVidaItemWithToolTip {
     public BreathCatcher() {
         super(new Item.Properties());
     }

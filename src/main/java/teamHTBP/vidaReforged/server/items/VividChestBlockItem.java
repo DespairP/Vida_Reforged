@@ -7,6 +7,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import teamHTBP.vidaReforged.client.model.blockModel.VividChestModel;
+import teamHTBP.vidaReforged.core.api.items.IVidaItemWithToolTip;
 import teamHTBP.vidaReforged.server.blockEntities.VidaBlockEntityLoader;
 import teamHTBP.vidaReforged.server.blockEntities.VividBlockChestEntity;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
@@ -14,7 +15,7 @@ import teamHTBP.vidaReforged.server.blocks.VividBlockChest;
 
 import java.util.function.Consumer;
 
-public class VividChestBlockItem extends BlockItem {
+public class VividChestBlockItem extends BlockItem implements IVidaItemWithToolTip {
     public VividChestBlockItem(Block block, Properties properties) {
         super(block, properties);
     }

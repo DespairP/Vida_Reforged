@@ -7,10 +7,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import teamHTBP.vidaReforged.core.api.items.IVidaItemWithToolTip;
+import teamHTBP.vidaReforged.core.common.item.VidaBaseItem;
 
 import java.util.function.Supplier;
 
-public class VidaFood extends Item {
+public class VidaFood extends VidaBaseItem implements IVidaItemWithToolTip {
     /**装饰*/
     private Supplier<Block> blockDecorator = () -> Blocks.AIR;
 

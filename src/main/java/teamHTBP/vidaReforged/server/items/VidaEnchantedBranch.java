@@ -21,6 +21,7 @@ import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.capability.IVidaMagicContainerCapability;
 import teamHTBP.vidaReforged.core.api.capability.IVidaManaCapability;
+import teamHTBP.vidaReforged.core.api.items.IVidaItemWithToolTip;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
 import teamHTBP.vidaReforged.server.events.IItemLeftUseHandler;
 import teamHTBP.vidaReforged.server.providers.VidaMagicManager;
@@ -30,7 +31,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 /**附魔树枝*/
-public class VidaEnchantedBranch extends VidaWand implements IItemLeftUseHandler {
+public class VidaEnchantedBranch extends VidaWand implements IItemLeftUseHandler, IVidaItemWithToolTip {
 
     public VidaEnchantedBranch(Properties properties) {
         super(properties);

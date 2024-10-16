@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.model.ModelBakery;
@@ -45,7 +46,11 @@ public class RenderTypeHandler extends RenderStateShard{
             256,
             false,
             false,
-            RenderType.CompositeState.builder().setShaderState(RENDERTYPE_GUI_SHADER).setTransparencyState(TRANSLUCENT_TRANSPARENCY).setDepthTestState(LEQUAL_DEPTH_TEST).createCompositeState(false)
+            RenderType.CompositeState.builder()
+                    .setShaderState(RENDERTYPE_GUI_SHADER)
+                    .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                    .setDepthTestState(LEQUAL_DEPTH_TEST)
+                    .createCompositeState(false)
     );
 
     public static final RenderType GUI_LINE = RenderType.create(
@@ -55,8 +60,32 @@ public class RenderTypeHandler extends RenderStateShard{
             256,
             false,
             false,
-            RenderType.CompositeState.builder().setShaderState(RENDERTYPE_GUI_SHADER).setTransparencyState(TRANSLUCENT_TRANSPARENCY).setDepthTestState(LEQUAL_DEPTH_TEST).createCompositeState(false)
+            RenderType.CompositeState.builder()
+                    .setShaderState(RENDERTYPE_GUI_SHADER)
+                    .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                    .setDepthTestState(LEQUAL_DEPTH_TEST)
+                    .createCompositeState(false)
     );
+
+    public static final RenderType ENTITY_GLINT_FOIL = RenderType.create(
+            "entity_glint_foil",
+            DefaultVertexFormat.POSITION_TEX,
+            VertexFormat.Mode.QUADS,
+            256,
+            false,
+            false,
+            RenderType.CompositeState.builder()
+                    .setShaderState(RENDERTYPE_ENTITY_GLINT_SHADER)
+                    .setTextureState(new RenderStateShard.TextureStateShard(ItemRenderer.ENCHANTED_GLINT_ITEM, true, false))
+                    .setWriteMaskState(COLOR_WRITE)
+                    .setCullState(NO_CULL)
+                    .setDepthTestState(LEQUAL_DEPTH_TEST)
+                    .setTransparencyState(GLINT_TRANSPARENCY)
+                    .setTexturingState(ENTITY_GLINT_TEXTURING)
+                    .setLayeringState(VIEW_OFFSET_Z_LAYERING)
+                    .createCompositeState(false)
+    );
+
 
     /*来自ars_nouveau*/
     public static final ParticleRenderType EMBER_RENDER  = new ParticleRenderType() {

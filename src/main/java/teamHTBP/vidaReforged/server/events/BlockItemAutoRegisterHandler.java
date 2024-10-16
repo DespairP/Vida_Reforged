@@ -11,6 +11,7 @@ import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import teamHTBP.vidaReforged.core.common.item.VidaBaseBlockItem;
 import teamHTBP.vidaReforged.core.utils.reg.RegisterItemBlock;
 import teamHTBP.vidaReforged.server.blocks.VidaBlockLoader;
 
@@ -55,7 +56,7 @@ public class BlockItemAutoRegisterHandler {
             if(!block.isPresent()){
                 return;
             }
-            BlockItem blockItem = new BlockItem(block.get(),new Item.Properties());
+            VidaBaseBlockItem blockItem = new VidaBaseBlockItem(block.get(),new Item.Properties());
 
             event.register(ForgeRegistries.Keys.ITEMS, helper -> {
                 helper.register(registerName, blockItem);

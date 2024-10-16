@@ -22,6 +22,6 @@ public class MobsModelRegistryHandler {
         event.registerEntityRenderer(VidaMobsLoader.ANCIENT_BELIEVER.get(), AncientBelieverRenderer::new);
         event.registerEntityRenderer(VidaMobsLoader.LIGHT_SHEEP.get(), LightSheepRenderer::new);
         event.registerEntityRenderer(VidaMobsLoader.ORANGE_SPOTTED_SPARROW.get(), OrangeSpottedSparrowsRenderer::new);
-        event.registerEntityRenderer(VidaMobsLoader.ELEMENTAL_SPIDER.get(), (context) -> new ElementalMobsRenderer<VidaElementSpider, Spider, SpiderModel<Spider>>(context, new ElementalMobsRenderer.ElementSpiderRenderer(context)));
+        event.registerEntityRenderer(VidaMobsLoader.ELEMENTAL_SPIDER.get(), (context) -> new ElementalMobsRenderer<VidaElementSpider, Spider, SpiderModel<Spider>>(context, new ElementalMobsRenderer.ElementSpiderRenderer(context), new SpiderModel<>(context.bakeLayer(ModelLayers.SPIDER))));
     }
 }

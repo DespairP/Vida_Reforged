@@ -6,10 +6,12 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.api.items.IVidaItemWithToolTip;
 import teamHTBP.vidaReforged.core.common.item.Position;
+import teamHTBP.vidaReforged.core.common.item.VidaBaseItem;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicEquipmentAttribute;
 
-public class VidaWandEquipment extends Item {
+public class VidaWandEquipment extends VidaBaseItem implements IVidaItemWithToolTip {
     private VidaMagicEquipmentAttribute attribute;
 
     public VidaWandEquipment() {
