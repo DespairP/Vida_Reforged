@@ -22,6 +22,7 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.monster.Spider;
 import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.client.RenderTypeHandler;
+import teamHTBP.vidaReforged.core.common.mobs.IVidaShieldMob;
 
 import static net.minecraft.client.renderer.entity.LivingEntityRenderer.isEntityUpsideDown;
 
@@ -38,6 +39,11 @@ public class ElementalMobsRenderer<M extends Z,Z extends Mob,K extends Hierarchi
     @Override
     public void render(M entity, float p1, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int light) {
         this.entityRenderer.render(entity, p1, partialTicks, poseStack, bufferSource, light);
+        if(entity instanceof IVidaShieldMob mob && !mob.hasShield()){
+            return;
+        } else if(!(entity instanceof IVidaShieldMob)) {
+            return;
+        }
         poseStack.pushPose();
         this.entityModel.attackTime = entity.getAttackAnim(partialTicks);
 
@@ -191,7 +197,7 @@ public class ElementalMobsRenderer<M extends Z,Z extends Mob,K extends Hierarchi
         @Override
         protected RenderType getRenderType(Spider p_115322_, boolean p_115323_, boolean p_115324_, boolean p_115325_) {
             ResourceLocation resourcelocation = this.getTextureLocation(p_115322_);
-            return RenderType.entityTranslucentEmissive(resourcelocation, false);
+            return RenderType.entityTranslucent(resourcelocation, false);
         }
     }
 

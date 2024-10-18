@@ -33,6 +33,7 @@ import java.util.function.Function;
 
 
 public class RenderTypeHandler extends RenderStateShard{
+    public static final ResourceLocation ENCHANTED_GLINT_CLOUD = new ResourceLocation(VidaReforged.MOD_ID, "textures/colormap/enchanted_glint_cloud.png");
     static final ResourceLocation TAIL = new ResourceLocation(VidaReforged.MOD_ID, "textures/particle/trail.png");
 
     public RenderTypeHandler(String p_110161_, Runnable p_110162_, Runnable p_110163_) {
@@ -76,7 +77,7 @@ public class RenderTypeHandler extends RenderStateShard{
             false,
             RenderType.CompositeState.builder()
                     .setShaderState(RENDERTYPE_ENTITY_GLINT_SHADER)
-                    .setTextureState(new RenderStateShard.TextureStateShard(ItemRenderer.ENCHANTED_GLINT_ITEM, true, false))
+                    .setTextureState(new RenderStateShard.TextureStateShard(RenderTypeHandler.ENCHANTED_GLINT_CLOUD, true, false))
                     .setWriteMaskState(COLOR_WRITE)
                     .setCullState(NO_CULL)
                     .setDepthTestState(LEQUAL_DEPTH_TEST)

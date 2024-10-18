@@ -17,10 +17,11 @@ import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
 import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
 import teamHTBP.vidaReforged.client.particles.particles.VidaParticleAttributes;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.common.mobs.IVidaElementalEntity;
 
 import java.util.ArrayList;
 
-public class StarGlintEntity extends ShootableEntity{
+public class StarGlintEntity extends ShootableEntity implements IVidaElementalEntity {
     private static final EntityDataAccessor<VidaElement> ELEMENT = SynchedEntityData.defineId(StarGlintEntity.class, VidaEntityDataSerializer.ELEMENT);
 
 
@@ -79,9 +80,9 @@ public class StarGlintEntity extends ShootableEntity{
                     (float) (xo  + deltaX * coeff),
                     (float) (yo + deltaY * coeff) + 0.1,
                     (float) (zo + deltaZ * coeff),
-                    0.15F * (random.nextFloat() - 0.5f),
                     0.05F * (random.nextFloat() - 0.5f),
-                    0.15F * (random.nextFloat() - 0.5f));
+                    0.05F * (random.nextFloat() - 0.5f),
+                    0.05F * (random.nextFloat() - 0.5f));
         }
     }
 

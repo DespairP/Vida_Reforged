@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.core.ElementInteract;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
 import teamHTBP.vidaReforged.core.utils.codec.EnumCodec;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
@@ -84,4 +85,18 @@ public enum VidaElement implements IVidaElement{
     public static VidaElement randomValue() {
         return VidaElementHelper.getNormalElements().get(new Random().nextInt(VidaElementHelper.getNormalElements().size()));
     }
+
+    public static ElementInteract getInteract(VidaElement elementL, VidaElement elementR){
+        if(elementL == elementR) {
+            return ElementInteract.SAME;
+        }
+        if(ElementInteract.GROWTH_MAP.get(elementL).equals(elementR) || ElementInteract.GROWTH_MAP.get(elementR).equals(elementL)){
+            return ElementInteract.GROWTH;
+        }
+        if(ElementInteract.CONFLICT_MAP.get(elementL).equals(elementR) || ElementInteract.CONFLICT_MAP.get(elementR).equals(elementL)){
+            return ElementInteract.CONFLICT;
+        }
+        return ElementInteract.UNDEFINED;
+    }
+
 }
