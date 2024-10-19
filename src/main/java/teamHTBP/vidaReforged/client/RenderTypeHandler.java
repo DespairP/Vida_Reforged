@@ -33,7 +33,12 @@ import java.util.function.Function;
 
 
 public class RenderTypeHandler extends RenderStateShard{
-    public static final ResourceLocation ENCHANTED_GLINT_CLOUD = new ResourceLocation(VidaReforged.MOD_ID, "textures/colormap/enchanted_glint_cloud.png");
+    public static final ResourceLocation ENCHANTED_GLINT_CLOUD_GOLD = new ResourceLocation(VidaReforged.MOD_ID, "textures/colormap/enchanted_glint_cloud_gold.png");
+    public static final ResourceLocation ENCHANTED_GLINT_CLOUD_WOOD = new ResourceLocation(VidaReforged.MOD_ID, "textures/colormap/enchanted_glint_cloud_wood.png");
+    public static final ResourceLocation ENCHANTED_GLINT_CLOUD_AQUA = new ResourceLocation(VidaReforged.MOD_ID, "textures/colormap/enchanted_glint_cloud_aqua.png");
+    public static final ResourceLocation ENCHANTED_GLINT_CLOUD_FIRE = new ResourceLocation(VidaReforged.MOD_ID, "textures/colormap/enchanted_glint_cloud_fire.png");
+    public static final ResourceLocation ENCHANTED_GLINT_CLOUD_EARTH = new ResourceLocation(VidaReforged.MOD_ID, "textures/colormap/enchanted_glint_cloud_earth.png");
+
     static final ResourceLocation TAIL = new ResourceLocation(VidaReforged.MOD_ID, "textures/particle/trail.png");
 
     public RenderTypeHandler(String p_110161_, Runnable p_110162_, Runnable p_110163_) {
@@ -67,9 +72,8 @@ public class RenderTypeHandler extends RenderStateShard{
                     .setDepthTestState(LEQUAL_DEPTH_TEST)
                     .createCompositeState(false)
     );
-
-    public static final RenderType ENTITY_GLINT_FOIL = RenderType.create(
-            "entity_glint_foil",
+    public static final RenderType ENTITY_GLINT_GOLD_FOIL = RenderType.create(
+            "entity_glint_gold_foil",
             DefaultVertexFormat.POSITION_TEX,
             VertexFormat.Mode.QUADS,
             256,
@@ -77,7 +81,83 @@ public class RenderTypeHandler extends RenderStateShard{
             false,
             RenderType.CompositeState.builder()
                     .setShaderState(RENDERTYPE_ENTITY_GLINT_SHADER)
-                    .setTextureState(new RenderStateShard.TextureStateShard(RenderTypeHandler.ENCHANTED_GLINT_CLOUD, true, false))
+                    .setTextureState(new RenderStateShard.TextureStateShard(RenderTypeHandler.ENCHANTED_GLINT_CLOUD_GOLD, true, false))
+                    .setWriteMaskState(COLOR_WRITE)
+                    .setCullState(NO_CULL)
+                    .setDepthTestState(LEQUAL_DEPTH_TEST)
+                    .setTransparencyState(GLINT_TRANSPARENCY)
+                    .setTexturingState(ENTITY_GLINT_TEXTURING)
+                    .setLayeringState(VIEW_OFFSET_Z_LAYERING)
+                    .createCompositeState(false)
+    );
+
+    public static final RenderType ENTITY_GLINT_WOOD_FOIL = RenderType.create(
+            "entity_glint_wood_foil",
+            DefaultVertexFormat.POSITION_TEX,
+            VertexFormat.Mode.QUADS,
+            256,
+            false,
+            false,
+            RenderType.CompositeState.builder()
+                    .setShaderState(RENDERTYPE_ENTITY_GLINT_SHADER)
+                    .setTextureState(new RenderStateShard.TextureStateShard(RenderTypeHandler.ENCHANTED_GLINT_CLOUD_WOOD, true, false))
+                    .setWriteMaskState(COLOR_WRITE)
+                    .setCullState(NO_CULL)
+                    .setDepthTestState(LEQUAL_DEPTH_TEST)
+                    .setTransparencyState(GLINT_TRANSPARENCY)
+                    .setTexturingState(ENTITY_GLINT_TEXTURING)
+                    .setLayeringState(VIEW_OFFSET_Z_LAYERING)
+                    .createCompositeState(false)
+    );
+
+    public static final RenderType ENTITY_GLINT_AQUA_FOIL = RenderType.create(
+            "entity_glint_aqua_foil",
+            DefaultVertexFormat.POSITION_TEX,
+            VertexFormat.Mode.QUADS,
+            256,
+            false,
+            false,
+            RenderType.CompositeState.builder()
+                    .setShaderState(RENDERTYPE_ENTITY_GLINT_SHADER)
+                    .setTextureState(new RenderStateShard.TextureStateShard(RenderTypeHandler.ENCHANTED_GLINT_CLOUD_AQUA, true, false))
+                    .setWriteMaskState(COLOR_WRITE)
+                    .setCullState(NO_CULL)
+                    .setDepthTestState(LEQUAL_DEPTH_TEST)
+                    .setTransparencyState(GLINT_TRANSPARENCY)
+                    .setTexturingState(ENTITY_GLINT_TEXTURING)
+                    .setLayeringState(VIEW_OFFSET_Z_LAYERING)
+                    .createCompositeState(false)
+    );
+
+    public static final RenderType ENTITY_GLINT_FIRE_FOIL = RenderType.create(
+            "entity_glint_aqua_foil",
+            DefaultVertexFormat.POSITION_TEX,
+            VertexFormat.Mode.QUADS,
+            256,
+            false,
+            false,
+            RenderType.CompositeState.builder()
+                    .setShaderState(RENDERTYPE_ENTITY_GLINT_SHADER)
+                    .setTextureState(new RenderStateShard.TextureStateShard(RenderTypeHandler.ENCHANTED_GLINT_CLOUD_FIRE, true, false))
+                    .setWriteMaskState(COLOR_WRITE)
+                    .setCullState(NO_CULL)
+                    .setDepthTestState(LEQUAL_DEPTH_TEST)
+                    .setTransparencyState(GLINT_TRANSPARENCY)
+                    .setTexturingState(ENTITY_GLINT_TEXTURING)
+                    .setLayeringState(VIEW_OFFSET_Z_LAYERING)
+                    .createCompositeState(false)
+    );
+
+    public static final RenderType ENTITY_GLINT_EARTH_FOIL = RenderType.create(
+            "entity_glint_aqua_foil",
+            DefaultVertexFormat.POSITION_TEX,
+            VertexFormat.Mode.QUADS,
+            256,
+            false,
+            false,
+            RenderType.CompositeState.builder()
+                    .setShaderState(RENDERTYPE_ENTITY_GLINT_SHADER)
+                    .setTextureState(new RenderStateShard.TextureStateShard(RenderTypeHandler.ENCHANTED_GLINT_CLOUD_EARTH, true, false))
                     .setWriteMaskState(COLOR_WRITE)
                     .setCullState(NO_CULL)
                     .setDepthTestState(LEQUAL_DEPTH_TEST)

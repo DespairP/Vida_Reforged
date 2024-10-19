@@ -18,6 +18,7 @@ import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
 import teamHTBP.vidaReforged.client.particles.particles.VidaParticleAttributes;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.mobs.IVidaElementalEntity;
+import teamHTBP.vidaReforged.core.common.mobs.IVidaShieldMob;
 
 import java.util.ArrayList;
 
@@ -57,7 +58,7 @@ public class StarGlintEntity extends ShootableEntity implements IVidaElementalEn
     protected void onHitEntity(EntityHitResult entityHitResult) {
         Entity entity = entityHitResult.getEntity();
         if (!this.level().isClientSide) {
-            entity.hurt(this.damageSources().mobProjectile(this, (LivingEntity) this.owner), 1.0F);
+            entity.hurt(this.damageSources().mobProjectile(this, (LivingEntity) this.owner), 2.0F);
         }
         this.discard();
     }
@@ -96,5 +97,10 @@ public class StarGlintEntity extends ShootableEntity implements IVidaElementalEn
 
     public VidaElement getElement() {
         return this.entityData.get(ELEMENT);
+    }
+
+    @Override
+    public boolean isIgnoreArmorDefense(IVidaShieldMob mob) {
+        return false;
     }
 }

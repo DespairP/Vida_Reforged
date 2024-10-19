@@ -44,7 +44,7 @@ public class VidaElementSpider extends Spider implements IVidaShieldMob {
 
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0D);
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 6.0D);
     }
 
 
@@ -60,14 +60,14 @@ public class VidaElementSpider extends Spider implements IVidaShieldMob {
 
     @Override
     public VidaElement getShieldType() {
-        return VidaElement.FIRE;
+        return VidaElement.EARTH;
     }
 
     @Override
     public int decreaseShield(int hurt) {
-        int sheid = this.getShield();
-        this.entityData.set(SHIED, Math.max(0, sheid - hurt));
-        return sheid - hurt;
+        int shield = this.getShield();
+        this.entityData.set(SHIED, Math.max(0, shield - hurt));
+        return Math.min(0, shield - hurt);
     }
 
     public void setShied(int shied){
@@ -77,7 +77,7 @@ public class VidaElementSpider extends Spider implements IVidaShieldMob {
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficultyInstance, MobSpawnType type, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
-        this.setShied(20);
+        this.setShied(2);
         return super.finalizeSpawn(levelAccessor, difficultyInstance, type, groupData, tag);
     }
 }

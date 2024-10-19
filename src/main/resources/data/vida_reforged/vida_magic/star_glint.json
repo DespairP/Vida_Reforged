@@ -11,7 +11,7 @@
         "texHeight": 192
     },
     "attribute": {
-        "baseCostMana": 10
+        "baseCostMana": 1
     },
     "description": {
         "translate": "vida_reforged.description.star_glint"

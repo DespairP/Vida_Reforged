@@ -110,8 +110,10 @@ public class ElementalMobsRenderer<M extends Z,Z extends Mob,K extends Hierarchi
         this.entityModel.prepareMobModel(entity, f5, f8, partialTicks);
         this.entityModel.setupAnim(entity, f5, f8, f7, f2, f6);
 
+        try {
+            this.renderGlint(poseStack, bufferSource, light, (IVidaShieldMob) entity, entityModel);
+        }catch (Exception ex){}
 
-        this.renderGlint(poseStack, bufferSource, light, entityModel);
         poseStack.popPose();
     }
 
@@ -178,9 +180,19 @@ public class ElementalMobsRenderer<M extends Z,Z extends Mob,K extends Hierarchi
         return (float)p_115305_.tickCount + p_115306_;
     }
 
-    private void renderGlint(PoseStack p_289673_, MultiBufferSource p_289654_, int p_289649_, net.minecraft.client.model.Model p_289659_) {
-        p_289659_.renderToBuffer(p_289673_, p_289654_.getBuffer(RenderTypeHandler.ENTITY_GLINT_FOIL), p_289649_, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-
+    private void renderGlint(PoseStack p_289673_, MultiBufferSource p_289654_, int p_289649_, IVidaShieldMob mob, net.minecraft.client.model.Model p_289659_) {
+        if(!mob.hasShield()){
+            return;
+        }
+        RenderType type = RenderType.glint();
+        switch (mob.getShieldType()){
+            case GOLD -> {type = RenderTypeHandler.ENTITY_GLINT_GOLD_FOIL;}
+            case WOOD -> {type = RenderTypeHandler.ENTITY_GLINT_WOOD_FOIL;}
+            case AQUA -> {type = RenderTypeHandler.ENTITY_GLINT_AQUA_FOIL;}
+            case FIRE -> {type = RenderTypeHandler.ENTITY_GLINT_FIRE_FOIL;}
+            case EARTH -> {type = RenderTypeHandler.ENTITY_GLINT_EARTH_FOIL;}
+        }
+        p_289659_.renderToBuffer(p_289673_, p_289654_.getBuffer(type), p_289649_, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     @Override
