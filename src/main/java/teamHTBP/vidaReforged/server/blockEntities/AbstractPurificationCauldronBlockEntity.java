@@ -97,11 +97,8 @@ public abstract class AbstractPurificationCauldronBlockEntity extends BlockEntit
 
     /**填入水*/
     public boolean fillWater(){
-        boolean result =  !this.isWaterFilled;
-        if(result){
-            this.isWaterFilled = true;
-        }
-        return result;
+        this.isWaterFilled = true;
+        return true;
     }
 
     public boolean isWaterFilled(){

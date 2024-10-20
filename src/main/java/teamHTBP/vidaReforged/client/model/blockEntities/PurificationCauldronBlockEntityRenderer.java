@@ -60,7 +60,7 @@ public class PurificationCauldronBlockEntityRenderer implements BlockEntityRende
 
     @Override
     public void render(BasePurificationCauldronBlockEntity entity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLightIn, int combinedOverlayIn) {
-        this.floatingLevelAnimator.tick(partialTicks);
+        this.floatingLevelAnimator.tick(Minecraft.getInstance().getDeltaFrameTime() * 3f);
         this.renderWaterLayer(entity, partialTicks, poseStack, bufferSource);
         this.renderItem(entity, partialTicks, poseStack, bufferSource, combinedLightIn, combinedOverlayIn);
 

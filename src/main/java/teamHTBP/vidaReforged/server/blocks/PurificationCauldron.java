@@ -2,6 +2,9 @@ package teamHTBP.vidaReforged.server.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -9,6 +12,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -16,6 +20,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -24,6 +29,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import teamHTBP.vidaReforged.core.common.blockentity.VidaBaseEntityBlock;
 import teamHTBP.vidaReforged.server.blockEntities.BasePurificationCauldronBlockEntity;
 import teamHTBP.vidaReforged.server.blockEntities.VidaBlockEntityLoader;
+import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 
 public class PurificationCauldron extends VidaBaseEntityBlock<BasePurificationCauldronBlockEntity> implements EntityBlock {
     private static VoxelShape SHAPE = Shapes.empty();
@@ -72,32 +78,23 @@ public class PurificationCauldron extends VidaBaseEntityBlock<BasePurificationCa
     /**填入水*/
     @Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand interactionHand, BlockHitResult result) {
-        if(level.isClientSide()){
-            return super.use(blockState, level, pos, player, interactionHand, result);
-        }
-
-
         // 进行交互的一定是要水桶
-        ItemStack handInItem = player.getItemInHand(interactionHand);
-        if(handInItem.getItem() != Items.WATER_BUCKET){
-            return super.use(blockState, level, pos, player, interactionHand, result);
+        if(!level.isClientSide){
+            emptyBucket(blockState, level, pos, player, interactionHand);
         }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
 
+    public void emptyBucket(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand){
+        ItemStack handInItem = player.getItemInHand(hand);
         BasePurificationCauldronBlockEntity blockEntity = (BasePurificationCauldronBlockEntity) level.getBlockEntity(pos);
-        if(!blockEntity.isWaterFilled && !blockEntity.isInProgress()){
+        if(handInItem.is(VidaItemLoader.VIVID_BUCKET.get()) && blockEntity != null && !blockEntity.isWaterFilled && !blockEntity.isInProgress()){
             blockEntity.fillWater();
-
-            //
-            if(interactionHand == InteractionHand.MAIN_HAND){
-                player.getInventory().removeItem(player.getInventory().selected, 1);
-                player.getInventory().add(player.getInventory().selected,new ItemStack(Items.BUCKET));
-            }else{
-                player.getInventory().offhand.clear();
-                player.getInventory().offhand.add(new ItemStack(Items.BUCKET));
+            level.sendBlockUpdated(pos, blockState, blockState, 1 | 2);
+            level.playSound((Player)null, player, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if(!player.getAbilities().instabuild){
+                player.setItemInHand(hand, ItemUtils.createFilledResult(handInItem, player, new ItemStack(Items.BUCKET)));
             }
-
-
         }
-        return InteractionResult.PASS;
     }
 }

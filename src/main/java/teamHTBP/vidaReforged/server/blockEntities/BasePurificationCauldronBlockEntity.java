@@ -2,15 +2,19 @@ package teamHTBP.vidaReforged.server.blockEntities;
 
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
+import teamHTBP.vidaReforged.client.particles.VidaParticleTypeLoader;
+import teamHTBP.vidaReforged.client.particles.options.BaseParticleType;
 import teamHTBP.vidaReforged.core.api.blockentity.IVidaTickableBlockEntity;
 
 import java.lang.reflect.Field;
