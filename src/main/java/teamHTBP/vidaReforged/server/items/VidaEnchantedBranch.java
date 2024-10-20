@@ -15,6 +15,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.VidaReforged;
@@ -32,6 +34,7 @@ import java.util.function.Consumer;
 
 /**附魔树枝*/
 public class VidaEnchantedBranch extends VidaWand implements IItemLeftUseHandler, IVidaItemWithToolTip {
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public VidaEnchantedBranch(Properties properties) {
         super(properties);
@@ -39,7 +42,7 @@ public class VidaEnchantedBranch extends VidaWand implements IItemLeftUseHandler
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
-        return InteractionResultHolder.pass(player.getItemInHand(hand));
+        return super.use(level, player, hand);
     }
 
     /**没有模型*/
@@ -48,6 +51,16 @@ public class VidaEnchantedBranch extends VidaWand implements IItemLeftUseHandler
 
     @Override
     public void onLeftClick(Level level, Player player, ItemStack handInItem, BlockPos pos) {
+        // 清空魔力
+        if(player.isShiftKeyDown()){
+            IVidaManaCapability manaContainerOpt = getManaCapability(handInItem).orElseThrow(IllegalAccessError::new);
+            manaContainerOpt.setMana(VidaElement.GOLD, 0);
+            manaContainerOpt.setMana(VidaElement.WOOD, 0);
+            manaContainerOpt.setMana(VidaElement.FIRE, 0);
+            manaContainerOpt.setMana(VidaElement.EARTH, 0);
+            manaContainerOpt.setMana(VidaElement.AQUA, 0);
+            return;
+        }
         // 如果不能释放，则直接返回
         if (!canReleaseMagic(handInItem)) {
             return;
@@ -90,11 +103,12 @@ public class VidaEnchantedBranch extends VidaWand implements IItemLeftUseHandler
             IVidaManaCapability manaContainer = getManaCapability(itemStack).orElseThrow(NullPointerException::new);
             Map<VidaElement, Double> elementsMana = manaContainer.getAllElementsMana();
             for(double mana : elementsMana.values()){
-                if(!Double.isNaN(mana) && mana >= 10){
+                if(!Double.isNaN(mana) && mana >= 1){
                     return true;
                 }
             }
-        }catch (Exception ex){//DO NOTHING
+        }catch (Exception ex){
+            LOGGER.error(ex);
         }
         return false;
     }

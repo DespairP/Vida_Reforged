@@ -90,6 +90,12 @@ public enum VidaElement implements IVidaElement{
         if(elementL == elementR) {
             return ElementInteract.SAME;
         }
+        if(elementL == VOID || elementL == EMPTY){
+            return ElementInteract.UNDEFINED;
+        }
+        if(elementR == VOID || elementR == EMPTY){
+            return ElementInteract.UNDEFINED;
+        }
         if(ElementInteract.GROWTH_MAP.get(elementL).equals(elementR) || ElementInteract.GROWTH_MAP.get(elementR).equals(elementL)){
             return ElementInteract.GROWTH;
         }

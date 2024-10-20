@@ -1,6 +1,7 @@
 package teamHTBP.vidaReforged.server.items;
 
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,6 +17,8 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.util.LazyOptional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.client.model.itemstackModel.VidaWandItemModel;
@@ -27,6 +30,7 @@ import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagicAttribute;
 import teamHTBP.vidaReforged.helper.VidaMagicInvokeHelper;
 import teamHTBP.vidaReforged.server.components.VidaWandTooltipComponent;
+import teamHTBP.vidaReforged.server.events.IItemLeftUseHandler;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 
 import java.util.HashMap;
@@ -39,8 +43,9 @@ import java.util.function.Consumer;
  * Vida法杖，
  * 提供魔力储存和魔法储存的
  */
-public class VidaWand extends Item implements IVidaManaConsumable {
+public class VidaWand extends Item implements IVidaManaConsumable, IItemLeftUseHandler {
     public static int holdTime = 0;
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public VidaWand(Item.Properties properties) {
         super(properties);
@@ -275,5 +280,22 @@ public class VidaWand extends Item implements IVidaManaConsumable {
             }
         };
         consumer.accept(extensions);
+    }
+
+    @Override
+    public void onLeftClick(Level level, Player player, ItemStack itemStack, BlockPos pos) {
+        if(!player.isShiftKeyDown()) {
+            return;
+        }
+        try {
+            IVidaManaCapability manaContainerOpt = getManaCapability(itemStack).orElseThrow(IllegalAccessError::new);
+            IVidaMagicContainerCapability magicContainerOpt = getMagicContainerCapability(itemStack).orElseThrow(IllegalAccessError::new);
+            if(magicContainerOpt.getCurrentElementOverride() == VidaElement.EMPTY){
+                return;
+            }
+            manaContainerOpt.setMana(magicContainerOpt.getCurrentElementOverride(), 0);
+        }catch (Exception ex){
+            LOGGER.error(ex);
+        }
     }
 }

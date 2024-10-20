@@ -177,7 +177,7 @@ public class VidaManaCapability implements IVidaManaCapability, INBTSerializable
             return new VidaCapabilityResult<>(FAILED, 0.0);
         }
 
-        if(remainSumManaAmount <= 0.0){
+        if(remainSumManaAmount <= 0.0 && energy > 0){
             return new VidaCapabilityResult<>(PASS, energy);
         }
 

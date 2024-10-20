@@ -80,8 +80,9 @@ public class VidaMagicInvokableManager {
 //        level.addFreshEntity(_entity2);
     };
 
-    /**活化*/
+    /**活化魔法*/
     public static final VidaMagic.IInvokable PURIFY = ((stack, invokeMagic, level, player) -> {
+        // 生成粒子
         IVidaMagicContainerCapability magicContainer = VidaWand.getMagicContainerCapability(stack).orElseThrow(NullPointerException::new);
         VidaElement element = magicContainer.getCurrentElementOverride() == VidaElement.EMPTY ? invokeMagic.element() : magicContainer.getCurrentElementOverride();
         MultiblockSparkEntity entity = VidaEntityLoader.MULTIBLOCK_TRAIL.get().create(level);
@@ -91,6 +92,7 @@ public class VidaMagicInvokableManager {
         }
     });
 
+    /***/
     public static final VidaMagic.IInvokable STAR_GLINT = ((stack, invokeMagic, level, player) -> {
         IVidaMagicContainerCapability magicContainer = VidaWand.getMagicContainerCapability(stack).orElseThrow(NullPointerException::new);
         IVidaManaCapability manaContainer = VidaWand.getManaCapability(stack).orElseThrow(NullPointerException::new);
@@ -106,7 +108,7 @@ public class VidaMagicInvokableManager {
             entity.init(player, 60, element);
             level.addFreshEntity(entity);
         }
-        manaContainer.consumeMana(element, 10);
+        manaContainer.consumeMana(element, invokeMagic.attribute.baseCostMana());
     });
 
     public static final VidaMagic.IInvokable SPARK = (stack, invokeMagic, level, player) -> {
