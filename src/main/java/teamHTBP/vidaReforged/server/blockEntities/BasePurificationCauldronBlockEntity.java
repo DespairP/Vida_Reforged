@@ -79,9 +79,9 @@ public class BasePurificationCauldronBlockEntity extends AbstractPurificationCau
     public void spawnAnimationParticle(Level level) {
         if(!level.isClientSide && rand.nextInt(30) > 28){
             int age = rand.nextInt(100, 120);
-            double x = getBlockPos().getX() + 0.23F + rand.nextFloat() * 0.5F;
+            double x = getBlockPos().getX() + 0.28F + rand.nextFloat() * 0.5F;
             double y = getBlockPos().getY() + 1F + rand.nextFloat() * 0.4f;
-            double z = getBlockPos().getZ() + 0.23F + rand.nextFloat() * 0.5F;
+            double z = getBlockPos().getZ() + 0.28F + rand.nextFloat() * 0.5F;
             double scale = 0.025f;
             double speed = rand.nextFloat() * 0.25f + 0.105f;
             ((ServerLevel) level).sendParticles(
