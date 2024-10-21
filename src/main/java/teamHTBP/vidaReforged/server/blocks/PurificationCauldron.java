@@ -63,6 +63,7 @@ public class PurificationCauldron extends VidaBaseEntityBlock<BasePurificationCa
             return;
         }
 
+        // 抛入物品判定
         if (entityIn instanceof ItemEntity dropItemEntity) {
             BasePurificationCauldronBlockEntity blockEntity = (BasePurificationCauldronBlockEntity) level.getBlockEntity(pos);
             ItemStack itemStack = dropItemEntity.getItem();
@@ -78,11 +79,25 @@ public class PurificationCauldron extends VidaBaseEntityBlock<BasePurificationCa
     /**填入水*/
     @Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand interactionHand, BlockHitResult result) {
-        // 进行交互的一定是要水桶
         if(!level.isClientSide){
+            // 填充水
             emptyBucket(blockState, level, pos, player, interactionHand);
+            // 物品交互
+            tryAddItem(blockState, level, pos, player, interactionHand);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    public void tryAddItem(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand){
+        ItemStack handInItem = player.getItemInHand(hand);
+        BasePurificationCauldronBlockEntity blockEntity = (BasePurificationCauldronBlockEntity) level.getBlockEntity(pos);
+        if (blockEntity != null && blockEntity.addItem(handInItem.copy())) {
+            if(!player.getAbilities().instabuild){
+                handInItem.setCount(0);
+            }
+            level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
+            level.playSound((Player)null, player, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.5F, 0.5F);
+        }
     }
 
     public void emptyBucket(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand){
@@ -90,7 +105,7 @@ public class PurificationCauldron extends VidaBaseEntityBlock<BasePurificationCa
         BasePurificationCauldronBlockEntity blockEntity = (BasePurificationCauldronBlockEntity) level.getBlockEntity(pos);
         if(handInItem.is(VidaItemLoader.VIVID_BUCKET.get()) && blockEntity != null && !blockEntity.isWaterFilled && !blockEntity.isInProgress()){
             blockEntity.fillWater();
-            level.sendBlockUpdated(pos, blockState, blockState, 1 | 2);
+            level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
             level.playSound((Player)null, player, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
             if(!player.getAbilities().instabuild){
                 player.setItemInHand(hand, ItemUtils.createFilledResult(handInItem, player, new ItemStack(Items.BUCKET)));

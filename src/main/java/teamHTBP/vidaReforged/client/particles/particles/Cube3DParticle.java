@@ -29,6 +29,11 @@ public class Cube3DParticle extends VidaBaseParticle {
 
     public Cube3DParticle(ClientLevel level, double x, double y, double z, double speedX, double speedY, double speedZ, VidaParticleAttributes attributes) {
         super(level, x, y ,z, speedX, speedY, speedZ, attributes);
+        if(attributes.extraPos() != null){
+            this.xd = attributes.extraPos().x * speedX;
+            this.yd = attributes.extraPos().y * speedY;
+            this.zd = attributes.extraPos().z * speedZ;
+        }
         this.quadSize = attributes.scale();
         this.type = rand.nextInt(10);
         this.hasFadeIn = attributes.color() != null && attributes.color().a() == 0;

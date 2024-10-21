@@ -3,21 +3,17 @@ package teamHTBP.vidaReforged.server.blockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.Nullable;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.debug.IDebugObj;
@@ -95,6 +91,8 @@ public abstract class AbstractPurificationCauldronBlockEntity extends BlockEntit
         return false;
     }
 
+    public abstract void spawnAnimationParticle(Level level);
+
     /**填入水*/
     public boolean fillWater(){
         this.isWaterFilled = true;
@@ -128,6 +126,7 @@ public abstract class AbstractPurificationCauldronBlockEntity extends BlockEntit
     public void continuePurify(){
         this.totalProgress += step;
         this.progress += step;
+        this.spawnAnimationParticle(level);
         if(this.progress >= getMaxSubTaskProgress()){
             completeSubTask();
         }
