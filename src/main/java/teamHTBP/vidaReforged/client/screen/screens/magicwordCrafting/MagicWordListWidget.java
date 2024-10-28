@@ -35,7 +35,7 @@ public class MagicWordListWidget extends AbstractWidget implements IVidaNodes {
     };
 
 
-    public MagicWordListWidget(int x, int y, int width, int height,double factor) {
+    public MagicWordListWidget(int x, int y, int width, int height) {
         super(x, y, width, height, Component.literal("Magic Word List"));
         this.widgetMap = new LinkedHashMap<>();
         this.initWidget();

@@ -91,9 +91,7 @@ public abstract class VidaWidget extends AbstractWidget implements IVidaNodes {
     }
 
 
-    public void onAdded(){
-
-    }
+    public void onAdded(){}
 
     @Override
     public <T extends IViewModelStoreProvider> T requireParent() {

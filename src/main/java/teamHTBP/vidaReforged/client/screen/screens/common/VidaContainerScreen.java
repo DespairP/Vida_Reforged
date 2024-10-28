@@ -39,16 +39,26 @@ import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public abstract class VidaContainerScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> implements ILifeCycleOwner, IViewModelStoreProvider {
-    /**触屏模式下点击的格子*/
+    /**
+     * 触屏模式下点击的格子
+     */
     protected Slot clickedSlot;
-    /**触屏模式下最后点击的格子*/
+    /**
+     * 触屏模式下最后点击的格子
+     */
     protected Slot lastClickSlot;
-    /**触屏模式下拖拽的物品*/
+    /**
+     * 触屏模式下拖拽的物品
+     */
     private ItemStack draggingItem = ItemStack.EMPTY;
-    private ItemStack lastQuickMoved  = ItemStack.EMPTY;
-    /**是否可以投掷*/
+    private ItemStack lastQuickMoved = ItemStack.EMPTY;
+    /**
+     * 是否可以投掷
+     */
     protected boolean isAllowThrow = true;
-    /**触屏模式下是否右键分割*/
+    /**
+     * 触屏模式下是否右键分割
+     */
     private boolean isSplittingStack;
     /***/
     private int quickCraftingType;
@@ -70,7 +80,9 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
     /**/
     protected List<GuiEventListener> children;
     private ViewModelStore store;
-    /**是否被*/
+    /**
+     * 是否被
+     */
     private boolean isRendered;
     /***/
     private final LifeCycleRegistry registry;
@@ -114,13 +126,13 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         renderSlots(graphics, mouseX, mouseY, partialTicks);
         renderDraggingItem(graphics, mouseX, mouseY, partialTicks);
-        for(Renderable renderable : renderables){
+        for (Renderable renderable : renderables) {
             renderable.render(graphics, mouseX, mouseY, partialTicks);
         }
     }
 
-    public void addComponentAndChild(VidaWidget widget){
-        if(widget.children() != null){
+    public void addComponentAndChild(VidaWidget widget) {
+        if (widget.children() != null) {
             children.addAll(widget.children());
         }
         children.add(widget);
@@ -129,7 +141,7 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
 
     protected <T extends GuiEventListener & NarratableEntry & IVidaNodes> T addListener(T widget) {
         children.add(widget);
-        if(widget.children() != null){
+        if (widget.children() != null) {
             children.addAll(widget.children());
         }
         return super.addWidget(widget);
@@ -141,7 +153,7 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
         return p_96625_;
     }
 
-    protected void renderSlots(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
+    protected void renderSlots(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         // 获取开始渲染位置
         int left = this.leftPos;
         int top = this.topPos;
@@ -152,12 +164,12 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
         PoseStack poseStack = graphics.pose();
 
         poseStack.pushPose();
-        poseStack.translate((float)left, (float)top, 0.0F);
+        poseStack.translate((float) left, (float) top, 0.0F);
 
         // 设置正在悬浮的格子为空
         this.hoveredSlot = null;
 
-        for(int i = 0; i < this.menu.slots.size(); ++i) {
+        for (int i = 0; i < this.menu.slots.size(); ++i) {
             Slot slot = this.getMenu().slots.get(i);
             // 渲染每个格子
             if (slot.isActive()) {
@@ -165,7 +177,7 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
             }
 
             // 设置正在悬浮的格子
-            if (this.isHovering(slot, (double)mouseX, (double)mouseY) && slot.isActive()) {
+            if (this.isHovering(slot, (double) mouseX, (double) mouseY) && slot.isActive()) {
                 this.hoveredSlot = slot;
                 if (this.hoveredSlot.isHighlightable()) {
                     this.renderSingleSlotHighlight(graphics, slot.x, slot.y, 0, getSlotColor(i));
@@ -179,8 +191,10 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
     }
 
 
-    /**绘制正在拖拽的物品*/
-    public void renderDraggingItem(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
+    /**
+     * 绘制正在拖拽的物品
+     */
+    public void renderDraggingItem(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         // 获取开始渲染位置
         int left = this.leftPos;
         int top = this.topPos;
@@ -189,7 +203,7 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
         RenderSystem.disableDepthTest();
         PoseStack poseStack = graphics.pose();
         poseStack.pushPose();
-        poseStack.translate((float)left, (float)top, 0.0F);
+        poseStack.translate((float) left, (float) top, 0.0F);
 
         // 渲染
         ItemStack draggingItem = this.draggingItem.isEmpty() ? this.menu.getCarried() : this.draggingItem;
@@ -211,7 +225,7 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
 
         // 拽回动画
         if (!this.snapbackItem.isEmpty()) {
-            float f = (float)(Util.getMillis() - this.snapbackTime) / 100.0F;
+            float f = (float) (Util.getMillis() - this.snapbackTime) / 100.0F;
             if (f >= 1.0F) {
                 f = 1.0F;
                 this.snapbackItem = ItemStack.EMPTY;
@@ -219,9 +233,9 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
 
             int j2 = this.snapbackEnd.x - this.snapbackStartX;
             int k2 = this.snapbackEnd.y - this.snapbackStartY;
-            int j1 = this.snapbackStartX + (int)((float)j2 * f);
-            int k1 = this.snapbackStartY + (int)((float)k2 * f);
-            this.renderFloatingItem(graphics, this.snapbackItem, j1, k1, (String)null);
+            int j1 = this.snapbackStartX + (int) ((float) j2 * f);
+            int k1 = this.snapbackStartY + (int) ((float) k2 * f);
+            this.renderFloatingItem(graphics, this.snapbackItem, j1, k1, (String) null);
         }
 
 
@@ -230,7 +244,9 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
         RenderSystem.disableBlend();
     }
 
-    /**渲染单个槽位*/
+    /**
+     * 渲染单个槽位
+     */
     protected void renderSingleSlot(GuiGraphics graphics, Slot slot) {
         int slotX = slot.x;
         int slotY = slot.y;
@@ -294,8 +310,10 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
         poseStack.popPose();
     }
 
-    /**绘制矩形*/
-    public void fill(GuiGraphics graphics, int x0, int y0, int x1, int y1, int color){
+    /**
+     * 绘制矩形
+     */
+    public void fill(GuiGraphics graphics, int x0, int y0, int x1, int y1, int color) {
         PoseStack poseStack = graphics.pose();
 
         poseStack.pushPose();
@@ -303,7 +321,9 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
         poseStack.popPose();
     }
 
-    /**绘制鼠标拿着的物品*/
+    /**
+     * 绘制鼠标拿着的物品
+     */
     private void renderFloatingItem(GuiGraphics graphics, ItemStack itemstack, int mouseX, int mouseY, String p_282568_) {
         graphics.pose().pushPose();
         graphics.pose().translate(0.0F, 0.0F, 232.0F);
@@ -314,7 +334,9 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
     }
 
 
-    /**重新计算快速合成剩余*/
+    /**
+     * 重新计算快速合成剩余
+     */
     private void recalculateQuickCraftRemaining() {
         ItemStack itemstack = this.menu.getCarried();
         if (!itemstack.isEmpty() && this.isQuickCrafting) {
@@ -323,7 +345,7 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
             } else {
                 this.quickCraftingRemainder = itemstack.getCount();
 
-                for(Slot slot : this.quickCraftSlots) {
+                for (Slot slot : this.quickCraftSlots) {
                     ItemStack itemstack1 = slot.getItem();
                     int i = itemstack1.isEmpty() ? 0 : itemstack1.getCount();
                     int j = Math.min(itemstack.getMaxStackSize(), slot.getMaxStackSize(itemstack));
@@ -335,27 +357,35 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
         }
     }
 
-    /**计算鼠标是否悬浮在某个槽位上*/
+    /**
+     * 计算鼠标是否悬浮在某个槽位上
+     */
     protected boolean isHovering(Slot slot, double mouseX, double mouseY) {
         return this.isHovering(slot.x, slot.y, 16, 16, mouseX, mouseY);
     }
 
-    /**高亮某个槽位*/
+    /**
+     * 高亮某个槽位
+     */
     public void renderSingleSlotHighlight(GuiGraphics graphics, int x, int y, int p_283504_, int color) {
         fill(graphics, x, y, x + 16, y + 16, color);
     }
 
-    /**鼠标点击监听事件*/
+    /**
+     * 鼠标点击监听事件
+     */
     public boolean mouseClicked(double mouseX, double mouseY, int key) {
-        if(mouseClickedListener(mouseX, mouseY, key)){
+        if (mouseClickedListener(mouseX, mouseY, key)) {
             return true;
         }
         return mouseClickedSlot(mouseX, mouseY, key);
     }
 
-    /**通知子监听器*/
+    /**
+     * 通知子监听器
+     */
     public boolean mouseClickedListener(double mouseX, double mouseY, int key) {
-        for(GuiEventListener guieventlistener : this.children()) {
+        for (GuiEventListener guieventlistener : this.children()) {
             if (guieventlistener.mouseClicked(mouseX, mouseY, key)) {
                 this.setFocused(guieventlistener);
                 if (key == 0) {
@@ -368,8 +398,10 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
         return false;
     }
 
-    /**通知槽位点击事件*/
-    public boolean mouseClickedSlot(double mouseX, double mouseY, int key){
+    /**
+     * 通知槽位点击事件
+     */
+    public boolean mouseClickedSlot(double mouseX, double mouseY, int key) {
         //中键
         InputConstants.Key mouseKey = InputConstants.Type.MOUSE.getOrCreate(key);
         boolean isMidKeyDown = this.minecraft.options.keyPickItem.isActiveAndMatches(mouseKey);
@@ -386,7 +418,8 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
             int top = this.topPos;
             // 检测是否点击了外部非槽位部分
             boolean isClickOutSide = this.hasClickedOutside(mouseX, mouseY, left, top, key);
-            if (slot != null) isClickOutSide = false; // Forge, prevent dropping of items through slots outside of GUI boundaries
+            if (slot != null)
+                isClickOutSide = false; // Forge, prevent dropping of items through slots outside of GUI boundaries
             // 记录被点击的槽位下标，-1代表没有，-999代表要投掷物品
             int clickedSlotIndex = -1;
             if (slot != null) {
@@ -433,7 +466,7 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
                             } else if (clickedSlotIndex == -999 && isAllowThrow) {
                                 // 其他状态下默认抛出物品
                                 clicktype = ClickType.THROW;
-                            } else if(clickedSlotIndex == -999){
+                            } else if (clickedSlotIndex == -999) {
                                 clicktype = ClickType.PICKUP;
                             }
 
@@ -466,9 +499,11 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
         return true;
     }
 
-    /**找到某个位置的槽位*/
+    /**
+     * 找到某个位置的槽位
+     */
     protected Slot findSlot(double mouseX, double mouseY) {
-        for(int i = 0; i < this.menu.slots.size(); ++i) {
+        for (int i = 0; i < this.menu.slots.size(); ++i) {
             Slot slot = this.menu.slots.get(i);
             if (this.isHovering(slot, mouseX, mouseY) && slot.isActive()) {
                 return slot;
@@ -478,7 +513,9 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
         return null;
     }
 
-    /**检测鼠标热键是否被按下*/
+    /**
+     * 检测鼠标热键是否被按下
+     */
     protected void checkHotbarMouseClicked(int key) {
         if (this.hoveredSlot != null && this.menu.getCarried().isEmpty()) {
             if (this.minecraft.options.keySwapOffhand.matchesMouse(key)) {
@@ -486,7 +523,7 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
                 return;
             }
 
-            for(int i = 0; i < 9; ++i) {
+            for (int i = 0; i < 9; ++i) {
                 if (this.minecraft.options.keyHotbarSlots[i].matchesMouse(key)) {
                     this.slotClicked(this.hoveredSlot, this.hoveredSlot.index, i, ClickType.SWAP);
                 }
@@ -494,14 +531,18 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
         }
     }
 
-    /**当鼠标松开时*/
+    /**
+     * 当鼠标松开时
+     */
     public boolean mouseReleased(double mouseX, double mouseY, int key) {
         // 通知监听器
         mouseReleasedListener(mouseX, mouseY, key); //Forge, Call parent to release buttons
         return mouseReleasedSlot(mouseX, mouseY, key);
     }
 
-    /**通知监听器松开事件*/
+    /**
+     * 通知监听器松开事件
+     */
     protected boolean mouseReleasedListener(double mouseX, double mouseY, int key) {
         this.setDragging(false);
         return this.getChildAt(mouseX, mouseY).filter((p_94708_) -> {
@@ -509,8 +550,10 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
         }).isPresent();
     }
 
-    /**通知槽位松开事件*/
-    public boolean mouseReleasedSlot(double mouseX, double mouseY, int key){
+    /**
+     * 通知槽位松开事件
+     */
+    public boolean mouseReleasedSlot(double mouseX, double mouseY, int key) {
         //找到正在悬浮的slot
         Slot slot = this.findSlot(mouseX, mouseY);
         int left = this.leftPos;
@@ -518,7 +561,8 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
 
         //是否点击到了外部
         boolean isClickedOutSide = this.hasClickedOutside(mouseX, mouseY, left, top, key);
-        if (slot != null) isClickedOutSide = false; // Forge, prevent dropping of items through slots outside of GUI boundaries
+        if (slot != null)
+            isClickedOutSide = false; // Forge, prevent dropping of items through slots outside of GUI boundaries
         InputConstants.Key mouseKey = InputConstants.Type.MOUSE.getOrCreate(key);
 
         //悬浮的slot下标
@@ -537,7 +581,7 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
             if (hasShiftDown()) {
                 // shift双击，快速移动物品
                 if (!this.lastQuickMoved.isEmpty()) {
-                    for(Slot iSlot: this.menu.slots) {
+                    for (Slot iSlot : this.menu.slots) {
                         if (iSlot != null && iSlot.mayPickup(this.minecraft.player) && iSlot.hasItem() && iSlot.isSameInventory(slot) && AbstractContainerMenu.canItemQuickReplace(iSlot, this.lastQuickMoved, true)) {
                             this.slotClicked(iSlot, iSlot.index, key, ClickType.QUICK_MOVE);
                         }
@@ -582,15 +626,15 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
                             this.snapbackItem = ItemStack.EMPTY;
                         } else {
                             this.slotClicked(this.clickedSlot, this.clickedSlot.index, key, ClickType.PICKUP);
-                            this.snapbackStartX = Mth.floor(mouseX - (double)left);
-                            this.snapbackStartY = Mth.floor(mouseY - (double)top);
+                            this.snapbackStartX = Mth.floor(mouseX - (double) left);
+                            this.snapbackStartY = Mth.floor(mouseY - (double) top);
                             this.snapbackEnd = this.clickedSlot;
                             this.snapbackItem = this.draggingItem;
                             this.snapbackTime = Util.getMillis();
                         }
                     } else if (!this.draggingItem.isEmpty()) {
-                        this.snapbackStartX = Mth.floor(mouseX - (double)left);
-                        this.snapbackStartY = Mth.floor(mouseY - (double)top);
+                        this.snapbackStartX = Mth.floor(mouseX - (double) left);
+                        this.snapbackStartY = Mth.floor(mouseY - (double) top);
                         this.snapbackEnd = this.clickedSlot;
                         this.snapbackItem = this.draggingItem;
                         this.snapbackTime = Util.getMillis();
@@ -599,13 +643,13 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
                     this.clearDraggingState();
                 }
             } else if (this.isQuickCrafting && !this.quickCraftSlots.isEmpty()) {
-                this.slotClicked((Slot)null, -999, AbstractContainerMenu.getQuickcraftMask(0, this.quickCraftingType), ClickType.QUICK_CRAFT);
+                this.slotClicked((Slot) null, -999, AbstractContainerMenu.getQuickcraftMask(0, this.quickCraftingType), ClickType.QUICK_CRAFT);
 
-                for(Slot slot1 : this.quickCraftSlots) {
+                for (Slot slot1 : this.quickCraftSlots) {
                     this.slotClicked(slot1, slot1.index, AbstractContainerMenu.getQuickcraftMask(1, this.quickCraftingType), ClickType.QUICK_CRAFT);
                 }
 
-                this.slotClicked((Slot)null, -999, AbstractContainerMenu.getQuickcraftMask(2, this.quickCraftingType), ClickType.QUICK_CRAFT);
+                this.slotClicked((Slot) null, -999, AbstractContainerMenu.getQuickcraftMask(2, this.quickCraftingType), ClickType.QUICK_CRAFT);
             } else if (!this.menu.getCarried().isEmpty()) {
                 if (this.minecraft.options.keyPickItem.isActiveAndMatches(mouseKey)) {
                     this.slotClicked(slot, hoveredSlotIndex, key, ClickType.CLONE);
@@ -628,7 +672,9 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
         return true;
     }
 
-    /**鼠标拖拽事件*/
+    /**
+     * 鼠标拖拽事件
+     */
     public boolean mouseDragged(double mouseX, double mouseY, int key, double dragX, double dragY) {
         Slot slot = this.findSlot(mouseX, mouseY);
         ItemStack itemstack = this.menu.getCarried();
@@ -659,14 +705,14 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
             this.recalculateQuickCraftRemaining();
         }
 
-        if(children() != null && children().size() > 0){
+        if (children() != null && children().size() > 0) {
             children().forEach(child -> child.mouseDragged(mouseX, mouseY, key, dragX, dragY));
         }
 
         return true;
     }
-    
-    private boolean isTouchScreenMode(){
+
+    private boolean isTouchScreenMode() {
         return this.minecraft.options.touchscreen().get();
     }
 
@@ -677,7 +723,8 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
         this.minecraft.popGuiLayer();
     }
 
-    protected void close(){}
+    protected void close() {
+    }
 
     @Override
     public List<? extends GuiEventListener> children() {
@@ -691,7 +738,7 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
 
     @Override
     public ViewModelStore getStore() {
-        if(store == null){
+        if (store == null) {
             this.store = new ViewModelStore();
         }
         return this.store;
@@ -701,7 +748,7 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
     public boolean mouseScrolled(double mouseX, double mouseY, double partialTicks) {
         List<GuiEventListener> listeners = new ArrayList<>();
 
-        for(GuiEventListener guieventlistener : this.children()) {
+        for (GuiEventListener guieventlistener : this.children()) {
             if (guieventlistener.isMouseOver(mouseX, mouseY)) {
                 listeners.add(guieventlistener);
             }

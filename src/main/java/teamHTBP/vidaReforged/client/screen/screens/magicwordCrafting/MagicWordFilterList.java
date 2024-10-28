@@ -18,7 +18,7 @@ public class MagicWordFilterList extends AbstractWidget implements IVidaNodes {
     private VidaElement selectedElement = VidaElement.EMPTY;
     private VidaMagicWordViewModel model;
     public MagicWordFilterList(int x, int y) {
-        super(x, y, MagicWordFilter.PIXEL, MagicWordFilter.PIXEL * BUTTON_AMOUNT, Component.literal("magic filter button list"));
+        super(x, y, MagicWordFilter.SIZE, MagicWordFilter.SIZE * BUTTON_AMOUNT, Component.literal("magic filter button list"));
         this.widgetMap = new LinkedHashMap<>();
         this.initWidget();
     }
@@ -32,7 +32,7 @@ public class MagicWordFilterList extends AbstractWidget implements IVidaNodes {
             if(element == VidaElement.EMPTY || element == VidaElement.VOID){
                 continue;
             }
-            widgetMap.put(element, new MagicWordFilter(this.model, getX(), getY() + count * MagicWordFilter.PIXEL, element));
+            widgetMap.put(element, new MagicWordFilter(this.model, getX(), getY() + count * MagicWordFilter.SIZE, element));
             count ++;
         }
 

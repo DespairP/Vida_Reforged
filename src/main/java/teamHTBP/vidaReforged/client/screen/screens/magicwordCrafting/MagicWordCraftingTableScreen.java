@@ -13,6 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
 import teamHTBP.vidaReforged.client.screen.components.magicWords.*;
@@ -32,96 +33,96 @@ import static teamHTBP.vidaReforged.core.utils.math.StringUtils.compareString;
 
 public class MagicWordCraftingTableScreen extends VidaContainerScreen<MagicWordCraftingTableMenu> {
     /**显示所有持有的词条容器*/
-    MagicWordListWidget magicWordWidget;
+    protected MagicWordListWidget magicWordWidget;
     /**过滤器*/
-    MagicWordFilterList magicWordFilterLists;
+    protected MagicWordFilterList magicWordFilterLists;
     /**显示选择的词条*/
-    MagicSelectedWordListWidget magicSelectedWordListWidget;
+    protected MagicSelectedWordListWidget magicSelectedWordListWidget;
     /**合成按钮*/
-    MagicWordCraftingButton magicWordCraftingButton;
-    /**放入物品的槽位*/
+    protected MagicWordCraftingButton magicWordCraftingButton;
+    /**放入物品的槽位边框*/
     List<MagicSlotComponent> magicSlots;
-    final Inventory inventory;
+    /**材质管理*/
     private final static ResourceLocation INVENTORY_LOCATION_RESOURCE = new ResourceLocation(MOD_ID, "textures/gui/magic_word_inventory.png");
+    /**数据容器*/
     private VidaMagicWordViewModel viewModel;
+    /***/
+    private Level level;
+    private static final int BORDER_Y = 28;
+    private static final int BORDER_X = 200;
 
 
-    public MagicWordCraftingTableScreen(MagicWordCraftingTableMenu menu, Inventory inventory, Component p_97743_) {
-        super(menu, inventory, Component.literal("magic_word_crafting_table"));
-        this.inventory = inventory;
+    public MagicWordCraftingTableScreen(MagicWordCraftingTableMenu menu, Inventory playerInventory, Component component) {
+        super(menu, playerInventory, component);
+        this.level = playerInventory.player.level();
     }
 
     @Override
     public void added() {
         super.added();
-        // init view model
+        // 初始化数据容器
         this.viewModel = new ViewModelProvider(this).get(VidaMagicWordViewModel.class);
+        this.viewModel.playerMagicWords.setValue(menu.getPlayerMagicWords());
+        this.viewModel.blockPos.setValue(menu.getBlockPos());
     }
 
     @Override
     protected void init() {
         super.init();
 
-        viewModel.playerMagicWords.setValue(menu.getPlayerMagicWords());
-        viewModel.blockPos.setValue(menu.getBlockPos());
-
-        // 200 is right panel, 20 is button list
+        // 计算物品栏位置
         this.leftPos = (Minecraft.getInstance().getWindow().getGuiScaledWidth() - 200 - 20 - 196) / 2;
         this.topPos = (Minecraft.getInstance().getWindow().getGuiScaledHeight() - 84);
 
+        // 计算组件位置
+        int componentWidth = MagicWordListWidget.WIDTH;
+        int componentHeight = this.height - BORDER_Y;
+        int x = this.width - BORDER_X;
+        int y = (this.height - componentHeight) / 2;
 
-        double factor = minecraft.getWindow().getGuiScale();
-        int screenWidth = this.width;
-        int screenHeight = minecraft.getWindow().getGuiScaledHeight();
-        int componentHeight = (int) (screenHeight - 28);
-        int x = screenWidth - 200;
-        int y = (int)((screenHeight - componentHeight) / 2);
-
-        magicWordWidget = new MagicWordListWidget(x, y, MagicWordListWidget.WIDTH, componentHeight, factor);
-        magicWordFilterLists = new MagicWordFilterList(x - MagicWordFilter.PIXEL, y + componentHeight - MagicWordFilter.PIXEL * MagicWordFilterList.BUTTON_AMOUNT);
-        magicSelectedWordListWidget = new MagicSelectedWordListWidget(this.leftPos + 46,this.topPos - 140);
-        magicWordCraftingButton = new MagicWordCraftingButton( this.leftPos + 64, this.topPos - 50);
-        magicSlots = new ArrayList<>();
-
+        // 初始化组件
+        this.magicWordWidget = new MagicWordListWidget(x, y, componentWidth, componentHeight);
+        this.magicWordFilterLists = new MagicWordFilterList(x - MagicWordFilter.SIZE, y + componentHeight - MagicWordFilter.SIZE * MagicWordFilterList.BUTTON_AMOUNT);
+        this.magicSelectedWordListWidget = new MagicSelectedWordListWidget(this.leftPos + 46,this.topPos - 140);
+        this.magicWordCraftingButton = new MagicWordCraftingButton( this.leftPos + 64, this.topPos - 50);
+        this.magicSlots = new ArrayList<>();
 
         this.addMagicSlots();
     }
 
     private void addMagicSlots(){
-
         List<Slot> slots = this.menu.getAllElementSlot();
         for(Slot slot : slots){
             if(slot == null) {
                 continue;
             }
-
             this.magicSlots.add(new MagicSlotComponent(slot, this.leftPos + slot.x, this.topPos + slot.y));
         }
-        //Slot slot = this.menu.getResultSlot();
-        //this.magicSlots.add(new MagicSlotComponent(slot,this.leftPos + slot.x, this.topPos + slot.y));
     }
 
     @Override
-    protected void renderBg(GuiGraphics graphics, float partialTicks, int x, int y) {
-
-    }
+    protected void renderBg(GuiGraphics graphics, float partialTicks, int x, int y) {}
 
     @Override
-    protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        if(magicWordCraftingButton != null && magicWordCraftingButton.isHovered()){
-            graphics.renderTooltip(this.font, Component.translatable("tootip.vida_reforged.word_crafting_notice"),  mouseX,  mouseY);
-        }
-    }
+    protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {}
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        // 渲染黑色背景
         this.renderBackground(graphics);
+        // 渲染物品栏
         this.renderInventory(graphics, mouseX, mouseY, partialTicks);
-        super.render(graphics, mouseX, mouseY, partialTicks);
+        // 渲染悬浮提示
         this.renderTooltip(graphics,mouseX,mouseY);
+        // 渲染组件
+        this.renderMagicWords(graphics, mouseX, mouseY, partialTicks);
+        // 渲染槽位
+        super.render(graphics, mouseX, mouseY, partialTicks);
+    }
+
+    @Override
+    protected void containerTick() {
         this.compareServerAndClientSideAndUpdate();
-        renderMagicWords(graphics, mouseX, mouseY, partialTicks);
-        this.renderLabels(graphics, mouseX, mouseY);
     }
 
     public void renderInventory(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
@@ -152,7 +153,7 @@ public class MagicWordCraftingTableScreen extends VidaContainerScreen<MagicWordC
         Map<VidaElement,String> clientMap = this.viewModel.selectedMagicWord.getValue();
         Map<VidaElement,String> serverMap = new LinkedHashMap<>();
         BlockPos pos = getMenu().getBlockPos();
-        if(inventory.player.getCommandSenderWorld().getBlockEntity(pos) instanceof MagicWordCraftingTableBlockEntity entity){
+        if(level.getBlockEntity(pos) instanceof MagicWordCraftingTableBlockEntity entity){
             isCrafting = entity.isCrafting;
             serverMap = entity.getMagicWordMap();
         }
@@ -187,42 +188,35 @@ public class MagicWordCraftingTableScreen extends VidaContainerScreen<MagicWordC
     }
 
     public void renderMagicWords(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
-        if(magicWordWidget != null){
-            RenderSystem.enableBlend();
-            magicWordWidget.render(graphics, mouseX, mouseY, partialTicks);
-            magicWordFilterLists.render(graphics, mouseX, mouseY, partialTicks);
-            magicSelectedWordListWidget.render(graphics, mouseX, mouseY, partialTicks);
-            magicSlots.forEach(slot -> slot.render(graphics, mouseX, mouseY, partialTicks));
-            graphics.setColor(1, 1, 1,1);
-            magicWordCraftingButton.render(graphics, mouseX, mouseY, partialTicks);
-            graphics.setColor(1, 1, 1,1);
-            renderBlock(graphics, mouseX, mouseY, partialTicks);
-            graphics.setColor(1, 1, 1,1);
-            RenderSystem.disableBlend();
-        }
+        this.magicWordWidget.render(graphics, mouseX, mouseY, partialTicks);
+        this.magicWordFilterLists.render(graphics, mouseX, mouseY, partialTicks);
+        this.magicSelectedWordListWidget.render(graphics, mouseX, mouseY, partialTicks);
+        this.magicSlots.forEach(slot -> slot.render(graphics, mouseX, mouseY, partialTicks));
+        this.magicWordCraftingButton.render(graphics, mouseX, mouseY, partialTicks);
+        this.renderBlock(graphics, mouseX, mouseY, partialTicks);
     }
 
 
     public void renderBlock(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
-        PoseStack pPoseStack = graphics.pose();
+        PoseStack poseStack = graphics.pose();
         final BlockRenderDispatcher blockRenderer = this.minecraft.getBlockRenderer();
 
         // 入栈1：设置结构偏移
-        pPoseStack.pushPose();
-        pPoseStack.translate(magicSelectedWordListWidget.getX() + 48, magicSelectedWordListWidget.getY() + 46, 100.0F);
-        pPoseStack.scale(12.0F, 12.0F, 12.0F);
+        poseStack.pushPose();
+        poseStack.translate(magicSelectedWordListWidget.getX() + 48, magicSelectedWordListWidget.getY() + 46, 100.0F);
+        poseStack.scale(12.0F, 12.0F, 12.0F);
         // 中心方块是-1,-1偏移后的方块
-        pPoseStack.translate(-1.0F, -1.0F, 0.0F);
+        poseStack.translate(-1.0F, -1.0F, 0.0F);
 
 
         // 将模型调整到旋转正中央
-        pPoseStack.translate(0.5 ,0.5,0.5);
+        poseStack.translate(0.5 ,0.5,0.5);
         // 因为renderBatched整个结构是倒着渲染的，先要将整个结构按X轴正转180度，然后再按20度，让方块的顶部面向玩家
-        pPoseStack.mulPose(Axis.XP.rotationDegrees(160));
+        poseStack.mulPose(Axis.XP.rotationDegrees(160));
         // 再按Y轴转45度，让方块左边和右边面向玩家，呈现三视图的状态
-        pPoseStack.mulPose(Axis.YP.rotationDegrees(45));
+        poseStack.mulPose(Axis.YP.rotationDegrees(45));
         // 将模型调整到旋转前正中央
-        pPoseStack.translate(-0.5 ,-0.5,-0.5);
+        poseStack.translate(-0.5 ,-0.5,-0.5);
 
 
 
@@ -237,12 +231,12 @@ public class MagicWordCraftingTableScreen extends VidaContainerScreen<MagicWordC
         BlockState state = VidaBlockLoader.MAGIC_WORD_CRAFTING.get().defaultBlockState();
 
         // 通知此batch加入相应的render
-        blockRenderer.renderSingleBlock(state, pPoseStack, graphics.bufferSource(),0, 15728880, ModelData.EMPTY, RenderType.translucent());
+        blockRenderer.renderSingleBlock(state, poseStack, graphics.bufferSource(),0, 15728880, ModelData.EMPTY, RenderType.translucent());
 
         // 出栈1-1
         RenderSystem.disableBlend();
         // 出栈1
-        pPoseStack.popPose();
+        poseStack.popPose();
 
     }
 

@@ -25,7 +25,7 @@ import java.util.Map;
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
 public class MagicWordFilter extends AbstractWidget {
-    public static final int PIXEL = 20;
+    public static final int SIZE = 20;
     private final VidaElement element;
     private FloatRange alphaRange = new FloatRange(0.1f,0.1f,0.3f);
     VidaMagicWordViewModel model;
@@ -40,7 +40,7 @@ public class MagicWordFilter extends AbstractWidget {
     );
 
     public MagicWordFilter(VidaMagicWordViewModel model, int x, int y, VidaElement element) {
-        super(x, y, PIXEL, PIXEL, Component.translatable("magic_word_filter"));
+        super(x, y, SIZE, SIZE, Component.translatable("magic_word_filter"));
         this.element = element;
         this.model = model;
         IDataObserver<VidaElement> elementObserver = (value) -> {
@@ -85,9 +85,9 @@ public class MagicWordFilter extends AbstractWidget {
         VertexConsumer consumer = graphics.bufferSource().getBuffer(RenderType.gui());
         matrix4f.translate(getX(), getY(), 0);
         consumer.vertex(matrix4f, 0, 0, 0).color(fromR, fromG, fromB, alpha).endVertex();
-        consumer.vertex(matrix4f, 0, PIXEL, 0).color(fromR, fromG, fromB, alpha).endVertex();
-        consumer.vertex(matrix4f, PIXEL, PIXEL, 0).color(toR, toG, toB, alpha).endVertex();
-        consumer.vertex(matrix4f, PIXEL, 0, 0).color(toR, toG, toB, alpha).endVertex();
+        consumer.vertex(matrix4f, 0, SIZE, 0).color(fromR, fromG, fromB, alpha).endVertex();
+        consumer.vertex(matrix4f, SIZE, SIZE, 0).color(toR, toG, toB, alpha).endVertex();
+        consumer.vertex(matrix4f, SIZE, 0, 0).color(toR, toG, toB, alpha).endVertex();
         poseStack.popPose();
 
         this.renderFocused(graphics, mouseX, mouseY, partialTicks);
@@ -114,10 +114,10 @@ public class MagicWordFilter extends AbstractWidget {
         Matrix4f matrix4f = poseStack.last().pose();
         VertexConsumer consumer = graphics.bufferSource().getBuffer(RenderType.gui());
 
-        matrix4f.translate(getX() + PIXEL - 2, getY(), 0);
+        matrix4f.translate(getX() + SIZE - 2, getY(), 0);
         consumer.vertex(matrix4f, 0, 0, 0).color(toR, toG, toB, 1).endVertex();
-        consumer.vertex(matrix4f, 0, PIXEL, 0).color(fromR, fromG, fromB, 1).endVertex();
-        consumer.vertex(matrix4f, 2, PIXEL, 0).color(fromR, fromG, fromB, 1).endVertex();
+        consumer.vertex(matrix4f, 0, SIZE, 0).color(fromR, fromG, fromB, 1).endVertex();
+        consumer.vertex(matrix4f, 2, SIZE, 0).color(fromR, fromG, fromB, 1).endVertex();
         consumer.vertex(matrix4f, 2, 0, 0).color(toR, toG, toB, 1).endVertex();
         poseStack.popPose();
     }

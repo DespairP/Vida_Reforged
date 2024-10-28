@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.client.gui.GuiGraphics;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.core.common.ui.VidaLifecycleSection;
 
 import java.util.HashSet;
@@ -13,14 +12,14 @@ import java.util.List;
 import java.util.Set;
 
 
-public class VidaWandCraftingSectionController {
+public class VidaFragmentController {
     private Set<VidaLifecycleSection> registeredSection = new HashSet<>();
 
     private LinkedList<VidaLifecycleSection> currentSections = null;
 
     private Logger LOGGER = LogManager.getLogger();
 
-    public VidaWandCraftingSectionController(LinkedList<VidaLifecycleSection> sections){
+    public VidaFragmentController(LinkedList<VidaLifecycleSection> sections){
         this.currentSections = new LinkedList<>();
         registerSections(sections);
     }

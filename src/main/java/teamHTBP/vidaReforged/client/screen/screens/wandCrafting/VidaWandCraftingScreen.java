@@ -57,7 +57,7 @@ public class VidaWandCraftingScreen extends VidaContainerScreen<VidaWandCrafting
     /**
      * 区域显示/不显示控制器
      */
-    VidaWandCraftingSectionController sectionManager;
+    VidaFragmentController sectionManager;
     /**
      * 法杖显示区域
      */
@@ -188,7 +188,7 @@ public class VidaWandCraftingScreen extends VidaContainerScreen<VidaWandCrafting
             this.initSlots();
 
             if (this.sectionManager == null) {
-                this.sectionManager = new VidaWandCraftingSectionController(new LinkedList<>(sections));
+                this.sectionManager = new VidaFragmentController(new LinkedList<>(sections));
             }
             sections.forEach(this::addRenderableOnly);
             // 调整布局
