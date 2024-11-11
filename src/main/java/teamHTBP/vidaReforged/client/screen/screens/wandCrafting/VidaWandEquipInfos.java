@@ -5,7 +5,9 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.layouts.FrameLayout;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.client.screen.components.common.ScrolledContainer;
 import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.core.common.item.Position;
@@ -13,7 +15,7 @@ import teamHTBP.vidaReforged.core.common.item.Position;
 import java.util.List;
 
 public class VidaWandEquipInfos extends VidaWidget {
-    public ScrolledContainer<VidaWidget> container;
+    public ScrolledContainer container;
     GridLayout gridLayout;
     VidaWandSlot slotMessage$0 = new VidaWandSlot(0, 0, getWidth() - 20, 0, ItemStack.EMPTY);
     VidaWandSlot slotMessage$1 = new VidaWandSlot(0, 0, getWidth() - 20, 0, ItemStack.EMPTY);
@@ -41,9 +43,9 @@ public class VidaWandEquipInfos extends VidaWidget {
     }
 
     private void initWidget(){
-        this.container = new ScrolledContainer<>(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        this.container = new ScrolledContainer(this.getX(), this.getY(), this.getWidth(), this.getHeight(), new ResourceLocation(VidaReforged.MOD_ID, ""));
         this.container.setCacheable(false);
-        this.container.setExtraSpacing(0);
+        this.container.setBottomBorderSize(0);
 
         gridLayout = new GridLayout(this.getX(), this.getY());
         gridLayout.rowSpacing(5);

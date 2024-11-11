@@ -18,7 +18,7 @@ import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.components.guidebooks.VidaGuidebookText;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaWandCraftingViewModel;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
-import teamHTBP.vidaReforged.core.common.ui.VidaLifecycleSection;
+import teamHTBP.vidaReforged.client.screen.components.VidaLifecycleSection;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 import teamHTBP.vidaReforged.core.utils.anim.SecondOrderDynamics;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
@@ -34,7 +34,7 @@ import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
 public class VidaWandMagicSection extends VidaLifecycleSection {
     VidaWandCraftingViewModel viewModel;
-    ScrolledContainer<VidaWandMagicButton> scrolledContainer;
+    ScrolledContainer scrolledContainer;
     public final static ResourceLocation NON_SELECTED = VidaMagic.MAGIC_UNKNOWN;
     ResourceLocation currentFocusMagicId = NON_SELECTED;
     public Map<ResourceLocation, VidaWandMagicButton> allMagicsButtons = new HashMap<>();
@@ -61,7 +61,7 @@ public class VidaWandMagicSection extends VidaLifecycleSection {
     @Override
     public void onInit() {
         // 技能调整滚动条
-        this.scrolledContainer = new ScrolledContainer<>(getX(), getY(), getWidth() / 2, getHeight());
+        this.scrolledContainer = new ScrolledContainer(getX(), getY(), getWidth() / 2, getHeight(), new ResourceLocation(MOD_ID, "skill_container"));
         this.scrolledContainer.setCacheable(false);
         this.scrolledContainer.thumbWidth = 2;
 

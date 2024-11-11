@@ -17,6 +17,7 @@ import java.util.function.Supplier;
  * 方块工厂类
  * 有关Block.Properties,参见：{@link BlockBehaviour.Properties}<br/>
  */
+@Deprecated
 public class DecoBlockFactory {
 
     public static class Builder {

@@ -11,7 +11,7 @@ import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
-import teamHTBP.vidaReforged.client.screen.screens.magicwordCrafting.MagicWordListWidget;
+import teamHTBP.vidaReforged.client.screen.screens.magicwordCrafting.MagicWordDisplayContainer;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.ui.component.IDataObserver;
@@ -40,13 +40,13 @@ public class MagicWordWidget extends AbstractWidget {
     public FloatRange upperBorderPoint = new FloatRange(0,0, WIDTH);
     public FloatRange downBorderPoint = new FloatRange(0,0, WIDTH);
     public FloatRange selectedAlpha = new FloatRange(0,0, 1);
-    private MagicWordListWidget container;
+    private MagicWordDisplayContainer container;
     private VidaElement element;
     private VidaMagicWordViewModel model;
     private boolean isSelected = false;
     private boolean isUnlocked = false;
 
-    public MagicWordWidget(VidaMagicWordViewModel model, MagicWordListWidget parent, int x, int y, MagicWord word) {
+    public MagicWordWidget(VidaMagicWordViewModel model, MagicWordDisplayContainer parent, int x, int y, MagicWord word) {
         super(x, y, WIDTH, HEIGHT, Component.translatable("magic word"));
         this.magicWord = word;
         this.model = model;

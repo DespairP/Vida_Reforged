@@ -2,7 +2,7 @@ package teamHTBP.vidaReforged.client.particles.particles;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
-import teamHTBP.vidaReforged.client.RenderTypeHandler;
+import teamHTBP.vidaReforged.client.renderer.RenderTypeHandler;
 
 public class TinkleParticle extends VidaBaseParticle{
     private float initSize = 0;

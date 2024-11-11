@@ -1,11 +1,13 @@
 package teamHTBP.vidaReforged.client.screen.screens.magicwordAchieve;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.client.screen.components.VidaLifecycleSection;
 import teamHTBP.vidaReforged.client.screen.components.common.MagicWordButton;
 import teamHTBP.vidaReforged.client.screen.components.common.ScrolledContainer;
 import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
@@ -18,10 +20,10 @@ import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
 import java.util.*;
 
-public class MagicWordSingleListWidget extends AbstractWidget implements IVidaNodes {
+public class MagicWordSingleListWidget extends VidaLifecycleSection {
     VidaViewMagicWordViewModel viewModel;
     public final Map<VidaElement, List<MagicWordButton>> widgetMap;
-    public ScrolledContainer<MagicWordButton> scrolledContainer;
+    public ScrolledContainer scrolledContainer;
     public MagicWordButton.ClickListener clickListener = (element, magicId) -> this.viewModel.setSelectWord(magicId);
 
     public MagicWordSingleListWidget(int x, int y, int width, int height) {
@@ -34,7 +36,7 @@ public class MagicWordSingleListWidget extends AbstractWidget implements IVidaNo
 
 
     public void initWidget(){
-        scrolledContainer = new ScrolledContainer<>(getX(), getY(), this.width, this.height);
+        scrolledContainer = new ScrolledContainer(getX(), getY(), this.width, this.height, new ResourceLocation(VidaReforged.MOD_ID, "magic_word_list"));
 
         for(VidaElement element : VidaElement.values()){
             widgetMap.put(element,new LinkedList<>());
@@ -50,7 +52,7 @@ public class MagicWordSingleListWidget extends AbstractWidget implements IVidaNo
             int offsetY = i  * 10;
             boolean isUnLocked = this.viewModel.playerMagicWords.getValue().contains(word.name());
 
-            MagicWordButton magicWordWidget = new MagicWordButton(getX() + x + offsetX, getY() + y + offsetY, width - 10, MagicWordButton.HEIGHT, word.name());
+            MagicWordButton magicWordWidget = new MagicWordButton(getX() + x + offsetX, getY() + y + offsetY, width - 10, MagicWordButton.HEIGHT, word.name(), new ResourceLocation(VidaReforged.MOD_ID, word.name()));
             magicWordWidget.setOnClickListener(clickListener);
             magicWordWidget.setLocked(!isUnLocked);
 

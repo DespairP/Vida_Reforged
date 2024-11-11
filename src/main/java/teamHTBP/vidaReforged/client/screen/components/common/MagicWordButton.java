@@ -13,6 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.core.api.VidaElement;
+import teamHTBP.vidaReforged.core.api.screen.StyleSheet;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
@@ -33,6 +34,7 @@ public class MagicWordButton extends VidaWidget {
     /**锁住状态的图标*/
     public final static ResourceLocation QUESTION_MARK = new ResourceLocation(MOD_ID, "textures/icons/magic_word/question_mark.png");
     /**字体路径*/
+    @StyleSheet
     public static ResourceLocation DINKFONT = new ResourceLocation(MOD_ID, "dinkie");
     /**词条id*/
     protected String magicWordId = "";
@@ -46,6 +48,11 @@ public class MagicWordButton extends VidaWidget {
     public FloatRange selectedAlpha = new FloatRange(0,0, 1);
     /**是否是选中状态*/
     private boolean selected = false;
+    /**选中背景色*/
+    @StyleSheet
+    private ARGBColor fromColor = ARGBColor.of(125, 226, 252);
+    @StyleSheet
+    private ARGBColor toColor = ARGBColor.of(185, 182, 229);
     /**监听器*/
     private ClickListener click;
 
@@ -57,8 +64,8 @@ public class MagicWordButton extends VidaWidget {
      * @param height 组件高度
      * @param magicWordId 词条Id
      */
-    public MagicWordButton(int initX, int initY, int width, int height, String magicWordId) {
-        super(initX, initY, width, height, Component.translatable(COMPONENT_MARK));
+    public MagicWordButton(int initX, int initY, int width, int height, String magicWordId, ResourceLocation id) {
+        super(initX, initY, width, height, Component.translatable(COMPONENT_MARK), id);
         this.magicWord = MagicWordManager.getMagicWord(magicWordId);
         this.magicWordId = magicWord.name();
     }
@@ -85,12 +92,10 @@ public class MagicWordButton extends VidaWidget {
         VertexConsumer buffer = graphics.bufferSource().getBuffer(RenderType.gui());
         matrix4f.translate(getX(), getY(), 0);
 
-        ARGBColor fromColor = ARGBColor.of(125, 226, 252);
         float fromR = fromColor.r() / 255.0f;
         float fromG = fromColor.g() / 255.0f;
         float fromB = fromColor.b() / 255.0f;
 
-        ARGBColor toColor = ARGBColor.of(185, 182, 229);
         float toR = toColor.r() / 255.0f;
         float toG = toColor.g() / 255.0f;
         float toB = toColor.b() / 255.0f;

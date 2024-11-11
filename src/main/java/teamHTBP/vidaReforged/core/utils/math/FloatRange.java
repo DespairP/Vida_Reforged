@@ -1,6 +1,6 @@
 package teamHTBP.vidaReforged.core.utils.math;
 
-public class FloatRange {
+public class FloatRange implements Cloneable{
     private float currentValue;
     private final float maxValue;
     private final float minValue;
@@ -32,5 +32,15 @@ public class FloatRange {
 
     public float change(boolean isIncrease,float step){
         return isIncrease ? increase(step) : decrease(step);
+    }
+
+    @Override
+    public FloatRange clone() {
+        try {
+            FloatRange clone = (FloatRange) super.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

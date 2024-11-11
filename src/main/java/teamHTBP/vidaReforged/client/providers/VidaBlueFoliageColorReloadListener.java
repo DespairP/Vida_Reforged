@@ -1,17 +1,12 @@
-package teamHTBP.vidaReforged.client.level;
+package teamHTBP.vidaReforged.client.providers;
 
-import net.minecraft.client.resources.LegacyStuffWrapper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.common.level.VidaBlueLeavesColor;
-import teamHTBP.vidaReforged.core.common.level.VidaLeavesColor;
-
-import java.io.IOException;
 
 @OnlyIn(Dist.CLIENT)
 public class VidaBlueFoliageColorReloadListener extends VidaFoliageColorReloadListener {

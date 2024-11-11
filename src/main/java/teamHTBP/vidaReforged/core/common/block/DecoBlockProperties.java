@@ -5,6 +5,7 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraftforge.registries.RegistryObject;
 
+@Deprecated
 public record DecoBlockProperties(WoodType woodType, BlockSetType blockSetType, RegistryObject<Block> baseBlock) {
     public void check() throws NullPointerException{
         if(woodType == null && blockSetType == null && baseBlock == null){

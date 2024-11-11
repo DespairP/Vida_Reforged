@@ -8,6 +8,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
@@ -18,7 +19,7 @@ import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
-public class MagicWordCraftingButton extends AbstractWidget implements IVidaNodes {
+public class MagicWordCraftingButton extends VidaWidget implements IVidaNodes {
     public static final int WIDTH = 48;
     public static final int HEIGHT = 16;
     public final static ResourceLocation DINKFONT = new ResourceLocation(MOD_ID, "dinkie");

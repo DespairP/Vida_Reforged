@@ -1,13 +1,10 @@
 package teamHTBP.vidaReforged.client.screen.screens.wandCrafting;
 
-import com.electronwill.nightconfig.core.utils.TransformingCollection;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.network.chat.Component;
@@ -16,8 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Vector3f;
-import org.lwjgl.opengl.GL11;
-import teamHTBP.vidaReforged.client.RenderTypeHandler;
+import teamHTBP.vidaReforged.client.renderer.RenderTypeHandler;
 import teamHTBP.vidaReforged.client.events.registries.LayerRegistryHandler;
 import teamHTBP.vidaReforged.client.model.itemModel.VidaWandModel;
 import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
@@ -25,7 +21,6 @@ import teamHTBP.vidaReforged.client.screen.viewModels.VidaWandCraftingViewModel;
 import teamHTBP.vidaReforged.core.common.item.Position;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 import teamHTBP.vidaReforged.core.utils.anim.SecondOrderDynamics;
-import teamHTBP.vidaReforged.helper.VidaGuiHelper;
 import teamHTBP.vidaReforged.server.items.VidaWandEquipment;
 import teamHTBP.vidaReforged.server.menu.slots.VidaWandEquipmentSlot;
 

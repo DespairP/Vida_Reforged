@@ -6,18 +6,16 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
-import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.Mth;
 import org.joml.Vector3d;
-import org.joml.Vector3f;
 import teamHTBP.vidaReforged.core.utils.math.Bezier3Curve;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
-import static teamHTBP.vidaReforged.client.RenderTypeHandler.TRAIL_SHADER;
+import static teamHTBP.vidaReforged.client.renderer.RenderTypeHandler.TRAIL_SHADER;
 
 /**四阶Bezier曲线*/
 public class TrailParticle extends VidaBaseParticle {

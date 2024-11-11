@@ -20,7 +20,7 @@ import teamHTBP.vidaReforged.client.screen.viewModels.VidaScreenEventChannelView
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaWandCraftingViewModel;
 import teamHTBP.vidaReforged.core.common.item.Position;
 import teamHTBP.vidaReforged.core.common.system.guidebook.VidaScreenEvent;
-import teamHTBP.vidaReforged.core.common.ui.VidaLifecycleSection;
+import teamHTBP.vidaReforged.client.screen.components.VidaLifecycleSection;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 import teamHTBP.vidaReforged.core.utils.anim.SecondOrderDynamics;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;

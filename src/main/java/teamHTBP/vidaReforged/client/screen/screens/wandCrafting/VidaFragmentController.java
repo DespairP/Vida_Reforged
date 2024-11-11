@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.client.gui.GuiGraphics;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import teamHTBP.vidaReforged.core.common.ui.VidaLifecycleSection;
+import teamHTBP.vidaReforged.client.screen.components.VidaLifecycleSection;
 
 import java.util.HashSet;
 import java.util.LinkedList;

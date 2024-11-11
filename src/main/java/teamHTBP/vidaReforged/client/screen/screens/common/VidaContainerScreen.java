@@ -1,5 +1,7 @@
 package teamHTBP.vidaReforged.client.screen.screens.common;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -25,6 +27,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import teamHTBP.vidaReforged.client.providers.ScreenComponentStyleSheet;
+import teamHTBP.vidaReforged.client.providers.ScreenComponentStyleSheetManager;
+import teamHTBP.vidaReforged.core.api.screen.StyleSheet;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelStore;
 import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
@@ -34,11 +39,13 @@ import teamHTBP.vidaReforged.core.common.ui.lifecycle.LifeCycle;
 import teamHTBP.vidaReforged.core.common.ui.lifecycle.LifeCycleRegistry;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Field;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @OnlyIn(Dist.CLIENT)
 public abstract class VidaContainerScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> implements ILifeCycleOwner, IViewModelStoreProvider {
+    protected static final Logger LOGGER = LogManager.getLogger();
     /**
      * 触屏模式下点击的格子
      */
@@ -77,22 +84,24 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
     private Slot snapbackEnd;
     @Nullable
     private Slot quickdropSlot;
-    /**/
+    /**监听器子组件*/
     protected List<GuiEventListener> children;
+    /**渲染子组件*/
+    protected Set<VidaWidget> allAvailableChildren;
+    /**ViewModel储存器*/
     private ViewModelStore store;
     /**
-     * 是否被
+     * 是否被渲染
      */
     private boolean isRendered;
     /***/
     private final LifeCycleRegistry registry;
 
-    protected static final Logger LOGGER = LogManager.getLogger();
-
     protected VidaContainerScreen(T menu, Inventory inventory, Component component) {
         super(menu, inventory, component);
         this.skipNextRelease = true;
         this.children = new ArrayList<>();
+        this.allAvailableChildren = new HashSet<>();
         this.registry = new LifeCycleRegistry(this);
     }
 
@@ -113,6 +122,7 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
     @Override
     protected void rebuildWidgets() {
         registry.handleLifecycleEvent(LifeCycle.Event.ON_PAUSE);
+        this.allAvailableChildren.clear();
         this.children.clear();
         super.rebuildWidgets();
     }
@@ -131,12 +141,29 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
         }
     }
 
+    @Deprecated
     public void addComponentAndChild(VidaWidget widget) {
         if (widget.children() != null) {
             children.addAll(widget.children());
         }
         children.add(widget);
         renderables.add(widget);
+    }
+
+    /**添加渲染节点*/
+    public <X extends VidaWidget> void addNodes(X ...widgets){
+        for(VidaWidget widget : widgets){
+            Collection<VidaWidget> childNodes = widget.childrenNode();
+            if(childNodes != null){
+                this.allAvailableChildren.addAll(childNodes);
+            }
+            this.allAvailableChildren.add(widget);
+        }
+    }
+
+    /**获取所有可被渲染的节点*/
+    public Set<VidaWidget> getAllAvailableNodes(){
+        return ImmutableSet.copyOf(this.allAvailableChildren);
     }
 
     protected <T extends GuiEventListener & NarratableEntry & IVidaNodes> T addListener(T widget) {
@@ -783,5 +810,98 @@ public abstract class VidaContainerScreen<T extends AbstractContainerMenu> exten
 
             return handled;
         }
+    }
+
+    public static final String WILD_CARD = "*";
+
+    public static <T extends AbstractContainerMenu> void composeStyles(VidaContainerScreen<T> screen, ResourceLocation screenId){
+        Map<String, VidaWidget> idToComponent = new LinkedHashMap<>();
+        // 获取配置
+        ScreenComponentStyleSheet config = ScreenComponentStyleSheetManager.getStyleSheetById(screenId);
+        if(config == null || config.getStyles().size() == 0){
+            return;
+        }
+        // Id->Component
+        Set<VidaWidget> nodes = screen.getAllAvailableNodes();
+        for(VidaWidget node : nodes){
+            if(node.getId() == null){
+                continue;
+            }
+            idToComponent.put(node.getId().toString(), node);
+        }
+        // 注入属性
+        Map<String, Map<String, Object>> availableConfigs = config.getStyles();
+        Set<String> configureComponentIds = availableConfigs.keySet();
+        for(String componentId : configureComponentIds){
+            // 单独注入
+            if(!componentId.contains(WILD_CARD)){
+                handleSingle(componentId, availableConfigs, idToComponent);
+            }
+            // 匹配注入
+            if(componentId.contains(WILD_CARD)){
+                handleMultiple(componentId, availableConfigs, idToComponent);
+            }
+        }
+    }
+
+    private static void handleMultiple(String componentId, Map<String, Map<String, Object>> availableConfigs, Map<String, VidaWidget> idToComponent){
+        String regex = createRegexFromGlob(componentId);
+        List<VidaWidget> components = idToComponent.entrySet().stream().filter(component -> component.getKey().matches(regex)).map(Map.Entry::getValue).toList();
+        for(VidaWidget widget : components){
+            tryInject(availableConfigs.get(componentId), widget);
+        }
+    }
+
+    private static void handleSingle(String componentId, Map<String, Map<String, Object>> availableConfigs, Map<String, VidaWidget> idToComponent){
+        if(!idToComponent.containsKey(componentId)){
+            return;
+        }
+        tryInject(availableConfigs.get(componentId), idToComponent.get(componentId));
+    }
+
+    /**尝试注入属性*/
+    private static void tryInject(Map<String, Object> attributes, VidaWidget widget){
+        try {
+            Class clazz = widget.getClass();
+            Field[] fields = clazz.getDeclaredFields();
+            Map<String, Field> nameToFields = new HashMap<>();
+            for(Field field : fields){
+                if(field.isAnnotationPresent(StyleSheet.class)){
+                    field.setAccessible(true);
+                    nameToFields.put(field.getName(), field);
+                }
+            }
+
+            for (Map.Entry<String, Object> attribute : attributes.entrySet()) {
+                Field field = nameToFields.get(attribute.getKey());
+                if(field == null){
+                    continue;
+                }
+                if(attribute.getValue() != null && field.getType().equals(attribute.getValue().getClass())){
+                    field.set(widget, attribute.getValue());
+                }
+            }
+        }catch (Exception exception){
+            LOGGER.error(exception);
+        }
+    }
+
+    public static String createRegexFromGlob(String glob)
+    {
+        String out = "^";
+        for(int i = 0; i < glob.length(); ++i)
+        {
+            final char c = glob.charAt(i);
+            switch(c)
+            {
+                case '*': out += ".*"; break;
+                case '?': out += '.'; break;
+                case '.': out += "\\."; break;
+                case '\\': out += "\\\\"; break;
+                default: out += c;
+            }
+        }
+        out += '$';
+        return out;
     }
 }

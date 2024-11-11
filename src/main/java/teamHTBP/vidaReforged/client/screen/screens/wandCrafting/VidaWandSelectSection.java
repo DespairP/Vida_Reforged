@@ -13,7 +13,7 @@ import teamHTBP.vidaReforged.client.screen.components.common.IconButton;
 import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaScreenEventChannelViewModel;
 import teamHTBP.vidaReforged.core.common.system.guidebook.VidaScreenEvent;
-import teamHTBP.vidaReforged.core.common.ui.VidaLifecycleSection;
+import teamHTBP.vidaReforged.client.screen.components.VidaLifecycleSection;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 
 import java.util.Collection;

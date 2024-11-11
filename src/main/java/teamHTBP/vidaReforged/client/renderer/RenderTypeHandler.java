@@ -1,7 +1,5 @@
-package teamHTBP.vidaReforged.client;
+package teamHTBP.vidaReforged.client.renderer;
 
-import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -16,16 +14,11 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.resources.ResourceLocation;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL30;
 import teamHTBP.vidaReforged.VidaReforged;
-import teamHTBP.vidaReforged.client.events.ShadersHandler;
-import teamHTBP.vidaReforged.plugin.ModsInfo;
 
 import javax.annotation.Nonnull;
 import java.util.SortedMap;

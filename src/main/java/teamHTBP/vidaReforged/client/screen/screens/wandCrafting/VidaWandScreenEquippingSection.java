@@ -5,7 +5,7 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.network.chat.Component;
 import org.joml.Vector3f;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaWandCraftingViewModel;
-import teamHTBP.vidaReforged.core.common.ui.VidaLifecycleSection;
+import teamHTBP.vidaReforged.client.screen.components.VidaLifecycleSection;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 import teamHTBP.vidaReforged.core.utils.anim.SecondOrderDynamics;
 

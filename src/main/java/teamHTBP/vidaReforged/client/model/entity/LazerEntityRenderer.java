@@ -2,22 +2,17 @@ package teamHTBP.vidaReforged.client.model.entity;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Axis;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.inventory.InventoryMenu;
 import org.joml.Vector3d;
 import org.joml.Vector3f;
-import software.bernie.shadowed.eliotlash.mclib.math.functions.limit.Min;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.server.entity.LazerEntity;
 
@@ -25,7 +20,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static teamHTBP.vidaReforged.client.RenderTypeHandler.TRAIL_SHADER;
+import static teamHTBP.vidaReforged.client.renderer.RenderTypeHandler.TRAIL_SHADER;
 
 /**激光*/
 public class LazerEntityRenderer extends EntityRenderer<LazerEntity> {

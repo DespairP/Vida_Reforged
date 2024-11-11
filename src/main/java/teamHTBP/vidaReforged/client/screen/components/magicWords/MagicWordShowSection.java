@@ -3,11 +3,11 @@ package teamHTBP.vidaReforged.client.screen.components.magicWords;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.components.guidebooks.GuideBookScrollTextArea;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaViewMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
@@ -22,10 +22,10 @@ import java.util.*;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
-public class MagicWordShowSection extends AbstractWidget implements IVidaNodes {
+public class MagicWordShowSection extends VidaWidget implements IVidaNodes {
     VidaViewMagicWordViewModel viewModel;
-    GuideBookScrollTextArea textArea;
-    public static ResourceLocation QUESTION_MARK = new ResourceLocation(MOD_ID, "textures/icons/magic_word/question_mark.png");
+    private GuideBookScrollTextArea textArea;
+    public static ResourceLocation DEFAULT_QUESTION_MARK = new ResourceLocation(MOD_ID, "textures/icons/magic_word/question_mark.png");
     public int topHeight = 32;
     public MagicWord magicWord = null;
 
@@ -81,7 +81,7 @@ public class MagicWordShowSection extends AbstractWidget implements IVidaNodes {
         }
         poseStack.pushPose();
         final boolean isUnlocked = isUnlocked();
-        ResourceLocation iconLocation = isUnlocked ? magicWord.icon() : QUESTION_MARK;
+        ResourceLocation iconLocation = isUnlocked ? magicWord.icon() : DEFAULT_QUESTION_MARK;
         TextureSection section = new TextureSection(iconLocation,0,0,16,16, 16, 16);
 
         final float factor = 1.5f;

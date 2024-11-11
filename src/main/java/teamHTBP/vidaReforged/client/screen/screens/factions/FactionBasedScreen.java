@@ -4,23 +4,26 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.layouts.GridLayout;
+import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import teamHTBP.vidaReforged.client.screen.screens.common.VidaContainerScreen;
 import teamHTBP.vidaReforged.client.screen.screens.wandCrafting.VidaFragmentController;
+import teamHTBP.vidaReforged.core.common.ui.layouts.GridLayoutMutation;
 import teamHTBP.vidaReforged.helper.VidaGuiHelper;
 import teamHTBP.vidaReforged.server.menu.AbstractFactionMenu;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FactionBasedScreen<T extends AbstractFactionMenu> extends VidaContainerScreen<T> {
+public abstract class FactionBasedScreen<T extends AbstractFactionMenu> extends VidaContainerScreen<T> {
     private boolean isShowPlayerInventory = false;
-    private GridLayout gridLayout;
+    private GridLayoutMutation gridLayout;
     private FactionSection leftSection;
+    private FactionSection rightSection;
+    private ScreenRectangle leftSectionRect;
     private VidaFragmentController controller;
-
 
     protected FactionBasedScreen(T menu, Inventory inventory, Component component) {
         super(menu, inventory, component);
@@ -29,23 +32,42 @@ public class FactionBasedScreen<T extends AbstractFactionMenu> extends VidaConta
     @Override
     public void added() {
         super.added();
-        this.addFactionSection();
+        this.leftSection = this.addEntityFactionSection();
+        this.rightSection = this.addDetailedFactionSection();
+        this.gridLayout = new GridLayoutMutation();
+        this.leftSection.onAdded();
+
+    }
+
+    public void doLeftSectionResize(){
+        this.leftSection.setWidth(vw(30));
+        this.leftSection.setHeight(vh(100));
+    }
+
+    public void doRightSectionResize(){
+        this.leftSection.setWidth(vw(60));
+        this.leftSection.setHeight(vh(100));
     }
 
     @Override
     protected void init() {
         super.init();
-        // resize
-        this.leftSection.setWidth(vw(30));
-        this.leftSection.setHeight(vh(30));
-        // 添加
-        this.gridLayout = new GridLayout();
-        this.gridLayout.addChild(this.leftSection, 0, 0);
+        // 大小重置
+        doLeftSectionResize();
+        doRightSectionResize();
+        // 布局
+        gridLayout.clear();
+        gridLayout.addChild(leftSection,0, 0, gridLayout.defaultCellSetting().alignHorizontallyLeft());
+        gridLayout.addChild(rightSection, 0, 1, gridLayout.defaultCellSetting().alignHorizontallyRight());
+        // 添加，调整
+        gridLayout.arrangeElements();
     }
 
-    protected void addFactionSection(){
-        this.leftSection = new FactionSection(0, 0, vw(30), vh(100));
-    }
+    /**左边栏目显示*/
+    protected abstract FactionSection addEntityFactionSection();
+
+    /**右边栏目显示*/
+    protected abstract FactionSection addDetailedFactionSection();
 
     public int vw(float percent){
         return (int) (this.width * percent);
@@ -58,7 +80,14 @@ public class FactionBasedScreen<T extends AbstractFactionMenu> extends VidaConta
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {}
 
+    @Override
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(graphics, mouseX, mouseY, partialTicks);
+        this.leftSection.render(graphics, mouseX, mouseY, partialTicks);
+        this.rightSection.render(graphics, mouseX, mouseY, partialTicks);
+    }
 
+    /**条件性渲染物品栏*/
     @Override
     protected void renderSlots(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         // 获取开始渲染位置

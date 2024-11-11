@@ -1,45 +1,26 @@
 package teamHTBP.vidaReforged.client.events;
 
 import com.google.gson.JsonSyntaxException;
-import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.shaders.Uniform;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.EffectInstance;
 import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.ShaderInstance;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterShadersEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.joml.Vector4f;
 import teamHTBP.vidaReforged.VidaReforged;
-import teamHTBP.vidaReforged.client.events.registries.MobsModelRegistryHandler;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * @author DustW
@@ -51,6 +32,8 @@ public class ShadersHandler {
     public static ShaderInstance simplicity;
     public static ShaderInstance orb;
     public static ShaderInstance stars;
+    public static ShaderInstance gradientLinear;
+    public static ShaderInstance gradientFlow;
     public static PostChain glowShadow;
     public static PostChain spidew_bloom;
 
@@ -71,6 +54,14 @@ public class ShadersHandler {
                         event.getResourceProvider(),
                         new ResourceLocation(VidaReforged.MOD_ID, "stars"), DefaultVertexFormat.POSITION_TEX),
                 s -> stars = s);
+        event.registerShader(new ShaderInstance(
+                        event.getResourceProvider(),
+                        new ResourceLocation(VidaReforged.MOD_ID, "step_color_gradient"), DefaultVertexFormat.POSITION_TEX),
+                s -> gradientLinear = s);
+        event.registerShader(new ShaderInstance(
+                        event.getResourceProvider(),
+                        new ResourceLocation(VidaReforged.MOD_ID, "flowing_color_gradient"), DefaultVertexFormat.POSITION_TEX),
+                s -> gradientFlow = s);
     }
 
     /**加载帧缓冲*/
@@ -93,9 +84,38 @@ public class ShadersHandler {
         }
     }
 
+    public static void setInteger(ShaderInstance instance, String key, int value){
+        Uniform uniform = instance.getUniform(key);
+        if(uniform != null){
+            uniform.set(value);
+        }
+    }
 
+    public static void setPoint2f(ShaderInstance instance, String key, float x, float y){
+        Uniform uniform = instance.getUniform(key);
+        if(uniform != null){
+            uniform.set(x, y);
+        }
+    }
+
+    public static void setFloat(ShaderInstance instance, String key, float value){
+        Uniform uniform = instance.getUniform(key);
+        if(uniform != null){
+            uniform.set(value);
+        }
+    }
+
+    public static void setVector4fParam(ShaderInstance instance, String key, Vector4f vector4f){
+        Uniform uniform = instance.getUniform(key);
+        if(uniform != null){
+            uniform.set(vector4f);
+        }
+    }
+
+    @Deprecated
     public static final record Point2f(float x, float y) {}
 
+    @Deprecated
     public static void setUniforms(ShaderInstance shader, Point2f res, Point2f mouse, float partialTick) {
         setUniforms(shader, res, mouse, (int) ClientTickHandler.ticks, partialTick);
     }

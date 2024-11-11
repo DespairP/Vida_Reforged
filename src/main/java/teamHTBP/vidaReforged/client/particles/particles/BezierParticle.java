@@ -6,7 +6,7 @@ import net.minecraft.client.particle.ParticleRenderType;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3d;
 import org.joml.Vector3f;
-import teamHTBP.vidaReforged.client.RenderTypeHandler;
+import teamHTBP.vidaReforged.client.renderer.RenderTypeHandler;
 import teamHTBP.vidaReforged.core.utils.anim.SecondOrderDynamics;
 import teamHTBP.vidaReforged.core.utils.math.Bezier3Curve;
 

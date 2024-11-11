@@ -7,7 +7,13 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
+import teamHTBP.vidaReforged.client.events.ClientTickHandler;
+import teamHTBP.vidaReforged.client.renderer.ui.BorderRendererManager;
+import teamHTBP.vidaReforged.client.renderer.ui.IBorderRenderer;
+import teamHTBP.vidaReforged.client.shaders.GradientShader;
+import teamHTBP.vidaReforged.core.api.screen.StyleSheet;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.helper.VidaGuiHelper;
 
@@ -21,30 +27,41 @@ import java.util.function.BiConsumer;
  * 可滚动的容器
  *
  * */
-public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
+public class ScrolledContainer extends VidaWidget{
     /**容器内容物*/
     List<VidaWidget> contents = new ArrayList<>();
     /**y轴滚动*/
-    private AtomicInteger scrollY = new AtomicInteger(0);
-    /**滚动条按钮大小*/
-    private FloatRange scrollThumbAlpha = new FloatRange(0,0,0.3f);
+    protected AtomicInteger scrollY = new AtomicInteger(0);
+    /**滚动条按钮透明*/
+    protected FloatRange scrollThumbAlpha = new FloatRange(0,0,0.3f);
     /**缓存*/
-    private int cachedContentHeight = 0;
+    protected int cachedContentHeight = 0;
     /**缓存*/
-    private boolean shouldUpdateCache = true;
+    protected boolean shouldUpdateCache = true;
     /**每个内容物在容器内渲染逻辑*/
+    @Deprecated
     private BiConsumer<GuiGraphics, VidaWidget> renderFunc;
     /**滑动按钮大小*/
+    @StyleSheet
     public int thumbWidth = 6;
-    /***/
-    public boolean isThumbActive = false;
-    /**/
-    public boolean isCacheable = true;
-    /**/
-    public int extraSpacing = 0;
+    /**背景*/
+    @StyleSheet
+    public GradientShader.LinearGradient backgroundColor;
+    public GradientShader background;
+    /**背景的装饰用边界*/
+    public IBorderRenderer borderRenderer;
+    @StyleSheet
+    public ResourceLocation border;
+    /**拖动按钮是否显示*/
+    protected boolean isThumbActive = false;
+    /**缓存*/
+    protected boolean isCacheable = true;
+    /**Padding*/
+    @StyleSheet
+    public int bottomBorderSize = 0;
 
-    public ScrolledContainer(int x, int y, int width, int height) {
-        super(x, y, width, height, Component.literal("scrollable container"));
+    public ScrolledContainer(int x, int y, int width, int height, ResourceLocation id) {
+        super(x, y, width, height, Component.literal("scrollable container"), id);
         this.contents = new ArrayList<>();
     }
 
@@ -52,11 +69,12 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
         isCacheable = cacheable;
     }
 
-    public void setExtraSpacing(int extraSpacing) {
-        this.extraSpacing = extraSpacing;
+    public void setBottomBorderSize(int bottomBorderSize) {
+        this.bottomBorderSize = bottomBorderSize;
     }
 
     /**设置容器内容渲染逻辑*/
+    @Deprecated
     public void setContentRenderFunc(BiConsumer<GuiGraphics, VidaWidget> renderFunc) {
         this.renderFunc = renderFunc;
     }
@@ -69,7 +87,6 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
      */
     public void add(VidaWidget widget, int containerInX,int containerInY){
         add(widget);
-        //
         widget.setX(getX() + containerInX);
         widget.setY(getY() + containerInY);
     }
@@ -87,7 +104,6 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
         widget.setOffsetY(0);
         //加入component
         this.contents.add(widget);
-        //
         shouldUpdateCache = true;
     }
 
@@ -121,17 +137,29 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
         scrollThumbAlpha.change(isHovered || isThumbActive, 0.02f);
 
 
-        renderBackground(graphics);
+        renderBackground(graphics, partialTicks);
         renderContents(graphics, mouseX, mouseY, partialTicks);
         renderThumbIcon(graphics, mouseX, mouseY);
     }
 
     /**渲染背景 */
-    protected void renderBackground(GuiGraphics graphics){
+    protected void renderBackground(GuiGraphics graphics, float partialTicks){
         PoseStack poseStack = graphics.pose();
         poseStack.pushPose();
-        graphics.fillGradient( getX(), getY(), getX() + this.width, getY() + this.height, -1072689136, -804253680);
+        //graphics.fillGradient(getX(), getY(), getX() + this.width, getY() + this.height, -1072689136, -804253680);
         poseStack.popPose();
+        if(background == null && backgroundColor != null){
+            background = backgroundColor.build();
+        }
+        if(background != null && backgroundColor != null){
+            background.render(graphics, getX(), getY(), 0, width, height, 1, ClientTickHandler.ticks, partialTicks);
+        }
+        if(borderRenderer == null && border != null){
+            borderRenderer = BorderRendererManager.getRender(border);
+        }
+        if(borderRenderer != null && border != null){
+            borderRenderer.renderBorder(graphics, getX(), getY(), width, height, 0xFFD3D3D3);
+        }
     }
 
     protected void renderContents(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
@@ -210,14 +238,13 @@ public class ScrolledContainer<T extends VidaWidget> extends VidaWidget{
         try {
             final VidaWidget minYWidget = this.contents.stream().min(Comparator.comparing(VidaWidget::getY)).orElseThrow();
             final VidaWidget maxYWidget = this.contents.stream().max(Comparator.comparing(VidaWidget::getY)).orElseThrow();
-            cachedContentHeight = maxYWidget.getY() + maxYWidget.getHeight() - minYWidget.getY() + extraSpacing;
+            cachedContentHeight = maxYWidget.getY() + maxYWidget.getHeight() - minYWidget.getY() + bottomBorderSize;
             shouldUpdateCache = false;
             return cachedContentHeight;
         }catch (Exception ex){
             return 0;
         }
     }
-
 
 
     @Override

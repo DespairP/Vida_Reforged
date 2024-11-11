@@ -3,9 +3,12 @@ package teamHTBP.vidaReforged.client.screen.components.common;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
 import teamHTBP.vidaReforged.core.common.ui.component.IViewModelStoreProvider;
 
@@ -14,14 +17,23 @@ public abstract class VidaWidget extends AbstractWidget implements IVidaNodes {
     protected int initialY;
     protected int offsetX;
     protected int offsetY;
-    private Screen parent;
-    private String id;
+    private final ResourceLocation id;
     public Minecraft mc;
 
+    @Deprecated
     public VidaWidget(int x, int y, int width, int height, Component component) {
         super(x, y, width, height, component);
         this.initialX = x;
         this.initialY = y;
+        this.id = new ResourceLocation(VidaReforged.MOD_ID, "widget");
+        this.mc = Minecraft.getInstance();
+    }
+
+    public VidaWidget(int x, int y, int width, int height, Component component, ResourceLocation id) {
+        super(x, y, width, height, component);
+        this.initialX = x;
+        this.initialY = y;
+        this.id = id;
         this.mc = Minecraft.getInstance();
     }
 
@@ -71,20 +83,16 @@ public abstract class VidaWidget extends AbstractWidget implements IVidaNodes {
     }
 
     @Override
-    protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {}
 
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getId() {
+    public ResourceLocation getId() {
         return id;
     }
 
     @Override
-    protected void updateWidgetNarration(NarrationElementOutput output) {}
+    protected void updateWidgetNarration(NarrationElementOutput output) {
+        output.add(NarratedElementType.HINT, id.toLanguageKey());
+    }
 
     public Screen getParent(){
         return Minecraft.getInstance().screen;

@@ -4,24 +4,18 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
-import teamHTBP.vidaReforged.server.entity.LazerEntity;
 
-import static teamHTBP.vidaReforged.client.RenderTypeHandler.PARTICLE_SHEET_NO_MASK;
-import static teamHTBP.vidaReforged.client.RenderTypeHandler.TRAIL_SHADER;
+import static teamHTBP.vidaReforged.client.renderer.RenderTypeHandler.PARTICLE_SHEET_NO_MASK;
 
 public abstract class SimpleTextureEntityRender<T extends Entity> extends EntityRenderer<T> {
     private TextureSection texture;

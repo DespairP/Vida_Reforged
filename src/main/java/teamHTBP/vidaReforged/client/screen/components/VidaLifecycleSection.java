@@ -1,7 +1,8 @@
-package teamHTBP.vidaReforged.core.common.ui;
+package teamHTBP.vidaReforged.client.screen.components;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.core.common.ui.lifecycle.ILifeCycleOwner;
 import teamHTBP.vidaReforged.core.common.ui.lifecycle.LifeCycle;
@@ -13,6 +14,11 @@ public abstract class VidaLifecycleSection extends VidaWidget implements ILifeCy
 
     public VidaLifecycleSection(int x, int y, int width, int height, Component component) {
         super(x, y, width, height, component);
+        this.registry = new LifeCycleRegistry(this);
+    }
+
+    public VidaLifecycleSection(int x, int y, int width, int height, Component component, ResourceLocation componentId) {
+        super(x, y, width, height, component, componentId);
         this.registry = new LifeCycleRegistry(this);
     }
 

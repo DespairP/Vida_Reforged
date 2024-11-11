@@ -9,5 +9,5 @@ void main(){
     vec4 color = texture(colorTex,texCoords);
     vec4 mask  = texture(maskTex,texCoords);
 
-    colorOut = vec4(color.rgb,color.a * mask.r);//alpha value can be in any channel ,depends on texture format.
+    colorOut = vec4(color.rgb,color.a * mask.r); //alpha value can be in any channel ,depends on texture format.
 }

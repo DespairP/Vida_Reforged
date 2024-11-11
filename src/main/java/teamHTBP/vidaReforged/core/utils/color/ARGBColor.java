@@ -40,6 +40,10 @@ public class ARGBColor extends VidaColor {
         this.b = b;
     }
 
+    public ARGBColor(float a, float r, float g, float b) {
+        this((int) (a * 255f), (int) (r * 255f), (int) (g * 255f), (int)(b * 255f));
+    }
+
     public Vector4f toFloat(){
         return new Vector4f(a, r, g, b).div(MAX_COLOR);
     }

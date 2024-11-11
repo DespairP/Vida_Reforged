@@ -4,10 +4,11 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
@@ -17,38 +18,36 @@ import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
+import java.util.Locale;
+
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
-public class MagicSelectedWordWidget extends AbstractWidget implements IVidaNodes {
-    VidaElement element = VidaElement.EMPTY;
+public class MagicSelectedWordWidget extends VidaWidget implements IVidaNodes {
+    /**所属元素*/
+    private final VidaElement element;
+    /**空词条*/
     public final static ResourceLocation EMPTY_WORD_LOCATION = new ResourceLocation(MOD_ID, "textures/gui/magic_word_crafting.png");
-    public final static TextureSection section = new TextureSection(EMPTY_WORD_LOCATION,48,8,16,16, 256, 256);
-    FloatRange range = new FloatRange(0.7f, 0.7f, 1);
+    /**词条框*/
+    public final static TextureSection SECTION = new TextureSection(EMPTY_WORD_LOCATION,48,8,16,16, 256, 256);
+    /**选中的Id*/
     private String selectWordId;
-    private VidaMagicWordViewModel model;
-    public Minecraft mc;
+    /**监听器*/
+    private ClickListener listener = (element) -> {};
 
 
-    public MagicSelectedWordWidget(int x, int y, VidaElement element) {
-        super(x, y, 16, 16, Component.literal("selected_magic_word"));
+    public MagicSelectedWordWidget(int x, int y, VidaElement element, ClickListener listener) {
+        super(x, y, 16, 16, Component.literal("selected_magic_word"), new ResourceLocation(MOD_ID, "select_magic_word_" + element.toString().toLowerCase(Locale.US)));
         this.element = element;
-        this.mc = Minecraft.getInstance();
-        this.init();
+        this.listener = listener;
     }
 
-    public void init(){
-        //
-        this.model = new ViewModelProvider(requireParent()).get(VidaMagicWordViewModel.class);
-
-        this.model.selectedMagicWord.observeForever(newValue -> {
-            this.selectWordId = this.model.selectedMagicWord.getValue().getOrDefault(element,"");
-        });
-        this.selectWordId = this.model.selectedMagicWord.getValue().getOrDefault(element,"");
+    public void setSelectWordId(String selectWordId) {
+        this.selectWordId = selectWordId;
     }
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        float alpha = range.change(isHovered,0.04f * mc.getDeltaFrameTime());
+        float alpha = isHovered ? 1f : 0.7f;
 
         RenderSystem.enableBlend();
 
@@ -56,10 +55,10 @@ public class MagicSelectedWordWidget extends AbstractWidget implements IVidaNode
         graphics.setColor(alpha,alpha,alpha,alpha);
         poseStack.pushPose();
         graphics.blit(
-                section.location(),
+                SECTION.location(),
                 getX(), getY(), 0,
-                section.minU(), section.minV(),
-                section.w(), section.h(),
+                SECTION.minU(), SECTION.minV(),
+                SECTION.w(), SECTION.h(),
                 256, 256
         );
         poseStack.popPose();
@@ -68,7 +67,6 @@ public class MagicSelectedWordWidget extends AbstractWidget implements IVidaNode
         MagicWord word = MagicWordManager.getMagicWord(selectWordId);
         if(word == null){
             return;
-
         }
         // 绘制图标
         TextureSection section = new TextureSection(word.icon(),0,0,16,16, 16, 16);
@@ -86,13 +84,18 @@ public class MagicSelectedWordWidget extends AbstractWidget implements IVidaNode
         poseStack.popPose();
     }
 
-    @Override
-    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
-
+    public void setListener(ClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
-    public void onClick(double p_93634_, double p_93635_) {
-        this.model.selectedFilterElement.setValue(element);
+    public void onClick(double mouseX, double mouseY) {
+        if(this.listener != null){
+            this.listener.onClick(element);
+        }
+    }
+
+    public interface ClickListener{
+        public void onClick(VidaElement element);
     }
 }

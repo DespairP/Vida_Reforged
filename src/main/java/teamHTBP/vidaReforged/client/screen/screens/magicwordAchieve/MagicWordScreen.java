@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import teamHTBP.vidaReforged.client.screen.components.magicWords.MagicWordShowSection;
 import teamHTBP.vidaReforged.client.screen.screens.common.VidaContainerScreen;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaViewMagicWordViewModel;
+import teamHTBP.vidaReforged.core.api.screen.StyleSheet;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
@@ -21,14 +22,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MagicWordScreen extends VidaContainerScreen<MagicWordViewMenu> {
-    private static final Logger LOGGER = LogManager.getLogger();
-    FloatRange alphaRange = new FloatRange(0, 0, 0.75f);
+    /**透明度*/
+    @StyleSheet
+    FloatRange alpha = new FloatRange(0, 0, 0.75f);
+    /**ViewModel*/
     VidaViewMagicWordViewModel model;
+    /**子组件*/
     MagicWordSingleListWidget singleList;
     MagicWordShowSection textArea;
 
     public MagicWordScreen(MagicWordViewMenu menu, Inventory playerInventory, Component component) {
-        super(menu, Minecraft.getInstance().player.getInventory(), Component.literal("view magic word"));
+        super(menu, playerInventory, component);
     }
 
 
@@ -36,12 +40,12 @@ public class MagicWordScreen extends VidaContainerScreen<MagicWordViewMenu> {
     public void added() {
         super.added();
         this.model = new ViewModelProvider(this).get(VidaViewMagicWordViewModel.class);
+        this.model.playerMagicWords.setValue(menu.getPlayerMagicWords());
     }
 
     @Override
     protected void init() {
         super.init();
-        this.model.playerMagicWords.setValue(menu.getPlayerMagicWords());
 
         int width = (int) (this.width * 0.8f / 3);
         int height = (int) (this.height - 28);
@@ -63,7 +67,7 @@ public class MagicWordScreen extends VidaContainerScreen<MagicWordViewMenu> {
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         RenderSystem.enableBlend();
-        RenderSystem.setShaderColor(1,1,1,alphaRange.get());
+        RenderSystem.setShaderColor(1,1,1, alpha.get());
 
         renderBackground(graphics);
         super.render(graphics, mouseX, mouseY, partialTicks);
@@ -86,7 +90,7 @@ public class MagicWordScreen extends VidaContainerScreen<MagicWordViewMenu> {
 
     @Override
     public void renderBackground(GuiGraphics graphics) {
-        alphaRange.increase(0.02f);
+        alpha.increase(0.02f);
         PoseStack poseStack = graphics.pose();
 
         poseStack.pushPose();

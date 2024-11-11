@@ -1,0 +1,23 @@
+vida_reforged:filter_button_gold:
+  iconFromColor: !color [ 255, 246, 211, 101 ]
+  iconToColor: !color [ 255, 253, 160, 133 ]
+vida_reforged:filter_button_wood:
+  iconFromColor: !color [ 255, 11, 163, 96 ]
+  iconToColor: !color [ 255, 60, 186, 146 ]
+vida_reforged:filter_button_aqua:
+  iconFromColor: !color [ 255, 72, 198, 239 ]
+  iconToColor: !color [ 255, 111, 134, 214 ]
+vida_reforged:filter_button_fire:
+  iconFromColor: !color [ 255, 255, 88, 88 ]
+  iconToColor: !color [ 255, 240, 152, 25 ]
+vida_reforged:filter_button_earth:
+  iconFromColor: !color [ 255, 230, 185, 128 ]
+  iconToColor: !color [ 255, 234, 205, 163 ]
+vida_reforged:magic_word_list_box:
+  thumbWidth: 5
+  bottomBorderSize: 10
+  border: !res "vida_reforged:square_border_in"
+  backgroundColor: !linear-gradient
+    angle: 10
+    path: [0.0, 0.1, 1.0]
+    colors: [ [255, 61, 69, 105], [255, 17, 28, 54 ], [255, 61, 69, 105] ]

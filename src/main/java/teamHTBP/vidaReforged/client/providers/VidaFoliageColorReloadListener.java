@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.level;
+package teamHTBP.vidaReforged.client.providers;
 
 import net.minecraft.client.resources.FoliageColorReloadListener;
 import net.minecraft.client.resources.LegacyStuffWrapper;

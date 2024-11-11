@@ -16,13 +16,11 @@ import org.joml.Math;
 import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.VidaReforged;
 import net.minecraft.client.gui.GuiGraphics;
-import teamHTBP.vidaReforged.client.RenderTypeHandler;
+import teamHTBP.vidaReforged.client.renderer.RenderTypeHandler;
 import teamHTBP.vidaReforged.client.events.ClientTickHandler;
 import teamHTBP.vidaReforged.client.events.ShadersHandler;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
-
-import java.awt.*;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -202,10 +200,10 @@ public class VidaGuiHelper {
         float eX = (float) x + width;
         float eY = (float) y + height;
 
-        builder.vertex(matrix4f, (float) x, eY, 0).endVertex();
-        builder.vertex(matrix4f, eX, eY, 0).endVertex();
-        builder.vertex(matrix4f, eX, (float) y, 0).endVertex();
-        builder.vertex(matrix4f, (float) x, (float) y, 0).endVertex();
+        builder.vertex(matrix4f, (float) x, eY, 1).endVertex();
+        builder.vertex(matrix4f, eX, eY, 1).endVertex();
+        builder.vertex(matrix4f, eX, (float) y, 1).endVertex();
+        builder.vertex(matrix4f, (float) x, (float) y, 1).endVertex();
 
         BufferUploader.drawWithShader(builder.end());
         RenderSystem.disableBlend();
