@@ -8,9 +8,15 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Matrix4f;
+import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.client.events.ClientTickHandler;
+import teamHTBP.vidaReforged.client.renderer.ui.BorderRendererManager;
+import teamHTBP.vidaReforged.client.renderer.ui.IBorderRenderer;
+import teamHTBP.vidaReforged.client.shaders.GradientShader;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
@@ -18,6 +24,7 @@ import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.helper.VidaGuiHelper;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 
+import java.awt.*;
 import java.util.*;
 
 @OnlyIn(Dist.CLIENT)
@@ -32,9 +39,19 @@ public class VidaUnlockMagicWordScreen extends GuiGraphics implements IVidaScree
     private static final int MAX_WIDTH = 100;
     private static final VidaGuiHelper.TickHelper tickHelper = new VidaGuiHelper.TickHelper();
     private static final int MAX_LENGTH = 3;
+    private GradientShader shader;
+    private IBorderRenderer border;
 
     public VidaUnlockMagicWordScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource) {
         super(minecraft, bufferSource);
+        this.shader = new GradientShader
+                .FlowGradient()
+                .addColor(0,0xff070F2B)
+                .addColor(1, 0xff1B1A55)
+                .addColor(2, 0xff535C91)
+                .addColor(3,0xff9290C3)
+                .build();
+        this.border = BorderRendererManager.getRender(new ResourceLocation(VidaReforged.MOD_ID, "square_border"));
     }
 
     @Override
@@ -52,13 +69,15 @@ public class VidaUnlockMagicWordScreen extends GuiGraphics implements IVidaScree
         PoseStack poseStack = graphics.pose();
 
         tickHelper.tick(partialTicks);
-        renderPopup(poseStack, partialTicks);
+        renderPopup(graphics, partialTicks);
         renderText(poseStack, partialTicks);
         renderFadeOut();
         renderOver();
     }
 
-    public void renderPopup(PoseStack poseStack, float partialTicks){
+    public void renderPopup(GuiGraphics graphics, float partialTicks){
+        PoseStack poseStack = graphics.pose();
+
         final float height = HEIGHT;
         if(getTickLength() <= 10){
             alphaRange.increase(tickHelper.getTickPercent(0.1f));
@@ -81,14 +100,14 @@ public class VidaUnlockMagicWordScreen extends GuiGraphics implements IVidaScree
 
         // 背景
         poseStack.pushPose();
-        ARGBColor color = new ARGBColor((int) (255 * alphaRange.get()), 255, 255, 255);
-        fillGradient(
-                (int) x, (int) y,
-                (int) (x + width), (int) (y + height),
-                color.argb(),
-                color.argb()
-        );
+        shader.render(graphics, (int)x, (int) y, 0, (int) width, (int) height, alpha, (int) ClientTickHandler.ticks, partialTicks);
         poseStack.popPose();
+
+        RenderSystem.enableBlend();
+        graphics.setColor(1, 1, 1, alpha - 0.1f);
+        border.renderBorder(graphics, (int) x - 2, (int) y - 2, (int) width + 2, (int) height + 2, 0xffffffff);
+        graphics.setColor(1, 1, 1, 1);
+        RenderSystem.disableBlend();
 
         // 背景边框
         poseStack.pushPose();
@@ -156,7 +175,7 @@ public class VidaUnlockMagicWordScreen extends GuiGraphics implements IVidaScree
 
         poseStack.pushPose();
         RenderSystem.enableBlend();
-        ARGBColor color = new ARGBColor((int) (255 * textRange.get()), 8, 8, 8);
+        ARGBColor color = new ARGBColor((int) (255 * textRange.get()), 198, 198, 198);
         Component title = Component.literal("已解锁词条");
         drawString(mc.font, title, (int) (x + 32), (int) (y + 6), color.fontColor());
         poseStack.popPose();
