@@ -12,15 +12,11 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 import teamHTBP.vidaReforged.client.screen.components.common.ItemStackWidget;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
-import teamHTBP.vidaReforged.client.screen.viewModels.VidaWandCraftingViewModel;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
-import teamHTBP.vidaReforged.core.common.item.Position;
-import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.server.items.VidaWandEquipment;
-import teamHTBP.vidaReforged.server.menu.slots.VidaWandEquipmentSlot;
 
 import java.util.ArrayList;
 import java.util.List;

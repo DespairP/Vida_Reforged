@@ -9,13 +9,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.helper.VidaGuiHelper;
 import teamHTBP.vidaReforged.server.blockEntities.VaseBlockEntity;
 
-public class VaseScreen extends AbstractVidaHUDScreen {
+public class VaseScreen extends VidaHUDScreen {
     VaseBlockEntity entity = null;
     final TextureSection HUD = new TextureSection(new ResourceLocation(VidaReforged.MOD_ID, "textures/block/blockmodel/vase.png"), 4, 3, 9, 13, 32, 32);
 

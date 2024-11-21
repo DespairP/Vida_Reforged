@@ -7,6 +7,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import teamHTBP.vidaReforged.client.screen.*;
 import teamHTBP.vidaReforged.client.screen.screens.common.PrismScreen;
 import teamHTBP.vidaReforged.client.screen.screens.common.SherdResearchScreen;
+import teamHTBP.vidaReforged.client.screen.screens.factions.TradeFactionBasedScreen;
 import teamHTBP.vidaReforged.client.screen.screens.magicwordAchieve.MagicWordScreen;
 import teamHTBP.vidaReforged.client.screen.screens.wandCrafting.VidaWandCraftingScreen;
 import teamHTBP.vidaReforged.client.screen.screens.magicwordCrafting.MagicWordCraftingTableScreen;
@@ -25,6 +26,7 @@ public class VidaScreenRegistryHandler {
             MenuScreens.register(VidaMenuContainerTypeLoader.MAGIC_WORD_VIEWING.get(), MagicWordScreen::new);
             MenuScreens.register(VidaMenuContainerTypeLoader.VIDA_WAND_CRAFTING_TABLE.get(), VidaWandCraftingScreen::new);
             MenuScreens.register(VidaMenuContainerTypeLoader.SHERD_RESEARCH_TABLE.get(), SherdResearchScreen::new);
+            MenuScreens.register(VidaMenuContainerTypeLoader.FRACTION_TRADE.get(), TradeFactionBasedScreen::new);
             MenuScreens.register(VidaMenuContainerTypeLoader.VIVID_CHEST_MENU.get(), VividChestScreen::new);
         });
     }

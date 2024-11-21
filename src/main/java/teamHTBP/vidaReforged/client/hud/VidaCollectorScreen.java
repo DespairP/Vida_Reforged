@@ -9,15 +9,13 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import teamHTBP.vidaReforged.core.api.hud.IVidaEntityScreen;
-import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
-import teamHTBP.vidaReforged.server.blockEntities.BasePurificationCauldronBlockEntity;
 import teamHTBP.vidaReforged.server.blockEntities.CollectorBlockEntity;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
 @OnlyIn(Dist.CLIENT)
-public class VidaCollectorScreen extends AbstractVidaHUDScreen implements IVidaEntityScreen {
+public class VidaCollectorScreen extends VidaHUDScreen implements IVidaEntityScreen {
     public final ResourceLocation LOCATION = new ResourceLocation(MOD_ID, "textures/gui/collector_hud.png");
     /**收集器*/
     public final TextureSection BLOCK = new TextureSection(LOCATION, 1, 35,13,13, 48, 48);

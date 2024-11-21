@@ -32,6 +32,8 @@ public class ShadersHandler {
     public static ShaderInstance simplicity;
     public static ShaderInstance orb;
     public static ShaderInstance stars;
+    public static ShaderInstance ringProgressBar;
+    public static ShaderInstance gradientLight;
     public static ShaderInstance gradientLinear;
     public static ShaderInstance gradientFlow;
     public static PostChain glowShadow;
@@ -62,6 +64,14 @@ public class ShadersHandler {
                         event.getResourceProvider(),
                         new ResourceLocation(VidaReforged.MOD_ID, "flowing_color_gradient"), DefaultVertexFormat.POSITION_TEX),
                 s -> gradientFlow = s);
+        event.registerShader(new ShaderInstance(
+                        event.getResourceProvider(),
+                        new ResourceLocation(VidaReforged.MOD_ID, "ring_progress_bar"), DefaultVertexFormat.POSITION_TEX),
+                s -> ringProgressBar = s);
+        event.registerShader(new ShaderInstance(
+                        event.getResourceProvider(),
+                        new ResourceLocation(VidaReforged.MOD_ID, "light_gradient"), DefaultVertexFormat.POSITION_TEX),
+                s -> gradientLight = s);
     }
 
     /**加载帧缓冲*/

@@ -7,7 +7,7 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.network.chat.Component;
 import teamHTBP.vidaReforged.client.screen.components.common.ComponentsContainer;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 
 import java.util.Collection;

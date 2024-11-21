@@ -5,7 +5,7 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import teamHTBP.vidaReforged.client.screen.components.common.IconButton;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaScreenEventChannelViewModel;
 import teamHTBP.vidaReforged.core.common.system.guidebook.VidaScreenEvent;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;

@@ -13,7 +13,7 @@ import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.common.system.guidebook.DisplayInfo;
 import teamHTBP.vidaReforged.core.common.system.guidebook.VidaScreenEvent;
 import teamHTBP.vidaReforged.core.common.system.guidebook.VidaPageListItem;

@@ -3,10 +3,8 @@ package teamHTBP.vidaReforged.client.hud;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.joml.Vector2i;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 
 /**
@@ -14,9 +12,9 @@ import teamHTBP.vidaReforged.core.utils.render.TextureSection;
  *
  * */
 @OnlyIn(Dist.CLIENT)
-public class AbstractVidaHUDScreen extends GuiGraphics {
+public abstract class VidaHUDScreen extends GuiGraphics {
 
-    public AbstractVidaHUDScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource) {
+    public VidaHUDScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource) {
         super(minecraft, bufferSource);
     }
 

@@ -10,7 +10,7 @@ import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 
 import java.util.ArrayList;
 import java.util.List;

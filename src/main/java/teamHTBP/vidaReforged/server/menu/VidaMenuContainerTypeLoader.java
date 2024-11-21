@@ -153,4 +153,19 @@ public class VidaMenuContainerTypeLoader {
                     }
             )
     );
+
+    public final static RegistryObject<MenuType<TradeFractionMenu>> FRACTION_TRADE = MENU_CONTAINER_TYPE.register(
+            "trade_fraction",
+            () -> IForgeMenuType.create(
+                    (windowId, inv, data) -> {
+                        final BlockPos pos = data.readBlockPos();
+                        final Level level = inv.player.getCommandSenderWorld();
+                        return new TradeFractionMenu(
+                                windowId,
+                                ContainerLevelAccess.create(level, pos),
+                                inv
+                        );
+                    }
+            )
+    );
 }

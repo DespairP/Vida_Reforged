@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.hud.IVidaEntityScreen;
-import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.helper.VidaGuiHelper;
 import teamHTBP.vidaReforged.server.blockEntities.FloatingCrystalBlockEntity;
@@ -17,7 +16,7 @@ import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 
 import java.util.Map;
 
-public class VidaCrystalManaScreen extends AbstractVidaHUDScreen implements IVidaEntityScreen {
+public class VidaCrystalManaScreen extends VidaHUDScreen implements IVidaEntityScreen {
     private BlockEntity blockEntity;
     private static final ResourceLocation LOCATION = new ResourceLocation(VidaReforged.MOD_ID, "textures/gui/crystal.png");
     private static final Map<VidaElement, TextureSection> ELEMENT_BACKGROUND = Map.of(

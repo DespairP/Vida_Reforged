@@ -3,13 +3,18 @@ package teamHTBP.vidaReforged.server.commands;
 import com.mojang.brigadier.Command;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.synchronization.ArgumentTypeInfo;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -26,6 +31,8 @@ import teamHTBP.vidaReforged.server.commands.arguments.MagicArgumentInfo;
 import teamHTBP.vidaReforged.server.events.VidaCapabilityRegisterHandler;
 import teamHTBP.vidaReforged.server.items.VidaItemLoader;
 import teamHTBP.vidaReforged.server.items.VidaWand;
+import teamHTBP.vidaReforged.server.menu.PrismMenu;
+import teamHTBP.vidaReforged.server.menu.TradeFractionMenu;
 import teamHTBP.vidaReforged.server.packets.OpenGuidebookPacket;
 import teamHTBP.vidaReforged.server.packets.MagicWordUnlockClientboundPacket;
 import teamHTBP.vidaReforged.server.packets.VidaPacketManager;
@@ -36,6 +43,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+
+import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
+import static teamHTBP.vidaReforged.server.menu.PrismMenu.MENU_NAME;
 
 public class VidaCommandManager {
     public final static DeferredRegister<ArgumentTypeInfo<?,?>> ARGUMENT_TYPE = DeferredRegister.create(ForgeRegistries.COMMAND_ARGUMENT_TYPES, VidaReforged.MOD_ID);
@@ -230,6 +240,24 @@ public class VidaCommandManager {
         return 1;
     };
 
+    public final static Command<CommandSourceStack> OPEN_TEST_FRACTION = context -> {
+        ServerPlayer player = context.getSource().getPlayer();
+        BlockPos pos = player.blockPosition();
+        NetworkHooks.openScreen(
+                (ServerPlayer) player,
+                new SimpleMenuProvider(
+                        (containerId,pPlayerInventory, playerIn) -> new TradeFractionMenu(
+                                containerId,
+                                ContainerLevelAccess.create(playerIn.level(), pos),
+                                playerIn.getInventory()
+                        ),
+                        Component.translatable(String.format("%s:%s", MOD_ID, "trade_fraction"))
+                ),
+                (packerBuffer) -> {
+                    packerBuffer.writeBlockPos(pos);
+                });
+        return 1;
+    };
 
     public final static Command<CommandSourceStack> OPEN_GUIDEBOOK_LIST = context -> {
         ServerPlayer player = context.getSource().getPlayer();

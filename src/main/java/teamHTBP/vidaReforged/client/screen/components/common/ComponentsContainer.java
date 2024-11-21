@@ -2,6 +2,7 @@ package teamHTBP.vidaReforged.client.screen.components.common;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * 组件容器
  */
-public class ComponentsContainer extends VidaWidget{
+public class ComponentsContainer extends VidaWidget {
     List<VidaWidget> children = new LinkedList<>();
     BackgroundRenderer background;
     RearrangeHandler arrangement;

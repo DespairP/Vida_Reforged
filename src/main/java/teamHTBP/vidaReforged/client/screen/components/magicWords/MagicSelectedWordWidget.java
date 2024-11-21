@@ -2,19 +2,13 @@ package teamHTBP.vidaReforged.client.screen.components.magicWords;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import teamHTBP.vidaReforged.VidaReforged;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
-import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
-import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
-import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.server.providers.MagicWordManager;
 

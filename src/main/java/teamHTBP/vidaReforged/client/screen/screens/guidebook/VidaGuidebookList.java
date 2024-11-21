@@ -4,7 +4,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.components.guidebooks.VidaGuidebookListItemButton;
 import teamHTBP.vidaReforged.client.screen.components.guidebooks.VidaGuidebookPagination;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaGuidebookListPageViewModel;

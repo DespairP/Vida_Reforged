@@ -11,6 +11,7 @@ import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 
+@Deprecated
 public abstract class AbstractVidaWidget implements Renderable, GuiEventListener {
     /**组件width*/
     protected float width;

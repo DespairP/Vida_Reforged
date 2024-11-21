@@ -16,7 +16,7 @@ import org.joml.Vector3f;
 import teamHTBP.vidaReforged.client.renderer.RenderTypeHandler;
 import teamHTBP.vidaReforged.client.events.registries.LayerRegistryHandler;
 import teamHTBP.vidaReforged.client.model.itemModel.VidaWandModel;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaWandCraftingViewModel;
 import teamHTBP.vidaReforged.core.common.item.Position;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;

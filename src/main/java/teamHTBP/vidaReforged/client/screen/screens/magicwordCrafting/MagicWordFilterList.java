@@ -3,18 +3,14 @@ package teamHTBP.vidaReforged.client.screen.screens.magicwordCrafting;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
-import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
-import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
-import teamHTBP.vidaReforged.helper.VidaElementHelper;
 
 import java.util.*;
 

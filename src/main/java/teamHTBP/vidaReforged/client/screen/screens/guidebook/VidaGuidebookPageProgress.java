@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.components.guidebooks.VidaGuidebookListItemProgressButton;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaGuidebookListPageViewModel;
 import teamHTBP.vidaReforged.core.common.system.guidebook.VidaPageListItem;

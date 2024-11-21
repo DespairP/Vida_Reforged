@@ -1,10 +1,9 @@
 package teamHTBP.vidaReforged.client.screen.components.common;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.ImageWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 
 public class ImageMutableWidget extends VidaWidget {

@@ -7,7 +7,7 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.components.guidebooks.GuideBookScrollTextArea;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaViewMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;

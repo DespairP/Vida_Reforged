@@ -27,12 +27,11 @@ import net.minecraftforge.client.ForgeHooksClient;
 import org.joml.AxisAngle4d;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 
-import java.util.Collection;
 import java.util.List;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;

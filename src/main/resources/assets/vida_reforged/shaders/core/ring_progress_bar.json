@@ -1,0 +1,20 @@
+{
+    "vertex": "position",
+    "fragment": "vida_reforged:ring_progress_bar",
+    "blend": {
+        "func": "add",
+        "srcrgb": "srcalpha",
+        "dstrgb": "1-srcalpha"
+    },
+    "samplers": [],
+    "attributes": [ "Position" ],
+    "uniforms": [
+        { "name": "iResolution", "type": "float", "count": 2, "values": [0.0, 0.0]},
+        { "name": "ModelViewMat",  "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]},
+        { "name": "ProjMat",  "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]},
+        { "name": "progress", "type": "float", "count": 1, "values": [0.0]},
+        { "name": "thickness", "type": "float", "count": 1, "values": [0.05]},
+        { "name": "fromColor", "type": "float", "count": 4, "values": [0.0, 0.0, 0.0, 0.0]},
+        { "name": "toColor", "type": "float", "count": 4, "values": [0.0, 0.0, 0.0, 0.0]}
+    ]
+}

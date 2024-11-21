@@ -5,7 +5,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.network.chat.Component;
 import org.joml.Vector2f;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.screens.common.VidaContainerScreen;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;

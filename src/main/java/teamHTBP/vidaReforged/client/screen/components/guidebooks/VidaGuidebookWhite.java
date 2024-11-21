@@ -2,7 +2,7 @@ package teamHTBP.vidaReforged.client.screen.components.guidebooks;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 
 public class VidaGuidebookWhite extends VidaWidget implements IVidaGuidebookComponent {
 

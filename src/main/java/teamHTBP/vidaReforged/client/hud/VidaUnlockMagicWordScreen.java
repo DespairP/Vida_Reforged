@@ -29,35 +29,47 @@ import java.util.*;
 
 @OnlyIn(Dist.CLIENT)
 public class VidaUnlockMagicWordScreen extends GuiGraphics implements IVidaScreen {
+    /**提示解锁的词条*/
     public static LinkedList<String> magicWords = new LinkedList<>();
+    /**透明度*/
     private static FloatRange alphaRange = new FloatRange(0,0,0.7f);
+    /**文字透明度*/
     private static FloatRange textRange = new FloatRange(0,0,0.7f);
+    /**提示框长度*/
     private static FloatRange lengthRange = new FloatRange(64, 64, 100);
+    /**显示的位置*/
     private float x;
     private float y;
+    /**提示框最大长度和宽度*/
     private static final int HEIGHT = 32;
-    private static final int MAX_WIDTH = 100;
+    private static final int MAX_WIDTH = 150;
+    /**计时器*/
     private static final VidaGuiHelper.TickHelper tickHelper = new VidaGuiHelper.TickHelper();
+    /**最大词条长度*/
     private static final int MAX_LENGTH = 3;
+    /**背景区域*/
     private GradientShader shader;
+    /**边框*/
     private IBorderRenderer border;
 
     public VidaUnlockMagicWordScreen(Minecraft minecraft, MultiBufferSource.BufferSource bufferSource) {
         super(minecraft, bufferSource);
         this.shader = new GradientShader
                 .FlowGradient()
-                .addColor(0,0xff070F2B)
+                .addColor(0,0xffE19898)
                 .addColor(1, 0xff1B1A55)
                 .addColor(2, 0xff535C91)
-                .addColor(3,0xff9290C3)
+                .addColor(3,0xffA2678A)
                 .build();
         this.border = BorderRendererManager.getRender(new ResourceLocation(VidaReforged.MOD_ID, "square_border"));
     }
 
+    /**渲染词条解锁*/
     @Override
     public void render(GuiGraphics graphics, float partialTicks) {
+        // 如果没有要提示说要解锁的词条，则重置状态
         if(magicWords.size() <= 0){
-            lengthRange = new FloatRange(32,32,guiWidth() * 0.3f);
+            lengthRange = new FloatRange(32,32, (float) (MAX_WIDTH));
             alphaRange = new FloatRange(0,0, 0.7f);
             alphaRange.set(0f);
             lengthRange.set(0f);
@@ -65,10 +77,11 @@ public class VidaUnlockMagicWordScreen extends GuiGraphics implements IVidaScree
             tickHelper.reset();
             return;
         }
-
+        // 如果有，开始计时渲染
         PoseStack poseStack = graphics.pose();
-
+        // 计时
         tickHelper.tick(partialTicks);
+        // 背景，文字，效果
         renderPopup(graphics, partialTicks);
         renderText(poseStack, partialTicks);
         renderFadeOut();
@@ -81,7 +94,7 @@ public class VidaUnlockMagicWordScreen extends GuiGraphics implements IVidaScree
         final float height = HEIGHT;
         if(getTickLength() <= 10){
             alphaRange.increase(tickHelper.getTickPercent(0.1f));
-            lengthRange.increase(tickHelper.getTickPercent((guiWidth() * 0.3f - 32f))/ 6f);
+            lengthRange.increase(tickHelper.getTickPercent(20));
         }
         final float alpha = alphaRange.get();
         final float width = lengthRange.get();

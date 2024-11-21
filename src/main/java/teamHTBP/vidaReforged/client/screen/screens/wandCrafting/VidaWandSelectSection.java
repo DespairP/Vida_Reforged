@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import teamHTBP.vidaReforged.client.screen.components.common.DisplayBlock;
 import teamHTBP.vidaReforged.client.screen.components.common.IconButton;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaScreenEventChannelViewModel;
 import teamHTBP.vidaReforged.core.common.system.guidebook.VidaScreenEvent;
 import teamHTBP.vidaReforged.client.screen.components.VidaLifecycleSection;

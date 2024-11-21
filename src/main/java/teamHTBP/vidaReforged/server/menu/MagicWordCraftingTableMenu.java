@@ -67,7 +67,7 @@ public class MagicWordCraftingTableMenu extends AbstractContainerMenu {
             MagicWordCraftingTableBlockEntity entity = (MagicWordCraftingTableBlockEntity)level.getBlockEntity(pos$1);
             int index = 0;
             for(VidaElement element : normalElements){
-                Slot elementSlot = new Slot(entity.getSlotFromElement(element), 0, (index++) * 20 + COL_SIZE * 2 + 4, -30);
+                Slot elementSlot = new Slot(entity.getSlotFromElement(element), 0, (index++) * 20 + COL_SIZE * 2 + 4, -32);
                 this.elementSlotMap.put(element, elementSlot);
                 this.addSlot(elementSlot);
             }

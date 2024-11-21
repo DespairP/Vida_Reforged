@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.screen.components.common;
+package teamHTBP.vidaReforged.client.screen.components;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

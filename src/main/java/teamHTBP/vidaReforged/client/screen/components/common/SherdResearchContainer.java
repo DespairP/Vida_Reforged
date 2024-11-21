@@ -3,7 +3,6 @@ package teamHTBP.vidaReforged.client.screen.components.common;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
@@ -12,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import org.joml.Matrix4f;
 import org.joml.Vector2i;
 import teamHTBP.vidaReforged.client.events.ClientTickHandler;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.helper.VidaGuiHelper;
@@ -20,9 +20,8 @@ import teamHTBP.vidaReforged.server.menu.slots.SherdSlot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class SherdResearchContainer extends VidaWidget{
+public class SherdResearchContainer extends VidaWidget {
     FloatRange alpha = new FloatRange(0, 0, 0.5f);
     final Slot sherdSlot;
     List<Vector2i> randomPoint = new ArrayList<>();

@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.client.screen.components.common.ScrolledContainer;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.common.item.Position;
 
 import java.util.List;

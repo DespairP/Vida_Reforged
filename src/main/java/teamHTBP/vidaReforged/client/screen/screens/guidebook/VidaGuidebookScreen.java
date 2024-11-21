@@ -2,7 +2,7 @@ package teamHTBP.vidaReforged.client.screen.screens.guidebook;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.screens.common.VidaContainerScreen;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaScreenEventChannelViewModel;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;

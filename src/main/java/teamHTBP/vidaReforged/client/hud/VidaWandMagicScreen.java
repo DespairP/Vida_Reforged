@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import org.joml.Vector3f;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.client.screen.components.common.ImageMutableWidget;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**渲染持有魔法*/
-public class VidaWandMagicScreen extends AbstractVidaHUDScreen implements IVidaScreen {
+public class VidaWandMagicScreen extends VidaHUDScreen implements IVidaScreen {
     ItemStack currentRenderedItem = ItemStack.EMPTY;
     int currentMagicIndex = -1;
     /**现在物品拥有的魔法*/

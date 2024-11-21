@@ -104,12 +104,17 @@ public class VidaCommandRegisterHandler {
                 .requires(source -> source.hasPermission(3))
                 .executes(VidaCommandManager.OPEN_GUIDEBOOK_LIST);
 
+        LiteralArgumentBuilder<CommandSourceStack> testFraction = Commands.literal("fraction")
+                        .requires(source -> source.hasPermission(3))
+                        .executes(VidaCommandManager.OPEN_TEST_FRACTION);
+
         dispatcher.register(
                 Commands.literal("vida")
                         .then(magic)
                         .then(magicContainer)
                         .then(magicWord)
                         .then(guidebook)
+                        .then(testFraction)
         );
     }
 }

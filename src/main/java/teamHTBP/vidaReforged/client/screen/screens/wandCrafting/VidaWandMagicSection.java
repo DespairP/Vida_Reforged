@@ -14,7 +14,7 @@ import org.joml.Vector3f;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.client.screen.components.common.IconButton;
 import teamHTBP.vidaReforged.client.screen.components.common.ScrolledContainer;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.components.guidebooks.VidaGuidebookText;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaWandCraftingViewModel;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;

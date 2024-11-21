@@ -2,7 +2,7 @@ package teamHTBP.vidaReforged.client.screen.screens.guidebook;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.common.ui.lifecycle.ILifeCycleOwner;
 import teamHTBP.vidaReforged.core.common.ui.lifecycle.LifeCycle;
 import teamHTBP.vidaReforged.core.common.ui.lifecycle.LifeCycleRegistry;

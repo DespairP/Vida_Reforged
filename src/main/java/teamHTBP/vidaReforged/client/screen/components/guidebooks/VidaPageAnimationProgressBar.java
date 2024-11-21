@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import org.joml.Vector3f;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.common.system.guidebook.VidaPageAnimation;
 import teamHTBP.vidaReforged.core.common.system.guidebook.VidaPageAnimationStep;
 import teamHTBP.vidaReforged.core.common.system.guidebook.VidaPageAnimationSubStep;

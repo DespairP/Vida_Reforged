@@ -12,6 +12,7 @@ import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.client.events.ClientTickHandler;
 import teamHTBP.vidaReforged.client.renderer.ui.BorderRendererManager;
 import teamHTBP.vidaReforged.client.renderer.ui.IBorderRenderer;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.client.shaders.GradientShader;
 import teamHTBP.vidaReforged.core.api.screen.StyleSheet;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
@@ -27,7 +28,7 @@ import java.util.function.BiConsumer;
  * 可滚动的容器
  *
  * */
-public class ScrolledContainer extends VidaWidget{
+public class ScrolledContainer extends VidaWidget {
     /**容器内容物*/
     List<VidaWidget> contents = new ArrayList<>();
     /**y轴滚动*/

@@ -16,6 +16,9 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
+import teamHTBP.vidaReforged.VidaReforged;
+import teamHTBP.vidaReforged.client.renderer.ui.BorderRendererManager;
+import teamHTBP.vidaReforged.client.renderer.ui.IBorderRenderer;
 import teamHTBP.vidaReforged.client.screen.components.magicWords.*;
 import teamHTBP.vidaReforged.client.screen.screens.common.VidaContainerScreen;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
@@ -110,7 +113,7 @@ public class MagicWordCraftingTableScreen extends VidaContainerScreen<MagicWordC
                 .addOption(VidaElement.FIRE, this::onFilterButtonClick)
                 .addOption(VidaElement.EARTH, this::onFilterButtonClick);
         this.selectedWords = new MagicSelectedWordContainer(this, this.leftPos + 46, this.topPos - 140);
-        this.magicWordCraftingButton = new MagicWordCraftingButton(this.leftPos + 64, this.topPos - 50);
+        this.magicWordCraftingButton = new MagicWordCraftingButton(this.leftPos + 64, this.topPos - 54);
         this.magicSlots = new ArrayList<>();
         this.addMagicSlots();
         this.addNodes(
@@ -156,6 +159,7 @@ public class MagicWordCraftingTableScreen extends VidaContainerScreen<MagicWordC
         // 渲染槽位
         super.render(graphics, mouseX, mouseY, partialTicks);
     }
+
 
     @Override
     protected void containerTick() {

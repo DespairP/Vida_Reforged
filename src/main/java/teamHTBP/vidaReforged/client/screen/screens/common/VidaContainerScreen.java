@@ -1,6 +1,5 @@
 package teamHTBP.vidaReforged.client.screen.screens.common;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -31,7 +30,7 @@ import teamHTBP.vidaReforged.client.providers.ScreenComponentStyleSheet;
 import teamHTBP.vidaReforged.client.providers.ScreenComponentStyleSheetManager;
 import teamHTBP.vidaReforged.core.api.screen.StyleSheet;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelStore;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.api.hud.IVidaNodes;
 import teamHTBP.vidaReforged.core.common.ui.component.IViewModelStoreProvider;
 import teamHTBP.vidaReforged.core.common.ui.lifecycle.ILifeCycleOwner;
@@ -41,7 +40,6 @@ import teamHTBP.vidaReforged.core.common.ui.lifecycle.LifeCycleRegistry;
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @OnlyIn(Dist.CLIENT)
 public abstract class VidaContainerScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> implements ILifeCycleOwner, IViewModelStoreProvider {

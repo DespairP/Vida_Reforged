@@ -5,6 +5,8 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.*;
 import net.minecraft.resources.ResourceLocation;
+import teamHTBP.vidaReforged.client.screen.screens.factions.FactionBasedScreen;
+import teamHTBP.vidaReforged.client.screen.screens.factions.FactionBasedSection;
 import teamHTBP.vidaReforged.client.screen.screens.magicwordCrafting.MagicWordCraftingTableScreen;
 import teamHTBP.vidaReforged.client.screen.screens.magicwordAchieve.MagicWordScreen;
 import teamHTBP.vidaReforged.client.screen.screens.common.PrismScreen;
@@ -25,6 +27,7 @@ public class VidaJeiPlugin implements IModPlugin {
         registration.addGuiContainerHandler(MagicWordCraftingTableScreen.class, HideJEIGuiHandler.create(MagicWordCraftingTableScreen.class));
         registration.addGuiContainerHandler(VidaWandCraftingScreen.class, HideJEIGuiHandler.create(VidaWandCraftingScreen.class));
         registration.addGuiContainerHandler(PrismScreen.class, HideJEIGuiHandler.create(PrismScreen.class));
+        registration.addGuiContainerHandler(FactionBasedScreen.class, HideJEIGuiHandler.create(FactionBasedScreen.class));
         registration.addGlobalGuiHandler(new HideJEIScreenHandler());
     }
 }

@@ -12,7 +12,7 @@ import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.client.screen.components.VidaLifecycleSection;
 import teamHTBP.vidaReforged.client.screen.components.common.MagicWordButton;
 import teamHTBP.vidaReforged.client.screen.components.common.ScrolledContainer;
-import teamHTBP.vidaReforged.client.screen.components.common.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.common.system.magicWord.MagicWord;
