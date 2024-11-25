@@ -17,6 +17,6 @@ public class ItemStackWidget extends ImageWidget {
 
     @Override
     public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        graphics.renderItem(renderItem, getX(), getY());
+        graphics.renderFakeItem(renderItem, getX(), getY());
     }
 }

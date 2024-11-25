@@ -35,6 +35,7 @@ import java.util.List;
 
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
+@Deprecated
 public class DisplayBlock extends VidaWidget {
     FloatRange alphaRange = new FloatRange(0,0,1f);
     FloatRange hoverRange = new FloatRange(0,0,0.4f);

@@ -6,6 +6,7 @@ import net.minecraft.network.chat.Component;
 import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 
+/**可变的图像组件*/
 public class ImageMutableWidget extends VidaWidget {
     private TextureSection section;
     private int rev;

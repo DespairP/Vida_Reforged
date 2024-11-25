@@ -27,7 +27,7 @@ import java.util.Optional;
 import static teamHTBP.vidaReforged.VidaReforged.MOD_ID;
 
 /**
- * migrate to {@link teamHTBP.vidaReforged.client.screen.components.common.MagicWordButton}
+ * migrate to {@link MagicWordButton}
  * */
 @Deprecated(forRemoval = true)
 public class MagicWordWidget extends AbstractWidget {

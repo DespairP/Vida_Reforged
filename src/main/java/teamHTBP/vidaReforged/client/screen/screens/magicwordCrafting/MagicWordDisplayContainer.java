@@ -10,7 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.client.screen.components.VidaLifecycleSection;
-import teamHTBP.vidaReforged.client.screen.components.common.MagicWordButton;
+import teamHTBP.vidaReforged.client.screen.components.magicWords.MagicWordButton;
 import teamHTBP.vidaReforged.client.screen.components.common.ScrolledContainer;
 import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;

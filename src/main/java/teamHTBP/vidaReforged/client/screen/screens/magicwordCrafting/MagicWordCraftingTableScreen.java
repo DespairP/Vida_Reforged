@@ -16,9 +16,8 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
-import teamHTBP.vidaReforged.VidaReforged;
-import teamHTBP.vidaReforged.client.renderer.ui.BorderRendererManager;
-import teamHTBP.vidaReforged.client.renderer.ui.IBorderRenderer;
+import teamHTBP.vidaReforged.client.screen.components.common.Select;
+import teamHTBP.vidaReforged.client.screen.components.common.SelectButton;
 import teamHTBP.vidaReforged.client.screen.components.magicWords.*;
 import teamHTBP.vidaReforged.client.screen.screens.common.VidaContainerScreen;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaMagicWordViewModel;
@@ -42,7 +41,7 @@ public class MagicWordCraftingTableScreen extends VidaContainerScreen<MagicWordC
     /**
      * 过滤器
      */
-    protected MagicWordFilterList<VidaElement> magicWordFilterLists;
+    protected Select<VidaElement> magicWordFilterLists;
     /**
      * 显示选择的词条
      */
@@ -100,18 +99,18 @@ public class MagicWordCraftingTableScreen extends VidaContainerScreen<MagicWordC
 
         // 初始化组件
         this.magicWordWidget = new MagicWordDisplayContainer(x, y, componentWidth, componentHeight);
-        this.magicWordFilterLists = new MagicWordFilterList<VidaElement>(
-                x - MagicWordFilterButton.BTN_SIZE,
-                y + componentHeight - MagicWordFilterButton.BTN_SIZE * MagicWordFilterList.DEFAULT_BUTTON_AMOUNT,
-                MagicWordFilterButton.BTN_SIZE,
-                MagicWordFilterList.DEFAULT_BUTTON_AMOUNT,
+        this.magicWordFilterLists = new Select<VidaElement>(
+                x - SelectButton.BTN_SIZE,
+                y + componentHeight - SelectButton.BTN_SIZE * Select.DEFAULT_BUTTON_AMOUNT,
+                SelectButton.BTN_SIZE,
+                Select.DEFAULT_BUTTON_AMOUNT,
                 new ResourceLocation(MOD_ID, "filter_container")
         )
-                .addOption(VidaElement.GOLD, this::onFilterButtonClick)
-                .addOption(VidaElement.WOOD, this::onFilterButtonClick)
-                .addOption(VidaElement.AQUA, this::onFilterButtonClick)
-                .addOption(VidaElement.FIRE, this::onFilterButtonClick)
-                .addOption(VidaElement.EARTH, this::onFilterButtonClick);
+                .addOption(VidaElement.GOLD, button -> button.setClickListener(this::onFilterButtonClick))
+                .addOption(VidaElement.WOOD, button -> button.setClickListener(this::onFilterButtonClick))
+                .addOption(VidaElement.AQUA, button -> button.setClickListener(this::onFilterButtonClick))
+                .addOption(VidaElement.FIRE, button -> button.setClickListener(this::onFilterButtonClick))
+                .addOption(VidaElement.EARTH, button -> button.setClickListener(this::onFilterButtonClick));
         this.selectedWords = new MagicSelectedWordContainer(this, this.leftPos + 46, this.topPos - 140);
         this.magicWordCraftingButton = new MagicWordCraftingButton(this.leftPos + 64, this.topPos - 54);
         this.magicSlots = new ArrayList<>();

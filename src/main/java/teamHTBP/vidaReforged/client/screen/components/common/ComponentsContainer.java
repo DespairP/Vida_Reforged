@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * 组件容器
  */
+@Deprecated
 public class ComponentsContainer extends VidaWidget {
     List<VidaWidget> children = new LinkedList<>();
     BackgroundRenderer background;

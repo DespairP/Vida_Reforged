@@ -17,11 +17,15 @@ import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 
 public class IconButton extends VidaWidget {
-    /**文字*/
+    /**
+     * 文字
+     */
     protected Component text;
-    /**透明度变化速度*/
+    /**
+     * 透明度变化速度
+     */
     protected float speed = 0.02f;
-    private FloatRange alpha = new FloatRange(0,0.0f,0.5f);
+    private FloatRange alpha = new FloatRange(0, 0.0f, 0.5f);
     private GridLayout gridLayout;
     private Padding padding = Padding.empty();
     private ImageMutableWidget imageWidget;
@@ -35,7 +39,7 @@ public class IconButton extends VidaWidget {
 
     @Data
     @Accessors(chain = true, fluent = true)
-    public static class Builder{
+    public static class Builder {
         private Component message;
         private TextureSection imageTex;
         private TextureSection imageActiveTex;
@@ -46,9 +50,10 @@ public class IconButton extends VidaWidget {
         private int rev;
         private ClickListener listener;
 
-        public Builder(){}
+        public Builder() {
+        }
 
-        public IconButton build(int x, int y){
+        public IconButton build(int x, int y) {
             IconButton button = new IconButton(x, y, width, height, message);
             button.setIcon(imageTex, rev)
                     .setActiveIcon(imageActiveTex)
@@ -73,7 +78,7 @@ public class IconButton extends VidaWidget {
         return this;
     }
 
-    public IconButton setBackground(boolean visible){
+    public IconButton setBackground(boolean visible) {
         this.isBackground = visible;
         return this;
     }
@@ -91,7 +96,7 @@ public class IconButton extends VidaWidget {
         return this;
     }
 
-    public IconButton setText(Component text){
+    public IconButton setText(Component text) {
         this.text = text;
         this.textWidget.setMessage(text);
         return this;
@@ -102,11 +107,11 @@ public class IconButton extends VidaWidget {
         return this;
     }
 
-    public void refresh(){
+    public void refresh() {
         this.init();
     }
 
-    protected void init(){
+    protected void init() {
         this.gridLayout = new GridLayout(getX(), getY());
         this.gridLayout.setX(getX() + padding.left());
         this.gridLayout.setY(getY() + padding.top());
@@ -140,7 +145,7 @@ public class IconButton extends VidaWidget {
         poseStack.pushPose();
         RenderSystem.enableBlend();
 
-        if(isBackground) {
+        if (isBackground) {
             renderWidgetBackground(graphics);
             renderHoverBackground(graphics);
         }
@@ -152,25 +157,29 @@ public class IconButton extends VidaWidget {
         poseStack.popPose();
     }
 
-    /**渲染图标*/
-    public void renderChildren(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks){
-        if(this.imageWidget != null) {
+    /**
+     * 渲染图标
+     */
+    public void renderChildren(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        if (this.imageWidget != null) {
             imageWidget.setSection(isHovered ? activeSection : normalSection);
             imageWidget.renderWidget(graphics, mouseX, mouseY, partialTicks);
         }
-        if(this.textWidget != null){
+        if (this.textWidget != null) {
             textWidget.renderWidget(graphics, mouseX, mouseY, partialTicks);
         }
     }
 
-    protected void renderHoverBackground(GuiGraphics graphics){
+    protected void renderHoverBackground(GuiGraphics graphics) {
         // 渲染背景
         ARGBColor color = ARGBColor.of(alpha.get(), 0.6f, 0.6f, 0.6f);
         graphics.fillGradient(getX(), getY(), getX() + width, getY() + height, color.argb(), color.argb());
     }
 
-    /**渲染背景*/
-    protected void renderWidgetBackground(GuiGraphics graphics){
+    /**
+     * 渲染背景
+     */
+    protected void renderWidgetBackground(GuiGraphics graphics) {
         PoseStack poseStack = graphics.pose();
         poseStack.pushPose();
         graphics.fillGradient(getX(), getY(), getX() + width, getY() + height, 0xA0101010, 0xB0101010);
@@ -179,13 +188,13 @@ public class IconButton extends VidaWidget {
 
     @Override
     public void onClick(double mouseX, double mouseY) {
-        if(listener != null){
+        if (listener != null) {
             this.listener.onClick();
         }
     }
 
 
-    public interface ClickListener{
+    public interface ClickListener {
         public void onClick();
     }
 }

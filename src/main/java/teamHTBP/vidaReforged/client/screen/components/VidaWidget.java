@@ -40,12 +40,17 @@ public abstract class VidaWidget extends AbstractWidget implements IVidaNodes {
     @Override
     public void setY(int y) {
         this.initialY = y;
+        this.onPositionMoved(this.getX(), this.getY());
     }
 
     @Override
     public void setX(int x) {
         this.initialX = x;
+        this.onPositionMoved(this.getX(), this.getY());
     }
+
+
+    protected void onPositionMoved(int x, int y){}
 
     @Override
     public int getX() {

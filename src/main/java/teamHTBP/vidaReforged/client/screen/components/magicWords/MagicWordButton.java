@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.screen.components.common;
+package teamHTBP.vidaReforged.client.screen.components.magicWords;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
