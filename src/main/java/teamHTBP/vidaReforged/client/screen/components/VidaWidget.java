@@ -37,6 +37,19 @@ public abstract class VidaWidget extends AbstractWidget implements IVidaNodes {
         this.mc = Minecraft.getInstance();
     }
 
+
+    @Override
+    public void setWidth(int width) {
+        super.setWidth(width);
+        onResized(width, getHeight());
+    }
+
+    @Override
+    public void setHeight(int height) {
+        super.setHeight(height);
+        onResized(getWidth(), height);
+    }
+
     @Override
     public void setY(int y) {
         this.initialY = y;
@@ -51,6 +64,8 @@ public abstract class VidaWidget extends AbstractWidget implements IVidaNodes {
 
 
     protected void onPositionMoved(int x, int y){}
+
+    protected void onResized(int width, int height){};
 
     @Override
     public int getX() {
@@ -106,6 +121,12 @@ public abstract class VidaWidget extends AbstractWidget implements IVidaNodes {
 
     public void onAdded(){}
 
+    public void debug(GuiGraphics graphics){
+        graphics.pose().pushPose();
+        graphics.fill(getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0xffffffff);
+        graphics.pose().popPose();
+    }
+
     @Override
     public <T extends IViewModelStoreProvider> T requireParent() {
         Screen parent = getParent();
@@ -114,4 +135,5 @@ public abstract class VidaWidget extends AbstractWidget implements IVidaNodes {
         }
         return null;
     }
+
 }

@@ -14,6 +14,7 @@ import org.joml.Matrix4f;
 import teamHTBP.vidaReforged.client.screen.components.AbstractVidaWidget;
 import teamHTBP.vidaReforged.core.utils.animation.DestinationAnimator;
 
+@Deprecated
 public class AttachSlot extends AbstractVidaWidget implements Renderable {
     /***/
     private float offsetPosX = 0;

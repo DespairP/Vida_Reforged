@@ -1,21 +1,17 @@
 package teamHTBP.vidaReforged.client.screen.screens.factions;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.StringWidget;
 import net.minecraft.client.gui.layouts.FrameLayout;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
 import org.joml.Vector3f;
 import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.client.renderer.ui.BorderRendererManager;
 import teamHTBP.vidaReforged.client.renderer.ui.IBorderRenderer;
-import teamHTBP.vidaReforged.client.screen.components.fraction.LivingEntityDisplayComponent;
+import teamHTBP.vidaReforged.client.screen.components.faction.LivingEntityDisplayComponent;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaFractionViewModel;
 import teamHTBP.vidaReforged.core.api.screen.StyleSheet;
 import teamHTBP.vidaReforged.core.common.ui.component.ViewModelProvider;
 import teamHTBP.vidaReforged.core.utils.anim.SecondOrderDynamics;
-import teamHTBP.vidaReforged.core.utils.color.ARGBColor;
 
 public class EntityFactionBasedSection extends FactionBasedSection {
     /**ViewModel*/

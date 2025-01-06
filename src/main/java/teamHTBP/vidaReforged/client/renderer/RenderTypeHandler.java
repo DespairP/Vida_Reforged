@@ -141,6 +141,14 @@ public class RenderTypeHandler extends RenderStateShard{
                     .createCompositeState(false)
     );
 
+    public final static RenderStateShard.TransparencyStateShard TRANSLUCENT_TRANSPARENCY_GUI = new RenderStateShard.TransparencyStateShard("translucent_transparency", () -> {
+        RenderSystem.enableBlend();
+        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+    }, () -> {
+        RenderSystem.disableBlend();
+        RenderSystem.defaultBlendFunc();
+    });
+
     public static final RenderType ENTITY_GLINT_EARTH_FOIL = RenderType.create(
             "entity_glint_aqua_foil",
             DefaultVertexFormat.POSITION_TEX,

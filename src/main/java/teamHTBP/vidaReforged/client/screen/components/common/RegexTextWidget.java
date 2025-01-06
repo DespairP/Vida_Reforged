@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.screen.components.guidebooks;
+package teamHTBP.vidaReforged.client.screen.components.common;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -11,13 +11,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
+import teamHTBP.vidaReforged.client.screen.components.guidebooks.IVidaGuidebookComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class VidaGuidebookText extends VidaWidget implements IVidaGuidebookComponent {
+public class RegexTextWidget extends VidaWidget implements IVidaGuidebookComponent {
     /**字体*/
     private Font font;
     /**匹配${}格式的正则*/
@@ -26,7 +27,8 @@ public class VidaGuidebookText extends VidaWidget implements IVidaGuidebookCompo
     private final String regex;
     /**显示的所有字*/
     private String all;
-    public VidaGuidebookText(String key, int x, int y, int width, int height) {
+
+    public RegexTextWidget(String key, int x, int y, int width, int height) {
         super(x, y, width, height, Component.literal("text"));
         this.font = Minecraft.getInstance().font;
         this.regex = "\\$\\{.*?\\}";
@@ -34,7 +36,7 @@ public class VidaGuidebookText extends VidaWidget implements IVidaGuidebookCompo
         this.all = Language.getInstance().getOrDefault(key, key);
     }
 
-    public VidaGuidebookText(Component key, int x, int y, int width, int height) {
+    public RegexTextWidget(Component key, int x, int y, int width, int height) {
         super(x, y, width, height, Component.literal("text"));
         this.font = Minecraft.getInstance().font;
         this.regex = "\\$\\{.*?\\}";
@@ -50,11 +52,9 @@ public class VidaGuidebookText extends VidaWidget implements IVidaGuidebookCompo
         RenderSystem.setShaderColor(alpha, alpha,alpha,alpha);
         renderBg(graphics, mouseX, mouseY, partialTicks);
         renderText(graphics,mouseX,mouseY,partialTicks);
-        //drawScrollBar(graphics, mouseX, mouseY, partialTicks);
         RenderSystem.setShaderColor(1,1,1,1);
         RenderSystem.disableBlend();
     }
-
 
 
     /**渲染*/

@@ -34,6 +34,8 @@ public class Select<T> extends VidaWidget implements IVidaNodes {
     private GridLayoutMutation layout;
     /**按钮间距*/
     private int buttonGap = 0;
+    /**选中的Id*/
+    private T selectedId;
 
     /**渲染类型*/
     public enum SelectType {
@@ -116,6 +118,7 @@ public class Select<T> extends VidaWidget implements IVidaNodes {
                 entry.getValue().setSelected(false);
             }
         }
+        this.selectedId = id;
     }
 
     public Collection<? extends GuiEventListener> children() {

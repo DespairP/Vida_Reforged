@@ -33,13 +33,17 @@ public abstract class FactionBasedScreen<T extends AbstractFactionMenu> extends 
     @Override
     public void added() {
         super.added();
-        this.leftExperienceSection = this.addExperienceFactionSection();
-        this.leftOtherSection = this.addOtherFactionSection();
-        this.leftEntitySection = this.addEntityFactionSection();
-        this.rightSection = this.addDetailedFactionSection();
-        this.gridLayout = new GridLayoutMutation();
-        this.leftGridLayout = new GridLayoutMutation();
-        this.leftEntitySection.onAdded();
+        try {
+            this.leftExperienceSection = this.addExperienceFactionSection();
+            this.leftOtherSection = this.addOtherFactionSection();
+            this.leftEntitySection = this.addEntityFactionSection();
+            this.rightSection = this.addDetailedFactionSection();
+            this.gridLayout = new GridLayoutMutation();
+            this.leftGridLayout = new GridLayoutMutation();
+            this.leftEntitySection.onAdded();
+        }catch (Exception exception){
+            LOGGER.error(exception);
+        }
     }
 
     public void doLeftSectionResize(){
@@ -61,22 +65,26 @@ public abstract class FactionBasedScreen<T extends AbstractFactionMenu> extends 
     @Override
     protected void init() {
         super.init();
-        // 大小重置
-        doLeftSectionResize();
-        doRightSectionResize();
-        leftEntitySection.init();
-        rightSection.init();
-        // 布局
-        leftGridLayout.clear();
-        gridLayout.clear();
-        leftGridLayout.addChild(leftEntitySection,0, 0, gridLayout.defaultCellSetting().alignHorizontallyLeft());
-        leftGridLayout.addChild(leftExperienceSection,1, 0, gridLayout.defaultCellSetting().alignHorizontallyLeft());
-        leftGridLayout.addChild(leftOtherSection,2, 0, gridLayout.defaultCellSetting().alignHorizontallyLeft());
-        gridLayout.addChild(leftGridLayout,0, 0, gridLayout.defaultCellSetting());
-        gridLayout.addChild(rightSection, 0, 1, gridLayout.defaultCellSetting().alignHorizontallyRight());
-        // 添加，调整
-        leftGridLayout.arrangeElements();
-        gridLayout.arrangeElements();
+        try {
+            // 大小重置
+            doLeftSectionResize();
+            doRightSectionResize();
+            leftEntitySection.init();
+            rightSection.init();
+            // 布局
+            leftGridLayout.clear();
+            gridLayout.clear();
+            leftGridLayout.addChild(leftEntitySection, 0, 0, gridLayout.defaultCellSetting().alignHorizontallyLeft());
+            leftGridLayout.addChild(leftExperienceSection, 1, 0, gridLayout.defaultCellSetting().alignHorizontallyLeft());
+            leftGridLayout.addChild(leftOtherSection, 2, 0, gridLayout.defaultCellSetting().alignHorizontallyLeft());
+            gridLayout.addChild(leftGridLayout, 0, 0, gridLayout.defaultCellSetting());
+            gridLayout.addChild(rightSection, 0, 1, gridLayout.defaultCellSetting().alignHorizontallyRight());
+            // 添加，调整
+            leftGridLayout.arrangeElements();
+            gridLayout.arrangeElements();
+        }catch (Exception exception){
+            LOGGER.error(exception);
+        }
     }
 
     /**左边栏目显示*/

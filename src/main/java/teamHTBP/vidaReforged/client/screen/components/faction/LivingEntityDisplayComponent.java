@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.screen.components.fraction;
+package teamHTBP.vidaReforged.client.screen.components.faction;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;

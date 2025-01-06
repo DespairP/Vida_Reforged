@@ -9,14 +9,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import org.joml.Vector2i;
-import teamHTBP.vidaReforged.VidaReforged;
-import teamHTBP.vidaReforged.client.screen.components.common.SherdResearchContainer;
+import teamHTBP.vidaReforged.client.screen.components.others.SherdResearchContainer;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 import teamHTBP.vidaReforged.helper.VidaGuiHelper;
 import teamHTBP.vidaReforged.server.menu.SherdResearchTableMenu;
-import teamHTBP.vidaReforged.server.menu.slots.FobiddenSlot;
-import teamHTBP.vidaReforged.server.menu.slots.SherdSlot;
 
 import java.util.ArrayList;
 import java.util.List;

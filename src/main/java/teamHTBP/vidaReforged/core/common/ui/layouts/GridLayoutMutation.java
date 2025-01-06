@@ -95,8 +95,10 @@ public class GridLayoutMutation extends AbstractLayout {
             gridlayout$cellinhabitant2.setY(this.getY() + aint3[gridlayout$cellinhabitant2.row], k2);
         }
 
+
         this.width = aint2[j] + aint[j];
         this.height = aint3[i] + aint1[i];
+
     }
 
     public <T extends LayoutElement> T addChild(T p_265485_, int p_265720_, int p_265679_) {

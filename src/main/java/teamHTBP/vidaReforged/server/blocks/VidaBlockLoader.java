@@ -1,10 +1,14 @@
 package teamHTBP.vidaReforged.server.blocks;
 
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -224,7 +228,7 @@ public class VidaBlockLoader {
     public final static RegistryObject<Block> VIDA_SHROOMLIGHT = registerDecoBlock("vida_shroomlight", WOOD, LOG);
     /**生命树叶*/
     public static RegistryObject<Block> VIDA_LEAVES = registerDecoBlock("vida_leaves", LEAVES, NORMAL, true);
-    public static RegistryObject<Block> VIDA_BLUE_LEAVES = registerDecoBlock("vida_blue_leaves", LEAVES, NORMAL, true);
+    public static RegistryObject<Block> VIDA_BLUE_LEAVES = BLOCKS.register("vida_blue_leaves", () -> new BlueLeavesBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_LEAVES)));
     @RegisterItemBlock
     public static RegistryObject<Block> VIDA_FALLEN_LEAVES = BLOCKS.register("vida_fallen_leaves", () -> new FallenLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).noOcclusion()));
     @RegisterItemBlock
@@ -456,6 +460,8 @@ public class VidaBlockLoader {
     @RegisterItemBlock
     public final static RegistryObject<Block> VIVID_LOG = registerDecoBlock("vivid_log", WOOD, LOG);
     public final static RegistryObject<Block> VIVID_CHEST_BLOCK = BLOCKS.register("vivid_chest", () -> new VividBlockChest(BlockBehaviour.Properties.copy(Blocks.CHEST)));
+    @RegisterItemBlock
+    public final static RegistryObject<Block> SOFT_DIRT = BLOCKS.register("soft_dirt", () -> new SearchableBlock(Blocks.AIR, BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.SNARE).strength(0.25F).sound(SoundType.SAND).pushReaction(PushReaction.DESTROY), SoundEvents.BRUSH_GRAVEL, SoundEvents.BRUSH_GRAVEL_COMPLETED));
 
     /**
      * @param name 注册名称

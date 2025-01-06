@@ -2,15 +2,14 @@ package teamHTBP.vidaReforged.core.common.system.guidebook;
 
 import com.mojang.serialization.Codec;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Display;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import teamHTBP.vidaReforged.client.screen.components.common.RegexTextWidget;
 import teamHTBP.vidaReforged.client.screen.components.guidebooks.*;
 import teamHTBP.vidaReforged.client.screen.screens.guidebook.VidaGuidebookListScreen;
-import teamHTBP.vidaReforged.client.screen.screens.guidebook.VidaGuidebookPageDetail;
 
 /**
  * 指导书组件数据体基类 <br/>
@@ -88,7 +87,7 @@ public abstract class VidaPageBaseComponent implements IVidaPageComponent{
         @OnlyIn(Dist.CLIENT)
         @Override
         public IVidaGuidebookComponent generateComponent() {
-            return new VidaGuidebookText(key, x, y, 147, height);
+            return new RegexTextWidget(key, x, y, 147, height);
         }
 
         @Override

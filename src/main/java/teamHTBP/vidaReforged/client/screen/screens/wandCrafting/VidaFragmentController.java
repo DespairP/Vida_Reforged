@@ -19,12 +19,12 @@ public class VidaFragmentController {
 
     private Logger LOGGER = LogManager.getLogger();
 
-    public VidaFragmentController(LinkedList<VidaLifecycleSection> sections){
+    public VidaFragmentController(List<VidaLifecycleSection> sections){
         this.currentSections = new LinkedList<>();
         registerSections(sections);
     }
 
-    private void registerSections(LinkedList<VidaLifecycleSection> sections){
+    private void registerSections(List<VidaLifecycleSection> sections){
         registeredSection.addAll(sections);
         registeredSection.forEach(section -> {
             section.init();

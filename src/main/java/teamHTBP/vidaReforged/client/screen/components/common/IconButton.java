@@ -28,7 +28,7 @@ public class IconButton extends VidaWidget {
     private FloatRange alpha = new FloatRange(0, 0.0f, 0.5f);
     private GridLayout gridLayout;
     private Padding padding = Padding.empty();
-    private ImageMutableWidget imageWidget;
+    private ImageWidget imageWidget;
     private StringWidget textWidget;
     private boolean isBackground = false;
     TextureSection normalSection;
@@ -68,7 +68,7 @@ public class IconButton extends VidaWidget {
     public IconButton(int x, int y, int width, int height, Component component) {
         super(x, y, width, height, component);
         this.gridLayout = new GridLayout(getX(), getY());
-        this.imageWidget = new ImageMutableWidget(0, 0, 0, 0, Component.literal("image"), null);
+        this.imageWidget = new ImageWidget(0, 0, 0, 0, Component.literal("image"), null);
         this.textWidget = new StringWidget(component, mc.font);
         init();
     }

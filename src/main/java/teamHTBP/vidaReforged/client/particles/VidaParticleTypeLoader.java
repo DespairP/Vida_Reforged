@@ -41,6 +41,8 @@ public class VidaParticleTypeLoader {
     @RegisterParticleType(SpinParticle.class)
     public final static RegistryObject<ParticleType<BaseParticleType>> STAR_PARTICLE = PARTICLE_TYPE_REGISTER.register("star_particle", ()->new BaseParticleType(VidaParticleTypeLoader.ORB_PARTICLE));
 
+    @RegisterParticleType(LeavesLikeParticle.class)
+    public final static RegistryObject<ParticleType<BaseParticleType>> VIDA_LEAVES_LIGHT_PARTICLE = PARTICLE_TYPE_REGISTER.register("vida_leaves_light_particle", ()->new BaseParticleType(VidaParticleTypeLoader.VIDA_LEAVES_LIGHT_PARTICLE));
 
     public final static RegistryObject<ParticleType<BaseBezierParticleType>> BEZIER_PARTICLE = PARTICLE_TYPE_REGISTER.register("bezier_particle", BaseBezierParticleType::new);
 

@@ -6,6 +6,7 @@ import net.minecraft.util.RandomSource;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,10 @@ public record ColorTheme(String themeName, VidaColor baseColor, List<VidaColor> 
             VidaElement.VOID, registerTheme("void", ARGBColor.BLACK, List.of(), List.of())
     );
 
+    static {
+        registerTheme("blue_leaves",  ARGBColor.argb(0xff91C4C9), List.of(ARGBColor.argb(0XFF91C4C9), ARGBColor.argb(0xFF6E7C8F)), new LinkedList<>());
+    }
+
     public TwoValueGradientColor getRandomGradient(RandomSource randomSource){
         if(randomPickGradientColor.size() == 0){
             return new TwoValueGradientColor(baseColor, baseColor);
@@ -31,6 +36,14 @@ public record ColorTheme(String themeName, VidaColor baseColor, List<VidaColor> 
 
     public static ColorTheme getColorThemeByElement(VidaElement element){
         return ELEMENT_COLOR_THEME.get(element);
+    }
+
+    public static ColorTheme getColorThemeById(String id){
+        return THEMES.get(id);
+    }
+
+    public ARGBColor getRandomColor(RandomSource randomSource){
+        return randomPickColor.get(randomSource.nextInt(randomPickColor.size())).toARGB();
     }
 
     public static ColorTheme registerTheme(String themeName, VidaColor baseColor, List<VidaColor> randomPickColor , List<TwoValueGradientColor> randomPickGradientColor){

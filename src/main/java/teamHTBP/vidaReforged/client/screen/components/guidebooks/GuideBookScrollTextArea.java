@@ -14,6 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import org.joml.Matrix4f;
+import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.utils.animation.DestinationAnimator;
 import teamHTBP.vidaReforged.core.utils.math.FloatRange;
 import teamHTBP.vidaReforged.helper.VidaGuiHelper;
@@ -26,7 +27,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Deprecated
-public class GuideBookScrollTextArea extends AbstractWidget implements IGuidebookComponent {
+public class GuideBookScrollTextArea extends VidaWidget implements IGuidebookComponent {
     /**字体*/
     private Font font;
     /**匹配${}格式的正则*/

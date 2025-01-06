@@ -15,7 +15,7 @@ import teamHTBP.vidaReforged.VidaReforged;
 import teamHTBP.vidaReforged.client.screen.components.common.IconButton;
 import teamHTBP.vidaReforged.client.screen.components.common.ScrolledContainer;
 import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
-import teamHTBP.vidaReforged.client.screen.components.guidebooks.VidaGuidebookText;
+import teamHTBP.vidaReforged.client.screen.components.common.RegexTextWidget;
 import teamHTBP.vidaReforged.client.screen.viewModels.VidaWandCraftingViewModel;
 import teamHTBP.vidaReforged.core.common.system.magic.VidaMagic;
 import teamHTBP.vidaReforged.client.screen.components.VidaLifecycleSection;
@@ -301,23 +301,23 @@ public class VidaWandMagicSection extends VidaLifecycleSection {
 
     public static class VidaMagicInfoArea extends VidaWidget{
         StringWidget title;
-        VidaGuidebookText description;
+        RegexTextWidget description;
         VidaMagic magic;
 
 
         public VidaMagicInfoArea(int x, int y, int width, int height, Component component) {
             super(x, y, width, height, component);
             this.title = new StringWidget(Component.literal("介绍"), this.mc.font);
-            this.description = new VidaGuidebookText("", getX(), getY(),getWidth() - 8, getHeight() / 2);
+            this.description = new RegexTextWidget("", getX(), getY(),getWidth() - 8, getHeight() / 2);
         }
 
         public void setMagicId(ResourceLocation magicId) {
             if(magicId == null || magicId.equals(VidaMagic.MAGIC_UNKNOWN)){
-                this.description = new VidaGuidebookText("", getX(), getY(),getWidth() - 8, getHeight() / 2);
+                this.description = new RegexTextWidget("", getX(), getY(),getWidth() - 8, getHeight() / 2);
                 return;
             }
             this.magic = VidaMagicManager.getMagicByMagicId(magicId);
-            this.description = new VidaGuidebookText(this.magic.description(), getX(), getY(),getWidth() - 8, getHeight() / 2);
+            this.description = new RegexTextWidget(this.magic.description(), getX(), getY(),getWidth() - 8, getHeight() / 2);
         }
 
         @Override

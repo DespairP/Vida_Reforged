@@ -24,7 +24,12 @@ public abstract class VidaBaseParticle extends TextureSheetParticle {
 
     protected VidaBaseParticle(ClientLevel level, double x, double y, double z, VidaParticleAttributes attributes){
         this(level, x, y, z);
+        this.rand = RandomSource.create();
         this.attributes = attributes;
+        this.alpha = attributes.color().a() / 255.0f;
+        this.rCol = attributes.color().r() / 255.0f;
+        this.gCol = attributes.color().g() / 255.0f;
+        this.bCol = attributes.color().b() / 255.0f;
     }
 
     protected VidaBaseParticle(ClientLevel level, double x, double y, double z, double xd, double yd, double zd, VidaParticleAttributes attributes){

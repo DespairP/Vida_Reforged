@@ -31,31 +31,49 @@ public class TradeFactionBasedSection extends FactionBasedSection {
     SecondOrderDynamics offset;
     @StyleSheet
     IBorderRenderer border;
+    /**标签页*/
+    private Select<String> tabSelector;
+    /**交易页*/
+    private TradeLevelSection tradeSection;
     /***/
-    Select<String> tabSelector;
-
+    VidaFragmentController controller;
 
     public TradeFactionBasedSection(int x, int y, int width, int height) {
         super(x, y, width, height);
-        this.background = new GradientShader.FlowGradient()
-                .addColor(0, 0xFF4C5F7A)
-                .addColor(1, 0xFF393E6F)
-                .addColor(2, 0xFF3D2E4F)
-                .addColor(3, 0xFF321D2F)
-                .build();
-        offset = new SecondOrderDynamics(1, 1, 0.5f, new Vector3f(150, 0, 0));
-        border = BorderRendererManager.getRender(new ResourceLocation(VidaReforged.MOD_ID, "arrows_border"));
-        tabSelector = new Select<String>(x + 10, y + 10, SelectButton.BTN_SIZE, 2, new ResourceLocation("trade_tab"))
-                .setButtonGap(3)
-                .setType(Select.SelectType.HORIZONTAL)
-                .addOption("trade", button -> {})
-                .addOption("buy", button -> {});
+        try {
+            this.background = new GradientShader.FlowGradient()
+                    .addColor(0, 0xFF4C5F7A)
+                    .addColor(1, 0xFF393E6F)
+                    .addColor(2, 0xFF3D2E4F)
+                    .addColor(3, 0xFF321D2F)
+                    .build();
+            tradeSection = new TradeLevelSection(x + 10, y + 20, width, height, Component.literal(""), new ResourceLocation(VidaReforged.MOD_ID, "trade_section"));
+            offset = new SecondOrderDynamics(1, 1, 0.5f, new Vector3f(150, 0, 0));
+            border = BorderRendererManager.getRender(new ResourceLocation(VidaReforged.MOD_ID, "arrows_border"));
+            controller = new VidaFragmentController(List.of(tradeSection));
+            tabSelector = new Select<String>(x + 10, y + 10, SelectButton.BTN_SIZE, 2, new ResourceLocation("trade_tab"))
+                    .setButtonGap(3)
+                    .setType(Select.SelectType.HORIZONTAL)
+                    .addOption("trade", button -> {})
+                    .addOption("buy", button -> {});
+            tradeSection.onAdded();
+        }catch (Exception exception){
+            LOGGER.error(exception);
+        }
+    }
+
+    @Override
+    protected void onResized(int width, int height) {
+        tradeSection.setWidth(width - 20);
+        tradeSection.setHeight(height - 70);
     }
 
     @Override
     protected void onPositionMoved(int x, int y) {
         this.tabSelector.setX(x + 10);
         this.tabSelector.setY(y + 10);
+        this.tradeSection.setX(x + 10);
+        this.tradeSection.setY(y + 60);
     }
 
     protected void renderBackground(GuiGraphics graphics, float partialTicks){
@@ -85,6 +103,7 @@ public class TradeFactionBasedSection extends FactionBasedSection {
         poseStack.translate(offsetCurrent.x,0, 15);
         // 渲染组件
         tabSelector.render(graphics, mouseX, mouseY, partialTicks);
+        controller.render(graphics, mouseX, mouseY, partialTicks);
         poseStack.popPose();
     }
 

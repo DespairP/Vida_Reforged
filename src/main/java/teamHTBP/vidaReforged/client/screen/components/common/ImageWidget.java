@@ -7,11 +7,11 @@ import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.utils.render.TextureSection;
 
 /**可变的图像组件*/
-public class ImageMutableWidget extends VidaWidget {
+public class ImageWidget extends VidaWidget {
     private TextureSection section;
     private int rev;
 
-    public ImageMutableWidget(int x, int y, int width, int height, Component component, TextureSection section) {
+    public ImageWidget(int x, int y, int width, int height, Component component, TextureSection section) {
         super(x, y, width, height, component);
         this.section = section;
     }

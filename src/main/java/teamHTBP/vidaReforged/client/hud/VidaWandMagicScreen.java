@@ -12,7 +12,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Vector3f;
 import teamHTBP.vidaReforged.VidaReforged;
-import teamHTBP.vidaReforged.client.screen.components.common.ImageMutableWidget;
+import teamHTBP.vidaReforged.client.screen.components.common.ImageWidget;
 import teamHTBP.vidaReforged.client.screen.components.VidaWidget;
 import teamHTBP.vidaReforged.core.api.VidaElement;
 import teamHTBP.vidaReforged.core.api.hud.IVidaScreen;
@@ -230,11 +230,11 @@ public class VidaWandMagicScreen extends VidaHUDScreen implements IVidaScreen {
 
     /**元素*/
     public static class VidaElementSlot extends VidaWidget{
-        ImageMutableWidget widget;
+        ImageWidget widget;
 
         public VidaElementSlot(int x, int y, int width, int height, Component component, VidaElement element) {
             super(x, y, width, height, component);
-            this.widget = new ImageMutableWidget(x, y ,width, height, component, element.getIcon());
+            this.widget = new ImageWidget(x, y ,width, height, component, element.getIcon());
             this.widget.setRev(32);
         }
 

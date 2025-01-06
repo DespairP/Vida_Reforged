@@ -1,4 +1,4 @@
-package teamHTBP.vidaReforged.client.screen.components.fraction;
+package teamHTBP.vidaReforged.client.screen.components.faction;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

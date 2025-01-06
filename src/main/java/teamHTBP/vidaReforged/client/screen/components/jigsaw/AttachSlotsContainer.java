@@ -7,6 +7,7 @@ import net.minecraft.client.gui.components.Renderable;
 import java.util.LinkedList;
 import java.util.List;
 
+@Deprecated
 public class AttachSlotsContainer implements Renderable {
     private int rowNum = 0;
     private int colNum = 0;

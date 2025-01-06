@@ -3,12 +3,14 @@ package teamHTBP.vidaReforged.client.screen.components;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import teamHTBP.vidaReforged.core.common.ui.lifecycle.ILifeCycleOwner;
 import teamHTBP.vidaReforged.core.common.ui.lifecycle.LifeCycle;
 import teamHTBP.vidaReforged.core.common.ui.lifecycle.LifeCycleRegistry;
 
 public abstract class VidaLifecycleSection extends VidaWidget implements ILifeCycleOwner {
-
+    protected static final Logger LOGGER = LogManager.getLogger();
     protected LifeCycleRegistry registry;
 
     @Deprecated
